@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>components/loading</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="components/loading">
+  <h1>Loading</h1>
+  <p>
+    <button aria-busy="true">Busy button</button>
+    <button aria-busy="true"></button>
+    <button aria-busy="true" class="secondary">Busy secondary</button>
+    <button aria-busy="true" class="contrast">Busy contrast</button>
+    <button aria-busy="true" class="outline">Busy outline</button>
+    <button aria-busy="true" class="outline contrast">Busy outline contrast</button>
+    <button aria-busy="false">Not busy</button>
+  </p>
+  <p>
+    <input type="submit" value="Busy submit" aria-busy="true">
+    <input type="button" value="Busy input button" aria-busy="true">
+    <input type="reset" value="Busy reset" aria-busy="true">
+  </p>
+  <p>
+    <a href="#busy" aria-busy="true">Busy link</a>
+    <a href="#busy-button" role="button" aria-busy="true">Busy role button</a>
+    <span aria-busy="true">Busy span with text</span>
+    <span aria-busy="true"></span>
+  </p>
+  <article aria-busy="true"></article>
+  <article aria-busy="true">Busy card with text</article>
+  <div aria-busy="true">Busy div</div>
+  <form aria-busy="true"><p>Busy form (excluded)</p></form>
+  <input type="text" name="busy-input" aria-busy="true" value="Busy input (excluded)">
+  <select name="busy-select" aria-busy="true"><option>Busy select (excluded)</option></select>
+  <textarea name="busy-textarea" aria-busy="true" rows="2">Busy textarea (excluded)</textarea>
+
+  <div dir="rtl">
+    <button aria-busy="true">RTL busy button</button>
+    <span aria-busy="true">RTL busy span</span>
+  </div>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <button aria-busy="true">Busy</button>
+    <button aria-busy="true" class="contrast">Busy contrast</button>
+    <button aria-busy="true" class="outline">Busy outline</button>
+    <span aria-busy="true">Busy span</span>
+    <article aria-busy="true"></article>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <button aria-busy="true">Busy</button>
+    <button aria-busy="true" class="contrast">Busy contrast</button>
+    <button aria-busy="true" class="outline">Busy outline</button>
+    <span aria-busy="true">Busy span</span>
+    <article aria-busy="true"></article>
+  </div>
+</div>
+</body>
+</html>

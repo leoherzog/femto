@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>tokens/schemes</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="tokens/schemes">
+  <h1>Color schemes</h1>
+  <p>Scheme tokens on every color-bearing element: on the page, in light and dark islands nested several deep both ways, on elements that carry data-theme themselves, and in shadow roots whose host has no theme, a dark theme or a light theme.</p>
+  <h2>Page scheme</h2>
+  <div data-module="tokens/schemes">
+    <h1>page h1</h1><h2>page h2</h2><h3>page h3</h3><h4>page h4</h4><h5>page h5</h5><h6>page h6</h6>
+    <hgroup><h3>page group</h3><p>Muted subtitle</p></hgroup>
+    <p>Text with <a href="#page-a" data-states="hover focus-visible">link</a>, <a href="#page-s" class="secondary">secondary</a>, <a href="#page-c" class="contrast">contrast</a>, <a href="#page-cur" aria-current="page">current</a>, <mark>mark</mark>, <ins>ins</ins>, <del>del</del>, <small>small</small>, <code>code</code>, <kbd>kbd</kbd> and <samp>samp</samp>.</p>
+    <blockquote>Quote<footer><cite>Cite</cite></footer></blockquote>
+    <hr>
+    <pre><code>pre code</code></pre>
+    <table class="striped"><thead><tr><th>Head</th><th>Col</th></tr></thead><tbody><tr><td>Odd</td><td>Odd</td></tr><tr><td>Even</td><td>Even</td></tr></tbody><tfoot><tr><td>Foot</td><td>Foot</td></tr></tfoot></table>
+    <p><button data-states="focus">Primary</button> <button class="secondary">Secondary</button> <button class="contrast">Contrast</button> <button class="outline">Outline</button> <button class="outline secondary">Outline secondary</button> <button class="outline contrast">Outline contrast</button> <button disabled>Disabled</button></p>
+    <p><input type="submit" value="Submit" data-states="focus"> <input type="button" value="Button"> <input type="reset" value="Reset" data-states="focus"></p>
+    <input type="file" name="page-file" data-states="focus">
+    <input type="text" name="page-text" placeholder="Placeholder" data-states="focus">
+    <input type="text" name="page-valid" value="Valid" aria-invalid="false">
+    <small>Valid helper</small>
+    <input type="text" name="page-invalid" value="Invalid" aria-invalid="true">
+    <small>Invalid helper</small>
+    <input type="text" name="page-disabled" value="Disabled" disabled>
+    <input type="search" name="page-search" placeholder="Search">
+    <input type="date" name="page-date" value="2026-01-02">
+    <input type="color" name="page-color" value="#0172ad">
+    <select name="page-select"><option>Select</option></select>
+    <select name="page-multiple" multiple><option selected>Selected option</option><option>Option</option></select>
+    <textarea name="page-textarea" rows="1" placeholder="Textarea"></textarea>
+    <label><input type="checkbox" name="page-c1"> Checkbox</label>
+    <label><input type="checkbox" name="page-c2" checked data-states="focus"> Checked</label>
+    <label><input type="checkbox" name="page-c3" data-indeterminate> Indeterminate</label>
+    <label><input type="checkbox" name="page-c4" checked aria-invalid="true"> Checked invalid</label>
+    <label><input type="checkbox" name="page-c5" checked aria-invalid="false"> Checked valid</label>
+    <label><input type="radio" name="page-r" checked data-states="focus"> Radio</label>
+    <label><input type="checkbox" role="switch" name="page-s1"> Switch off</label>
+    <label><input type="checkbox" role="switch" name="page-s2" checked> Switch on</label>
+    <input type="range" name="page-range" data-states="focus">
+    <progress value="40" max="100"></progress>
+    <div role="group"><input type="text" name="page-group" placeholder="Group" data-states="focus"><button data-states="focus">Go</button></div>
+    <div role="search"><input type="search" name="page-gsearch" placeholder="Search group"><button class="secondary" data-states="focus">Go</button></div>
+    <details><summary data-states="focus focus-visible">Accordion</summary><p>Content</p></details>
+    <details open><summary>Open accordion</summary><p>Content</p></details>
+    <details><summary role="button">Button summary</summary><p>Content</p></details>
+    <details><summary role="button" class="contrast">Contrast button summary</summary><p>Content</p></details>
+    <details><summary role="button" class="outline">Outline button summary</summary><p>Content</p></details>
+    <details class="dropdown"><summary data-states="focus">Dropdown</summary><ul><li><a href="#page-dd">Item</a></li></ul></details>
+    <article><header>Card header</header>Card body<footer>Card footer</footer></article>
+    <p><button aria-busy="true">Busy</button> <button aria-busy="true" class="contrast">Busy contrast</button> <button aria-busy="true" class="outline">Busy outline</button> <span aria-busy="true">Busy span</span></p>
+    <nav aria-label="breadcrumb"><ul><li><a href="#page-b1">Home</a></li><li><a href="#page-b2" aria-current="page">Current</a></li></ul></nav>
+    <p><span data-tooltip="Tooltip" tabindex="0" data-states="hover">Tooltip target</span></p>
+    <dialog><article><button aria-label="Close" rel="prev"></button><p>Closed dialog with the overlay color</p></article></dialog>
+  </div>
+  <div data-theme="light">
+    <h2>light: data-theme="light"</h2>
+    <div data-module="tokens/schemes">
+      <h1>light h1</h1><h2>light h2</h2><h3>light h3</h3><h4>light h4</h4><h5>light h5</h5><h6>light h6</h6>
+      <hgroup><h3>light group</h3><p>Muted subtitle</p></hgroup>
+      <p>Text with <a href="#light-a" data-states="hover focus-visible">link</a>, <a href="#light-s" class="secondary">secondary</a>, <a href="#light-c" class="contrast">contrast</a>, <a href="#light-cur" aria-current="page">current</a>, <mark>mark</mark>, <ins>ins</ins>, <del>del</del>, <small>small</small>, <code>code</code>, <kbd>kbd</kbd> and <samp>samp</samp>.</p>
+      <blockquote>Quote<footer><cite>Cite</cite></footer></blockquote>
+      <hr>
+      <pre><code>pre code</code></pre>
+      <table class="striped"><thead><tr><th>Head</th><th>Col</th></tr></thead><tbody><tr><td>Odd</td><td>Odd</td></tr><tr><td>Even</td><td>Even</td></tr></tbody><tfoot><tr><td>Foot</td><td>Foot</td></tr></tfoot></table>
+      <p><button data-states="focus">Primary</button> <button class="secondary">Secondary</button> <button class="contrast">Contrast</button> <button class="outline">Outline</button> <button class="outline secondary">Outline secondary</button> <button class="outline contrast">Outline contrast</button> <button disabled>Disabled</button></p>
+      <p><input type="submit" value="Submit" data-states="focus"> <input type="button" value="Button"> <input type="reset" value="Reset"></p>
+      <input type="file" name="light-file">
+      <input type="text" name="light-text" placeholder="Placeholder" data-states="focus">
+      <input type="text" name="light-valid" value="Valid" aria-invalid="false">
+      <small>Valid helper</small>
+      <input type="text" name="light-invalid" value="Invalid" aria-invalid="true">
+      <small>Invalid helper</small>
+      <input type="text" name="light-disabled" value="Disabled" disabled>
+      <input type="search" name="light-search" placeholder="Search">
+      <input type="date" name="light-date" value="2026-01-02">
+      <input type="color" name="light-color" value="#0172ad">
+      <select name="light-select"><option>Select</option></select>
+      <select name="light-multiple" multiple><option selected>Selected option</option><option>Option</option></select>
+      <textarea name="light-textarea" rows="1" placeholder="Textarea"></textarea>
+      <label><input type="checkbox" name="light-c1"> Checkbox</label>
+      <label><input type="checkbox" name="light-c2" checked data-states="focus"> Checked</label>
+      <label><input type="checkbox" name="light-c3" data-indeterminate> Indeterminate</label>
+      <label><input type="checkbox" name="light-c4" checked aria-invalid="true"> Checked invalid</label>
+      <label><input type="checkbox" name="light-c5" checked aria-invalid="false"> Checked valid</label>
+      <label><input type="radio" name="light-r" checked> Radio</label>
+      <label><input type="checkbox" role="switch" name="light-s1"> Switch off</label>
+      <label><input type="checkbox" role="switch" name="light-s2" checked> Switch on</label>
+      <input type="range" name="light-range">
+      <progress value="40" max="100"></progress>
+      <div role="group"><input type="text" name="light-group" placeholder="Group" data-states="focus"><button data-states="focus">Go</button></div>
+      <div role="search"><input type="search" name="light-gsearch" placeholder="Search group"><button class="secondary" data-states="focus">Go</button></div>
+      <details><summary>Accordion</summary><p>Content</p></details>
+      <details open><summary>Open accordion</summary><p>Content</p></details>
+      <details><summary role="button">Button summary</summary><p>Content</p></details>
+      <details><summary role="button" class="contrast">Contrast button summary</summary><p>Content</p></details>
+      <details><summary role="button" class="outline">Outline button summary</summary><p>Content</p></details>
+      <details class="dropdown"><summary>Dropdown</summary><ul><li><a href="#light-dd">Item</a></li></ul></details>
+      <article><header>Card header</header>Card body<footer>Card footer</footer></article>
+      <p><button aria-busy="true">Busy</button> <button aria-busy="true" class="contrast">Busy contrast</button> <button aria-busy="true" class="outline">Busy outline</button> <span aria-busy="true">Busy span</span></p>
+      <nav aria-label="breadcrumb"><ul><li><a href="#light-b1">Home</a></li><li><a href="#light-b2" aria-current="page">Current</a></li></ul></nav>
+      <p><span data-tooltip="Tooltip" tabindex="0">Tooltip target</span></p>
+      <dialog><article><button aria-label="Close" rel="prev"></button><p>Closed dialog with the overlay color</p></article></dialog>
+    </div>
+    <div data-theme="dark">
+      <h2>light-dark: data-theme="dark"</h2>
+      <div data-module="tokens/schemes">
+        <h1>light-dark h1</h1><h2>light-dark h2</h2><h3>light-dark h3</h3><h4>light-dark h4</h4><h5>light-dark h5</h5><h6>light-dark h6</h6>
+        <hgroup><h3>light-dark group</h3><p>Muted subtitle</p></hgroup>
+        <p>Text with <a href="#light-dark-a" data-states="hover focus-visible">link</a>, <a href="#light-dark-s" class="secondary">secondary</a>, <a href="#light-dark-c" class="contrast">contrast</a>, <a href="#light-dark-cur" aria-current="page">current</a>, <mark>mark</mark>, <ins>ins</ins>, <del>del</del>, <small>small</small>, <code>code</code>, <kbd>kbd</kbd> and <samp>samp</samp>.</p>
+        <blockquote>Quote<footer><cite>Cite</cite></footer></blockquote>
+        <hr>
+        <pre><code>pre code</code></pre>
+        <table class="striped"><thead><tr><th>Head</th><th>Col</th></tr></thead><tbody><tr><td>Odd</td><td>Odd</td></tr><tr><td>Even</td><td>Even</td></tr></tbody><tfoot><tr><td>Foot</td><td>Foot</td></tr></tfoot></table>
+        <p><button data-states="focus">Primary</button> <button class="secondary">Secondary</button> <button class="contrast">Contrast</button> <button class="outline">Outline</button> <button class="outline secondary">Outline secondary</button> <button class="outline contrast">Outline contrast</button> <button disabled>Disabled</button></p>
+        <p><input type="submit" value="Submit" data-states="focus"> <input type="button" value="Button"> <input type="reset" value="Reset"></p>
+        <input type="file" name="light-dark-file">
+        <input type="text" name="light-dark-text" placeholder="Placeholder" data-states="focus">
+        <input type="text" name="light-dark-valid" value="Valid" aria-invalid="false">
+        <small>Valid helper</small>
+        <input type="text" name="light-dark-invalid" value="Invalid" aria-invalid="true">
+        <small>Invalid helper</small>
+        <input type="text" name="light-dark-disabled" value="Disabled" disabled>
+        <input type="search" name="light-dark-search" placeholder="Search">
+        <input type="date" name="light-dark-date" value="2026-01-02">
+        <input type="color" name="light-dark-color" value="#0172ad">
+        <select name="light-dark-select"><option>Select</option></select>
+        <select name="light-dark-multiple" multiple><option selected>Selected option</option><option>Option</option></select>
+        <textarea name="light-dark-textarea" rows="1" placeholder="Textarea"></textarea>
+        <label><input type="checkbox" name="light-dark-c1"> Checkbox</label>
+        <label><input type="checkbox" name="light-dark-c2" checked data-states="focus"> Checked</label>
+        <label><input type="checkbox" name="light-dark-c3" data-indeterminate> Indeterminate</label>
+        <label><input type="checkbox" name="light-dark-c4" checked aria-invalid="true"> Checked invalid</label>
+        <label><input type="checkbox" name="light-dark-c5" checked aria-invalid="false"> Checked valid</label>
+        <label><input type="radio" name="light-dark-r" checked> Radio</label>
+        <label><input type="checkbox" role="switch" name="light-dark-s1"> Switch off</label>
+        <label><input type="checkbox" role="switch" name="light-dark-s2" checked> Switch on</label>
+        <input type="range" name="light-dark-range">
+        <progress value="40" max="100"></progress>
+        <div role="group"><input type="text" name="light-dark-group" placeholder="Group" data-states="focus"><button data-states="focus">Go</button></div>
+        <div role="search"><input type="search" name="light-dark-gsearch" placeholder="Search group"><button class="secondary" data-states="focus">Go</button></div>
+        <details><summary>Accordion</summary><p>Content</p></details>
+        <details open><summary>Open accordion</summary><p>Content</p></details>
+        <details><summary role="button">Button summary</summary><p>Content</p></details>
+        <details><summary role="button" class="contrast">Contrast button summary</summary><p>Content</p></details>
+        <details><summary role="button" class="outline">Outline button summary</summary><p>Content</p></details>
+        <details class="dropdown"><summary>Dropdown</summary><ul><li><a href="#light-dark-dd">Item</a></li></ul></details>
+        <article><header>Card header</header>Card body<footer>Card footer</footer></article>
+        <p><button aria-busy="true">Busy</button> <button aria-busy="true" class="contrast">Busy contrast</button> <button aria-busy="true" class="outline">Busy outline</button> <span aria-busy="true">Busy span</span></p>
+        <nav aria-label="breadcrumb"><ul><li><a href="#light-dark-b1">Home</a></li><li><a href="#light-dark-b2" aria-current="page">Current</a></li></ul></nav>
+        <p><span data-tooltip="Tooltip" tabindex="0">Tooltip target</span></p>
+        <dialog><article><button aria-label="Close" rel="prev"></button><p>Closed dialog with the overlay color</p></article></dialog>
+      </div>
+      <div data-theme="light">
+        <h2>light-dark-light: data-theme="light"</h2>
+        <div data-module="tokens/schemes">
+          <h1>light-dark-light h1</h1><h6>light-dark-light h6</h6>
+          <p>Text with <a href="#light-dark-light-a">link</a>, <mark>mark</mark>, <ins>ins</ins>, <del>del</del>, <small>small</small> and <code>code</code>.</p>
+          <p><button>Primary</button> <button class="secondary">Secondary</button> <button class="contrast">Contrast</button> <input type="submit" value="Submit"></p>
+          <input type="text" name="light-dark-light-text" placeholder="Placeholder">
+          <input type="text" name="light-dark-light-invalid" value="Invalid" aria-invalid="true">
+          <label><input type="checkbox" name="light-dark-light-c" checked> Checked</label>
+          <label><input type="checkbox" role="switch" name="light-dark-light-s" checked> Switch on</label>
+          <div role="group"><input type="text" name="light-dark-light-group" placeholder="Group"><button>Go</button></div>
+          <details><summary role="button" class="contrast">Contrast button summary</summary><p>Content</p></details>
+          <article><header>Card header</header>Card body<footer>Card footer</footer></article>
+          <p><button aria-busy="true" class="contrast">Busy contrast</button></p>
+          <progress value="40" max="100"></progress>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div data-theme="dark">
+    <h2>dark: data-theme="dark"</h2>
+    <div data-module="tokens/schemes">
+      <h1>dark h1</h1><h2>dark h2</h2><h3>dark h3</h3><h4>dark h4</h4><h5>dark h5</h5><h6>dark h6</h6>
+      <hgroup><h3>dark group</h3><p>Muted subtitle</p></hgroup>
+      <p>Text with <a href="#dark-a" data-states="hover focus-visible">link</a>, <a href="#dark-s" class="secondary">secondary</a>, <a href="#dark-c" class="contrast">contrast</a>, <a href="#dark-cur" aria-current="page">current</a>, <mark>mark</mark>, <ins>ins</ins>, <del>del</del>, <small>small</small>, <code>code</code>, <kbd>kbd</kbd> and <samp>samp</samp>.</p>
+      <blockquote>Quote<footer><cite>Cite</cite></footer></blockquote>
+      <hr>
+      <pre><code>pre code</code></pre>
+      <table class="striped"><thead><tr><th>Head</th><th>Col</th></tr></thead><tbody><tr><td>Odd</td><td>Odd</td></tr><tr><td>Even</td><td>Even</td></tr></tbody><tfoot><tr><td>Foot</td><td>Foot</td></tr></tfoot></table>
+      <p><button data-states="focus">Primary</button> <button class="secondary">Secondary</button> <button class="contrast">Contrast</button> <button class="outline">Outline</button> <button class="outline secondary">Outline secondary</button> <button class="outline contrast">Outline contrast</button> <button disabled>Disabled</button></p>
+      <p><input type="submit" value="Submit" data-states="focus"> <input type="button" value="Button"> <input type="reset" value="Reset"></p>
+      <input type="file" name="dark-file">
+      <input type="text" name="dark-text" placeholder="Placeholder" data-states="focus">
+      <input type="text" name="dark-valid" value="Valid" aria-invalid="false">
+      <small>Valid helper</small>
+      <input type="text" name="dark-invalid" value="Invalid" aria-invalid="true">
+      <small>Invalid helper</small>
+      <input type="text" name="dark-disabled" value="Disabled" disabled>
+      <input type="search" name="dark-search" placeholder="Search">
+      <input type="date" name="dark-date" value="2026-01-02">
+      <input type="color" name="dark-color" value="#0172ad">
+      <select name="dark-select"><option>Select</option></select>
+      <select name="dark-multiple" multiple><option selected>Selected option</option><option>Option</option></select>
+      <textarea name="dark-textarea" rows="1" placeholder="Textarea"></textarea>
+      <label><input type="checkbox" name="dark-c1"> Checkbox</label>
+      <label><input type="checkbox" name="dark-c2" checked data-states="focus"> Checked</label>
+      <label><input type="checkbox" name="dark-c3" data-indeterminate> Indeterminate</label>
+      <label><input type="checkbox" name="dark-c4" checked aria-invalid="true"> Checked invalid</label>
+      <label><input type="checkbox" name="dark-c5" checked aria-invalid="false"> Checked valid</label>
+      <label><input type="radio" name="dark-r" checked> Radio</label>
+      <label><input type="checkbox" role="switch" name="dark-s1"> Switch off</label>
+      <label><input type="checkbox" role="switch" name="dark-s2" checked> Switch on</label>
+      <input type="range" name="dark-range">
+      <progress value="40" max="100"></progress>
+      <div role="group"><input type="text" name="dark-group" placeholder="Group" data-states="focus"><button data-states="focus">Go</button></div>
+      <div role="search"><input type="search" name="dark-gsearch" placeholder="Search group"><button class="secondary" data-states="focus">Go</button></div>
+      <details><summary>Accordion</summary><p>Content</p></details>
+      <details open><summary>Open accordion</summary><p>Content</p></details>
+      <details><summary role="button">Button summary</summary><p>Content</p></details>
+      <details><summary role="button" class="contrast">Contrast button summary</summary><p>Content</p></details>
+      <details><summary role="button" class="outline">Outline button summary</summary><p>Content</p></details>
+      <details class="dropdown"><summary>Dropdown</summary><ul><li><a href="#dark-dd">Item</a></li></ul></details>
+      <article><header>Card header</header>Card body<footer>Card footer</footer></article>
+      <p><button aria-busy="true">Busy</button> <button aria-busy="true" class="contrast">Busy contrast</button> <button aria-busy="true" class="outline">Busy outline</button> <span aria-busy="true">Busy span</span></p>
+      <nav aria-label="breadcrumb"><ul><li><a href="#dark-b1">Home</a></li><li><a href="#dark-b2" aria-current="page">Current</a></li></ul></nav>
+      <p><span data-tooltip="Tooltip" tabindex="0">Tooltip target</span></p>
+      <dialog><article><button aria-label="Close" rel="prev"></button><p>Closed dialog with the overlay color</p></article></dialog>
+    </div>
+    <div data-theme="light">
+      <h2>dark-light: data-theme="light"</h2>
+      <div data-module="tokens/schemes">
+        <h1>dark-light h1</h1><h2>dark-light h2</h2><h3>dark-light h3</h3><h4>dark-light h4</h4><h5>dark-light h5</h5><h6>dark-light h6</h6>
+        <hgroup><h3>dark-light group</h3><p>Muted subtitle</p></hgroup>
+        <p>Text with <a href="#dark-light-a" data-states="hover focus-visible">link</a>, <a href="#dark-light-s" class="secondary">secondary</a>, <a href="#dark-light-c" class="contrast">contrast</a>, <a href="#dark-light-cur" aria-current="page">current</a>, <mark>mark</mark>, <ins>ins</ins>, <del>del</del>, <small>small</small>, <code>code</code>, <kbd>kbd</kbd> and <samp>samp</samp>.</p>
+        <blockquote>Quote<footer><cite>Cite</cite></footer></blockquote>
+        <hr>
+        <pre><code>pre code</code></pre>
+        <table class="striped"><thead><tr><th>Head</th><th>Col</th></tr></thead><tbody><tr><td>Odd</td><td>Odd</td></tr><tr><td>Even</td><td>Even</td></tr></tbody><tfoot><tr><td>Foot</td><td>Foot</td></tr></tfoot></table>
+        <p><button data-states="focus">Primary</button> <button class="secondary">Secondary</button> <button class="contrast">Contrast</button> <button class="outline">Outline</button> <button class="outline secondary">Outline secondary</button> <button class="outline contrast">Outline contrast</button> <button disabled>Disabled</button></p>
+        <p><input type="submit" value="Submit" data-states="focus"> <input type="button" value="Button"> <input type="reset" value="Reset"></p>
+        <input type="file" name="dark-light-file">
+        <input type="text" name="dark-light-text" placeholder="Placeholder" data-states="focus">
+        <input type="text" name="dark-light-valid" value="Valid" aria-invalid="false">
+        <small>Valid helper</small>
+        <input type="text" name="dark-light-invalid" value="Invalid" aria-invalid="true">
+        <small>Invalid helper</small>
+        <input type="text" name="dark-light-disabled" value="Disabled" disabled>
+        <input type="search" name="dark-light-search" placeholder="Search">
+        <input type="date" name="dark-light-date" value="2026-01-02">
+        <input type="color" name="dark-light-color" value="#0172ad">
+        <select name="dark-light-select"><option>Select</option></select>
+        <select name="dark-light-multiple" multiple><option selected>Selected option</option><option>Option</option></select>
+        <textarea name="dark-light-textarea" rows="1" placeholder="Textarea"></textarea>
+        <label><input type="checkbox" name="dark-light-c1"> Checkbox</label>
+        <label><input type="checkbox" name="dark-light-c2" checked data-states="focus"> Checked</label>
+        <label><input type="checkbox" name="dark-light-c3" data-indeterminate> Indeterminate</label>
+        <label><input type="checkbox" name="dark-light-c4" checked aria-invalid="true"> Checked invalid</label>
+        <label><input type="checkbox" name="dark-light-c5" checked aria-invalid="false"> Checked valid</label>
+        <label><input type="radio" name="dark-light-r" checked> Radio</label>
+        <label><input type="checkbox" role="switch" name="dark-light-s1"> Switch off</label>
+        <label><input type="checkbox" role="switch" name="dark-light-s2" checked> Switch on</label>
+        <input type="range" name="dark-light-range">
+        <progress value="40" max="100"></progress>
+        <div role="group"><input type="text" name="dark-light-group" placeholder="Group" data-states="focus"><button data-states="focus">Go</button></div>
+        <div role="search"><input type="search" name="dark-light-gsearch" placeholder="Search group"><button class="secondary" data-states="focus">Go</button></div>
+        <details><summary>Accordion</summary><p>Content</p></details>
+        <details open><summary>Open accordion</summary><p>Content</p></details>
+        <details><summary role="button">Button summary</summary><p>Content</p></details>
+        <details><summary role="button" class="contrast">Contrast button summary</summary><p>Content</p></details>
+        <details><summary role="button" class="outline">Outline button summary</summary><p>Content</p></details>
+        <details class="dropdown"><summary>Dropdown</summary><ul><li><a href="#dark-light-dd">Item</a></li></ul></details>
+        <article><header>Card header</header>Card body<footer>Card footer</footer></article>
+        <p><button aria-busy="true">Busy</button> <button aria-busy="true" class="contrast">Busy contrast</button> <button aria-busy="true" class="outline">Busy outline</button> <span aria-busy="true">Busy span</span></p>
+        <nav aria-label="breadcrumb"><ul><li><a href="#dark-light-b1">Home</a></li><li><a href="#dark-light-b2" aria-current="page">Current</a></li></ul></nav>
+        <p><span data-tooltip="Tooltip" tabindex="0">Tooltip target</span></p>
+        <dialog><article><button aria-label="Close" rel="prev"></button><p>Closed dialog with the overlay color</p></article></dialog>
+      </div>
+      <div data-theme="dark">
+        <h2>dark-light-dark: data-theme="dark"</h2>
+        <div data-module="tokens/schemes">
+          <h1>dark-light-dark h1</h1><h6>dark-light-dark h6</h6>
+          <p>Text with <a href="#dark-light-dark-a">link</a>, <mark>mark</mark>, <ins>ins</ins>, <del>del</del>, <small>small</small> and <code>code</code>.</p>
+          <p><button>Primary</button> <button class="secondary">Secondary</button> <button class="contrast">Contrast</button> <input type="submit" value="Submit"></p>
+          <input type="text" name="dark-light-dark-text" placeholder="Placeholder">
+          <input type="text" name="dark-light-dark-invalid" value="Invalid" aria-invalid="true">
+          <label><input type="checkbox" name="dark-light-dark-c" checked> Checked</label>
+          <label><input type="checkbox" role="switch" name="dark-light-dark-s" checked> Switch on</label>
+          <div role="group"><input type="text" name="dark-light-dark-group" placeholder="Group"><button>Go</button></div>
+          <details><summary role="button" class="contrast">Contrast button summary</summary><p>Content</p></details>
+          <article><header>Card header</header>Card body<footer>Card footer</footer></article>
+          <p><button aria-busy="true" class="contrast">Busy contrast</button></p>
+          <progress value="40" max="100"></progress>
+        </div>
+      </div>
+    </div>
+  </div>
+  <h2>Elements with their own data-theme</h2>
+  <article data-theme="dark"><header>Dark card</header>Card body<footer>Card footer</footer></article>
+  <article data-theme="light"><header>Light card</header>Card body<footer>Card footer</footer></article>
+  <p><button data-theme="dark">Dark button</button> <button data-theme="light" class="contrast">Light contrast button</button> <input type="submit" data-theme="dark" value="Dark submit"></p>
+  <input type="text" name="own-dark" data-theme="dark" placeholder="Input with a dark theme">
+  <label><input type="checkbox" name="own-dark-check" data-theme="dark" checked> Checkbox with a dark theme</label>
+  <details data-theme="dark"><summary role="button" class="contrast">Dark details, contrast summary</summary><p>Content</p></details>
+  <section data-theme="dark"><p>Dark section with <mark>mark</mark></p></section>
+  <span data-theme="dark">Dark span with <a href="#own">a link</a></span>
+  <div data-theme="unknown"><p>Unknown data-theme value with <a href="#unk">a link</a></p><button>Button</button></div>
+  <h2>Shadow roots</h2>
+  <div data-shadow>
+    <template>
+      <h2>Shadow, host without data-theme</h2>
+      <h1>shadow-plain h1</h1><h2>shadow-plain h2</h2><h3>shadow-plain h3</h3><h4>shadow-plain h4</h4><h5>shadow-plain h5</h5><h6>shadow-plain h6</h6>
+      <hgroup><h3>shadow-plain group</h3><p>Muted subtitle</p></hgroup>
+      <p>Text with <a href="#shadow-plain-a">link</a>, <a href="#shadow-plain-s" class="secondary">secondary</a>, <a href="#shadow-plain-c" class="contrast">contrast</a>, <a href="#shadow-plain-cur" aria-current="page">current</a>, <mark>mark</mark>, <ins>ins</ins>, <del>del</del>, <small>small</small>, <code>code</code>, <kbd>kbd</kbd> and <samp>samp</samp>.</p>
+      <blockquote>Quote<footer><cite>Cite</cite></footer></blockquote>
+      <hr>
+      <pre><code>pre code</code></pre>
+      <table class="striped"><thead><tr><th>Head</th><th>Col</th></tr></thead><tbody><tr><td>Odd</td><td>Odd</td></tr><tr><td>Even</td><td>Even</td></tr></tbody><tfoot><tr><td>Foot</td><td>Foot</td></tr></tfoot></table>
+      <p><button>Primary</button> <button class="secondary">Secondary</button> <button class="contrast">Contrast</button> <button class="outline">Outline</button> <button class="outline secondary">Outline secondary</button> <button class="outline contrast">Outline contrast</button> <button disabled>Disabled</button></p>
+      <p><input type="submit" value="Submit"> <input type="button" value="Button"> <input type="reset" value="Reset"></p>
+      <input type="file" name="shadow-plain-file">
+      <input type="text" name="shadow-plain-text" placeholder="Placeholder">
+      <input type="text" name="shadow-plain-valid" value="Valid" aria-invalid="false">
+      <small>Valid helper</small>
+      <input type="text" name="shadow-plain-invalid" value="Invalid" aria-invalid="true">
+      <small>Invalid helper</small>
+      <input type="text" name="shadow-plain-disabled" value="Disabled" disabled>
+      <input type="search" name="shadow-plain-search" placeholder="Search">
+      <input type="date" name="shadow-plain-date" value="2026-01-02">
+      <input type="color" name="shadow-plain-color" value="#0172ad">
+      <select name="shadow-plain-select"><option>Select</option></select>
+      <select name="shadow-plain-multiple" multiple><option selected>Selected option</option><option>Option</option></select>
+      <textarea name="shadow-plain-textarea" rows="1" placeholder="Textarea"></textarea>
+      <label><input type="checkbox" name="shadow-plain-c1"> Checkbox</label>
+      <label><input type="checkbox" name="shadow-plain-c2" checked> Checked</label>
+      <label><input type="checkbox" name="shadow-plain-c3" data-indeterminate> Indeterminate</label>
+      <label><input type="checkbox" name="shadow-plain-c4" checked aria-invalid="true"> Checked invalid</label>
+      <label><input type="checkbox" name="shadow-plain-c5" checked aria-invalid="false"> Checked valid</label>
+      <label><input type="radio" name="shadow-plain-r" checked> Radio</label>
+      <label><input type="checkbox" role="switch" name="shadow-plain-s1"> Switch off</label>
+      <label><input type="checkbox" role="switch" name="shadow-plain-s2" checked> Switch on</label>
+      <input type="range" name="shadow-plain-range">
+      <progress value="40" max="100"></progress>
+      <div role="group"><input type="text" name="shadow-plain-group" placeholder="Group"><button>Go</button></div>
+      <div role="search"><input type="search" name="shadow-plain-gsearch" placeholder="Search group"><button class="secondary">Go</button></div>
+      <details><summary>Accordion</summary><p>Content</p></details>
+      <details open><summary>Open accordion</summary><p>Content</p></details>
+      <details><summary role="button">Button summary</summary><p>Content</p></details>
+      <details><summary role="button" class="contrast">Contrast button summary</summary><p>Content</p></details>
+      <details><summary role="button" class="outline">Outline button summary</summary><p>Content</p></details>
+      <details class="dropdown"><summary>Dropdown</summary><ul><li><a href="#shadow-plain-dd">Item</a></li></ul></details>
+      <article><header>Card header</header>Card body<footer>Card footer</footer></article>
+      <p><button aria-busy="true">Busy</button> <button aria-busy="true" class="contrast">Busy contrast</button> <button aria-busy="true" class="outline">Busy outline</button> <span aria-busy="true">Busy span</span></p>
+      <nav aria-label="breadcrumb"><ul><li><a href="#shadow-plain-b1">Home</a></li><li><a href="#shadow-plain-b2" aria-current="page">Current</a></li></ul></nav>
+      <p><span data-tooltip="Tooltip" tabindex="0">Tooltip target</span></p>
+      <dialog><article><button aria-label="Close" rel="prev"></button><p>Closed dialog with the overlay color</p></article></dialog>
+      <div data-theme="dark">
+        <h1>shadow-dark-island h1</h1><h6>shadow-dark-island h6</h6>
+        <p>Text with <a href="#shadow-dark-island-a">link</a>, <mark>mark</mark>, <ins>ins</ins>, <del>del</del>, <small>small</small> and <code>code</code>.</p>
+        <p><button>Primary</button> <button class="secondary">Secondary</button> <button class="contrast">Contrast</button> <input type="submit" value="Submit"></p>
+        <input type="text" name="shadow-dark-island-text" placeholder="Placeholder">
+        <input type="text" name="shadow-dark-island-invalid" value="Invalid" aria-invalid="true">
+        <label><input type="checkbox" name="shadow-dark-island-c" checked> Checked</label>
+        <label><input type="checkbox" role="switch" name="shadow-dark-island-s" checked> Switch on</label>
+        <div role="group"><input type="text" name="shadow-dark-island-group" placeholder="Group"><button>Go</button></div>
+        <details><summary role="button" class="contrast">Contrast button summary</summary><p>Content</p></details>
+        <article><header>Card header</header>Card body<footer>Card footer</footer></article>
+        <p><button aria-busy="true" class="contrast">Busy contrast</button></p>
+        <progress value="40" max="100"></progress>
+      </div>
+    </template>
+  </div>
+  <div data-shadow data-theme="dark">
+    <template>
+      <h2>Shadow, dark host</h2>
+      <h1>shadow-dark-host h1</h1><h2>shadow-dark-host h2</h2><h3>shadow-dark-host h3</h3><h4>shadow-dark-host h4</h4><h5>shadow-dark-host h5</h5><h6>shadow-dark-host h6</h6>
+      <hgroup><h3>shadow-dark-host group</h3><p>Muted subtitle</p></hgroup>
+      <p>Text with <a href="#shadow-dark-host-a">link</a>, <a href="#shadow-dark-host-s" class="secondary">secondary</a>, <a href="#shadow-dark-host-c" class="contrast">contrast</a>, <a href="#shadow-dark-host-cur" aria-current="page">current</a>, <mark>mark</mark>, <ins>ins</ins>, <del>del</del>, <small>small</small>, <code>code</code>, <kbd>kbd</kbd> and <samp>samp</samp>.</p>
+      <blockquote>Quote<footer><cite>Cite</cite></footer></blockquote>
+      <hr>
+      <pre><code>pre code</code></pre>
+      <table class="striped"><thead><tr><th>Head</th><th>Col</th></tr></thead><tbody><tr><td>Odd</td><td>Odd</td></tr><tr><td>Even</td><td>Even</td></tr></tbody><tfoot><tr><td>Foot</td><td>Foot</td></tr></tfoot></table>
+      <p><button>Primary</button> <button class="secondary">Secondary</button> <button class="contrast">Contrast</button> <button class="outline">Outline</button> <button class="outline secondary">Outline secondary</button> <button class="outline contrast">Outline contrast</button> <button disabled>Disabled</button></p>
+      <p><input type="submit" value="Submit"> <input type="button" value="Button"> <input type="reset" value="Reset"></p>
+      <input type="file" name="shadow-dark-host-file">
+      <input type="text" name="shadow-dark-host-text" placeholder="Placeholder">
+      <input type="text" name="shadow-dark-host-valid" value="Valid" aria-invalid="false">
+      <small>Valid helper</small>
+      <input type="text" name="shadow-dark-host-invalid" value="Invalid" aria-invalid="true">
+      <small>Invalid helper</small>
+      <input type="text" name="shadow-dark-host-disabled" value="Disabled" disabled>
+      <input type="search" name="shadow-dark-host-search" placeholder="Search">
+      <input type="date" name="shadow-dark-host-date" value="2026-01-02">
+      <input type="color" name="shadow-dark-host-color" value="#0172ad">
+      <select name="shadow-dark-host-select"><option>Select</option></select>
+      <select name="shadow-dark-host-multiple" multiple><option selected>Selected option</option><option>Option</option></select>
+      <textarea name="shadow-dark-host-textarea" rows="1" placeholder="Textarea"></textarea>
+      <label><input type="checkbox" name="shadow-dark-host-c1"> Checkbox</label>
+      <label><input type="checkbox" name="shadow-dark-host-c2" checked> Checked</label>
+      <label><input type="checkbox" name="shadow-dark-host-c3" data-indeterminate> Indeterminate</label>
+      <label><input type="checkbox" name="shadow-dark-host-c4" checked aria-invalid="true"> Checked invalid</label>
+      <label><input type="checkbox" name="shadow-dark-host-c5" checked aria-invalid="false"> Checked valid</label>
+      <label><input type="radio" name="shadow-dark-host-r" checked> Radio</label>
+      <label><input type="checkbox" role="switch" name="shadow-dark-host-s1"> Switch off</label>
+      <label><input type="checkbox" role="switch" name="shadow-dark-host-s2" checked> Switch on</label>
+      <input type="range" name="shadow-dark-host-range">
+      <progress value="40" max="100"></progress>
+      <div role="group"><input type="text" name="shadow-dark-host-group" placeholder="Group"><button>Go</button></div>
+      <div role="search"><input type="search" name="shadow-dark-host-gsearch" placeholder="Search group"><button class="secondary">Go</button></div>
+      <details><summary>Accordion</summary><p>Content</p></details>
+      <details open><summary>Open accordion</summary><p>Content</p></details>
+      <details><summary role="button">Button summary</summary><p>Content</p></details>
+      <details><summary role="button" class="contrast">Contrast button summary</summary><p>Content</p></details>
+      <details><summary role="button" class="outline">Outline button summary</summary><p>Content</p></details>
+      <details class="dropdown"><summary>Dropdown</summary><ul><li><a href="#shadow-dark-host-dd">Item</a></li></ul></details>
+      <article><header>Card header</header>Card body<footer>Card footer</footer></article>
+      <p><button aria-busy="true">Busy</button> <button aria-busy="true" class="contrast">Busy contrast</button> <button aria-busy="true" class="outline">Busy outline</button> <span aria-busy="true">Busy span</span></p>
+      <nav aria-label="breadcrumb"><ul><li><a href="#shadow-dark-host-b1">Home</a></li><li><a href="#shadow-dark-host-b2" aria-current="page">Current</a></li></ul></nav>
+      <p><span data-tooltip="Tooltip" tabindex="0">Tooltip target</span></p>
+      <dialog><article><button aria-label="Close" rel="prev"></button><p>Closed dialog with the overlay color</p></article></dialog>
+      <div data-theme="light">
+        <h1>shadow-light-island h1</h1><h6>shadow-light-island h6</h6>
+        <p>Text with <a href="#shadow-light-island-a">link</a>, <mark>mark</mark>, <ins>ins</ins>, <del>del</del>, <small>small</small> and <code>code</code>.</p>
+        <p><button>Primary</button> <button class="secondary">Secondary</button> <button class="contrast">Contrast</button> <input type="submit" value="Submit"></p>
+        <input type="text" name="shadow-light-island-text" placeholder="Placeholder">
+        <input type="text" name="shadow-light-island-invalid" value="Invalid" aria-invalid="true">
+        <label><input type="checkbox" name="shadow-light-island-c" checked> Checked</label>
+        <label><input type="checkbox" role="switch" name="shadow-light-island-s" checked> Switch on</label>
+        <div role="group"><input type="text" name="shadow-light-island-group" placeholder="Group"><button>Go</button></div>
+        <details><summary role="button" class="contrast">Contrast button summary</summary><p>Content</p></details>
+        <article><header>Card header</header>Card body<footer>Card footer</footer></article>
+        <p><button aria-busy="true" class="contrast">Busy contrast</button></p>
+        <progress value="40" max="100"></progress>
+      </div>
+    </template>
+  </div>
+  <div data-shadow data-theme="light">
+    <template>
+      <h2>Shadow, light host</h2>
+      <h1>shadow-light-host h1</h1><h2>shadow-light-host h2</h2><h3>shadow-light-host h3</h3><h4>shadow-light-host h4</h4><h5>shadow-light-host h5</h5><h6>shadow-light-host h6</h6>
+      <hgroup><h3>shadow-light-host group</h3><p>Muted subtitle</p></hgroup>
+      <p>Text with <a href="#shadow-light-host-a">link</a>, <a href="#shadow-light-host-s" class="secondary">secondary</a>, <a href="#shadow-light-host-c" class="contrast">contrast</a>, <a href="#shadow-light-host-cur" aria-current="page">current</a>, <mark>mark</mark>, <ins>ins</ins>, <del>del</del>, <small>small</small>, <code>code</code>, <kbd>kbd</kbd> and <samp>samp</samp>.</p>
+      <blockquote>Quote<footer><cite>Cite</cite></footer></blockquote>
+      <hr>
+      <pre><code>pre code</code></pre>
+      <table class="striped"><thead><tr><th>Head</th><th>Col</th></tr></thead><tbody><tr><td>Odd</td><td>Odd</td></tr><tr><td>Even</td><td>Even</td></tr></tbody><tfoot><tr><td>Foot</td><td>Foot</td></tr></tfoot></table>
+      <p><button>Primary</button> <button class="secondary">Secondary</button> <button class="contrast">Contrast</button> <button class="outline">Outline</button> <button class="outline secondary">Outline secondary</button> <button class="outline contrast">Outline contrast</button> <button disabled>Disabled</button></p>
+      <p><input type="submit" value="Submit"> <input type="button" value="Button"> <input type="reset" value="Reset"></p>
+      <input type="file" name="shadow-light-host-file">
+      <input type="text" name="shadow-light-host-text" placeholder="Placeholder">
+      <input type="text" name="shadow-light-host-valid" value="Valid" aria-invalid="false">
+      <small>Valid helper</small>
+      <input type="text" name="shadow-light-host-invalid" value="Invalid" aria-invalid="true">
+      <small>Invalid helper</small>
+      <input type="text" name="shadow-light-host-disabled" value="Disabled" disabled>
+      <input type="search" name="shadow-light-host-search" placeholder="Search">
+      <input type="date" name="shadow-light-host-date" value="2026-01-02">
+      <input type="color" name="shadow-light-host-color" value="#0172ad">
+      <select name="shadow-light-host-select"><option>Select</option></select>
+      <select name="shadow-light-host-multiple" multiple><option selected>Selected option</option><option>Option</option></select>
+      <textarea name="shadow-light-host-textarea" rows="1" placeholder="Textarea"></textarea>
+      <label><input type="checkbox" name="shadow-light-host-c1"> Checkbox</label>
+      <label><input type="checkbox" name="shadow-light-host-c2" checked> Checked</label>
+      <label><input type="checkbox" name="shadow-light-host-c3" data-indeterminate> Indeterminate</label>
+      <label><input type="checkbox" name="shadow-light-host-c4" checked aria-invalid="true"> Checked invalid</label>
+      <label><input type="checkbox" name="shadow-light-host-c5" checked aria-invalid="false"> Checked valid</label>
+      <label><input type="radio" name="shadow-light-host-r" checked> Radio</label>
+      <label><input type="checkbox" role="switch" name="shadow-light-host-s1"> Switch off</label>
+      <label><input type="checkbox" role="switch" name="shadow-light-host-s2" checked> Switch on</label>
+      <input type="range" name="shadow-light-host-range">
+      <progress value="40" max="100"></progress>
+      <div role="group"><input type="text" name="shadow-light-host-group" placeholder="Group"><button>Go</button></div>
+      <div role="search"><input type="search" name="shadow-light-host-gsearch" placeholder="Search group"><button class="secondary">Go</button></div>
+      <details><summary>Accordion</summary><p>Content</p></details>
+      <details open><summary>Open accordion</summary><p>Content</p></details>
+      <details><summary role="button">Button summary</summary><p>Content</p></details>
+      <details><summary role="button" class="contrast">Contrast button summary</summary><p>Content</p></details>
+      <details><summary role="button" class="outline">Outline button summary</summary><p>Content</p></details>
+      <details class="dropdown"><summary>Dropdown</summary><ul><li><a href="#shadow-light-host-dd">Item</a></li></ul></details>
+      <article><header>Card header</header>Card body<footer>Card footer</footer></article>
+      <p><button aria-busy="true">Busy</button> <button aria-busy="true" class="contrast">Busy contrast</button> <button aria-busy="true" class="outline">Busy outline</button> <span aria-busy="true">Busy span</span></p>
+      <nav aria-label="breadcrumb"><ul><li><a href="#shadow-light-host-b1">Home</a></li><li><a href="#shadow-light-host-b2" aria-current="page">Current</a></li></ul></nav>
+      <p><span data-tooltip="Tooltip" tabindex="0">Tooltip target</span></p>
+      <dialog><article><button aria-label="Close" rel="prev"></button><p>Closed dialog with the overlay color</p></article></dialog>
+    </template>
+  </div>
+  <div data-theme="dark">
+    <h2>Shadow host inside a dark island</h2>
+    <div data-shadow>
+      <template>
+        <h2>Shadow inside a dark island</h2>
+        <h1>shadow-in-dark h1</h1><h6>shadow-in-dark h6</h6>
+        <p>Text with <a href="#shadow-in-dark-a">link</a>, <mark>mark</mark>, <ins>ins</ins>, <del>del</del>, <small>small</small> and <code>code</code>.</p>
+        <p><button>Primary</button> <button class="secondary">Secondary</button> <button class="contrast">Contrast</button> <input type="submit" value="Submit"></p>
+        <input type="text" name="shadow-in-dark-text" placeholder="Placeholder">
+        <input type="text" name="shadow-in-dark-invalid" value="Invalid" aria-invalid="true">
+        <label><input type="checkbox" name="shadow-in-dark-c" checked> Checked</label>
+        <label><input type="checkbox" role="switch" name="shadow-in-dark-s" checked> Switch on</label>
+        <div role="group"><input type="text" name="shadow-in-dark-group" placeholder="Group"><button>Go</button></div>
+        <details><summary role="button" class="contrast">Contrast button summary</summary><p>Content</p></details>
+        <article><header>Card header</header>Card body<footer>Card footer</footer></article>
+        <p><button aria-busy="true" class="contrast">Busy contrast</button></p>
+        <progress value="40" max="100"></progress>
+      </template>
+    </div>
+  </div>
+</div>
+</body>
+</html>

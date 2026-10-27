@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>classes/modal</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="classes/modal">
+  <h1>Modal classes</h1>
+  <p>The .close control and the modal-is-open, modal-is-opening and modal-is-closing classes on html, which the class query variant sets.</p>
+
+  <div data-theme="light">
+    <dialog open>
+      <article>
+        <header>
+          <a href="#lc" aria-label="Close" class="close"></a>
+          <h2>Light island dialog</h2>
+        </header>
+        <p>Light island dialog body.</p>
+      </article>
+    </dialog>
+  </div>
+  <div data-theme="dark">
+    <dialog open>
+      <article>
+        <header>
+          <button aria-label="Close" class="close"></button>
+          <h2>Dark island dialog</h2>
+        </header>
+        <p>Dark island dialog body.</p>
+      </article>
+    </dialog>
+  </div>
+
+  <dialog open>
+    <article>
+      <header>
+        <a href="#close" aria-label="Close" class="close" data-states="hover focus focus-visible active"></a>
+        <h2>Dialog with .close in the header</h2>
+      </header>
+      <p>Dialog body text.</p>
+      <button aria-label="Close" class="close" data-states="hover focus"></button>
+      <span class="close" aria-current="page"></span>
+      <footer>
+        <button class="secondary" data-states="hover">Cancel</button>
+        <button>Confirm</button>
+      </footer>
+    </article>
+  </dialog>
+</div>
+</body>
+</html>

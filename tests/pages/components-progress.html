@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>components/progress</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="components/progress">
+  <h1>Progress</h1>
+  <label>Determinate, 40%
+    <progress value="40" max="100"></progress>
+  </label>
+  <progress value="0" max="100"></progress>
+  <progress value="100" max="100"></progress>
+  <progress value="0.25"></progress>
+  <p>Indeterminate, without a value:</p>
+  <progress></progress>
+  <p>Inline <progress value="60" max="100"></progress> in a paragraph.</p>
+
+  <div dir="rtl">
+    <progress value="40" max="100"></progress>
+    <progress></progress>
+  </div>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <progress value="40" max="100"></progress>
+    <progress></progress>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <progress value="40" max="100"></progress>
+    <progress></progress>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>content/code</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="content/code">
+  <h1>Code</h1>
+  <p>Inline <code>code</code>, <kbd>kbd</kbd>, <kbd><kbd>Ctrl</kbd>+<kbd>C</kbd></kbd> and <samp>samp</samp> in a paragraph.</p>
+  <pre>Bare pre text without a child element.</pre>
+  <pre><code>pre &gt; code block
+  second line, indented</code></pre>
+  <pre><samp>pre &gt; samp block</samp></pre>
+  <pre>Pre with <code>inline code</code> and <samp>inline samp</samp> among text.</pre>
+  <pre><code>A long line that overflows horizontally: 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789</code></pre>
+  <h2>Heading with <code>code</code></h2>
+  <p><small>Small with <code>code</code></small></p>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <p><code>code</code> <kbd>kbd</kbd> <samp>samp</samp></p>
+    <pre><code>light pre code</code></pre>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <p><code>code</code> <kbd>kbd</kbd> <samp>samp</samp></p>
+    <pre><code>dark pre code</code></pre>
+  </div>
+</div>
+</body>
+</html>

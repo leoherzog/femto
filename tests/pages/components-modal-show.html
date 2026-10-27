@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>components/modal (showModal)</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="components/modal">
+  <h1>Modal opened with showModal()</h1>
+  <p>page.js calls showModal() on each dialog[data-show-modal] in document order, so the last one is topmost, not inert, and carries the interaction states. Each dialog has a ::backdrop.</p>
+
+  <div data-theme="light">
+    <dialog data-show-modal>
+      <article>
+        <header>
+          <button aria-label="Close" rel="prev"></button>
+          <h2>Light island modal</h2>
+        </header>
+        <p>Light island modal body.</p>
+      </article>
+    </dialog>
+  </div>
+  <div data-theme="dark">
+    <dialog data-show-modal>
+      <article>
+        <header>
+          <a href="#close" aria-label="Close" rel="prev" class="close"></a>
+          <h2>Dark island modal</h2>
+        </header>
+        <p>Dark island modal body.</p>
+      </article>
+    </dialog>
+  </div>
+
+  <dialog data-show-modal>
+    <article>
+      <header>
+        <button aria-label="Close" rel="prev" data-states="hover focus focus-visible"></button>
+        <h2>Modal dialog</h2>
+      </header>
+      <p>Modal body text.</p>
+      <a href="#close-body" aria-label="Close" class="close"></a>
+      <footer>
+        <button class="secondary" data-states="hover focus">Cancel</button>
+        <button data-states="focus">Confirm</button>
+        <a href="#f1" role="button">Link button</a>
+      </footer>
+    </article>
+  </dialog>
+</div>
+</body>
+</html>

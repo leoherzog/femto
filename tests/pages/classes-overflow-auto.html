@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>classes/overflow-auto</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="classes/overflow-auto">
+  <h1>Overflow auto</h1>
+  <div class="overflow-auto">
+    <table>
+      <thead>
+        <tr><th>Column one heading</th><th>Column two heading</th><th>Column three heading</th><th>Column four heading</th><th>Column five heading</th><th>Column six heading</th><th>Column seven heading</th><th>Column eight heading</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Wide_cell_content_one</td><td>Wide_cell_content_two</td><td>Wide_cell_content_three</td><td>Wide_cell_content_four</td><td>Wide_cell_content_five</td><td>Wide_cell_content_six</td><td>Wide_cell_content_seven</td><td>Wide_cell_content_eight</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="overflow-auto">
+    <img src="/tests/pages/assets/wide.svg" alt="Wide image" width="2400" height="120">
+  </div>
+  <div class="overflow-auto">
+    <p>Short content that does not overflow.</p>
+  </div>
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <div class="overflow-auto"><table><tbody><tr><td>Light_wide_cell_content_number_one</td><td>Light_wide_cell_content_number_two</td><td>Light_wide_cell_content_number_three</td></tr></tbody></table></div>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <div class="overflow-auto"><table><tbody><tr><td>Dark_wide_cell_content_number_one</td><td>Dark_wide_cell_content_number_two</td><td>Dark_wide_cell_content_number_three</td></tr></tbody></table></div>
+  </div>
+</div>
+</body>
+</html>

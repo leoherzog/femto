@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>femto parity host</title>
+<style>
+  /* The host never styles the fixture. The iframe keeps color-scheme: normal so its
+     prefers-color-scheme follows the emulated preference (Chrome and Firefox both make an
+     iframe's prefers-color-scheme follow the embedding element's used color-scheme). */
+  html, body { margin: 0; padding: 0; background: #fff; }
+  #strip { height: 20px; background: #eee; font: 11px/20px monospace; padding: 0 4px; overflow: hidden; }
+  #box { position: relative; }
+  iframe { border: 0; display: block; }
+</style>
+<script src="/tests/harness/differ.js"></script>
+</head>
+<body>
+<div id="strip">femto parity harness</div>
+<div id="box"></div>
+</body>
+</html>

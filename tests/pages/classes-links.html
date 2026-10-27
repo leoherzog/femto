@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>classes/links</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="classes/links">
+  <h1>Link classes</h1>
+  <p>
+    <a href="#p">Primary link</a>
+    <a href="#s" class="secondary" data-states="hover focus focus-visible active">Secondary link</a>
+    <a href="#c" class="contrast" data-states="hover focus focus-visible active">Contrast link</a>
+  </p>
+  <p>
+    <a href="#sc" class="secondary" aria-current="page">Secondary current</a>
+    <a href="#cc" class="contrast" aria-current="true">Contrast current</a>
+    <a href="#sf" class="secondary" aria-current="false">Secondary, aria-current false</a>
+    <a href="#cf" class="contrast" aria-current="false">Contrast, aria-current false</a>
+  </p>
+  <p>
+    <span role="link" tabindex="0" class="secondary" data-states="hover focus active">Secondary role link</span>
+    <span role="link" tabindex="0" class="contrast" data-states="hover focus active">Contrast role link</span>
+    <span role="link" tabindex="0" class="secondary" aria-current="page">Secondary role link, current</span>
+    <span role="link" tabindex="0" class="contrast" aria-current="page">Contrast role link, current</span>
+  </p>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <p><a href="#ls" class="secondary" data-states="hover">Secondary</a> <a href="#lc" class="contrast" data-states="hover">Contrast</a> <a href="#lsc" class="secondary" aria-current="page">Secondary current</a> <a href="#lcc" class="contrast" aria-current="page">Contrast current</a></p>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <p><a href="#ds" class="secondary" data-states="hover">Secondary</a> <a href="#dc" class="contrast" data-states="hover">Contrast</a> <a href="#dsc" class="secondary" aria-current="page">Secondary current</a> <a href="#dcc" class="contrast" aria-current="page">Contrast current</a></p>
+  </div>
+</div>
+</body>
+</html>

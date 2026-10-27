@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>classes/grid</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="classes/grid">
+  <h1>Grid</h1>
+  <div class="grid">
+    <div>Column 1</div>
+    <div>Column 2</div>
+    <div>Column 3</div>
+  </div>
+  <div class="grid">
+    <div>Single column</div>
+  </div>
+  <div class="grid">
+    <input type="text" name="g1" placeholder="Grid input">
+    <select name="g2"><option>Grid select</option></select>
+    <button>Grid button</button>
+  </div>
+  <small>Helper text after a grid.</small>
+  <div class="grid">
+    <article>Card in a grid</article>
+    <article>Another card with a long unbroken word: Pneumonoultramicroscopicsilicovolcanoconiosis</article>
+  </div>
+  <div class="grid">
+    <div class="grid"><div>Nested 1</div><div>Nested 2</div></div>
+    <div>Outer 2</div>
+  </div>
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <div class="grid"><div>Light 1</div><div>Light 2</div></div>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <div class="grid"><div>Dark 1</div><div>Dark 2</div></div>
+  </div>
+</div>
+</body>
+</html>

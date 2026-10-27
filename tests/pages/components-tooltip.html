@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>components/tooltip</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="components/tooltip">
+  <h1>Tooltip</h1>
+  <p>Tooltips are spaced out so that one target's tooltip never covers another target.</p>
+
+  <h2>Inline elements</h2>
+  <p>Default placement on a
+    <span data-tooltip="Default tooltip" tabindex="0" data-states="hover focus">span</span>.</p>
+  <p>Top placement on a
+    <span data-tooltip="Top tooltip" data-placement="top" tabindex="0" data-states="hover focus">span</span>.</p>
+  <p>Bottom placement on a
+    <span data-tooltip="Bottom tooltip" data-placement="bottom" tabindex="0" data-states="hover focus">span</span>.</p>
+  <p>Left placement on a
+    <span data-tooltip="Left tooltip" data-placement="left" tabindex="0" data-states="hover focus">span</span>.</p>
+  <p>Right placement on a
+    <span data-tooltip="Right tooltip" data-placement="right" tabindex="0" data-states="hover focus">span</span>.</p>
+  <p>Tooltip on a <a href="#link" data-tooltip="Link tooltip" data-states="hover focus">link</a>,
+    which keeps its own decoration.</p>
+  <p>Tooltip on <em data-tooltip="Emphasis tooltip">emphasis without tabindex</em> and on an <abbr title="Abbreviation" data-tooltip="Abbr tooltip">abbr</abbr>.</p>
+  <p>Tooltip with an unknown placement <span data-tooltip="Unknown placement" data-placement="middle" tabindex="0">span</span>.</p>
+
+  <h2>Buttons and other controls</h2>
+  <p><button data-tooltip="Default button tooltip" data-states="hover focus focus-visible">Button, default</button></p>
+  <p><button data-tooltip="Top button tooltip" data-placement="top" data-states="hover focus">Button, top</button></p>
+  <p><button data-tooltip="Bottom button tooltip" data-placement="bottom" data-states="hover focus">Button, bottom</button></p>
+  <p><button data-tooltip="Left button tooltip" data-placement="left" data-states="hover focus">Button, left</button></p>
+  <p><button data-tooltip="Right button tooltip" data-placement="right" data-states="hover focus">Button, right</button></p>
+  <p><a href="#rb" role="button" data-tooltip="Role button tooltip" data-placement="bottom" data-states="hover">Role button</a></p>
+  <p><input type="button" value="Input button" data-tooltip="Input tooltip (pseudo-elements do not render)" data-placement="right"></p>
+  <p><button class="secondary" data-tooltip="Secondary button tooltip">Secondary button</button></p>
+
+  <h2>Block elements</h2>
+  <div data-tooltip="Block tooltip" tabindex="0" data-states="hover focus">A block div with a default tooltip</div>
+  <div data-tooltip="Block bottom tooltip" data-placement="bottom" tabindex="0" data-states="hover">A block div with a bottom tooltip</div>
+  <article data-tooltip="Card tooltip" data-placement="left">A card with a left tooltip</article>
+  <article data-tooltip="Card tooltip" data-placement="right">A card with a right tooltip</article>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <p><span data-tooltip="Light tooltip" tabindex="0" data-states="hover">Light span</span></p>
+    <p><button data-tooltip="Light button tooltip" data-placement="bottom" data-states="hover">Light button</button></p>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <p><span data-tooltip="Dark tooltip" tabindex="0" data-states="hover">Dark span</span></p>
+    <p><button data-tooltip="Dark button tooltip" data-placement="bottom" data-states="hover">Dark button</button></p>
+  </div>
+</div>
+</body>
+</html>

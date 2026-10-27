@@ -1,0 +1,16 @@
+[
+  {
+    "id": "firefox-focus-ring-restored",
+    "module": "forms/basics",
+    "kind": "style",
+    "selector": "*",
+    "pseudo": "",
+    "property": "/^outline-/",
+    "reference": "*",
+    "femto": "*",
+    "where": {"browsers": ["firefox"], "states": ["focus", "focus-visible", "active"]},
+    "category": "dropped-hack",
+    "reason": "2.1.1 ships ':-moz-focusring { outline: none }', which removes Firefox's keyboard focus ring. femto drops that rule, so Firefox shows its default focus outline again where no other outline applies.",
+    "notes": "Seed from PLAN. Broad: any element, focus states, Firefox only. Narrow it once forms/basics is converted."
+  }
+]

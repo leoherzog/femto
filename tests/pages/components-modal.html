@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>components/modal</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="components/modal">
+  <h1>Modal</h1>
+  <p>Background content behind statically open dialogs. Only the last dialog, which sits on top, carries interaction states.</p>
+  <dialog>
+    <article>A closed dialog</article>
+  </dialog>
+  <dialog open="false">
+    <article>A dialog with open="false", hidden by the stylesheet</article>
+  </dialog>
+  <div data-shadow>
+    <template>
+      <dialog><article><button aria-label="Close" rel="prev"></button><p>Closed dialog in a shadow root</p></article></dialog>
+    </template>
+  </div>
+
+  <div data-theme="light">
+    <dialog open>
+      <article>
+        <header>
+          <button aria-label="Close" rel="prev"></button>
+          <h2>Light island dialog</h2>
+        </header>
+        <p>Light island dialog body.</p>
+        <footer>
+          <button>Cancel</button>
+          <button>Confirm</button>
+        </footer>
+      </article>
+    </dialog>
+  </div>
+  <div data-theme="dark">
+    <dialog open>
+      <article>
+        <header>
+          <a href="#close" aria-label="Close" rel="prev" aria-current="true"></a>
+          <h2>Dark island dialog</h2>
+        </header>
+        <p>Dark island dialog body.</p>
+        <footer>
+          <a href="#d1" role="button">Cancel</a>
+          <a href="#d2" role="button">Confirm</a>
+        </footer>
+      </article>
+    </dialog>
+  </div>
+
+  <dialog open>
+    <article>
+      <header>
+        <button aria-label="Close" rel="prev" data-states="hover focus focus-visible active"></button>
+        <h2>Confirm your action</h2>
+        <p>Header subtitle</p>
+      </header>
+      <p>Dialog body text.</p>
+      <a href="#close-body" aria-label="Close" rel="prev" data-states="hover focus"></a>
+      <p>A close link outside the header.</p>
+      <footer>
+        <button data-states="hover focus">Cancel</button>
+        <button>Confirm</button>
+        <a href="#f1" role="button">Link button one</a>
+        <a href="#f2" role="button" data-states="focus">Link button two</a>
+      </footer>
+    </article>
+  </dialog>
+</div>
+</body>
+</html>

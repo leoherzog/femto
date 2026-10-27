@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>components/group</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="components/group">
+  <h1>Group and search</h1>
+
+  <h2>Role group</h2>
+  <div role="group">
+    <input type="email" name="g-email" placeholder="Email" data-states="hover focus focus-visible">
+    <input type="submit" value="Subscribe" data-states="hover focus focus-visible active">
+  </div>
+  <div role="group">
+    <select name="g-select" data-states="focus"><option>Select in a group</option></select>
+    <button data-states="hover focus">Button</button>
+  </div>
+  <div role="group">
+    <button data-states="focus">First</button>
+    <button class="secondary" data-states="focus">Second</button>
+    <button class="contrast" data-states="focus">Third</button>
+  </div>
+  <div role="group">
+    <input type="button" value="Input button" data-states="focus">
+    <input type="reset" value="Reset" data-states="focus">
+    <a href="#rb" role="button" data-states="focus">Role button</a>
+  </div>
+  <div role="group">
+    <input type="text" name="g-only" placeholder="Single input in a group">
+  </div>
+  <div role="group">
+    <input type="text" name="g-before-select" placeholder="Input before a select">
+    <select name="g-select-2" data-states="focus"><option>Select, not first</option></select>
+    <input type="button" value="Input button, last">
+  </div>
+  <div role="group">
+    <input type="text" name="g-a" placeholder="Two">
+    <input type="text" name="g-b" placeholder="inputs" data-states="focus">
+  </div>
+  <div role="group">
+    <label><input type="checkbox" name="g-check"> Checkbox</label>
+    <label><input type="radio" name="g-radio"> Radio</label>
+    <span>Text span</span>
+  </div>
+  <fieldset role="group">
+    <input type="text" name="g-fs" placeholder="Fieldset with role group">
+    <button>Go</button>
+  </fieldset>
+
+  <h2>Role search</h2>
+  <div role="search">
+    <input type="search" name="s-search" placeholder="Search" data-states="hover focus focus-visible">
+    <input type="submit" value="Search" data-states="hover focus active">
+  </div>
+  <div role="search">
+    <input type="search" name="s-search-2" placeholder="Search">
+    <button class="secondary" data-states="focus">Secondary</button>
+  </div>
+  <div role="search">
+    <input type="search" name="s-search-3" placeholder="Search">
+    <button class="contrast" data-states="focus">Contrast</button>
+  </div>
+  <div role="search">
+    <select name="s-select" data-states="focus"><option>Category</option></select>
+    <input type="search" name="s-search-4" placeholder="Search">
+    <a href="#sb" role="button" data-states="focus">Go</a>
+  </div>
+  <div role="search">
+    <input type="search" name="s-only" placeholder="Search alone">
+  </div>
+  <div role="search">
+    <input type="button" value="Input button" data-states="focus">
+    <input type="reset" value="Reset" data-states="focus">
+  </div>
+  <div role="search">
+    <input type="search" name="s-before-select" placeholder="Search">
+    <select name="s-select-2"><option>Select, not first</option></select>
+    <input type="button" value="Input button, not first" data-states="focus">
+  </div>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <div role="group">
+      <input type="text" name="lg-text" placeholder="Light group input" data-states="focus">
+      <button data-states="focus">Light button</button>
+    </div>
+    <div role="search">
+      <input type="search" name="ls-search" placeholder="Light search" data-states="focus">
+      <button class="secondary" data-states="focus">Secondary</button>
+      <button class="contrast" data-states="focus">Contrast</button>
+    </div>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <div role="group">
+      <input type="text" name="dg-text" placeholder="Dark group input" data-states="focus">
+      <button data-states="focus">Dark button</button>
+    </div>
+    <div role="search">
+      <input type="search" name="ds-search" placeholder="Dark search" data-states="focus">
+      <button class="secondary" data-states="focus">Secondary</button>
+      <button class="contrast" data-states="focus">Contrast</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>utilities/accessibility</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="utilities/accessibility">
+  <h1>Accessibility and user interaction</h1>
+  <p>
+    <button aria-controls="panel" aria-expanded="false" data-states="hover">Button with aria-controls</button>
+    <span aria-controls="panel" tabindex="0">Span with aria-controls</span>
+  </p>
+  <div id="panel">Controlled panel</div>
+  <p>
+    <button disabled>Disabled button</button>
+    <a href="#ad" aria-disabled="true">Link with aria-disabled</a>
+    <span aria-disabled="true">Span with aria-disabled</span>
+    <span aria-disabled="false">Span with aria-disabled false</span>
+    <a href="#adr" role="button" aria-disabled="true">Role button with aria-disabled</a>
+  </p>
+  <input type="text" name="disabled-text" value="Disabled input" disabled>
+  <select name="disabled-select" disabled><option>Disabled select</option></select>
+  <textarea name="disabled-textarea" rows="2" disabled>Disabled textarea</textarea>
+  <fieldset disabled><legend>Disabled fieldset</legend><input type="text" name="fd" value="Inside"></fieldset>
+  <p>
+    <span hidden aria-hidden="false">Hidden with aria-hidden false</span>
+    <span hidden aria-hidden="false" tabindex="0">Focusable hidden with aria-hidden false</span>
+    <span hidden aria-hidden="true">Hidden with aria-hidden true</span>
+    <span aria-hidden="true">Visible with aria-hidden true</span>
+    <span aria-hidden="false">Visible with aria-hidden false</span>
+  </p>
+  <p>Touch action targets:
+    <a href="#t1">a</a>
+    <button>button</button>
+    <input type="text" name="ta" value="input">
+    <label>label</label>
+    <select name="ts"><option>select</option></select>
+    <textarea name="tt" rows="1">textarea</textarea>
+    <span tabindex="0">[tabindex]</span>
+    <span tabindex="-1">[tabindex=-1]</span>
+  </p>
+  <details><summary>summary</summary><p>Content</p></details>
+  <p><img src="/tests/pages/assets/landscape.svg" alt="Image map" width="160" height="90" usemap="#fixture-map">
+    <map name="fixture-map"><area shape="rect" coords="0,0,80,90" href="#area" alt="Left half"></map></p>
+
+  <div dir="rtl">
+    <p>Element with dir="rtl" sets direction.</p>
+    <div dir="ltr"><p>Nested dir="ltr" inside dir="rtl".</p></div>
+  </div>
+  <p dir="rtl">Paragraph with dir="rtl".</p>
+  <p dir="auto">Paragraph with dir="auto".</p>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <button aria-controls="panel">aria-controls</button>
+    <button disabled>Disabled</button>
+    <span aria-disabled="true">aria-disabled</span>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <button aria-controls="panel">aria-controls</button>
+    <button disabled>Disabled</button>
+    <span aria-disabled="true">aria-disabled</span>
+  </div>
+</div>
+</body>
+</html>

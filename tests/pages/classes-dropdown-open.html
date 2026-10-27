@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>classes/dropdown (open)</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="classes/dropdown">
+  <h1>Dropdown, open</h1>
+  <p>Every dropdown variant in its open state. Each open summary::before covers the viewport, so only list items (z-index 99) and the last summary on the page carry interaction states. Paragraphs after each dropdown leave room for its absolutely positioned list.</p>
+
+  <details class="dropdown" open>
+    <summary>Open select-like dropdown</summary>
+    <ul>
+      <li><a href="#a1" data-states="hover focus focus-visible active">Item one</a></li>
+      <li><a href="#a2" aria-current="page">Current item</a></li>
+      <li><a href="#a3" aria-current="false">aria-current false item</a></li>
+      <li><a href="#a4">Item with a long label that might be cut with an ellipsis when the list is narrow</a></li>
+    </ul>
+  </details>
+  <p>Room for the open list above.<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;</p>
+  <details class="dropdown" open>
+    <summary aria-invalid="false">Open valid dropdown</summary>
+    <ul><li><a href="#v1">Item</a></li></ul>
+  </details>
+  <p>Room for the open list above.<br>&nbsp;</p>
+  <details class="dropdown" open>
+    <summary aria-invalid="true">Open invalid dropdown</summary>
+    <ul><li><a href="#i1">Item</a></li></ul>
+  </details>
+  <p>Room for the open list above.<br>&nbsp;</p>
+  <details class="dropdown" open>
+    <summary role="button">Open button dropdown</summary>
+    <ul>
+      <li><a href="#b1" data-states="hover">Item</a></li>
+      <li>Plain text item</li>
+    </ul>
+  </details>
+  <p>Room for the open list above.<br>&nbsp;<br>&nbsp;<br>&nbsp;</p>
+  <details class="dropdown" open>
+    <summary role="button" class="secondary">Open secondary button dropdown</summary>
+    <ul><li><a href="#b2">Item</a></li></ul>
+  </details>
+  <p>Room for the open list above.<br>&nbsp;</p>
+  <details class="dropdown" open>
+    <summary role="button" class="outline contrast">Open outline contrast button dropdown</summary>
+    <ul><li><a href="#b3">Item</a></li></ul>
+  </details>
+  <p>Room for the open list above.<br>&nbsp;</p>
+  <details class="dropdown" open>
+    <summary>Open dropdown with checkboxes and radios</summary>
+    <ul>
+      <li data-states="hover"><label><input type="checkbox" name="dd-c1" checked> Checkbox option</label></li>
+      <li><label><input type="checkbox" name="dd-c2"> Another checkbox</label></li>
+      <li><label><input type="radio" name="dd-r" checked> Radio option</label></li>
+    </ul>
+  </details>
+  <p>Room for the open list above.<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;</p>
+  <details class="dropdown" open>
+    <summary>Open right aligned list</summary>
+    <ul dir="rtl"><li><a href="#r1">Item</a></li></ul>
+  </details>
+  <p>Room for the open list above.<br>&nbsp;</p>
+  <label>Open dropdown inside a label
+    <details class="dropdown" open>
+      <summary>Chosen</summary>
+      <ul><li><a href="#lb1">Item</a></li></ul>
+    </details>
+  </label>
+  <p>Room for the open list above.<br>&nbsp;</p>
+
+  <nav>
+    <ul>
+      <li><strong>Nav</strong></li>
+    </ul>
+    <ul>
+      <li>
+        <details class="dropdown" open>
+          <summary role="button" class="secondary">Open nav button dropdown</summary>
+          <ul dir="rtl"><li><a href="#n3">Item</a></li></ul>
+        </details>
+      </li>
+      <li>
+        <details class="dropdown" open>
+          <summary>Open nav dropdown</summary>
+          <ul dir="rtl">
+            <li><a href="#n1" data-states="hover focus">Item</a></li>
+            <li><a href="#n2" aria-current="page">Current</a></li>
+          </ul>
+        </details>
+      </li>
+    </ul>
+  </nav>
+  <p>Room for the open lists above.<br>&nbsp;<br>&nbsp;<br>&nbsp;</p>
+
+  <div dir="rtl">
+    <details class="dropdown" open>
+      <summary>Open RTL dropdown</summary>
+      <ul><li><a href="#rtl1">Item</a></li></ul>
+    </details>
+    <p>Room for the open list above.<br>&nbsp;</p>
+  </div>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <details class="dropdown" open>
+      <summary>Light open dropdown</summary>
+      <ul><li><a href="#l1" data-states="hover">Item</a></li><li><a href="#l2" aria-current="page">Current</a></li></ul>
+    </details>
+    <p>Room for the open list above.<br>&nbsp;<br>&nbsp;<br>&nbsp;</p>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <details class="dropdown" open>
+      <summary>Dark open dropdown</summary>
+      <ul><li><a href="#d1" data-states="hover">Item</a></li><li><a href="#d2" aria-current="page">Current</a></li></ul>
+    </details>
+    <p>Room for the open list above.<br>&nbsp;<br>&nbsp;<br>&nbsp;</p>
+  </div>
+
+  <details class="dropdown" open>
+    <summary data-states="hover focus focus-visible">Last open dropdown, topmost overlay</summary>
+    <ul><li><a href="#last">Item</a></li></ul>
+  </details>
+</div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>components/card</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="components/card">
+  <h1>Card</h1>
+  <article>Plain card without header or footer.</article>
+  <article>
+    <header>Card header</header>
+    Card body text.
+    <footer>Card footer</footer>
+  </article>
+  <article>
+    <header><h3>Card title in a header</h3></header>
+    <p>Card paragraph.</p>
+    <article>
+      <header>Nested card header</header>
+      <p>Nested card body.</p>
+      <footer>Nested card footer</footer>
+    </article>
+    <footer><button>Card action</button> <button class="secondary">Secondary action</button></footer>
+  </article>
+  <article>
+    <div><header>A header that is not a direct child</header></div>
+    <p>Only direct header and footer children are card sections.</p>
+  </article>
+  <article>
+    <h2>Card with a heading first</h2>
+    <p>Paragraph</p>
+    <h3>Heading after a paragraph in a card</h3>
+  </article>
+  <h2>Heading after a card</h2>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <article><header>Light card header</header>Light body<footer>Light footer</footer></article>
+    <article data-theme="dark"><header>Card that is itself a dark island</header>Body<footer>Footer</footer></article>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <article><header>Dark card header</header>Dark body<footer>Dark footer</footer></article>
+    <article data-theme="light"><header>Card that is itself a light island</header>Body<footer>Footer</footer></article>
+  </div>
+</div>
+</body>
+</html>

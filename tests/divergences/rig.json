@@ -1,0 +1,30 @@
+[
+  {
+    "id": "safari-no-media-dark",
+    "module": "rig",
+    "kind": "skipped-check",
+    "check": "/^media:(dark|light)$/",
+    "where": {
+      "browsers": [
+        "safari"
+      ]
+    },
+    "category": "browser-limit",
+    "reason": "Safari has no WebDriver emulation of prefers-color-scheme, and agents never change the macOS appearance. Each Safari session runs the OS scheme (matchMedia in the host page) plus data-theme light and dark on <html>, and skips the other media leg. At each Safari gate the owner switches macOS to dark for a second Safari pass (tests/README.md, Safari dark pass), so the two passes together run every leg.",
+    "notes": "A Safari iframe whose embedding element has color-scheme: dark reports prefers-color-scheme: dark to matchMedia, but its stylesheets and light-dark() still follow the OS (verified 2026-10-27, Safari 27.0.1), so that is not usable as emulation. The Phase 0 dark pass (dark-* run ids, 2026-10-27) ran the media-dark leg and the dark-media half of theme-light in Safari with zero differences."
+  },
+  {
+    "id": "safari-no-focus-visible-date-input",
+    "module": "rig",
+    "kind": "skipped-check",
+    "check": "/^state:focus-visible:input\\[type=(date|datetime-local|month|time|week)\\]$/",
+    "where": {
+      "browsers": [
+        "safari"
+      ]
+    },
+    "category": "browser-limit",
+    "reason": "Safari never lets input[type=date] itself match :focus-visible: keyboard focus lands on an inner date field (Option+Tab and Shift+Option+Tab leave the input :focus but not :focus-visible), and focus() after a key press does not match either (verified 2026-10-27, Safari 27.0.1, type=date). The pattern also names the other date-family types, which use the same inner-field control; the skip applies only when the state really fails to match, so a type that can match is still compared. Chrome and Firefox reach the state with Tab. No 2.1.1 rule uses :focus-visible on these inputs.",
+    "notes": "The harness turns an unreached state into the skipped check state:<state>:<tag>[type=<type>] only when an entry like this one matches it; any other unreached state stays a harness error."
+  }
+]

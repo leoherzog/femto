@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>classes/table-striped</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="classes/table-striped">
+  <h1>Striped tables</h1>
+  <table class="striped">
+    <thead><tr><th>Head</th><th>Col</th><th>Col</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Row 1 th</th><td>Row 1</td><td>Row 1</td></tr>
+      <tr><th scope="row">Row 2 th</th><td>Row 2</td><td>Row 2</td></tr>
+      <tr><th scope="row">Row 3 th</th><td>Row 3</td><td>Row 3</td></tr>
+      <tr><th scope="row">Row 4 th</th><td>Row 4</td><td>Row 4</td></tr>
+      <tr hidden><td>Hidden row</td><td>Hidden</td><td>Hidden</td></tr>
+      <tr><td>Row 6</td><td>Row 6</td><td>Row 6</td></tr>
+    </tbody>
+    <tfoot><tr><td>Foot</td><td>Foot</td><td>Foot</td></tr></tfoot>
+  </table>
+  <table class="striped">
+    <tbody>
+      <tr><td>Second tbody table, odd</td></tr>
+      <tr><td>Even</td></tr>
+    </tbody>
+    <tbody>
+      <tr><td>Second tbody, odd</td></tr>
+    </tbody>
+  </table>
+  <div class="striped">
+    <table><tbody><tr><td>Table inside a .striped div is not striped</td></tr></tbody></table>
+  </div>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <table class="striped"><tbody><tr><td>Odd</td><td>Odd</td></tr><tr><td>Even</td><td>Even</td></tr><tr><td>Odd</td><td>Odd</td></tr></tbody></table>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <table class="striped"><tbody><tr><td>Odd</td><td>Odd</td></tr><tr><td>Even</td><td>Even</td></tr><tr><td>Odd</td><td>Odd</td></tr></tbody></table>
+  </div>
+</div>
+</body>
+</html>

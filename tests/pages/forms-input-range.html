@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>forms/input-range</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="forms/input-range">
+  <h1>Input type range</h1>
+  <label for="ir-1">Range</label>
+  <input type="range" id="ir-1" name="range" value="40" data-states="hover focus focus-visible active">
+  <label>Range inside a label <input type="range" name="range-2" min="0" max="10" step="1" value="7"></label>
+  <label>Range at minimum <input type="range" name="range-min" value="0"></label>
+  <label>Disabled range <input type="range" name="range-disabled" value="60" disabled></label>
+  <label>Invalid range <input type="range" name="range-invalid" value="20" aria-invalid="true"></label>
+  <small>Range helper text.</small>
+
+  <div dir="rtl">
+    <input type="range" name="rtl-range" value="30">
+  </div>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <input type="range" name="l-range" value="40" data-states="focus active">
+    <input type="range" name="l-range-disabled" value="40" disabled>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <input type="range" name="d-range" value="40" data-states="focus active">
+    <input type="range" name="d-range-disabled" value="40" disabled>
+  </div>
+</div>
+</body>
+</html>

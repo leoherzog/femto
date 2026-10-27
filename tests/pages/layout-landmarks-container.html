@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>layout/landmarks-container</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<header data-module="layout/landmarks-container">
+  <nav>
+    <ul><li><strong>Site</strong></li></ul>
+    <ul><li><a href="#one">One</a></li><li><a href="#two">Two</a></li></ul>
+  </nav>
+</header>
+<main data-module="layout/landmarks-container">
+  <h1>Semantic container</h1>
+  <p>In the classless builds body &gt; header, body &gt; main and body &gt; footer act as the container: centered, with a max width per breakpoint, or fluid in the fluid build.</p>
+  <img src="/tests/pages/assets/wide.svg" alt="Image wider than the container">
+  <div class="container">A .container inside main (only styled by the class build)</div>
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <p>Light island inside the semantic container.</p>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <p>Dark island inside the semantic container.</p>
+  </div>
+</main>
+<footer data-module="layout/landmarks-container">
+  <p><small>Body footer acting as a container.</small></p>
+</footer>
+</body>
+</html>

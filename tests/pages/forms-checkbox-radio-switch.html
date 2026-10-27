@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>forms/checkbox-radio-switch</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="forms/checkbox-radio-switch">
+  <h1>Checkboxes, radios and switches</h1>
+
+  <fieldset>
+    <legend>Checkboxes inside labels</legend>
+    <label><input type="checkbox" name="c-off" data-states="hover focus focus-visible active"> Unchecked</label>
+    <label><input type="checkbox" name="c-on" checked data-states="hover focus focus-visible active"> Checked</label>
+    <label><input type="checkbox" name="c-mixed" data-indeterminate data-states="focus"> Indeterminate</label>
+    <label><input type="checkbox" name="c-mixed-on" checked data-indeterminate> Indeterminate and checked</label>
+    <label><input type="checkbox" name="c-disabled" disabled> Disabled</label>
+    <label><input type="checkbox" name="c-disabled-on" checked disabled> Checked and disabled</label>
+    <label><input type="checkbox" name="c-valid" checked aria-invalid="false" data-states="focus active"> Checked valid</label>
+    <label><input type="checkbox" name="c-invalid" checked aria-invalid="true" data-states="focus active"> Checked invalid</label>
+    <label><input type="checkbox" name="c-valid-off" aria-invalid="false"> Unchecked valid</label>
+    <label><input type="checkbox" name="c-invalid-off" aria-invalid="true"> Unchecked invalid</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Checkboxes with sibling labels</legend>
+    <input type="checkbox" id="cs-1" name="cs-1" checked>
+    <label for="cs-1">First sibling label</label>
+    <input type="checkbox" id="cs-2" name="cs-2">
+    <label for="cs-2">Second sibling label</label>
+    <input type="checkbox" id="cs-3" name="cs-3">
+    <label for="cs-3">Last sibling label</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Radios</legend>
+    <input type="radio" id="r-1" name="radio" checked data-states="hover focus focus-visible active">
+    <label for="r-1">Checked radio</label>
+    <input type="radio" id="r-2" name="radio" data-states="hover focus active">
+    <label for="r-2">Unchecked radio</label>
+    <input type="radio" id="r-3" name="radio" disabled>
+    <label for="r-3">Disabled radio</label>
+    <label><input type="radio" name="radio-dis-on" checked disabled> Checked and disabled</label>
+    <label><input type="radio" name="radio-valid" checked aria-invalid="false" data-states="focus active"> Checked valid</label>
+    <label><input type="radio" name="radio-invalid" checked aria-invalid="true" data-states="focus active"> Checked invalid</label>
+    <label><input type="radio" name="radio-invalid-off" aria-invalid="true"> Unchecked invalid</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Switches</legend>
+    <label><input type="checkbox" role="switch" name="s-off" data-states="hover focus focus-visible active"> Off</label>
+    <label><input type="checkbox" role="switch" name="s-on" checked data-states="hover focus focus-visible active"> On</label>
+    <label><input type="checkbox" role="switch" name="s-dis" disabled> Off and disabled</label>
+    <label><input type="checkbox" role="switch" name="s-dis-on" checked disabled> On and disabled</label>
+    <label><input type="checkbox" role="switch" name="s-valid" checked aria-invalid="false" data-states="focus active"> On valid</label>
+    <label><input type="checkbox" role="switch" name="s-invalid" checked aria-invalid="true" data-states="focus active"> On invalid</label>
+    <label><input type="checkbox" role="switch" name="s-valid-off" aria-invalid="false"> Off valid</label>
+    <label><input type="checkbox" role="switch" name="s-invalid-off" aria-invalid="true"> Off invalid</label>
+    <input type="checkbox" role="switch" id="s-sib" name="s-sib">
+    <label for="s-sib">Switch with a sibling label</label>
+  </fieldset>
+
+  <fieldset disabled>
+    <legend>Disabled fieldset</legend>
+    <label><input type="checkbox" name="fd-check" checked> Checkbox</label>
+    <label><input type="radio" name="fd-radio" checked> Radio</label>
+    <label><input type="checkbox" role="switch" name="fd-switch" checked> Switch</label>
+  </fieldset>
+
+  <div dir="rtl">
+    <label><input type="checkbox" name="rtl-check" checked> RTL checkbox</label>
+    <label><input type="checkbox" role="switch" name="rtl-switch" checked> RTL switch</label>
+  </div>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <label><input type="checkbox" name="l-off"> Unchecked</label>
+    <label><input type="checkbox" name="l-on" checked data-states="focus"> Checked</label>
+    <label><input type="checkbox" name="l-mixed" data-indeterminate> Indeterminate</label>
+    <label><input type="checkbox" name="l-invalid" checked aria-invalid="true"> Checked invalid</label>
+    <label><input type="checkbox" name="l-valid" checked aria-invalid="false"> Checked valid</label>
+    <label><input type="radio" name="l-radio" checked> Radio</label>
+    <label><input type="checkbox" role="switch" name="l-s-off" data-states="focus"> Switch off</label>
+    <label><input type="checkbox" role="switch" name="l-s-on" checked> Switch on</label>
+    <label><input type="checkbox" role="switch" name="l-s-dis" disabled> Switch disabled</label>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <label><input type="checkbox" name="d-off"> Unchecked</label>
+    <label><input type="checkbox" name="d-on" checked data-states="focus"> Checked</label>
+    <label><input type="checkbox" name="d-mixed" data-indeterminate> Indeterminate</label>
+    <label><input type="checkbox" name="d-invalid" checked aria-invalid="true"> Checked invalid</label>
+    <label><input type="checkbox" name="d-valid" checked aria-invalid="false"> Checked valid</label>
+    <label><input type="radio" name="d-radio" checked> Radio</label>
+    <label><input type="checkbox" role="switch" name="d-s-off" data-states="focus"> Switch off</label>
+    <label><input type="checkbox" role="switch" name="d-s-on" checked> Switch on</label>
+    <label><input type="checkbox" role="switch" name="d-s-dis" disabled> Switch disabled</label>
+  </div>
+</div>
+</body>
+</html>

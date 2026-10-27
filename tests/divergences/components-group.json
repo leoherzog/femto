@@ -1,0 +1,29 @@
+[
+  {
+    "id": "group-island-focus-ring-tokens",
+    "module": "components/group",
+    "kind": "token",
+    "token": "/^--femto-group-box-shadow-focus-with-(button|input)$/",
+    "selector": "div[data-theme], div[data-theme] *",
+    "property": "*",
+    "reference": "*",
+    "femto": "*",
+    "category": "natural-fix",
+    "reason": "2.1.1 builds the group focus-ring tokens in _styles.scss with var() substituted on :root, so a nested data-theme island inherits the page scheme's ring color. With light-dark() the token resolves per element, so the island gets its own scheme's color.",
+    "notes": "Seed from PLAN (spike 05: --pico-group-box-shadow-focus-with-button/-input inside islands)."
+  },
+  {
+    "id": "group-island-focus-ring-style",
+    "module": "components/group",
+    "kind": "style",
+    "selector": "div[data-theme] :is([role=group], [role=search])",
+    "pseudo": "",
+    "property": "box-shadow",
+    "reference": "*",
+    "femto": "*",
+    "where": {"states": ["hover", "focus", "focus-visible", "active"]},
+    "category": "natural-fix",
+    "reason": "Consequence of group-island-focus-ring-tokens: the [role=group] and [role=search] focus ring inside a nested data-theme island uses the island's scheme color instead of the page's.",
+    "notes": "Seed from PLAN."
+  }
+]

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>layout/landmarks</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<header data-module="layout/landmarks">
+  <p>Body header: a direct child of body.</p>
+</header>
+<main data-module="layout/landmarks">
+  <h1>Landmarks</h1>
+  <p>Body main: a direct child of body, with block padding.</p>
+  <article>
+    <header>Card header, not a body landmark</header>
+    <p>Card body.</p>
+    <footer>Card footer, not a body landmark</footer>
+  </article>
+  <main>A nested main element</main>
+  <section>
+    <header>Section header</header>
+    <p>Section body.</p>
+    <footer>Section footer</footer>
+  </section>
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <header>Light island header</header>
+    <main>Light island main</main>
+    <footer>Light island footer</footer>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <header>Dark island header</header>
+    <main>Dark island main</main>
+    <footer>Dark island footer</footer>
+  </div>
+</main>
+<footer data-module="layout/landmarks">
+  <p>Body footer: a direct child of body.</p>
+</footer>
+</body>
+</html>

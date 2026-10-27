@@ -1,0 +1,781 @@
+{
+  "$comment": "Comparison presets. ref and test are root-relative stylesheet lists loaded in order through the fixture page's css= parameter. entry selects fixture pages from tests/pages/pages.json (page.entries). hybrid.sections names the tests/sections.json entry used to split ref for hybrid builds; hybrid.append is imported after the chunks once any section is replaced. Azure is built into tokens/, so femto.css is the azure reference. Owned by the harness; see tests/README.md.",
+  "presets": {
+    "default": {
+      "entry": "default",
+      "ref": [
+        "/tests/reference/femto.css"
+      ],
+      "test": [
+        "/css/femto.css"
+      ],
+      "hybrid": {
+        "sections": "default"
+      }
+    },
+    "classless": {
+      "entry": "classless",
+      "ref": [
+        "/tests/reference/femto.classless.css"
+      ],
+      "test": [
+        "/css/femto.classless.css"
+      ],
+      "hybrid": {
+        "sections": "classless"
+      }
+    },
+    "fluid-classless": {
+      "entry": "fluid-classless",
+      "ref": [
+        "/tests/reference/femto.fluid.classless.css"
+      ],
+      "test": [
+        "/css/femto.fluid.classless.css"
+      ],
+      "hybrid": {
+        "sections": "fluid-classless"
+      }
+    },
+    "colors": {
+      "entry": "colors",
+      "ref": [
+        "/tests/reference/femto.colors.css"
+      ],
+      "test": [
+        "/css/femto.colors.css"
+      ]
+    },
+    "option-responsive-spacings": {
+      "entry": "default",
+      "group": "option",
+      "ref": [
+        "/tests/reference/options/femto.responsive-spacings.css"
+      ],
+      "test": [
+        "/css/femto.css",
+        "/css/options/responsive-spacings.css"
+      ],
+      "hybrid": {
+        "sections": "default",
+        "append": [
+          "/css/options/responsive-spacings.css"
+        ]
+      }
+    },
+    "option-no-transitions": {
+      "entry": "default",
+      "group": "option",
+      "ref": [
+        "/tests/reference/options/femto.no-transitions.css"
+      ],
+      "test": [
+        "/css/femto.css",
+        "/css/options/no-transitions.css"
+      ],
+      "hybrid": {
+        "sections": "default",
+        "append": [
+          "/css/options/no-transitions.css"
+        ]
+      }
+    },
+    "option-fixed-typography": {
+      "entry": "default",
+      "group": "option",
+      "ref": [
+        "/tests/reference/options/femto.fixed-typography.css"
+      ],
+      "test": [
+        "/css/femto.css",
+        "/css/options/fixed-typography.css"
+      ],
+      "hybrid": {
+        "sections": "default",
+        "append": [
+          "/css/options/fixed-typography.css"
+        ]
+      }
+    },
+    "theme-azure": {
+      "entry": "default",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.css"
+      ],
+      "test": [
+        "/css/femto.css",
+        "/css/themes/azure.css"
+      ],
+      "hybrid": {
+        "sections": "default",
+        "append": [
+          "/css/themes/azure.css"
+        ]
+      }
+    },
+    "theme-amber": {
+      "entry": "default",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.amber.css"
+      ],
+      "test": [
+        "/css/femto.css",
+        "/css/themes/amber.css"
+      ],
+      "hybrid": {
+        "sections": "default",
+        "append": [
+          "/css/themes/amber.css"
+        ]
+      }
+    },
+    "theme-blue": {
+      "entry": "default",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.blue.css"
+      ],
+      "test": [
+        "/css/femto.css",
+        "/css/themes/blue.css"
+      ],
+      "hybrid": {
+        "sections": "default",
+        "append": [
+          "/css/themes/blue.css"
+        ]
+      }
+    },
+    "theme-cyan": {
+      "entry": "default",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.cyan.css"
+      ],
+      "test": [
+        "/css/femto.css",
+        "/css/themes/cyan.css"
+      ],
+      "hybrid": {
+        "sections": "default",
+        "append": [
+          "/css/themes/cyan.css"
+        ]
+      }
+    },
+    "theme-fuchsia": {
+      "entry": "default",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.fuchsia.css"
+      ],
+      "test": [
+        "/css/femto.css",
+        "/css/themes/fuchsia.css"
+      ],
+      "hybrid": {
+        "sections": "default",
+        "append": [
+          "/css/themes/fuchsia.css"
+        ]
+      }
+    },
+    "theme-green": {
+      "entry": "default",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.green.css"
+      ],
+      "test": [
+        "/css/femto.css",
+        "/css/themes/green.css"
+      ],
+      "hybrid": {
+        "sections": "default",
+        "append": [
+          "/css/themes/green.css"
+        ]
+      }
+    },
+    "theme-grey": {
+      "entry": "default",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.grey.css"
+      ],
+      "test": [
+        "/css/femto.css",
+        "/css/themes/grey.css"
+      ],
+      "hybrid": {
+        "sections": "default",
+        "append": [
+          "/css/themes/grey.css"
+        ]
+      }
+    },
+    "theme-indigo": {
+      "entry": "default",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.indigo.css"
+      ],
+      "test": [
+        "/css/femto.css",
+        "/css/themes/indigo.css"
+      ],
+      "hybrid": {
+        "sections": "default",
+        "append": [
+          "/css/themes/indigo.css"
+        ]
+      }
+    },
+    "theme-jade": {
+      "entry": "default",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.jade.css"
+      ],
+      "test": [
+        "/css/femto.css",
+        "/css/themes/jade.css"
+      ],
+      "hybrid": {
+        "sections": "default",
+        "append": [
+          "/css/themes/jade.css"
+        ]
+      }
+    },
+    "theme-lime": {
+      "entry": "default",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.lime.css"
+      ],
+      "test": [
+        "/css/femto.css",
+        "/css/themes/lime.css"
+      ],
+      "hybrid": {
+        "sections": "default",
+        "append": [
+          "/css/themes/lime.css"
+        ]
+      }
+    },
+    "theme-orange": {
+      "entry": "default",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.orange.css"
+      ],
+      "test": [
+        "/css/femto.css",
+        "/css/themes/orange.css"
+      ],
+      "hybrid": {
+        "sections": "default",
+        "append": [
+          "/css/themes/orange.css"
+        ]
+      }
+    },
+    "theme-pink": {
+      "entry": "default",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.pink.css"
+      ],
+      "test": [
+        "/css/femto.css",
+        "/css/themes/pink.css"
+      ],
+      "hybrid": {
+        "sections": "default",
+        "append": [
+          "/css/themes/pink.css"
+        ]
+      }
+    },
+    "theme-pumpkin": {
+      "entry": "default",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.pumpkin.css"
+      ],
+      "test": [
+        "/css/femto.css",
+        "/css/themes/pumpkin.css"
+      ],
+      "hybrid": {
+        "sections": "default",
+        "append": [
+          "/css/themes/pumpkin.css"
+        ]
+      }
+    },
+    "theme-purple": {
+      "entry": "default",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.purple.css"
+      ],
+      "test": [
+        "/css/femto.css",
+        "/css/themes/purple.css"
+      ],
+      "hybrid": {
+        "sections": "default",
+        "append": [
+          "/css/themes/purple.css"
+        ]
+      }
+    },
+    "theme-red": {
+      "entry": "default",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.red.css"
+      ],
+      "test": [
+        "/css/femto.css",
+        "/css/themes/red.css"
+      ],
+      "hybrid": {
+        "sections": "default",
+        "append": [
+          "/css/themes/red.css"
+        ]
+      }
+    },
+    "theme-sand": {
+      "entry": "default",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.sand.css"
+      ],
+      "test": [
+        "/css/femto.css",
+        "/css/themes/sand.css"
+      ],
+      "hybrid": {
+        "sections": "default",
+        "append": [
+          "/css/themes/sand.css"
+        ]
+      }
+    },
+    "theme-slate": {
+      "entry": "default",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.slate.css"
+      ],
+      "test": [
+        "/css/femto.css",
+        "/css/themes/slate.css"
+      ],
+      "hybrid": {
+        "sections": "default",
+        "append": [
+          "/css/themes/slate.css"
+        ]
+      }
+    },
+    "theme-violet": {
+      "entry": "default",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.violet.css"
+      ],
+      "test": [
+        "/css/femto.css",
+        "/css/themes/violet.css"
+      ],
+      "hybrid": {
+        "sections": "default",
+        "append": [
+          "/css/themes/violet.css"
+        ]
+      }
+    },
+    "theme-yellow": {
+      "entry": "default",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.yellow.css"
+      ],
+      "test": [
+        "/css/femto.css",
+        "/css/themes/yellow.css"
+      ],
+      "hybrid": {
+        "sections": "default",
+        "append": [
+          "/css/themes/yellow.css"
+        ]
+      }
+    },
+    "theme-zinc": {
+      "entry": "default",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.zinc.css"
+      ],
+      "test": [
+        "/css/femto.css",
+        "/css/themes/zinc.css"
+      ],
+      "hybrid": {
+        "sections": "default",
+        "append": [
+          "/css/themes/zinc.css"
+        ]
+      }
+    },
+    "classless-theme-azure": {
+      "entry": "classless",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.classless.css"
+      ],
+      "test": [
+        "/css/femto.classless.css",
+        "/css/themes/azure.css"
+      ],
+      "hybrid": {
+        "sections": "classless",
+        "append": [
+          "/css/themes/azure.css"
+        ]
+      }
+    },
+    "classless-theme-amber": {
+      "entry": "classless",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.classless.amber.css"
+      ],
+      "test": [
+        "/css/femto.classless.css",
+        "/css/themes/amber.css"
+      ],
+      "hybrid": {
+        "sections": "classless",
+        "append": [
+          "/css/themes/amber.css"
+        ]
+      }
+    },
+    "classless-theme-blue": {
+      "entry": "classless",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.classless.blue.css"
+      ],
+      "test": [
+        "/css/femto.classless.css",
+        "/css/themes/blue.css"
+      ],
+      "hybrid": {
+        "sections": "classless",
+        "append": [
+          "/css/themes/blue.css"
+        ]
+      }
+    },
+    "classless-theme-cyan": {
+      "entry": "classless",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.classless.cyan.css"
+      ],
+      "test": [
+        "/css/femto.classless.css",
+        "/css/themes/cyan.css"
+      ],
+      "hybrid": {
+        "sections": "classless",
+        "append": [
+          "/css/themes/cyan.css"
+        ]
+      }
+    },
+    "classless-theme-fuchsia": {
+      "entry": "classless",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.classless.fuchsia.css"
+      ],
+      "test": [
+        "/css/femto.classless.css",
+        "/css/themes/fuchsia.css"
+      ],
+      "hybrid": {
+        "sections": "classless",
+        "append": [
+          "/css/themes/fuchsia.css"
+        ]
+      }
+    },
+    "classless-theme-green": {
+      "entry": "classless",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.classless.green.css"
+      ],
+      "test": [
+        "/css/femto.classless.css",
+        "/css/themes/green.css"
+      ],
+      "hybrid": {
+        "sections": "classless",
+        "append": [
+          "/css/themes/green.css"
+        ]
+      }
+    },
+    "classless-theme-grey": {
+      "entry": "classless",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.classless.grey.css"
+      ],
+      "test": [
+        "/css/femto.classless.css",
+        "/css/themes/grey.css"
+      ],
+      "hybrid": {
+        "sections": "classless",
+        "append": [
+          "/css/themes/grey.css"
+        ]
+      }
+    },
+    "classless-theme-indigo": {
+      "entry": "classless",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.classless.indigo.css"
+      ],
+      "test": [
+        "/css/femto.classless.css",
+        "/css/themes/indigo.css"
+      ],
+      "hybrid": {
+        "sections": "classless",
+        "append": [
+          "/css/themes/indigo.css"
+        ]
+      }
+    },
+    "classless-theme-jade": {
+      "entry": "classless",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.classless.jade.css"
+      ],
+      "test": [
+        "/css/femto.classless.css",
+        "/css/themes/jade.css"
+      ],
+      "hybrid": {
+        "sections": "classless",
+        "append": [
+          "/css/themes/jade.css"
+        ]
+      }
+    },
+    "classless-theme-lime": {
+      "entry": "classless",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.classless.lime.css"
+      ],
+      "test": [
+        "/css/femto.classless.css",
+        "/css/themes/lime.css"
+      ],
+      "hybrid": {
+        "sections": "classless",
+        "append": [
+          "/css/themes/lime.css"
+        ]
+      }
+    },
+    "classless-theme-orange": {
+      "entry": "classless",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.classless.orange.css"
+      ],
+      "test": [
+        "/css/femto.classless.css",
+        "/css/themes/orange.css"
+      ],
+      "hybrid": {
+        "sections": "classless",
+        "append": [
+          "/css/themes/orange.css"
+        ]
+      }
+    },
+    "classless-theme-pink": {
+      "entry": "classless",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.classless.pink.css"
+      ],
+      "test": [
+        "/css/femto.classless.css",
+        "/css/themes/pink.css"
+      ],
+      "hybrid": {
+        "sections": "classless",
+        "append": [
+          "/css/themes/pink.css"
+        ]
+      }
+    },
+    "classless-theme-pumpkin": {
+      "entry": "classless",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.classless.pumpkin.css"
+      ],
+      "test": [
+        "/css/femto.classless.css",
+        "/css/themes/pumpkin.css"
+      ],
+      "hybrid": {
+        "sections": "classless",
+        "append": [
+          "/css/themes/pumpkin.css"
+        ]
+      }
+    },
+    "classless-theme-purple": {
+      "entry": "classless",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.classless.purple.css"
+      ],
+      "test": [
+        "/css/femto.classless.css",
+        "/css/themes/purple.css"
+      ],
+      "hybrid": {
+        "sections": "classless",
+        "append": [
+          "/css/themes/purple.css"
+        ]
+      }
+    },
+    "classless-theme-red": {
+      "entry": "classless",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.classless.red.css"
+      ],
+      "test": [
+        "/css/femto.classless.css",
+        "/css/themes/red.css"
+      ],
+      "hybrid": {
+        "sections": "classless",
+        "append": [
+          "/css/themes/red.css"
+        ]
+      }
+    },
+    "classless-theme-sand": {
+      "entry": "classless",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.classless.sand.css"
+      ],
+      "test": [
+        "/css/femto.classless.css",
+        "/css/themes/sand.css"
+      ],
+      "hybrid": {
+        "sections": "classless",
+        "append": [
+          "/css/themes/sand.css"
+        ]
+      }
+    },
+    "classless-theme-slate": {
+      "entry": "classless",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.classless.slate.css"
+      ],
+      "test": [
+        "/css/femto.classless.css",
+        "/css/themes/slate.css"
+      ],
+      "hybrid": {
+        "sections": "classless",
+        "append": [
+          "/css/themes/slate.css"
+        ]
+      }
+    },
+    "classless-theme-violet": {
+      "entry": "classless",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.classless.violet.css"
+      ],
+      "test": [
+        "/css/femto.classless.css",
+        "/css/themes/violet.css"
+      ],
+      "hybrid": {
+        "sections": "classless",
+        "append": [
+          "/css/themes/violet.css"
+        ]
+      }
+    },
+    "classless-theme-yellow": {
+      "entry": "classless",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.classless.yellow.css"
+      ],
+      "test": [
+        "/css/femto.classless.css",
+        "/css/themes/yellow.css"
+      ],
+      "hybrid": {
+        "sections": "classless",
+        "append": [
+          "/css/themes/yellow.css"
+        ]
+      }
+    },
+    "classless-theme-zinc": {
+      "entry": "classless",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.classless.zinc.css"
+      ],
+      "test": [
+        "/css/femto.classless.css",
+        "/css/themes/zinc.css"
+      ],
+      "hybrid": {
+        "sections": "classless",
+        "append": [
+          "/css/themes/zinc.css"
+        ]
+      }
+    }
+  }
+}

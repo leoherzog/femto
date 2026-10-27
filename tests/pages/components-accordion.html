@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>components/accordion</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="components/accordion">
+  <h1>Accordion</h1>
+  <details>
+    <summary data-states="hover focus focus-visible active">Closed accordion</summary>
+    <p>Hidden content.</p>
+  </details>
+  <details open>
+    <summary data-states="hover focus focus-visible">Open accordion</summary>
+    <p>Visible content.</p>
+  </details>
+  <hr>
+  <details>
+    <summary role="button" data-states="hover focus focus-visible active">Closed accordion as a button</summary>
+    <p>Hidden content.</p>
+  </details>
+  <details open>
+    <summary role="button" data-states="focus">Open accordion as a button</summary>
+    <p>Visible content.</p>
+  </details>
+  <details>
+    <summary role="button" class="secondary">Secondary button summary</summary>
+    <p>Content.</p>
+  </details>
+  <details open>
+    <summary role="button" class="contrast">Open contrast button summary</summary>
+    <p>Content.</p>
+  </details>
+  <details>
+    <summary role="button" class="outline" data-states="hover">Outline button summary</summary>
+    <p>Content.</p>
+  </details>
+  <details>
+    <summary role="button" class="outline contrast">Outline contrast button summary</summary>
+    <p>Content.</p>
+  </details>
+  <details>
+    <summary role="link">Summary with another role</summary>
+    <p>Content.</p>
+  </details>
+  <details>
+    <p>Details without a summary element.</p>
+  </details>
+  <details open>
+    <summary>Open accordion with a nested one</summary>
+    <details>
+      <summary>Nested closed accordion</summary>
+      <p>Nested content.</p>
+    </details>
+    <details open>
+      <summary>Nested open accordion</summary>
+      <p>Nested content.</p>
+    </details>
+  </details>
+  <details name="exclusive">
+    <summary>Exclusive accordion one</summary>
+    <p>One.</p>
+  </details>
+  <details name="exclusive" open>
+    <summary>Exclusive accordion two, open</summary>
+    <p>Two.</p>
+  </details>
+
+  <div dir="rtl">
+    <details><summary>RTL closed accordion</summary><p>Content.</p></details>
+    <details open><summary>RTL open accordion</summary><p>Content.</p></details>
+    <details><summary role="button">RTL button summary</summary><p>Content.</p></details>
+  </div>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <details><summary data-states="focus focus-visible">Light closed</summary><p>Content.</p></details>
+    <details open><summary>Light open</summary><p>Content.</p></details>
+    <details><summary role="button">Light button</summary><p>Content.</p></details>
+    <details><summary role="button" class="contrast">Light contrast button</summary><p>Content.</p></details>
+    <details><summary role="button" class="outline">Light outline button</summary><p>Content.</p></details>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <details><summary data-states="focus focus-visible">Dark closed</summary><p>Content.</p></details>
+    <details open><summary>Dark open</summary><p>Content.</p></details>
+    <details><summary role="button">Dark button</summary><p>Content.</p></details>
+    <details><summary role="button" class="contrast">Dark contrast button</summary><p>Content.</p></details>
+    <details><summary role="button" class="outline">Dark outline button</summary><p>Content.</p></details>
+  </div>
+</div>
+</body>
+</html>

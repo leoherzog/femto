@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>tokens/base</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="tokens/base">
+  <h1>Base tokens</h1>
+  <p>One user of every base token: font families and sizes (the responsive root font size), line height, weight, underline offset, radius, border and outline widths, transition, spacings, grid gaps, form spacings, group shadows, modal backdrop filter, nav spacings, breadcrumb divider and the icons.</p>
+  <h2>Headings at the responsive root size</h2>
+  <h1>h1</h1><h2>h2</h2><h3>h3</h3><h4>h4</h4><h5>h5</h5><h6>h6</h6>
+  <p>Paragraph at the root size with <a href="#u">an underlined link</a>, <small>small text</small>, <code>monospace code</code>, <kbd>kbd</kbd> and an emoji &#x1F600;.</p>
+  <blockquote>Blockquote with block spacing.<footer>Footer</footer></blockquote>
+  <hr>
+
+  <h2>Controls</h2>
+  <button data-states="focus">Button with radius and border</button>
+  <input type="text" name="text" placeholder="Form element spacing" data-states="focus">
+  <input type="search" name="search" placeholder="Search icon and pill radius">
+  <input type="date" name="date" value="2026-01-02">
+  <input type="time" name="time" value="12:00">
+  <select name="select"><option>Chevron icon</option></select>
+  <label><input type="checkbox" name="checked" checked> Checkbox icon</label>
+  <label><input type="checkbox" name="mixed" data-indeterminate> Minus icon</label>
+  <label><input type="checkbox" role="switch" name="switch" checked> Switch</label>
+  <input type="range" name="range">
+  <progress value="40" max="100"></progress>
+
+  <h2>Components</h2>
+  <div class="grid"><div>Grid gap</div><div>Grid gap</div></div>
+  <div role="group">
+    <input type="text" name="group" placeholder="Group shadow with input" data-states="focus">
+    <button data-states="focus">Group shadow with button</button>
+  </div>
+  <details><summary>Accordion chevron</summary><p>Content</p></details>
+  <article><header>Card header</header>Block spacing<footer>Card footer</footer></article>
+  <nav>
+    <ul><li><strong>Nav</strong></li></ul>
+    <ul><li><a href="#n1">Nav link spacing</a></li><li><button>Nav button</button></li></ul>
+  </nav>
+  <nav aria-label="breadcrumb">
+    <ul><li><a href="#b1">Breadcrumb</a></li><li><a href="#b2">Divider</a></li><li>Current</li></ul>
+  </nav>
+  <p><button aria-busy="true">Loading icon</button> <span aria-busy="true">Loading span</span></p>
+  <p><span data-tooltip="Tooltip radius and font" tabindex="0">Tooltip</span></p>
+  <dialog><article><button aria-label="Close" rel="prev"></button><p>Closed dialog: backdrop filter and close icon</p></article></dialog>
+  <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle></svg>
+
+  <div data-shadow>
+    <template>
+      <h2>Shadow root</h2>
+      <p>Tokens from :host. Root size text with <a href="#s1">a link</a>, <small>small</small> and <code>code</code>.</p>
+      <h1>Shadow h1</h1><h6>Shadow h6</h6>
+      <button>Shadow button</button>
+      <input type="text" name="shadow-text" placeholder="Shadow input">
+      <input type="search" name="shadow-search" placeholder="Shadow search">
+      <select name="shadow-select"><option>Shadow select</option></select>
+      <label><input type="checkbox" name="shadow-check" checked> Shadow checkbox</label>
+      <label><input type="checkbox" name="shadow-mixed" data-indeterminate> Shadow indeterminate</label>
+      <label><input type="checkbox" role="switch" name="shadow-switch" checked> Shadow switch</label>
+      <div class="grid"><div>Shadow grid</div><div>Shadow grid</div></div>
+      <details><summary>Shadow accordion</summary><p>Content</p></details>
+      <article><header>Shadow card</header>Body<footer>Footer</footer></article>
+      <nav aria-label="breadcrumb"><ul><li><a href="#s2">Shadow</a></li><li>Breadcrumb</li></ul></nav>
+      <p><button aria-busy="true">Shadow loading</button></p>
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle></svg>
+    </template>
+  </div>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <p>Light text with <a href="#l">a link</a>.</p>
+    <button>Light button</button>
+    <label><input type="checkbox" name="l-check" checked> Light checkbox</label>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <p>Dark text with <a href="#d">a link</a>.</p>
+    <button>Dark button</button>
+    <label><input type="checkbox" name="d-check" checked> Dark checkbox</label>
+  </div>
+</div>
+</body>
+</html>

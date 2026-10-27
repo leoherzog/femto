@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>classes/buttons</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="classes/buttons">
+  <h1>Button classes</h1>
+  <p>
+    <button class="secondary" data-states="hover focus focus-visible active">Secondary</button>
+    <button class="contrast" data-states="hover focus focus-visible active">Contrast</button>
+    <button class="outline" data-states="hover focus focus-visible active">Outline</button>
+    <button class="outline secondary" data-states="hover focus active">Outline secondary</button>
+    <button class="outline contrast" data-states="hover focus active">Outline contrast</button>
+  </p>
+  <p>
+    <button class="secondary" aria-current="page" data-states="focus">Secondary current</button>
+    <button class="contrast" aria-current="page" data-states="focus">Contrast current</button>
+    <button class="outline" aria-current="page">Outline current</button>
+    <button class="outline secondary" aria-current="page">Outline secondary current</button>
+    <button class="outline contrast" aria-current="page">Outline contrast current</button>
+    <button class="secondary" aria-current="false">Secondary, aria-current false</button>
+  </p>
+  <p>
+    <button class="secondary" disabled>Secondary disabled</button>
+    <button class="contrast" disabled>Contrast disabled</button>
+    <button class="outline" disabled>Outline disabled</button>
+  </p>
+  <div>
+    <input type="submit" class="secondary" value="Submit secondary" data-states="hover focus">
+    <input type="submit" class="contrast" value="Submit contrast" data-states="hover focus">
+    <input type="submit" class="outline" value="Submit outline" data-states="hover">
+    <input type="button" class="secondary" value="Input button secondary">
+    <input type="button" class="outline contrast" value="Input button outline contrast" data-states="hover">
+    <input type="reset" class="outline" value="Reset outline" data-states="hover focus active">
+    <input type="reset" class="secondary" value="Reset secondary">
+  </div>
+  <p>
+    <a href="#s" role="button" class="secondary" data-states="hover focus">Role button secondary</a>
+    <a href="#c" role="button" class="contrast" data-states="hover focus">Role button contrast</a>
+    <a href="#o" role="button" class="outline" data-states="hover">Role button outline</a>
+    <a href="#os" role="button" class="outline secondary">Role button outline secondary</a>
+    <a href="#oc" role="button" class="outline contrast" data-states="hover">Role button outline contrast</a>
+  </p>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <button class="secondary" data-states="focus">Secondary</button>
+    <button class="contrast" data-states="focus">Contrast</button>
+    <button class="outline" data-states="hover">Outline</button>
+    <button class="outline secondary">Outline secondary</button>
+    <button class="outline contrast">Outline contrast</button>
+    <input type="reset" class="outline" value="Reset outline">
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <button class="secondary" data-states="focus">Secondary</button>
+    <button class="contrast" data-states="focus">Contrast</button>
+    <button class="outline" data-states="hover">Outline</button>
+    <button class="outline secondary">Outline secondary</button>
+    <button class="outline contrast">Outline contrast</button>
+    <input type="reset" class="outline" value="Reset outline">
+  </div>
+</div>
+</body>
+</html>

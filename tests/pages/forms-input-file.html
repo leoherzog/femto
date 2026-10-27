@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>forms/input-file</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="forms/input-file">
+  <h1>Input type file</h1>
+  <label for="if-1">File</label>
+  <input type="file" id="if-1" name="file" data-states="hover focus focus-visible active">
+  <small>File helper text.</small>
+  <label>Multiple files inside a label <input type="file" name="files" multiple></label>
+  <label>Disabled file <input type="file" name="file-disabled" disabled></label>
+  <label>Invalid file <input type="file" name="file-invalid" aria-invalid="true" data-states="focus"></label>
+  <small>Invalid file helper.</small>
+  <label>Valid file <input type="file" name="file-valid" aria-invalid="false"></label>
+  <small>Valid file helper.</small>
+  <fieldset disabled>
+    <legend>Disabled fieldset</legend>
+    <input type="file" name="file-fieldset">
+  </fieldset>
+
+  <div dir="rtl">
+    <input type="file" name="rtl-file">
+  </div>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <input type="file" name="l-file" data-states="hover focus">
+    <input type="file" name="l-file-invalid" aria-invalid="true">
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <input type="file" name="d-file" data-states="hover focus">
+    <input type="file" name="d-file-invalid" aria-invalid="true">
+  </div>
+</div>
+</body>
+</html>

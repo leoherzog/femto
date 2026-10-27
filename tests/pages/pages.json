@@ -1,0 +1,938 @@
+[
+ {
+  "page": "kitchen-sink.html",
+  "modules": [
+   "tokens/base",
+   "tokens/breakpoints",
+   "tokens/schemes",
+   "layout/document",
+   "layout/elements",
+   "layout/landmarks",
+   "layout/landmarks-container",
+   "layout/section",
+   "content/link",
+   "content/typography",
+   "content/embedded",
+   "content/button",
+   "content/table",
+   "content/code",
+   "content/figure",
+   "content/misc",
+   "forms/basics",
+   "forms/checkbox-radio-switch",
+   "forms/input-color",
+   "forms/input-date",
+   "forms/input-file",
+   "forms/input-range",
+   "forms/input-search",
+   "components/accordion",
+   "components/card",
+   "components/group",
+   "components/loading",
+   "components/modal",
+   "components/nav",
+   "components/progress",
+   "components/tooltip",
+   "classes/container",
+   "classes/grid",
+   "classes/overflow-auto",
+   "classes/dropdown",
+   "classes/buttons",
+   "classes/links",
+   "classes/table-striped",
+   "classes/modal",
+   "utilities/accessibility",
+   "utilities/reduce-motion",
+   "options/fluid",
+   "options/responsive-spacings",
+   "options/fixed-typography",
+   "options/no-transitions"
+  ],
+  "sections": [
+   "Styles",
+   "Color schemes",
+   "Document",
+   "Landmarks",
+   "Section",
+   "Container",
+   "Grid",
+   "Overflow auto",
+   "Typography",
+   "Link",
+   "Button",
+   "Table",
+   "Embedded content",
+   "Code",
+   "Figure",
+   "Misc",
+   "Basics form elements",
+   "Checkboxes, Radios and Switches",
+   "Input type color",
+   "Input type datetime",
+   "Input type file",
+   "Input type range",
+   "Input type search",
+   "Accordion (<details>)",
+   "Card (<article>)",
+   "Dropdown (details.dropdown)",
+   "Group ([role=\"group\"], [role=\"search\"])",
+   "Loading ([aria-busy=true])",
+   "Modal (<dialog>)",
+   "Nav",
+   "Progress",
+   "Tooltip ([data-tooltip])",
+   "Accessibility & User interaction",
+   "Reduce Motion Features"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": true,
+  "media": true
+ },
+ {
+  "page": "colors.html",
+  "modules": [
+   "colors"
+  ],
+  "sections": [],
+  "entries": [
+   "colors"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": false
+ },
+ {
+  "page": "tokens-base.html",
+  "modules": [
+   "tokens/base",
+   "options/fixed-typography"
+  ],
+  "sections": [
+   "Styles"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": true
+ },
+ {
+  "page": "tokens-breakpoints.html",
+  "modules": [
+   "tokens/breakpoints"
+  ],
+  "sections": [
+   "Styles",
+   "Container",
+   "Grid",
+   "Landmarks",
+   "Modal (<dialog>)"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": true
+ },
+ {
+  "page": "tokens-schemes.html",
+  "modules": [
+   "tokens/schemes"
+  ],
+  "sections": [
+   "Color schemes"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": true
+ },
+ {
+  "page": "layout-document.html",
+  "modules": [
+   "layout/document"
+  ],
+  "sections": [
+   "Document"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": false
+ },
+ {
+  "page": "layout-elements.html",
+  "modules": [
+   "layout/elements"
+  ],
+  "sections": [
+   "Styles"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": false
+ },
+ {
+  "page": "layout-landmarks.html",
+  "modules": [
+   "layout/landmarks",
+   "options/responsive-spacings"
+  ],
+  "sections": [
+   "Landmarks"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": true
+ },
+ {
+  "page": "layout-landmarks-container.html",
+  "modules": [
+   "layout/landmarks-container",
+   "options/fluid"
+  ],
+  "sections": [
+   "Landmarks"
+  ],
+  "entries": [
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": true
+ },
+ {
+  "page": "layout-section.html",
+  "modules": [
+   "layout/section",
+   "options/responsive-spacings"
+  ],
+  "sections": [
+   "Section"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": true
+ },
+ {
+  "page": "content-typography.html",
+  "modules": [
+   "content/typography",
+   "options/fixed-typography"
+  ],
+  "sections": [
+   "Typography"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": true
+ },
+ {
+  "page": "content-link.html",
+  "modules": [
+   "content/link"
+  ],
+  "sections": [
+   "Link"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": false
+ },
+ {
+  "page": "content-button.html",
+  "modules": [
+   "content/button"
+  ],
+  "sections": [
+   "Button"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": false
+ },
+ {
+  "page": "content-table.html",
+  "modules": [
+   "content/table"
+  ],
+  "sections": [
+   "Table"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": false
+ },
+ {
+  "page": "content-embedded.html",
+  "modules": [
+   "content/embedded"
+  ],
+  "sections": [
+   "Embedded content"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": false
+ },
+ {
+  "page": "content-code.html",
+  "modules": [
+   "content/code"
+  ],
+  "sections": [
+   "Code"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": false
+ },
+ {
+  "page": "content-figure.html",
+  "modules": [
+   "content/figure"
+  ],
+  "sections": [
+   "Figure"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": false
+ },
+ {
+  "page": "content-misc.html",
+  "modules": [
+   "content/misc"
+  ],
+  "sections": [
+   "Misc"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": false
+ },
+ {
+  "page": "forms-basics.html",
+  "modules": [
+   "forms/basics"
+  ],
+  "sections": [
+   "Basics form elements"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": true,
+  "media": false
+ },
+ {
+  "page": "forms-checkbox-radio-switch.html",
+  "modules": [
+   "forms/checkbox-radio-switch"
+  ],
+  "sections": [
+   "Checkboxes, Radios and Switches"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": false
+ },
+ {
+  "page": "forms-input-color.html",
+  "modules": [
+   "forms/input-color"
+  ],
+  "sections": [
+   "Input type color"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": false
+ },
+ {
+  "page": "forms-input-date.html",
+  "modules": [
+   "forms/input-date"
+  ],
+  "sections": [
+   "Input type datetime"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": true,
+  "media": false
+ },
+ {
+  "page": "forms-input-file.html",
+  "modules": [
+   "forms/input-file"
+  ],
+  "sections": [
+   "Input type file"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": false
+ },
+ {
+  "page": "forms-input-range.html",
+  "modules": [
+   "forms/input-range"
+  ],
+  "sections": [
+   "Input type range"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": false
+ },
+ {
+  "page": "forms-input-search.html",
+  "modules": [
+   "forms/input-search"
+  ],
+  "sections": [
+   "Input type search"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": true,
+  "media": false
+ },
+ {
+  "page": "components-accordion.html",
+  "modules": [
+   "components/accordion"
+  ],
+  "sections": [
+   "Accordion (<details>)"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": true,
+  "media": false
+ },
+ {
+  "page": "components-card.html",
+  "modules": [
+   "components/card",
+   "options/responsive-spacings"
+  ],
+  "sections": [
+   "Card (<article>)"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": true
+ },
+ {
+  "page": "components-group.html",
+  "modules": [
+   "components/group"
+  ],
+  "sections": [
+   "Group ([role=\"group\"], [role=\"search\"])"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": false
+ },
+ {
+  "page": "components-loading.html",
+  "modules": [
+   "components/loading"
+  ],
+  "sections": [
+   "Loading ([aria-busy=true])"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": false
+ },
+ {
+  "page": "components-modal.html",
+  "modules": [
+   "components/modal"
+  ],
+  "sections": [
+   "Modal (<dialog>)"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": true
+ },
+ {
+  "page": "components-modal-show.html",
+  "modules": [
+   "components/modal",
+   "classes/modal"
+  ],
+  "sections": [
+   "Modal (<dialog>)"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {},
+   {
+    "class": "modal-is-open"
+   }
+  ],
+  "rtl": false,
+  "media": true
+ },
+ {
+  "page": "components-nav.html",
+  "modules": [
+   "components/nav"
+  ],
+  "sections": [
+   "Nav"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": true,
+  "media": false
+ },
+ {
+  "page": "components-progress.html",
+  "modules": [
+   "components/progress"
+  ],
+  "sections": [
+   "Progress"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": true,
+  "media": true
+ },
+ {
+  "page": "components-tooltip.html",
+  "modules": [
+   "components/tooltip"
+  ],
+  "sections": [
+   "Tooltip ([data-tooltip])"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": true
+ },
+ {
+  "page": "classes-container.html",
+  "modules": [
+   "classes/container"
+  ],
+  "sections": [
+   "Container"
+  ],
+  "entries": [
+   "default"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": true
+ },
+ {
+  "page": "classes-grid.html",
+  "modules": [
+   "classes/grid"
+  ],
+  "sections": [
+   "Grid"
+  ],
+  "entries": [
+   "default"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": true
+ },
+ {
+  "page": "classes-overflow-auto.html",
+  "modules": [
+   "classes/overflow-auto"
+  ],
+  "sections": [
+   "Overflow auto"
+  ],
+  "entries": [
+   "default"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": false
+ },
+ {
+  "page": "classes-dropdown.html",
+  "modules": [
+   "classes/dropdown"
+  ],
+  "sections": [
+   "Dropdown (details.dropdown)"
+  ],
+  "entries": [
+   "default"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": true,
+  "media": false
+ },
+ {
+  "page": "classes-dropdown-open.html",
+  "modules": [
+   "classes/dropdown"
+  ],
+  "sections": [
+   "Dropdown (details.dropdown)"
+  ],
+  "entries": [
+   "default"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": true,
+  "media": false
+ },
+ {
+  "page": "classes-buttons.html",
+  "modules": [
+   "classes/buttons"
+  ],
+  "sections": [
+   "Button"
+  ],
+  "entries": [
+   "default"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": false
+ },
+ {
+  "page": "classes-links.html",
+  "modules": [
+   "classes/links"
+  ],
+  "sections": [
+   "Link"
+  ],
+  "entries": [
+   "default"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": false
+ },
+ {
+  "page": "classes-table-striped.html",
+  "modules": [
+   "classes/table-striped"
+  ],
+  "sections": [
+   "Table"
+  ],
+  "entries": [
+   "default"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": false
+ },
+ {
+  "page": "classes-modal.html",
+  "modules": [
+   "classes/modal"
+  ],
+  "sections": [
+   "Modal (<dialog>)"
+  ],
+  "entries": [
+   "default"
+  ],
+  "variants": [
+   {},
+   {
+    "class": "modal-is-open"
+   },
+   {
+    "class": "modal-is-open,modal-is-opening"
+   },
+   {
+    "class": "modal-is-open,modal-is-closing"
+   }
+  ],
+  "rtl": false,
+  "media": true,
+  "stateless_variants": [
+   "class=modal-is-open,modal-is-closing"
+  ]
+ },
+ {
+  "page": "utilities-accessibility.html",
+  "modules": [
+   "utilities/accessibility"
+  ],
+  "sections": [
+   "Accessibility & User interaction"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": true,
+  "media": false
+ },
+ {
+  "page": "utilities-reduce-motion.html",
+  "modules": [
+   "utilities/reduce-motion",
+   "options/no-transitions"
+  ],
+  "sections": [
+   "Reduce Motion Features"
+  ],
+  "entries": [
+   "default",
+   "classless",
+   "fluid-classless"
+  ],
+  "variants": [
+   {}
+  ],
+  "rtl": false,
+  "media": true
+ }
+]

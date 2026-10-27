@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>components/nav</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="components/nav">
+  <h1>Nav</h1>
+  <nav>
+    <ul>
+      <li><strong>Brand</strong></li>
+    </ul>
+    <ul>
+      <li><a href="#about" data-states="hover focus focus-visible active">About</a></li>
+      <li><a href="#services" aria-current="page">Services</a></li>
+      <li><a href="#products" class="secondary">Products</a></li>
+      <li><span role="link" tabindex="0" data-states="hover">Role link</span></li>
+      <li><button data-states="hover focus">Button</button></li>
+      <li><a href="#cta" role="button" data-states="hover">Role button</a></li>
+      <li><input type="button" value="Input button"></li>
+    </ul>
+  </nav>
+  <nav>
+    <ol>
+      <li><a href="#o1">Ordered one</a></li>
+      <li><a href="#o2">Ordered two</a></li>
+    </ol>
+    <ul>
+      <li><input type="search" name="nav-search" placeholder="Search" data-states="focus"></li>
+      <li><input type="text" name="nav-text" placeholder="Text"></li>
+      <li><select name="nav-select"><option>Select</option></select></li>
+      <li><label><input type="checkbox" name="nav-check"> Checkbox</label></li>
+      <li><input type="range" name="nav-range"></li>
+      <li><input type="file" name="nav-file"></li>
+    </ul>
+    <ol>
+      <li>Last ordered list</li>
+    </ol>
+  </nav>
+  <nav>
+    <ul>
+      <li>
+        <details class="dropdown">
+          <summary data-states="hover focus-visible">Closed nav dropdown</summary>
+          <ul dir="rtl"><li><a href="#dd">Item</a></li></ul>
+        </details>
+      </li>
+    </ul>
+  </nav>
+
+  <nav aria-label="breadcrumb">
+    <ul>
+      <li><a href="#home" data-states="hover">Home</a></li>
+      <li><a href="#category">Category</a></li>
+      <li><span>Plain item</span></li>
+      <li><a href="#current" aria-current="page">Current page</a></li>
+    </ul>
+  </nav>
+  <nav aria-label="breadcrumb">
+    <ul>
+      <li><a href="#b1">Home</a></li>
+      <li><a href="#b2" aria-current="false">aria-current false</a></li>
+      <li>Last item as text</li>
+    </ul>
+  </nav>
+
+  <aside>
+    <nav>
+      <ul>
+        <li><a href="#side1" data-states="hover">Aside link</a></li>
+        <li><a href="#side2" aria-current="page">Aside current</a></li>
+        <li><a href="#side3" role="button">Aside role button</a></li>
+      </ul>
+      <ol>
+        <li><a href="#side4">Aside ordered</a></li>
+      </ol>
+    </nav>
+  </aside>
+  <aside>
+    <ul><li>List in an aside without nav</li></ul>
+  </aside>
+
+  <div dir="rtl">
+    <nav aria-label="breadcrumb">
+      <ul>
+        <li><a href="#r1">RTL home</a></li>
+        <li><a href="#r2">RTL category</a></li>
+        <li><a href="#r3" aria-current="page">RTL current</a></li>
+      </ul>
+    </nav>
+    <nav>
+      <ul><li><strong>RTL brand</strong></li></ul>
+      <ul><li><a href="#r4">RTL link</a></li></ul>
+    </nav>
+  </div>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <nav>
+      <ul><li><strong>Light</strong></li></ul>
+      <ul><li><a href="#l1" data-states="hover focus-visible">Link</a></li><li><a href="#l2" aria-current="page">Current</a></li><li><button>Button</button></li></ul>
+    </nav>
+    <nav aria-label="breadcrumb">
+      <ul><li><a href="#l3">Home</a></li><li><a href="#l4" aria-current="page">Current</a></li></ul>
+    </nav>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <nav>
+      <ul><li><strong>Dark</strong></li></ul>
+      <ul><li><a href="#d1" data-states="hover focus-visible">Link</a></li><li><a href="#d2" aria-current="page">Current</a></li><li><button>Button</button></li></ul>
+    </nav>
+    <nav aria-label="breadcrumb">
+      <ul><li><a href="#d3">Home</a></li><li><a href="#d4" aria-current="page">Current</a></li></ul>
+    </nav>
+  </div>
+</div>
+</body>
+</html>

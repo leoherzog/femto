@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>layout/elements</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="layout/elements">
+  <h1>Element tokens</h1>
+  <p>Per-element token overrides from the styles section: links, small, headings, table heads and feet, code, form controls, dropdowns, groups, accordions and loading buttons.</p>
+
+  <h2>Links and small</h2>
+  <p><a href="#a">Link</a> <a href="#s" class="secondary">Secondary link</a> <a href="#c" class="contrast">Contrast link</a> <small>Small text</small></p>
+
+  <h2>Headings</h2>
+  <h1>h1</h1><h2>h2</h2><h3>h3</h3><h4>h4</h4><h5>h5</h5><h6>h6</h6>
+
+  <h2>Table head and foot</h2>
+  <table>
+    <thead><tr><th>thead th</th><td>thead td</td></tr></thead>
+    <tbody><tr><th>tbody th</th><td>tbody td</td></tr></tbody>
+    <tfoot><tr><th>tfoot th</th><td>tfoot td</td></tr></tfoot>
+  </table>
+
+  <h2>Code</h2>
+  <p><code>code</code> <kbd>kbd</kbd> <samp>samp</samp></p>
+  <pre>pre</pre>
+
+  <h2>Form controls</h2>
+  <input type="text" name="text" placeholder="Text" data-states="focus">
+  <input type="email" name="email" placeholder="Email">
+  <input type="search" name="search" placeholder="Search" data-states="focus">
+  <select name="select" data-states="focus"><option>Select</option></select>
+  <textarea name="textarea" rows="2" data-states="focus">Textarea</textarea>
+  <input type="submit" value="Submit">
+  <input type="button" value="Input button">
+  <input type="reset" value="Reset">
+  <input type="file" name="file">
+  <label><input type="checkbox" name="check" checked data-states="focus"> Checkbox</label>
+  <label><input type="radio" name="radio" checked data-states="focus"> Radio</label>
+  <label><input type="checkbox" role="switch" name="switch" checked data-states="focus"> Switch</label>
+
+  <h2>Dropdowns</h2>
+  <details class="dropdown">
+    <summary data-states="focus focus-visible">Dropdown summary without role</summary>
+    <ul><li><a href="#d1">Item</a></li></ul>
+  </details>
+  <details class="dropdown">
+    <summary role="button" data-states="focus">Dropdown summary with role button</summary>
+    <ul><li><a href="#d2">Item</a></li></ul>
+  </details>
+  <nav>
+    <ul>
+      <li><strong>Nav</strong></li>
+    </ul>
+    <ul>
+      <li>
+        <details class="dropdown">
+          <summary data-states="focus focus-visible">Nav dropdown</summary>
+          <ul dir="rtl"><li><a href="#n1">Item</a></li></ul>
+        </details>
+      </li>
+    </ul>
+  </nav>
+
+  <h2>Groups</h2>
+  <div role="search">
+    <input type="search" name="gs" placeholder="Search" data-states="focus">
+    <input type="submit" value="Search">
+  </div>
+  <div role="group">
+    <button data-states="focus">Primary</button>
+    <button class="secondary" data-states="focus">Secondary</button>
+    <button class="contrast" data-states="focus">Contrast</button>
+  </div>
+  <div role="group">
+    <input type="submit" class="secondary" value="Submit secondary" data-states="focus">
+    <input type="submit" class="contrast" value="Submit contrast" data-states="focus">
+  </div>
+  <div role="group">
+    <input type="button" class="secondary" value="Button secondary" data-states="focus">
+    <input type="button" class="contrast" value="Button contrast" data-states="focus">
+  </div>
+  <div role="group">
+    <a href="#g1" role="button" class="secondary" data-states="focus">Role button secondary</a>
+    <a href="#g2" role="button" class="contrast" data-states="focus">Role button contrast</a>
+  </div>
+  <div role="search">
+    <input type="search" name="gs2" placeholder="Search">
+    <button class="secondary" data-states="focus">Secondary</button>
+    <button class="contrast" data-states="focus">Contrast</button>
+    <a href="#g3" role="button">Role button</a>
+    <input type="button" value="Input button">
+  </div>
+
+  <h2>Accordion summaries with role button</h2>
+  <details><summary role="button">Primary</summary><p>Content</p></details>
+  <details><summary role="button" class="secondary">Secondary</summary><p>Content</p></details>
+  <details><summary role="button" class="contrast">Contrast</summary><p>Content</p></details>
+  <details><summary role="button" class="outline">Outline</summary><p>Content</p></details>
+  <details><summary role="button" class="outline contrast">Outline contrast</summary><p>Content</p></details>
+
+  <h2>Loading buttons</h2>
+  <p>
+    <button aria-busy="true">Busy</button>
+    <button aria-busy="true" class="secondary">Busy secondary</button>
+    <button aria-busy="true" class="contrast">Busy contrast</button>
+    <button aria-busy="true" class="outline">Busy outline</button>
+    <input type="submit" value="Busy submit" aria-busy="true">
+    <input type="reset" value="Busy reset" aria-busy="true">
+    <a href="#b" role="button" aria-busy="true">Busy role button</a>
+    <span role="button" aria-busy="true" class="contrast">Busy contrast role button</span>
+  </p>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <p><a href="#la" class="secondary">Secondary link</a> <small>small</small> <code>code</code> <kbd>kbd</kbd></p>
+    <details><summary role="button">Primary</summary></details>
+    <details><summary role="button" class="contrast">Contrast</summary></details>
+    <details><summary role="button" class="outline">Outline</summary></details>
+    <p><button aria-busy="true">Busy</button> <button aria-busy="true" class="contrast">Busy contrast</button> <button aria-busy="true" class="outline contrast">Busy outline contrast</button></p>
+    <div role="group">
+      <button class="secondary" data-states="focus">Secondary</button>
+      <button class="contrast" data-states="focus">Contrast</button>
+    </div>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <p><a href="#da" class="secondary">Secondary link</a> <small>small</small> <code>code</code> <kbd>kbd</kbd></p>
+    <details><summary role="button">Primary</summary></details>
+    <details><summary role="button" class="contrast">Contrast</summary></details>
+    <details><summary role="button" class="outline">Outline</summary></details>
+    <p><button aria-busy="true">Busy</button> <button aria-busy="true" class="contrast">Busy contrast</button> <button aria-busy="true" class="outline contrast">Busy outline contrast</button></p>
+    <div role="group">
+      <button class="secondary" data-states="focus">Secondary</button>
+      <button class="contrast" data-states="focus">Contrast</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>

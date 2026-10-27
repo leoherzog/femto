@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kitchen sink</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<header data-module="layout/landmarks">
+  <nav>
+    <ul><li><strong>Kitchen sink</strong></li></ul>
+    <ul>
+      <li><a href="#typography" data-states="hover focus-visible">Typography</a></li>
+      <li><a href="#forms" aria-current="page">Forms</a></li>
+      <li><a href="#components" class="secondary">Components</a></li>
+      <li><button class="contrast">Button</button></li>
+      <li>
+        <details class="dropdown">
+          <summary>Nav dropdown</summary>
+          <ul dir="rtl"><li><a href="#n1">Item</a></li><li><a href="#n2">Item</a></li></ul>
+        </details>
+      </li>
+    </ul>
+  </nav>
+</header>
+<main data-module="layout/landmarks" class="container">
+  <div data-module="tokens/base">
+    <h1 id="typography">Every module at once</h1>
+    <p>All modules on one page so cascade order between modules is checked. Open dropdowns and open dialogs, which cover the viewport, are on their own pages; interaction states here are limited to theme-sensitive controls.</p>
+  </div>
+
+  <div data-module="content/typography">
+    <h2>Typography</h2>
+    <p>Paragraph with <b>b</b>, <strong>strong</strong>, <em>em</em>, <i>i</i>, <u>u</u>, <s>s</s>, <small>small</small>, H<sub>2</sub>O, x<sup>2</sup>, <mark>mark</mark>, <abbr title="Abbreviation">abbr</abbr>, <ins>ins</ins>, <del>del</del>, <kbd>kbd</kbd>, <code>code</code>, <samp>samp</samp> and <a href="#link">a link</a>.</p>
+    <h3>Heading 3 after a paragraph</h3>
+    <hgroup><h4>Heading group</h4><p>Subtitle in muted color</p></hgroup>
+    <ul><li>Unordered one<ul><li>Nested unordered</li></ul></li><li>Unordered two</li></ul>
+    <ol><li>Ordered one<ol><li>Nested ordered</li></ol></li><li>Ordered two</li></ol>
+    <dl><dt>Term</dt><dd>Definition<ul><li>List in dd</li></ul></dd></dl>
+    <h4>Heading 4 after a list</h4>
+    <blockquote>A quotation that spans a line.<footer><cite>Someone Quoted</cite></footer></blockquote>
+    <address>1 Example Street<br>Somewhere</address>
+    <h5>Heading 5</h5>
+    <h6>Heading 6</h6>
+  </div>
+
+  <div data-module="content/link">
+    <h2>Links</h2>
+    <p><a href="#l1" data-states="hover focus focus-visible">Link</a> <a href="#l2" aria-current="page">Current</a> <span role="link" tabindex="0">Role link</span>
+      <a href="#l3" class="secondary">Secondary</a> <a href="#l4" class="contrast">Contrast</a></p>
+  </div>
+
+  <div data-module="content/button">
+    <h2>Buttons</h2>
+    <p>
+      <button data-states="hover focus focus-visible">Primary</button>
+      <button class="secondary" data-states="hover focus">Secondary</button>
+      <button class="contrast" data-states="hover focus">Contrast</button>
+      <button class="outline" data-states="hover">Outline</button>
+      <button class="outline secondary">Outline secondary</button>
+      <button class="outline contrast">Outline contrast</button>
+      <button disabled>Disabled</button>
+      <button aria-current="page">Current</button>
+    </p>
+    <p>
+      <input type="submit" value="Submit" data-states="focus">
+      <input type="button" value="Input button">
+      <input type="reset" value="Reset" data-states="hover">
+      <a href="#rb" role="button">Role button</a>
+    </p>
+  </div>
+
+  <div data-module="content/table">
+    <h2>Tables</h2>
+    <div class="overflow-auto">
+      <table>
+        <thead><tr><th>Head</th><th>Col</th></tr></thead>
+        <tbody><tr><th>Row</th><td>Cell</td></tr><tr><th>Row</th><td>Cell</td></tr></tbody>
+        <tfoot><tr><td>Foot</td><td>Foot</td></tr></tfoot>
+      </table>
+    </div>
+    <table class="striped">
+      <tbody><tr><td>Striped odd</td><td>Odd</td></tr><tr><td>Striped even</td><td>Even</td></tr><tr><td>Striped odd</td><td>Odd</td></tr></tbody>
+    </table>
+  </div>
+
+  <div data-module="content/embedded">
+    <h2>Embedded content</h2>
+    <p><img src="/tests/pages/assets/landscape.svg" alt="Placeholder" width="160" height="90">
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle></svg>
+      <video width="160" height="90"></video>
+      <audio controls></audio>
+      <audio></audio>
+      <canvas width="40" height="20"></canvas>
+      <iframe src="about:blank" title="Blank frame" width="80" height="40"></iframe></p>
+  </div>
+
+  <div data-module="content/code">
+    <h2>Code</h2>
+    <pre><code>pre &gt; code block</code></pre>
+    <pre><samp>pre &gt; samp block</samp></pre>
+  </div>
+
+  <div data-module="content/figure">
+    <figure>
+      <img src="/tests/pages/assets/landscape.svg" alt="Figure image" width="160" height="90">
+      <figcaption>Figure caption</figcaption>
+    </figure>
+  </div>
+
+  <div data-module="content/misc">
+    <hr>
+    <p hidden>Hidden paragraph</p>
+    <template><p>Template</p></template>
+  </div>
+
+  <div data-module="classes/grid">
+    <h2>Grid</h2>
+    <div class="grid"><div>Column 1</div><div>Column 2</div><div>Column 3</div></div>
+  </div>
+
+  <div data-module="layout/section">
+    <section><h2>Section</h2><p>Section content.</p></section>
+  </div>
+
+  <div data-module="forms/basics">
+    <h2 id="forms">Forms</h2>
+    <label for="ks-text">Text</label>
+    <input type="text" id="ks-text" name="text" placeholder="Placeholder" data-states="focus">
+    <small>Helper text.</small>
+    <input type="email" name="email" value="valid@example.com" aria-invalid="false">
+    <small>Valid helper.</small>
+    <input type="text" name="invalid" value="Invalid" aria-invalid="true">
+    <small>Invalid helper.</small>
+    <input type="number" name="number" value="3">
+    <input type="password" name="password" value="secret">
+    <input type="text" name="disabled" value="Disabled" disabled>
+    <select name="select" data-states="focus"><option>Select</option><option>Two</option></select>
+    <select name="multiple" multiple><option selected>Selected</option><option>Other</option></select>
+    <select name="required" required><option value="" selected>Placeholder option</option><option value="a">A</option></select>
+    <textarea name="textarea" rows="2" placeholder="Textarea"></textarea>
+    <fieldset>
+      <legend>Fieldset legend</legend>
+      <label>Label <input type="text" name="nested" placeholder="Inside a label"></label>
+    </fieldset>
+    <div class="grid"><input type="text" name="g1" placeholder="Grid input"><input type="text" name="g2" placeholder="Grid input"></div>
+    <small>Helper after a grid.</small>
+  </div>
+
+  <div data-module="forms/checkbox-radio-switch">
+    <fieldset>
+      <legend>Checkboxes, radios and switches</legend>
+      <label><input type="checkbox" name="c1"> Unchecked</label>
+      <label><input type="checkbox" name="c2" checked data-states="focus"> Checked</label>
+      <label><input type="checkbox" name="c3" data-indeterminate> Indeterminate</label>
+      <label><input type="checkbox" name="c4" checked aria-invalid="true"> Invalid</label>
+      <label><input type="checkbox" name="c5" checked aria-invalid="false"> Valid</label>
+      <input type="radio" id="ks-r1" name="r" checked><label for="ks-r1">Radio one</label>
+      <input type="radio" id="ks-r2" name="r"><label for="ks-r2">Radio two</label>
+      <label><input type="checkbox" role="switch" name="s1"> Switch off</label>
+      <label><input type="checkbox" role="switch" name="s2" checked data-states="focus"> Switch on</label>
+      <label><input type="checkbox" role="switch" name="s3" disabled> Switch disabled</label>
+    </fieldset>
+  </div>
+
+  <div data-module="forms/input-color">
+    <input type="color" name="color" value="#0172ad">
+  </div>
+  <div data-module="forms/input-date">
+    <input type="date" name="date" value="2026-01-02">
+    <input type="datetime-local" name="datetime" value="2026-01-02T03:04">
+    <input type="month" name="month" value="2026-01">
+    <input type="time" name="time" value="13:45">
+    <input type="week" name="week" value="2026-W02">
+  </div>
+  <div data-module="forms/input-file">
+    <input type="file" name="file" data-states="hover">
+  </div>
+  <div data-module="forms/input-range">
+    <input type="range" name="range" data-states="focus">
+  </div>
+  <div data-module="forms/input-search">
+    <input type="search" name="search" placeholder="Search">
+    <input type="search" name="search-invalid" value="Invalid" aria-invalid="true">
+  </div>
+
+  <div data-module="components/accordion">
+    <h2 id="components">Accordion</h2>
+    <details><summary data-states="focus-visible">Closed accordion</summary><p>Content</p></details>
+    <details open><summary>Open accordion</summary><p>Content</p></details>
+    <details><summary role="button">Accordion as button</summary><p>Content</p></details>
+    <details><summary role="button" class="contrast">Accordion contrast</summary><p>Content</p></details>
+    <details><summary role="button" class="outline">Accordion outline</summary><p>Content</p></details>
+  </div>
+
+  <div data-module="components/card">
+    <article>Plain card.</article>
+    <article>
+      <header><h3>Card title</h3></header>
+      <p>Card paragraph.</p>
+      <article><header>Nested card header</header>Nested body</article>
+      <footer><button>Action</button></footer>
+    </article>
+  </div>
+
+  <div data-module="classes/dropdown">
+    <details class="dropdown">
+      <summary>Closed dropdown</summary>
+      <ul><li><a href="#d1">Item</a></li></ul>
+    </details>
+    <details class="dropdown">
+      <summary role="button" class="secondary">Closed button dropdown</summary>
+      <ul><li><a href="#d2">Item</a></li></ul>
+    </details>
+  </div>
+
+  <div data-module="components/group">
+    <div role="group">
+      <input type="email" name="group-email" placeholder="Email" data-states="focus">
+      <input type="submit" value="Subscribe" data-states="focus">
+    </div>
+    <div role="search">
+      <input type="search" name="group-search" placeholder="Search">
+      <button class="secondary" data-states="focus">Search</button>
+    </div>
+  </div>
+
+  <div data-module="components/loading">
+    <p><button aria-busy="true">Loading</button> <button aria-busy="true" class="contrast">Loading contrast</button> <button aria-busy="true" class="outline">Loading outline</button> <span aria-busy="true">Busy span</span></p>
+    <article aria-busy="true"></article>
+  </div>
+
+  <div data-module="components/modal">
+    <dialog><article><header><button aria-label="Close" rel="prev"></button><h3>Closed dialog</h3></header><p>Body</p></article></dialog>
+    <dialog open="false"><article>Dialog with open="false"</article></dialog>
+    <dialog><article><header><a href="#close" aria-label="Close" class="close"></a><h3>Closed dialog with .close</h3></header></article></dialog>
+  </div>
+
+  <div data-module="components/nav">
+    <nav aria-label="breadcrumb">
+      <ul><li><a href="#b1">Home</a></li><li><a href="#b2">Category</a></li><li><a href="#b3" aria-current="page">Current</a></li></ul>
+    </nav>
+    <aside><nav><ul><li><a href="#a1">Aside link</a></li><li><a href="#a2">Aside link</a></li></ul></nav></aside>
+  </div>
+
+  <div data-module="components/progress">
+    <progress value="40" max="100"></progress>
+    <progress></progress>
+  </div>
+
+  <div data-module="components/tooltip">
+    <p><span data-tooltip="Tooltip" tabindex="0" data-states="hover">Tooltip on text</span>
+      <button data-tooltip="Bottom tooltip" data-placement="bottom">Tooltip on a button</button></p>
+  </div>
+
+  <div data-module="utilities/accessibility">
+    <p><button aria-controls="ks-panel">aria-controls</button> <span aria-disabled="true">aria-disabled</span> <span hidden aria-hidden="false">Hidden, aria-hidden false</span></p>
+    <div id="ks-panel" dir="rtl"><p>A dir="rtl" block.</p></div>
+  </div>
+
+  <div data-module="tokens/schemes">
+    <div data-theme="light">
+      <h2>Light island</h2>
+      <p>Text with <a href="#li">link</a>, <mark>mark</mark>, <ins>ins</ins>, <del>del</del> and <code>code</code>.</p>
+      <article><header>Light card header</header>Body<footer>Footer</footer></article>
+      <button>Primary</button> <button class="secondary">Secondary</button> <button class="contrast">Contrast</button>
+      <input type="text" name="li-text" placeholder="Light input" data-states="focus">
+      <label><input type="checkbox" name="li-c" checked> Checked</label>
+      <label><input type="checkbox" role="switch" name="li-s" checked> Switch on</label>
+      <details><summary role="button" class="contrast">Light contrast accordion</summary></details>
+      <button aria-busy="true" class="contrast">Light loading contrast</button>
+      <div role="group"><input type="text" name="li-g" placeholder="Group" data-states="focus"><button data-states="focus">Go</button></div>
+      <progress value="40" max="100"></progress>
+      <dialog><article>Light closed dialog</article></dialog>
+    </div>
+    <div data-theme="dark">
+      <h2>Dark island</h2>
+      <p>Text with <a href="#di">link</a>, <mark>mark</mark>, <ins>ins</ins>, <del>del</del> and <code>code</code>.</p>
+      <article><header>Dark card header</header>Body<footer>Footer</footer></article>
+      <button>Primary</button> <button class="secondary">Secondary</button> <button class="contrast">Contrast</button>
+      <input type="text" name="di-text" placeholder="Dark input" data-states="focus">
+      <label><input type="checkbox" name="di-c" checked> Checked</label>
+      <label><input type="checkbox" role="switch" name="di-s" checked> Switch on</label>
+      <details><summary role="button" class="contrast">Dark contrast accordion</summary></details>
+      <button aria-busy="true" class="contrast">Dark loading contrast</button>
+      <div role="group"><input type="text" name="di-g" placeholder="Group" data-states="focus"><button data-states="focus">Go</button></div>
+      <progress value="40" max="100"></progress>
+      <dialog><article>Dark closed dialog</article></dialog>
+    </div>
+  </div>
+
+  <div data-module="layout/document">
+    <div data-shadow>
+      <template>
+        <h2>Shadow heading</h2>
+        <p>Shadow <mark>mark</mark>, <ins>ins</ins>, <a href="#sh">link</a> and <code>code</code>.</p>
+        <article><header>Shadow card</header>Body</article>
+        <button>Shadow button</button>
+        <input type="text" name="shadow-text" placeholder="Shadow input">
+        <label><input type="checkbox" name="shadow-c" checked> Checked</label>
+        <label><input type="checkbox" role="switch" name="shadow-s" checked> Switch</label>
+        <details><summary role="button" class="contrast">Shadow contrast accordion</summary></details>
+        <button aria-busy="true" class="contrast">Shadow loading contrast</button>
+        <div data-theme="dark"><p>Dark island in a shadow root with <a href="#shd">a link</a></p><button>Button</button></div>
+      </template>
+    </div>
+  </div>
+</main>
+<footer data-module="layout/landmarks">
+  <p><small>Kitchen sink footer.</small></p>
+</footer>
+</body>
+</html>

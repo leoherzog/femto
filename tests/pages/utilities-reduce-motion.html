@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>utilities/reduce-motion</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="utilities/reduce-motion">
+  <h1>Reduce motion</h1>
+  <p>Elements with transitions or animations. Under prefers-reduced-motion: reduce, everything except [aria-busy=true] and its pseudo-elements loses its motion. This page also covers options/no-transitions.</p>
+  <p><a href="#l" data-states="hover">Link with a transition</a> <span data-tooltip="Tooltip with a slide animation" tabindex="0" data-states="hover">Tooltip target</span></p>
+  <p><button data-states="hover focus">Button with a transition</button> <a href="#rb" role="button">Role button</a> <button class="outline">Outline</button></p>
+  <input type="text" name="text" placeholder="Input with a transition" data-states="focus">
+  <select name="select"><option>Select</option></select>
+  <textarea name="textarea" rows="2">Textarea</textarea>
+  <label><input type="checkbox" role="switch" name="switch" checked> Switch thumb margin transition</label>
+  <label><input type="checkbox" name="check" checked> Checkbox</label>
+  <input type="range" name="range" value="50" data-states="active">
+  <input type="file" name="file">
+  <progress value="50" max="100"></progress>
+  <progress></progress>
+  <details><summary>Accordion chevron transition</summary><p>Content</p></details>
+  <details open><summary>Open accordion</summary><p>Content</p></details>
+  <details class="dropdown">
+    <summary>Dropdown with an opacity transition</summary>
+    <ul><li><a href="#d">Item</a></li></ul>
+  </details>
+  <div role="group">
+    <input type="text" name="group" placeholder="Group box-shadow transition" data-states="focus">
+    <button>Go</button>
+  </div>
+  <p>
+    <button aria-busy="true">Busy button keeps its spinner</button>
+    <span aria-busy="true">Busy span</span>
+    <span aria-busy="false">Not busy span</span>
+  </p>
+  <article aria-busy="true"></article>
+  <dialog>
+    <article><a href="#c" aria-label="Close" rel="prev"></a><p>Closed dialog with a close transition</p></article>
+  </dialog>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <a href="#li">Link</a> <button>Button</button> <progress></progress>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <a href="#di">Link</a> <button>Button</button> <progress></progress>
+  </div>
+</div>
+</body>
+</html>

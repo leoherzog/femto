@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>forms/input-date</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="forms/input-date">
+  <h1>Input type datetime</h1>
+  <label>Date <input type="date" name="date" value="2026-01-02" data-states="hover focus focus-visible active"></label>
+  <label>Date, empty <input type="date" name="date-empty"></label>
+  <label>Datetime local <input type="datetime-local" name="datetime-local" value="2026-01-02T03:04" data-states="focus"></label>
+  <label>Month <input type="month" name="month" value="2026-01"></label>
+  <label>Time <input type="time" name="time" value="13:45" data-states="focus"></label>
+  <label>Week <input type="week" name="week" value="2026-W02"></label>
+  <label>Disabled date <input type="date" name="date-disabled" value="2026-01-02" disabled></label>
+  <label>Readonly time <input type="time" name="time-readonly" value="08:00" readonly></label>
+  <label>Invalid date <input type="date" name="date-invalid" value="2026-01-02" aria-invalid="true"></label>
+  <small>Invalid date helper.</small>
+  <label>Valid time <input type="time" name="time-valid" value="09:30" aria-invalid="false"></label>
+  <small>Valid time helper.</small>
+
+  <div dir="rtl">
+    <h2>Right to left block</h2>
+    <input type="date" name="rtl-date" value="2026-01-02">
+    <input type="datetime-local" name="rtl-datetime" value="2026-01-02T03:04">
+    <input type="month" name="rtl-month" value="2026-01">
+    <input type="time" name="rtl-time" value="13:45">
+    <input type="week" name="rtl-week" value="2026-W02">
+  </div>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <input type="date" name="l-date" value="2026-01-02">
+    <input type="time" name="l-time" value="13:45">
+    <input type="date" name="l-date-invalid" value="2026-01-02" aria-invalid="true">
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <input type="date" name="d-date" value="2026-01-02">
+    <input type="time" name="d-time" value="13:45">
+    <input type="date" name="d-date-invalid" value="2026-01-02" aria-invalid="true">
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>forms/input-search</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="forms/input-search">
+  <h1>Input type search</h1>
+  <label for="is-1">Search</label>
+  <input type="search" id="is-1" name="search" placeholder="Search" data-states="hover focus focus-visible active">
+  <label>Search with a value <input type="search" name="search-value" value="Query"></label>
+  <label>Valid search <input type="search" name="search-valid" value="Valid" aria-invalid="false" data-states="focus"></label>
+  <small>Valid search helper.</small>
+  <label>Invalid search <input type="search" name="search-invalid" value="Invalid" aria-invalid="true" data-states="focus"></label>
+  <small>Invalid search helper.</small>
+  <label>Disabled search <input type="search" name="search-disabled" placeholder="Disabled" disabled></label>
+
+  <div dir="rtl">
+    <h2>Right to left block</h2>
+    <input type="search" name="rtl-search" placeholder="Search">
+    <input type="search" name="rtl-search-valid" value="Valid" aria-invalid="false">
+    <input type="search" name="rtl-search-invalid" value="Invalid" aria-invalid="true">
+  </div>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <input type="search" name="l-search" placeholder="Light search" data-states="focus">
+    <input type="search" name="l-search-invalid" value="Invalid" aria-invalid="true">
+    <input type="search" name="l-search-valid" value="Valid" aria-invalid="false">
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <input type="search" name="d-search" placeholder="Dark search" data-states="focus">
+    <input type="search" name="d-search-invalid" value="Invalid" aria-invalid="true">
+    <input type="search" name="d-search-valid" value="Valid" aria-invalid="false">
+  </div>
+</div>
+</body>
+</html>

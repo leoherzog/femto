@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>content/embedded</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="content/embedded">
+  <h1>Embedded content</h1>
+  <p>Image: <img src="/tests/pages/assets/landscape.svg" alt="Landscape placeholder" width="160" height="90"></p>
+  <p><img src="/tests/pages/assets/wide.svg" alt="Image wider than its container"></p>
+  <p><img src="/tests/pages/assets/landscape.svg" alt="Image with a border attribute" border="2"></p>
+  <p>Inline SVG without fill:
+    <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle></svg>
+    and with fill:
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="#d93526" aria-hidden="true"><rect width="24" height="24"></rect></svg>
+    and with fill none:
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle></svg>
+  </p>
+  <p>Video without a source: <video width="160" height="90"></video></p>
+  <p>Video with controls: <video width="160" height="90" controls></video></p>
+  <p>Audio with controls: <audio controls></audio></p>
+  <p>Audio without controls (hidden): <audio></audio></p>
+  <p>Canvas: <canvas width="80" height="40"></canvas></p>
+  <p>Iframe with about:blank: <iframe src="about:blank" title="Blank frame" width="160" height="60"></iframe></p>
+  <p>Iframe with srcdoc: <iframe srcdoc="&lt;p&gt;Inline frame document&lt;/p&gt;" title="Inline document frame" width="160" height="60"></iframe></p>
+  <p>Iframe with a frameborder attribute: <iframe src="about:blank" title="Frame with border" frameborder="1" width="80" height="40"></iframe></p>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <p><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle></svg> <img src="/tests/pages/assets/landscape.svg" alt="Light image" width="80" height="45"></p>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <p><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle></svg> <img src="/tests/pages/assets/landscape.svg" alt="Dark image" width="80" height="45"></p>
+  </div>
+</div>
+</body>
+</html>

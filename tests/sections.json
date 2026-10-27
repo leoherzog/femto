@@ -1,0 +1,1147 @@
+{
+  "$comment": "Banner sections of each 2.1.1 reference entry, in file order, and the femto files (relative to css/) that replace each one in a hybrid build. Owned by the refs agent; see tests/reference/README.md.",
+  "banner_format": "A banner is the three or more lines '/**', ' * <title>' (one or more title lines), ' */'. 'title' is the first title line exactly as written; 'banner' is every title line. 'line' is the 1-based line of '/**' in the reference file. A section runs from its banner to the line before the next banner (or end of file). The '(preamble)' pseudo-section is everything before the first banner (@charset and the copyright comment); it has no femto files.",
+  "files_root": "css/",
+  "entries": {
+    "default": {
+      "reference": "tests/reference/femto.css",
+      "sections": [
+        {
+          "title": "(preamble)",
+          "banner": [],
+          "line": 1,
+          "files": []
+        },
+        {
+          "title": "Styles",
+          "banner": [
+            "Styles"
+          ],
+          "line": 6,
+          "files": [
+            "tokens/base.css",
+            "tokens/breakpoints.css",
+            "layout/elements.css"
+          ]
+        },
+        {
+          "title": "Color schemes",
+          "banner": [
+            "Color schemes"
+          ],
+          "line": 229,
+          "files": [
+            "tokens/schemes.css"
+          ]
+        },
+        {
+          "title": "Document",
+          "banner": [
+            "Document",
+            "Content-box & Responsive typography"
+          ],
+          "line": 626,
+          "files": [
+            "layout/document.css"
+          ]
+        },
+        {
+          "title": "Landmarks",
+          "banner": [
+            "Landmarks"
+          ],
+          "line": 663,
+          "files": [
+            "layout/landmarks.css"
+          ]
+        },
+        {
+          "title": "Section",
+          "banner": [
+            "Section"
+          ],
+          "line": 681,
+          "files": [
+            "layout/section.css"
+          ]
+        },
+        {
+          "title": "Container",
+          "banner": [
+            "Container"
+          ],
+          "line": 688,
+          "files": [
+            "classes/container.css"
+          ]
+        },
+        {
+          "title": "Grid",
+          "banner": [
+            "Grid",
+            "Minimal grid system with auto-layout columns"
+          ],
+          "line": 728,
+          "files": [
+            "classes/grid.css"
+          ]
+        },
+        {
+          "title": "Overflow auto",
+          "banner": [
+            "Overflow auto"
+          ],
+          "line": 747,
+          "files": [
+            "classes/overflow-auto.css"
+          ]
+        },
+        {
+          "title": "Typography",
+          "banner": [
+            "Typography"
+          ],
+          "line": 754,
+          "files": [
+            "content/typography.css"
+          ]
+        },
+        {
+          "title": "Link",
+          "banner": [
+            "Link"
+          ],
+          "line": 910,
+          "files": [
+            "content/link.css",
+            "classes/links.css"
+          ]
+        },
+        {
+          "title": "Button",
+          "banner": [
+            "Button"
+          ],
+          "line": 964,
+          "files": [
+            "content/button.css",
+            "classes/buttons.css"
+          ]
+        },
+        {
+          "title": "Table",
+          "banner": [
+            "Table"
+          ],
+          "line": 1121,
+          "files": [
+            "content/table.css",
+            "classes/table-striped.css"
+          ]
+        },
+        {
+          "title": "Embedded content",
+          "banner": [
+            "Embedded content"
+          ],
+          "line": 1153,
+          "files": [
+            "content/embedded.css"
+          ]
+        },
+        {
+          "title": "Code",
+          "banner": [
+            "Code"
+          ],
+          "line": 1189,
+          "files": [
+            "content/code.css"
+          ]
+        },
+        {
+          "title": "Figure",
+          "banner": [
+            "Figure"
+          ],
+          "line": 1248,
+          "files": [
+            "content/figure.css"
+          ]
+        },
+        {
+          "title": "Misc",
+          "banner": [
+            "Misc"
+          ],
+          "line": 1261,
+          "files": [
+            "content/misc.css"
+          ]
+        },
+        {
+          "title": "Basics form elements",
+          "banner": [
+            "Basics form elements"
+          ],
+          "line": 1281,
+          "files": [
+            "forms/basics.css"
+          ]
+        },
+        {
+          "title": "Checkboxes, Radios and Switches",
+          "banner": [
+            "Checkboxes, Radios and Switches"
+          ],
+          "line": 1581,
+          "files": [
+            "forms/checkbox-radio-switch.css"
+          ]
+        },
+        {
+          "title": "Input type color",
+          "banner": [
+            "Input type color"
+          ],
+          "line": 1718,
+          "files": [
+            "forms/input-color.css"
+          ]
+        },
+        {
+          "title": "Input type datetime",
+          "banner": [
+            "Input type datetime"
+          ],
+          "line": 1736,
+          "files": [
+            "forms/input-date.css"
+          ]
+        },
+        {
+          "title": "Input type file",
+          "banner": [
+            "Input type file"
+          ],
+          "line": 1777,
+          "files": [
+            "forms/input-file.css"
+          ]
+        },
+        {
+          "title": "Input type range",
+          "banner": [
+            "Input type range"
+          ],
+          "line": 1801,
+          "files": [
+            "forms/input-range.css"
+          ]
+        },
+        {
+          "title": "Input type search",
+          "banner": [
+            "Input type search"
+          ],
+          "line": 1886,
+          "files": [
+            "forms/input-search.css"
+          ]
+        },
+        {
+          "title": "Accordion (<details>)",
+          "banner": [
+            "Accordion (<details>)"
+          ],
+          "line": 1914,
+          "files": [
+            "components/accordion.css"
+          ]
+        },
+        {
+          "title": "Card (<article>)",
+          "banner": [
+            "Card (<article>)"
+          ],
+          "line": 1989,
+          "files": [
+            "components/card.css"
+          ]
+        },
+        {
+          "title": "Dropdown (details.dropdown)",
+          "banner": [
+            "Dropdown (details.dropdown)"
+          ],
+          "line": 2021,
+          "files": [
+            "classes/dropdown.css"
+          ]
+        },
+        {
+          "title": "Group ([role=\"group\"], [role=\"search\"])",
+          "banner": [
+            "Group ([role=\"group\"], [role=\"search\"])"
+          ],
+          "line": 2181,
+          "files": [
+            "components/group.css"
+          ]
+        },
+        {
+          "title": "Loading ([aria-busy=true])",
+          "banner": [
+            "Loading ([aria-busy=true])"
+          ],
+          "line": 2309,
+          "files": [
+            "components/loading.css"
+          ]
+        },
+        {
+          "title": "Modal (<dialog>)",
+          "banner": [
+            "Modal (<dialog>)"
+          ],
+          "line": 2341,
+          "files": [
+            "components/modal.css",
+            "classes/modal.css"
+          ]
+        },
+        {
+          "title": "Nav",
+          "banner": [
+            "Nav"
+          ],
+          "line": 2474,
+          "files": [
+            "components/nav.css"
+          ]
+        },
+        {
+          "title": "Progress",
+          "banner": [
+            "Progress"
+          ],
+          "line": 2580,
+          "files": [
+            "components/progress.css"
+          ]
+        },
+        {
+          "title": "Tooltip ([data-tooltip])",
+          "banner": [
+            "Tooltip ([data-tooltip])"
+          ],
+          "line": 2641,
+          "files": [
+            "components/tooltip.css"
+          ]
+        },
+        {
+          "title": "Accessibility & User interaction",
+          "banner": [
+            "Accessibility & User interaction"
+          ],
+          "line": 2783,
+          "files": [
+            "utilities/accessibility.css"
+          ]
+        },
+        {
+          "title": "Reduce Motion Features",
+          "banner": [
+            "Reduce Motion Features"
+          ],
+          "line": 2820,
+          "files": [
+            "utilities/reduce-motion.css"
+          ]
+        }
+      ],
+      "append": []
+    },
+    "classless": {
+      "reference": "tests/reference/femto.classless.css",
+      "sections": [
+        {
+          "title": "(preamble)",
+          "banner": [],
+          "line": 1,
+          "files": []
+        },
+        {
+          "title": "Styles",
+          "banner": [
+            "Styles"
+          ],
+          "line": 6,
+          "files": [
+            "tokens/base.css",
+            "tokens/breakpoints.css",
+            "layout/elements.css"
+          ]
+        },
+        {
+          "title": "Color schemes",
+          "banner": [
+            "Color schemes"
+          ],
+          "line": 196,
+          "files": [
+            "tokens/schemes.css"
+          ]
+        },
+        {
+          "title": "Document",
+          "banner": [
+            "Document",
+            "Content-box & Responsive typography"
+          ],
+          "line": 552,
+          "files": [
+            "layout/document.css"
+          ]
+        },
+        {
+          "title": "Landmarks",
+          "banner": [
+            "Landmarks"
+          ],
+          "line": 589,
+          "files": [
+            "layout/landmarks.css",
+            "layout/landmarks-container.css"
+          ]
+        },
+        {
+          "title": "Section",
+          "banner": [
+            "Section"
+          ],
+          "line": 647,
+          "files": [
+            "layout/section.css"
+          ]
+        },
+        {
+          "title": "Typography",
+          "banner": [
+            "Typography"
+          ],
+          "line": 654,
+          "files": [
+            "content/typography.css"
+          ]
+        },
+        {
+          "title": "Link",
+          "banner": [
+            "Link"
+          ],
+          "line": 810,
+          "files": [
+            "content/link.css"
+          ]
+        },
+        {
+          "title": "Button",
+          "banner": [
+            "Button"
+          ],
+          "line": 844,
+          "files": [
+            "content/button.css"
+          ]
+        },
+        {
+          "title": "Table",
+          "banner": [
+            "Table"
+          ],
+          "line": 949,
+          "files": [
+            "content/table.css"
+          ]
+        },
+        {
+          "title": "Embedded content",
+          "banner": [
+            "Embedded content"
+          ],
+          "line": 981,
+          "files": [
+            "content/embedded.css"
+          ]
+        },
+        {
+          "title": "Code",
+          "banner": [
+            "Code"
+          ],
+          "line": 1017,
+          "files": [
+            "content/code.css"
+          ]
+        },
+        {
+          "title": "Figure",
+          "banner": [
+            "Figure"
+          ],
+          "line": 1076,
+          "files": [
+            "content/figure.css"
+          ]
+        },
+        {
+          "title": "Misc",
+          "banner": [
+            "Misc"
+          ],
+          "line": 1089,
+          "files": [
+            "content/misc.css"
+          ]
+        },
+        {
+          "title": "Basics form elements",
+          "banner": [
+            "Basics form elements"
+          ],
+          "line": 1109,
+          "files": [
+            "forms/basics.css"
+          ]
+        },
+        {
+          "title": "Checkboxes, Radios and Switches",
+          "banner": [
+            "Checkboxes, Radios and Switches"
+          ],
+          "line": 1409,
+          "files": [
+            "forms/checkbox-radio-switch.css"
+          ]
+        },
+        {
+          "title": "Input type color",
+          "banner": [
+            "Input type color"
+          ],
+          "line": 1546,
+          "files": [
+            "forms/input-color.css"
+          ]
+        },
+        {
+          "title": "Input type datetime",
+          "banner": [
+            "Input type datetime"
+          ],
+          "line": 1564,
+          "files": [
+            "forms/input-date.css"
+          ]
+        },
+        {
+          "title": "Input type file",
+          "banner": [
+            "Input type file"
+          ],
+          "line": 1605,
+          "files": [
+            "forms/input-file.css"
+          ]
+        },
+        {
+          "title": "Input type range",
+          "banner": [
+            "Input type range"
+          ],
+          "line": 1629,
+          "files": [
+            "forms/input-range.css"
+          ]
+        },
+        {
+          "title": "Input type search",
+          "banner": [
+            "Input type search"
+          ],
+          "line": 1714,
+          "files": [
+            "forms/input-search.css"
+          ]
+        },
+        {
+          "title": "Accordion (<details>)",
+          "banner": [
+            "Accordion (<details>)"
+          ],
+          "line": 1742,
+          "files": [
+            "components/accordion.css"
+          ]
+        },
+        {
+          "title": "Card (<article>)",
+          "banner": [
+            "Card (<article>)"
+          ],
+          "line": 1817,
+          "files": [
+            "components/card.css"
+          ]
+        },
+        {
+          "title": "Group ([role=\"group\"], [role=\"search\"])",
+          "banner": [
+            "Group ([role=\"group\"], [role=\"search\"])"
+          ],
+          "line": 1849,
+          "files": [
+            "components/group.css"
+          ]
+        },
+        {
+          "title": "Loading ([aria-busy=true])",
+          "banner": [
+            "Loading ([aria-busy=true])"
+          ],
+          "line": 1977,
+          "files": [
+            "components/loading.css"
+          ]
+        },
+        {
+          "title": "Modal (<dialog>)",
+          "banner": [
+            "Modal (<dialog>)"
+          ],
+          "line": 2009,
+          "files": [
+            "components/modal.css"
+          ]
+        },
+        {
+          "title": "Nav",
+          "banner": [
+            "Nav"
+          ],
+          "line": 2097,
+          "files": [
+            "components/nav.css"
+          ]
+        },
+        {
+          "title": "Progress",
+          "banner": [
+            "Progress"
+          ],
+          "line": 2203,
+          "files": [
+            "components/progress.css"
+          ]
+        },
+        {
+          "title": "Tooltip ([data-tooltip])",
+          "banner": [
+            "Tooltip ([data-tooltip])"
+          ],
+          "line": 2264,
+          "files": [
+            "components/tooltip.css"
+          ]
+        },
+        {
+          "title": "Accessibility & User interaction",
+          "banner": [
+            "Accessibility & User interaction"
+          ],
+          "line": 2406,
+          "files": [
+            "utilities/accessibility.css"
+          ]
+        },
+        {
+          "title": "Reduce Motion Features",
+          "banner": [
+            "Reduce Motion Features"
+          ],
+          "line": 2443,
+          "files": [
+            "utilities/reduce-motion.css"
+          ]
+        }
+      ],
+      "append": []
+    },
+    "fluid-classless": {
+      "reference": "tests/reference/femto.fluid.classless.css",
+      "sections": [
+        {
+          "title": "(preamble)",
+          "banner": [],
+          "line": 1,
+          "files": []
+        },
+        {
+          "title": "Styles",
+          "banner": [
+            "Styles"
+          ],
+          "line": 6,
+          "files": [
+            "tokens/base.css",
+            "tokens/breakpoints.css",
+            "layout/elements.css"
+          ]
+        },
+        {
+          "title": "Color schemes",
+          "banner": [
+            "Color schemes"
+          ],
+          "line": 196,
+          "files": [
+            "tokens/schemes.css"
+          ]
+        },
+        {
+          "title": "Document",
+          "banner": [
+            "Document",
+            "Content-box & Responsive typography"
+          ],
+          "line": 552,
+          "files": [
+            "layout/document.css"
+          ]
+        },
+        {
+          "title": "Landmarks",
+          "banner": [
+            "Landmarks"
+          ],
+          "line": 589,
+          "files": [
+            "layout/landmarks.css",
+            "layout/landmarks-container.css"
+          ]
+        },
+        {
+          "title": "Section",
+          "banner": [
+            "Section"
+          ],
+          "line": 610,
+          "files": [
+            "layout/section.css"
+          ]
+        },
+        {
+          "title": "Typography",
+          "banner": [
+            "Typography"
+          ],
+          "line": 617,
+          "files": [
+            "content/typography.css"
+          ]
+        },
+        {
+          "title": "Link",
+          "banner": [
+            "Link"
+          ],
+          "line": 773,
+          "files": [
+            "content/link.css"
+          ]
+        },
+        {
+          "title": "Button",
+          "banner": [
+            "Button"
+          ],
+          "line": 807,
+          "files": [
+            "content/button.css"
+          ]
+        },
+        {
+          "title": "Table",
+          "banner": [
+            "Table"
+          ],
+          "line": 912,
+          "files": [
+            "content/table.css"
+          ]
+        },
+        {
+          "title": "Embedded content",
+          "banner": [
+            "Embedded content"
+          ],
+          "line": 944,
+          "files": [
+            "content/embedded.css"
+          ]
+        },
+        {
+          "title": "Code",
+          "banner": [
+            "Code"
+          ],
+          "line": 980,
+          "files": [
+            "content/code.css"
+          ]
+        },
+        {
+          "title": "Figure",
+          "banner": [
+            "Figure"
+          ],
+          "line": 1039,
+          "files": [
+            "content/figure.css"
+          ]
+        },
+        {
+          "title": "Misc",
+          "banner": [
+            "Misc"
+          ],
+          "line": 1052,
+          "files": [
+            "content/misc.css"
+          ]
+        },
+        {
+          "title": "Basics form elements",
+          "banner": [
+            "Basics form elements"
+          ],
+          "line": 1072,
+          "files": [
+            "forms/basics.css"
+          ]
+        },
+        {
+          "title": "Checkboxes, Radios and Switches",
+          "banner": [
+            "Checkboxes, Radios and Switches"
+          ],
+          "line": 1372,
+          "files": [
+            "forms/checkbox-radio-switch.css"
+          ]
+        },
+        {
+          "title": "Input type color",
+          "banner": [
+            "Input type color"
+          ],
+          "line": 1509,
+          "files": [
+            "forms/input-color.css"
+          ]
+        },
+        {
+          "title": "Input type datetime",
+          "banner": [
+            "Input type datetime"
+          ],
+          "line": 1527,
+          "files": [
+            "forms/input-date.css"
+          ]
+        },
+        {
+          "title": "Input type file",
+          "banner": [
+            "Input type file"
+          ],
+          "line": 1568,
+          "files": [
+            "forms/input-file.css"
+          ]
+        },
+        {
+          "title": "Input type range",
+          "banner": [
+            "Input type range"
+          ],
+          "line": 1592,
+          "files": [
+            "forms/input-range.css"
+          ]
+        },
+        {
+          "title": "Input type search",
+          "banner": [
+            "Input type search"
+          ],
+          "line": 1677,
+          "files": [
+            "forms/input-search.css"
+          ]
+        },
+        {
+          "title": "Accordion (<details>)",
+          "banner": [
+            "Accordion (<details>)"
+          ],
+          "line": 1705,
+          "files": [
+            "components/accordion.css"
+          ]
+        },
+        {
+          "title": "Card (<article>)",
+          "banner": [
+            "Card (<article>)"
+          ],
+          "line": 1780,
+          "files": [
+            "components/card.css"
+          ]
+        },
+        {
+          "title": "Group ([role=\"group\"], [role=\"search\"])",
+          "banner": [
+            "Group ([role=\"group\"], [role=\"search\"])"
+          ],
+          "line": 1812,
+          "files": [
+            "components/group.css"
+          ]
+        },
+        {
+          "title": "Loading ([aria-busy=true])",
+          "banner": [
+            "Loading ([aria-busy=true])"
+          ],
+          "line": 1940,
+          "files": [
+            "components/loading.css"
+          ]
+        },
+        {
+          "title": "Modal (<dialog>)",
+          "banner": [
+            "Modal (<dialog>)"
+          ],
+          "line": 1972,
+          "files": [
+            "components/modal.css"
+          ]
+        },
+        {
+          "title": "Nav",
+          "banner": [
+            "Nav"
+          ],
+          "line": 2060,
+          "files": [
+            "components/nav.css"
+          ]
+        },
+        {
+          "title": "Progress",
+          "banner": [
+            "Progress"
+          ],
+          "line": 2166,
+          "files": [
+            "components/progress.css"
+          ]
+        },
+        {
+          "title": "Tooltip ([data-tooltip])",
+          "banner": [
+            "Tooltip ([data-tooltip])"
+          ],
+          "line": 2227,
+          "files": [
+            "components/tooltip.css"
+          ]
+        },
+        {
+          "title": "Accessibility & User interaction",
+          "banner": [
+            "Accessibility & User interaction"
+          ],
+          "line": 2369,
+          "files": [
+            "utilities/accessibility.css"
+          ]
+        },
+        {
+          "title": "Reduce Motion Features",
+          "banner": [
+            "Reduce Motion Features"
+          ],
+          "line": 2406,
+          "files": [
+            "utilities/reduce-motion.css"
+          ]
+        }
+      ],
+      "append": [
+        "options/fluid.css"
+      ]
+    }
+  },
+  "themes": {
+    "default": {
+      "reference": "tests/reference/femto.<color>.css",
+      "sections_from": "default",
+      "append": [
+        "themes/<color>.css"
+      ]
+    },
+    "classless": {
+      "reference": "tests/reference/femto.classless.<color>.css",
+      "sections_from": "classless",
+      "append": [
+        "themes/<color>.css"
+      ]
+    },
+    "colors": [
+      "amber",
+      "blue",
+      "cyan",
+      "fuchsia",
+      "green",
+      "grey",
+      "indigo",
+      "jade",
+      "lime",
+      "orange",
+      "pink",
+      "pumpkin",
+      "purple",
+      "red",
+      "sand",
+      "slate",
+      "violet",
+      "yellow",
+      "zinc"
+    ],
+    "$comment": "Every theme reference has exactly the same banner titles and order as its entry (checked when this file was generated). In 2.1.1 they also sit at the same lines (only the trailing newline differs), but locate them by title rather than relying on that. Azure is built into tokens/, so femto.css itself is the azure reference."
+  },
+  "options": {
+    "default": {
+      "responsive-spacings": {
+        "reference": "tests/reference/options/femto.responsive-spacings.css",
+        "sections_from": "default",
+        "append": [
+          "options/responsive-spacings.css"
+        ]
+      },
+      "no-transitions": {
+        "reference": "tests/reference/options/femto.no-transitions.css",
+        "sections_from": "default",
+        "append": [
+          "options/no-transitions.css"
+        ]
+      },
+      "fixed-typography": {
+        "reference": "tests/reference/options/femto.fixed-typography.css",
+        "sections_from": "default",
+        "append": [
+          "options/fixed-typography.css"
+        ]
+      }
+    },
+    "$comment": "Option references are compiled on the default entry only and have the default entry's banner titles and order (checked when this file was generated), at different line numbers."
+  },
+  "notes": [
+    {
+      "section": "Styles",
+      "topic": "class-dependent rules inside a shared section",
+      "note": "The default entry's Styles section has declarations the classless entries lack: --femto-grid-column-gap and --femto-grid-row-gap in the first :root, :host block; 'a.secondary, a.contrast { --femto-text-decoration: underline }'; 'details.dropdown summary:not([role=button])' and 'nav details.dropdown summary:focus-visible' (--femto-outline-width); and two '[role=search]:has(... .secondary:focus ...), [role=group]:has(...)' and '.contrast' rules (--femto-group-box-shadow-focus-with-button). If tokens/base.css or layout/elements.css is shared by every entry, these must move to classes/* files (default only), which moves them later in the cascade, or classless gains them."
+    },
+    {
+      "section": "Styles",
+      "topic": "selectors that differ between entries",
+      "note": "Default writes 'details summary[role=button]:not(.outline)::after' and '[aria-busy=true]:not(input, select, textarea):is(button, [type=submit], [type=button], [type=reset], [role=button]):not(.outline)::before' (filter: brightness(0) invert(1)); classless writes the same selectors without ':not(.outline)', so they have one class less specificity. One shared file cannot match both; using the default selector in classless raises specificity there."
+    },
+    {
+      "section": "Styles",
+      "topic": "theme-color-dependent declaration outside Color schemes",
+      "note": "For the six light-primary themes (amber, grey, lime, pumpkin, sand, yellow; --femto-primary-inverse: #000) the Styles rule '[aria-busy=true]...:not(.outline)::before' becomes 'filter: brightness(0) invert(0)' instead of invert(1), in both femto.<color>.css and femto.classless.<color>.css. The neighbouring 'details summary[role=button]:not(.outline)::after' keeps invert(1) in every theme (a 2.1.1 inconsistency to keep). So themes/<color>.css for those six must override one declaration from the Styles section, not only scheme tokens. This is the 28th theme-dependent declaration counted in PLAN."
+    },
+    {
+      "section": "Styles",
+      "topic": "where the option references change Styles",
+      "note": "Both responsive options live in the Styles section: options/femto.fixed-typography.css drops the five '@media (min-width: ...) { :root, :host { --femto-font-size: ... } }' blocks right after the first :root block; options/femto.responsive-spacings.css inserts five media blocks for 'body > header, body > main, body > footer, section' and five for 'article' (--femto-block-spacing-vertical/horizontal) at the same place. An appended options/*.css file sits at the end of the cascade instead; the hybrid build will show whether that order matters."
+    },
+    {
+      "section": "Color schemes",
+      "topic": "theme-color-dependent declarations",
+      "note": "Every non-azure theme changes 7 tokens in each of the 3 scheme blocks (light; media dark; [data-theme=dark]): --femto-text-selection-color, --femto-primary, --femto-primary-background, --femto-primary-underline, --femto-primary-hover, --femto-primary-hover-background, --femto-primary-focus (21 declarations). The six light-primary themes also change --femto-primary-inverse (#fff -> #000) and --femto-switch-thumb-box-shadow (0 0 0 rgba(0, 0, 0, 0) -> 0 0 0.5rem rgba(0, 0, 0, 0.25)) in each block (6 more), plus the Styles filter above: 28 in all. No other section depends on the theme color."
+    },
+    {
+      "section": "Color schemes",
+      "topic": "class-dependent declarations",
+      "note": "Default only: five --femto-dropdown-* tokens (background-color, border-color, box-shadow, color, hover-background-color) in each scheme block, and in both dark blocks 'details summary[role=button].contrast:not(.outline)::after' and '[aria-busy=true]...contrast...:not(.outline)::before' { filter: brightness(0) }. These belong with classes/dropdown.css and classes/buttons.css (or a classes/ schemes file), not tokens/schemes.css, if classless must not gain them."
+    },
+    {
+      "section": "Color schemes",
+      "topic": "scheme selectors differ from the PLAN snippet",
+      "note": "2.1.1 writes the light block as '[data-theme=light], :root:not([data-theme=dark]), :host(:not([data-theme=dark]))', the dark media block as '@media only screen and (prefers-color-scheme: dark) { :root:not([data-theme]), :host(:not([data-theme])) }', and '[data-theme=dark]'. The PLAN 'Light and dark' snippet omits both :host() forms and 'only screen and'. Without 'only screen', print output with a dark OS preference turns dark where 2.1.1 stays light; without :host(), shadow roots lose their scheme."
+    },
+    {
+      "section": "Color schemes",
+      "topic": "non-token rules in the section",
+      "note": "Besides the three token blocks the section has, per scheme, 'input:is([type=submit], [type=button], [type=reset], [type=checkbox], [type=radio], [type=file])' { --femto-form-element-focus-color: var(--femto-primary-focus) } under each scheme selector, the --femto-icon-valid and --femto-icon-invalid data-URI tokens, which stay per scheme, and at its very end an unscoped 'progress, [type=checkbox], [type=radio], [type=range] { accent-color: var(--femto-primary) }'."
+    },
+    {
+      "section": "Landmarks",
+      "topic": "entries differ structurally",
+      "note": "Default: 'body > header, body > main, body > footer { padding-block: var(--femto-block-spacing-vertical) }'. Classless replaces that rule with '{ width: 100%; margin-right: auto; margin-left: auto; padding: var(--femto-block-spacing-vertical) var(--femto-block-spacing-horizontal) }' plus five viewport media blocks (max-width 510/700/950/1200/1450px; padding-right/left 0 from 576px). Fluid classless is classless without those five media blocks; that is the only difference between femto.classless.css and femto.fluid.classless.css. An appended options/fluid.css must therefore cancel max-width and restore the horizontal padding from 576px up, or the fluid entry needs a different landmarks-container file."
+    },
+    {
+      "section": "Container, Grid, Overflow auto, Dropdown (details.dropdown)",
+      "topic": "sections missing from classless",
+      "note": "The classless and fluid-classless references have no Container, Grid, Overflow auto or Dropdown banner at all (30 banners against 34)."
+    },
+    {
+      "section": "Link, Button, Modal (<dialog>)",
+      "topic": "class rules in the middle of a section",
+      "note": "Link: the .secondary and .contrast rules sit before 'a[role=button] { display: inline-block }'. Button: .secondary, .contrast and .outline rules are interleaved with element rules. Modal: '.close' is merged into the same selector lists as ':is(a, button)[rel=prev]' (3 rules), and .modal-is-open, .modal-is-opening/.modal-is-closing and the modal-overlay and modal keyframes are default only. Appending classes/*.css after the content file reorders these rules; classes/modal.css has to repeat the rel=prev declarations under '.close' selectors."
+    },
+    {
+      "section": "Button",
+      "topic": "selector list that differs between entries",
+      "note": "Default's secondary focus rule lists '[type=reset]:focus, [type=reset]:is([aria-current]:not([aria-current=false])):focus, [type=file]::file-selector-button:focus, [type=file]::file-selector-button:is([aria-current]:not([aria-current=false])):focus'; classless lists only '[type=reset]:focus, [type=file]::file-selector-button:focus'. Sharing the default list gives a focused reset button with aria-current the secondary focus ring in classless, where 2.1.1 classless shows the primary one (a registrable natural fix)."
+    },
+    {
+      "section": "Basics form elements",
+      "topic": "class inside :where()",
+      "note": "Default writes ':where(input, select, textarea, fieldset, .grid) + small' and the [aria-invalid=false] and [aria-invalid=true] forms; classless drops '.grid'. :where() has zero specificity, so sharing the default selectors only changes classless pages that use class=\"grid\"."
+    },
+    {
+      "section": "Table",
+      "topic": "classless ships table.striped",
+      "note": "femto.classless.css and femto.fluid.classless.css contain 'table.striped' rules (a 2.1.1 bug); the draft map omits classes/table-striped.css from classless, which is the registered natural fix in PLAN."
+    },
+    {
+      "section": "(all)",
+      "topic": "theme references",
+      "note": "css/pico.<color>.css and css/pico.classless.<color>.css came from scripts/build-themes.js (sass.compile, whose 'outputStyle' option is ignored, so the output is expanded) and, unlike the three entry files, end without a trailing newline. Their banners match their entry exactly."
+    },
+    {
+      "section": "(options)",
+      "topic": "no-transitions reference removes more than durations",
+      "note": "$enable-transitions: false keeps '--femto-transition: 0.2s ease-in-out' defined but drops every 'transition' declaration (including the -webkit-/-moz-/-ms- copies in the range track and thumb and progress pseudo-element rules, and the switch thumb's 'transition: margin 0.1s ease-in-out'), the modal animation rules (.modal-is-opening/.modal-is-closing) with the modal-overlay and modal keyframes, and every tooltip slide animation with its keyframes and --femto-tooltip-slide-to/--femto-tooltip-caret-slide-to tokens. An options/no-transitions.css that only sets '--femto-transition: 0s' leaves transition-property lists, modal animations and tooltip animations in place, so those show up as differences."
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>layout/section</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="layout/section">
+  <h1>Section</h1>
+  <section>
+    <h2>First section</h2>
+    <p>Sections get a bottom margin from the block spacing.</p>
+  </section>
+  <section>
+    <h2>Second section</h2>
+    <section>
+      <h3>Nested section</h3>
+      <p>Nested content.</p>
+    </section>
+  </section>
+  <article>
+    <section><p>Section inside a card</p></section>
+  </article>
+  <section data-theme="light">
+    <h2>Section that is itself a light island</h2>
+  </section>
+  <section data-theme="dark">
+    <h2>Section that is itself a dark island</h2>
+  </section>
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <section><p>Light section</p></section>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <section><p>Dark section</p></section>
+  </div>
+</div>
+</body>
+</html>

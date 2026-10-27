@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>classes/dropdown</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="classes/dropdown">
+  <h1>Dropdown, closed</h1>
+  <p>Every dropdown variant in its closed state. Open dropdowns live in classes-dropdown-open.html, because an open dropdown covers the viewport with its summary::before overlay. The one open dropdown here has no summary element, so it has no overlay.</p>
+
+  <details class="dropdown">
+    <summary data-states="hover focus focus-visible active">Select-like dropdown</summary>
+    <ul>
+      <li><a href="#a1">Item one</a></li>
+      <li><a href="#a2">Item two</a></li>
+    </ul>
+  </details>
+  <details class="dropdown">
+    <summary aria-invalid="false" data-states="focus">Valid dropdown</summary>
+    <ul><li><a href="#v1">Item</a></li></ul>
+  </details>
+  <details class="dropdown">
+    <summary aria-invalid="true" data-states="focus">Invalid dropdown</summary>
+    <ul><li><a href="#i1">Item</a></li></ul>
+  </details>
+  <details class="dropdown">
+    <summary role="button" data-states="hover focus focus-visible">Button dropdown</summary>
+    <ul><li><a href="#b1">Item</a></li></ul>
+  </details>
+  <details class="dropdown">
+    <summary role="button" class="secondary" data-states="hover">Secondary button dropdown</summary>
+    <ul><li><a href="#b2">Item</a></li></ul>
+  </details>
+  <details class="dropdown">
+    <summary role="button" class="contrast">Contrast button dropdown</summary>
+    <ul><li><a href="#b3">Item</a></li></ul>
+  </details>
+  <details class="dropdown">
+    <summary role="button" class="outline">Outline button dropdown</summary>
+    <ul><li><a href="#b4">Item</a></li></ul>
+  </details>
+  <details class="dropdown">
+    <summary role="button" class="outline secondary">Outline secondary button dropdown</summary>
+    <ul><li><a href="#b5">Item</a></li></ul>
+  </details>
+  <details class="dropdown" open>
+    <button data-states="hover focus">Button child instead of a summary</button>
+    <a href="#ac">Link child instead of a summary</a>
+  </details>
+  <details class="dropdown">
+    <summary>Right aligned list</summary>
+    <ul dir="rtl"><li><a href="#r1">Item</a></li></ul>
+  </details>
+  <label>Dropdown inside a label
+    <details class="dropdown">
+      <summary>Choose</summary>
+      <ul>
+        <li><label><input type="checkbox" name="dd-c1"> Option one</label></li>
+        <li><label><input type="radio" name="dd-r"> Option two</label></li>
+      </ul>
+    </details>
+  </label>
+
+  <nav>
+    <ul>
+      <li><strong>Nav</strong></li>
+    </ul>
+    <ul>
+      <li><a href="#n1">Link</a></li>
+      <li>
+        <details class="dropdown">
+          <summary data-states="hover focus focus-visible active">Nav dropdown</summary>
+          <ul dir="rtl">
+            <li><a href="#n2">Item</a></li>
+          </ul>
+        </details>
+      </li>
+      <li>
+        <details class="dropdown">
+          <summary role="button" class="secondary" data-states="focus-visible">Nav button dropdown</summary>
+          <ul dir="rtl"><li><a href="#n3">Item</a></li></ul>
+        </details>
+      </li>
+    </ul>
+  </nav>
+
+  <div dir="rtl">
+    <details class="dropdown">
+      <summary>RTL dropdown</summary>
+      <ul><li><a href="#rtl1">Item</a></li></ul>
+    </details>
+  </div>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <details class="dropdown"><summary data-states="focus">Light dropdown</summary><ul><li><a href="#l1">Item</a></li></ul></details>
+    <details class="dropdown"><summary aria-invalid="true">Light invalid dropdown</summary><ul><li><a href="#l2">Item</a></li></ul></details>
+    <details class="dropdown"><summary role="button" class="contrast">Light button dropdown</summary><ul><li><a href="#l3">Item</a></li></ul></details>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <details class="dropdown"><summary data-states="focus">Dark dropdown</summary><ul><li><a href="#d1">Item</a></li></ul></details>
+    <details class="dropdown"><summary aria-invalid="true">Dark invalid dropdown</summary><ul><li><a href="#d2">Item</a></li></ul></details>
+    <details class="dropdown"><summary role="button" class="contrast">Dark button dropdown</summary><ul><li><a href="#d3">Item</a></li></ul></details>
+  </div>
+</div>
+</body>
+</html>

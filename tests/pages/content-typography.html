@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>content/typography</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="content/typography">
+  <h1>Heading 1</h1>
+  <h2>Heading 2 right after a heading</h2>
+  <h3>Heading 3</h3>
+  <h4>Heading 4</h4>
+  <h5>Heading 5</h5>
+  <h6>Heading 6</h6>
+
+  <p>Paragraph with <b>b</b>, <strong>strong</strong>, <em>em</em>, <i>i</i>, <u>u</u>, <s>s</s>,
+    <small>small</small>, H<sub>2</sub>O, x<sup>2</sup>, <mark>mark</mark>,
+    <abbr title="Abbreviation">abbr with title</abbr>, <abbr>abbr without title</abbr>,
+    <ins>ins</ins>, <del>del</del>, <q>q</q>, <cite>cite</cite>, <dfn>dfn</dfn>, <var>var</var>
+    and <time datetime="2026-01-02">time</time>.</p>
+  <h2>Heading 2 after a paragraph</h2>
+  <ul>
+    <li>Unordered one
+      <ul><li>Nested unordered</li></ul>
+      <ol><li>Nested ordered in unordered</li></ol>
+    </li>
+    <li>Unordered two</li>
+  </ul>
+  <h3>Heading 3 after an unordered list</h3>
+  <ol>
+    <li>Ordered one
+      <ol><li>Nested ordered</li></ol>
+    </li>
+    <li>Ordered two</li>
+  </ol>
+  <h4>Heading 4 after an ordered list</h4>
+  <dl>
+    <dt>Term</dt>
+    <dd>Definition
+      <dl><dt>Nested term</dt><dd>Nested definition</dd></dl>
+      <ul><li>List in a definition</li></ul>
+    </dd>
+  </dl>
+  <h5>Heading 5 after a description list</h5>
+  <blockquote>
+    A quotation that spans a line.
+    <footer><cite>Someone Quoted</cite></footer>
+  </blockquote>
+  <h6>Heading 6 after a blockquote</h6>
+  <address>1 Example Street<br>Somewhere</address>
+  <h2>Heading 2 after an address</h2>
+  <pre>Preformatted text</pre>
+  <h3>Heading 3 after pre</h3>
+  <table>
+    <tbody><tr><td>Table cell</td></tr></tbody>
+  </table>
+  <h4>Heading 4 after a table</h4>
+  <figure><p>Figure content</p></figure>
+  <h5>Heading 5 after a figure</h5>
+  <form><p>Form content</p></form>
+  <h6>Heading 6 after a form</h6>
+  <article><p>Article content</p></article>
+  <h2>Heading 2 after an article</h2>
+
+  <hgroup>
+    <h2>Heading group title</h2>
+    <p>Heading group subtitle in muted color</p>
+  </hgroup>
+  <hgroup>
+    <h3>Heading group with one child</h3>
+  </hgroup>
+  <hgroup>
+    <p>Kicker before the title</p>
+    <h3>Heading group with three children</h3>
+    <p>Last child subtitle</p>
+  </hgroup>
+
+  <p><small>Small paragraph text.</small></p>
+  <div data-theme="light">
+    <h2>Light island heading 2</h2>
+    <h1>Light h1</h1><h3>Light h3</h3><h4>Light h4</h4><h5>Light h5</h5><h6>Light h6</h6>
+    <p>Text with <mark>mark</mark>, <ins>ins</ins>, <del>del</del>, <abbr title="Abbreviation">abbr</abbr> and <small>small</small>.</p>
+    <hgroup><h3>Light group</h3><p>Light subtitle</p></hgroup>
+    <blockquote>Light quote<footer><cite>Light cite</cite></footer></blockquote>
+    <ul><li>Light list</li></ul>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island heading 2</h2>
+    <h1>Dark h1</h1><h3>Dark h3</h3><h4>Dark h4</h4><h5>Dark h5</h5><h6>Dark h6</h6>
+    <p>Text with <mark>mark</mark>, <ins>ins</ins>, <del>del</del>, <abbr title="Abbreviation">abbr</abbr> and <small>small</small>.</p>
+    <hgroup><h3>Dark group</h3><p>Dark subtitle</p></hgroup>
+    <blockquote>Dark quote<footer><cite>Dark cite</cite></footer></blockquote>
+    <ul><li>Dark list</li></ul>
+  </div>
+</div>
+</body>
+</html>

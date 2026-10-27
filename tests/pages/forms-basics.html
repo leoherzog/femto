@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>forms/basics</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="forms/basics">
+  <h1>Basics form elements</h1>
+
+  <div>
+    <label for="fb-text">Text with placeholder</label>
+    <input type="text" id="fb-text" name="text" placeholder="Placeholder text" data-states="hover focus focus-visible active">
+    <small>Helper text after an input.</small>
+
+    <label>Email inside a label <input type="email" name="email" placeholder="name@example.com"></label>
+    <label>Password <input type="password" name="password" value="secret"></label>
+    <label>Number with spin buttons <input type="number" name="number" value="3" min="0" max="10" data-states="focus"></label>
+    <label>Telephone <input type="tel" name="tel" placeholder="555 0100"></label>
+    <label>URL <input type="url" name="url" placeholder="Web address"></label>
+    <label>Search <input type="search" name="search" placeholder="Search"></label>
+    <label>Date <input type="date" name="date" value="2026-01-02"></label>
+    <label>Color <input type="color" name="color" value="#0172ad"></label>
+    <label>File <input type="file" name="file"></label>
+    <label>Range <input type="range" name="range" value="40"></label>
+    <input type="hidden" name="hidden" value="hidden">
+
+    <label>Readonly input <input type="text" name="readonly" value="Readonly value" readonly data-states="focus active"></label>
+    <label>Disabled input <input type="text" name="disabled" value="Disabled value" disabled></label>
+
+    <label for="fb-select">Select</label>
+    <select id="fb-select" name="select" data-states="hover focus focus-visible active">
+      <option>One</option>
+      <option selected>Two</option>
+      <option>Three</option>
+    </select>
+    <small>Helper text after a select.</small>
+
+    <label>Required select showing its placeholder
+      <select name="required-select" required>
+        <option value="" selected>Select an option</option>
+        <option value="a">Option A</option>
+      </select>
+    </label>
+
+    <label>Select with option groups
+      <select name="optgroups">
+        <optgroup label="Group one">
+          <option>One A</option>
+          <option>One B</option>
+        </optgroup>
+        <optgroup label="Group two">
+          <option>Two A</option>
+        </optgroup>
+      </select>
+    </label>
+
+    <label>Select multiple
+      <select name="multiple" multiple>
+        <option selected>Selected one</option>
+        <option>Not selected</option>
+        <option selected>Selected two</option>
+      </select>
+    </label>
+
+    <label>Select with size
+      <select name="sized" size="3">
+        <option>One</option>
+        <option selected>Two</option>
+        <option>Three</option>
+        <option>Four</option>
+      </select>
+    </label>
+
+    <label>Disabled select <select name="disabled-select" disabled><option>Disabled</option></select></label>
+
+    <label for="fb-textarea">Textarea</label>
+    <textarea id="fb-textarea" name="textarea" rows="3" placeholder="Textarea placeholder" data-states="hover focus focus-visible active"></textarea>
+    <small>Helper text after a textarea.</small>
+    <label>Readonly textarea <textarea name="readonly-textarea" rows="2" readonly data-states="focus">Readonly text</textarea></label>
+    <label>Disabled textarea <textarea name="disabled-textarea" rows="2" disabled>Disabled text</textarea></label>
+
+    <button type="submit">Submit button</button>
+  </div>
+
+  <h2>Validation states</h2>
+  <div>
+    <input type="text" name="valid" value="Valid value" aria-invalid="false" data-states="focus active">
+    <small>Looks good.</small>
+    <input type="text" name="invalid" value="Invalid value" aria-invalid="true" data-states="focus active">
+    <small>Please fix this field.</small>
+    <input type="email" name="valid-placeholder" placeholder="Valid with placeholder" aria-invalid="false">
+    <select name="valid-select" aria-invalid="false" data-states="focus">
+      <option>Valid select</option>
+    </select>
+    <small>Valid select helper.</small>
+    <select name="invalid-select" aria-invalid="true" data-states="focus">
+      <option>Invalid select</option>
+    </select>
+    <small>Invalid select helper.</small>
+    <select name="invalid-multiple" multiple aria-invalid="true">
+      <option selected>Invalid multiple</option>
+      <option>Other</option>
+    </select>
+    <textarea name="valid-textarea" rows="2" aria-invalid="false" data-states="focus">Valid textarea</textarea>
+    <small>Valid textarea helper.</small>
+    <textarea name="invalid-textarea" rows="2" aria-invalid="true" data-states="focus">Invalid textarea</textarea>
+    <small>Invalid textarea helper.</small>
+    <input type="date" name="invalid-date" value="2026-01-02" aria-invalid="true">
+    <input type="range" name="invalid-range" aria-invalid="true">
+    <input type="file" name="invalid-file" aria-invalid="true">
+    <label>Invalid checkbox, after its text <input type="checkbox" name="invalid-checkbox" aria-invalid="true" data-states="focus active"></label>
+    <label>Valid radio, after its text <input type="radio" name="valid-radio" aria-invalid="false" data-states="focus"></label>
+    <label>Plain checkbox, after its text <input type="checkbox" name="focus-checkbox" data-states="focus active"></label>
+
+    <fieldset aria-invalid="true">
+      <legend>Invalid fieldset</legend>
+      <label><input type="radio" name="fs-radio"> Option</label>
+    </fieldset>
+    <small>Invalid fieldset helper.</small>
+    <fieldset aria-invalid="false">
+      <legend>Valid fieldset</legend>
+      <label><input type="checkbox" name="fs-check" checked> Option</label>
+    </fieldset>
+    <small>Valid fieldset helper.</small>
+    <fieldset>
+      <legend>Plain fieldset</legend>
+      <input type="text" name="fs-text" placeholder="Inside fieldset">
+    </fieldset>
+    <small>Plain fieldset helper.</small>
+
+    <div class="grid">
+      <input type="text" name="grid-a" placeholder="Grid A">
+      <input type="text" name="grid-b" placeholder="Grid B">
+    </div>
+    <small>Helper after a .grid.</small>
+    <div class="grid" aria-invalid="false"><input type="text" name="grid-c" placeholder="Grid C"></div>
+    <small>Helper after a valid .grid.</small>
+    <div class="grid" aria-invalid="true"><input type="text" name="grid-d" placeholder="Grid D"></div>
+    <small>Helper after an invalid .grid.</small>
+  </div>
+
+  <h2>Disabled</h2>
+  <div>
+    <fieldset disabled>
+      <legend>Disabled fieldset</legend>
+      <input type="text" name="fd-text" value="In disabled fieldset">
+      <select name="fd-select"><option>In disabled fieldset</option></select>
+      <textarea name="fd-textarea" rows="2">In disabled fieldset</textarea>
+      <input type="submit" value="Submit in disabled fieldset">
+      <button type="button">Button in disabled fieldset</button>
+    </fieldset>
+    <label aria-disabled="true">
+      <input type="checkbox" name="ad-check" disabled> Label with aria-disabled and a disabled checkbox
+    </label>
+    <label aria-disabled="true">Label with aria-disabled <input type="text" name="ad-text" disabled value="Disabled inside"></label>
+  </div>
+
+  <div dir="rtl">
+    <h2>Right to left block</h2>
+    <input type="text" name="rtl-valid" value="Valid" aria-invalid="false">
+    <input type="text" name="rtl-invalid" value="Invalid" aria-invalid="true">
+    <select name="rtl-select"><option>RTL select</option></select>
+    <select name="rtl-select-invalid" aria-invalid="true"><option>RTL invalid select</option></select>
+    <textarea name="rtl-textarea" rows="2" aria-invalid="true">RTL textarea</textarea>
+  </div>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <input type="text" name="li-text" placeholder="Light placeholder" data-states="focus">
+    <input type="text" name="li-valid" value="Valid" aria-invalid="false">
+    <small>Light valid helper.</small>
+    <input type="text" name="li-invalid" value="Invalid" aria-invalid="true">
+    <small>Light invalid helper.</small>
+    <select name="li-select"><option>Light select</option></select>
+    <select name="li-multiple" multiple><option selected>Selected</option><option>Other</option></select>
+    <textarea name="li-textarea" rows="2" placeholder="Light textarea"></textarea>
+    <input type="text" name="li-disabled" value="Disabled" disabled>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <input type="text" name="di-text" placeholder="Dark placeholder" data-states="focus">
+    <input type="text" name="di-valid" value="Valid" aria-invalid="false">
+    <small>Dark valid helper.</small>
+    <input type="text" name="di-invalid" value="Invalid" aria-invalid="true">
+    <small>Dark invalid helper.</small>
+    <select name="di-select"><option>Dark select</option></select>
+    <select name="di-multiple" multiple><option selected>Selected</option><option>Other</option></select>
+    <textarea name="di-textarea" rows="2" placeholder="Dark textarea"></textarea>
+    <input type="text" name="di-disabled" value="Disabled" disabled>
+  </div>
+</div>
+</body>
+</html>

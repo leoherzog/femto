@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>content/figure</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="content/figure">
+  <h1>Figure</h1>
+  <figure>
+    <img src="/tests/pages/assets/landscape.svg" alt="Figure image" width="160" height="90">
+    <figcaption>Caption after the image</figcaption>
+  </figure>
+  <figure>
+    <figcaption>Caption before the content</figcaption>
+    <pre><code>figure &gt; pre &gt; code</code></pre>
+  </figure>
+  <figure>
+    <table><tbody><tr><td>Table in a figure</td></tr></tbody></table>
+    <figcaption>Table caption <small>with small</small></figcaption>
+  </figure>
+  <figure>
+    <div><figcaption>Nested figcaption inside a div</figcaption></div>
+  </figure>
+  <figcaption>Figcaption outside a figure</figcaption>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <figure><img src="/tests/pages/assets/landscape.svg" alt="Light figure" width="80" height="45"><figcaption>Light caption</figcaption></figure>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <figure><img src="/tests/pages/assets/landscape.svg" alt="Dark figure" width="80" height="45"><figcaption>Dark caption</figcaption></figure>
+  </div>
+</div>
+</body>
+</html>

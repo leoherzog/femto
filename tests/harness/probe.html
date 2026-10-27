@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>rig probe</title>
+<script src="/tests/harness/page.js"></script>
+<!-- Harness-owned rig probe (not a fixture): checks which pseudo-elements getComputedStyle reads
+     and whether hover, active and focus-visible input reach the iframe. -->
+<style>
+  li::marker { color: rgb(1, 2, 3); }
+  summary::marker { color: rgb(19, 20, 21); }
+  .ph::placeholder { color: rgb(4, 5, 6); }
+  .fb::file-selector-button { color: rgb(7, 8, 9); }
+  dialog::backdrop { background-color: rgb(10, 11, 12); }
+  .b::before { content: "b"; color: rgb(13, 14, 15); }
+  .b::after { content: "a"; color: rgb(16, 17, 18); }
+  .cs { color-scheme: light dark; color: light-dark(rgb(0, 0, 1), rgb(0, 0, 2)); }
+  #hv { color: rgb(0, 0, 0); transition: color 10s; }
+  #hv:hover { color: rgb(255, 0, 0); }
+  #ac:active { color: rgb(0, 255, 0); }
+  #fv:focus-visible { color: rgb(0, 0, 255); }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  #spin { display: inline-block; animation: spin 1s linear infinite; }
+</style>
+</head>
+<body>
+<div data-module="rig/probe">
+  <ul><li id="li">item</li></ul>
+  <details open><summary id="sum">summary</summary>details</details>
+  <input id="ph" class="ph" placeholder="placeholder">
+  <input id="fb" class="fb" type="file">
+  <dialog id="dlg">dialog</dialog>
+  <p id="b" class="b">before and after</p>
+  <p id="cs" class="cs">light-dark</p>
+  <p><span id="spin">spin</span></p>
+  <p>
+    <a href="#x" id="pre">previous link</a>
+    <button id="hv" type="button" data-states="hover">hover</button>
+    <button id="ac" type="button" data-states="active">active</button>
+    <a href="#y" id="fv" data-states="focus focus-visible">focus-visible</a>
+  </p>
+</div>
+</body>
+</html>

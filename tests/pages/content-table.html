@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>content/table</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="content/table">
+  <h1>Tables</h1>
+  <table>
+    <caption>Table with head, body and foot</caption>
+    <thead>
+      <tr><th scope="col">Head one</th><th scope="col">Head two</th><td>Head td</td></tr>
+    </thead>
+    <tbody>
+      <tr><th scope="row">Row head</th><td>Cell</td><td>Cell</td></tr>
+      <tr><th scope="row">Row head</th><td>Cell</td><td>Cell</td></tr>
+      <tr><th scope="row">Row head</th><td>Cell</td><td>Cell</td></tr>
+    </tbody>
+    <tfoot>
+      <tr><th scope="row">Foot th</th><td>Foot td</td><td>Foot td</td></tr>
+    </tfoot>
+  </table>
+  <table>
+    <tr><td>Table without sections</td><td>Cell</td></tr>
+    <tr><td>Second row</td><td>Cell</td></tr>
+  </table>
+  <table class="striped">
+    <thead><tr><th>Striped head</th><th>Col</th></tr></thead>
+    <tbody>
+      <tr><th>Odd row th</th><td>Odd</td></tr>
+      <tr><th>Even row th</th><td>Even</td></tr>
+      <tr><td>Odd</td><td>Odd</td></tr>
+    </tbody>
+    <tfoot><tr><td>Foot</td><td>Foot</td></tr></tfoot>
+  </table>
+
+  <div dir="rtl">
+    <table><tbody><tr><th>RTL th</th><td>RTL td</td></tr></tbody></table>
+  </div>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <table>
+      <thead><tr><th>Light head</th><th>Col</th></tr></thead>
+      <tbody><tr><td>Cell</td><td>Cell</td></tr><tr><td>Cell</td><td>Cell</td></tr></tbody>
+      <tfoot><tr><td>Foot</td><td>Foot</td></tr></tfoot>
+    </table>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <table>
+      <thead><tr><th>Dark head</th><th>Col</th></tr></thead>
+      <tbody><tr><td>Cell</td><td>Cell</td></tr><tr><td>Cell</td><td>Cell</td></tr></tbody>
+      <tfoot><tr><td>Foot</td><td>Foot</td></tr></tfoot>
+    </table>
+  </div>
+</div>
+</body>
+</html>

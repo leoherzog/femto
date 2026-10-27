@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "femto/tests/divergences/schema.json",
+  "title": "femto divergence registry file",
+  "description": "Every file in tests/divergences/ except this one is a JSON array of entries. A difference between a 2.1.1 reference and femto passes only if at least one entry matches it. Patterns: a plain string matches exactly (values compare with the harness color tolerance), \"*\" matches anything, and \"/regex/flags\" is a JavaScript regular expression (flags i, m, s, u). tests/README.md documents matching in full.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["id", "module", "kind", "category", "reason"],
+    "properties": {
+      "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$", "description": "Unique across all registry files."},
+      "module": {"type": "string", "minLength": 1, "description": "Module id (forms/basics), or tokens, rig, entries."},
+      "kind": {"enum": ["style", "token", "token-raw", "surface-added", "surface-missing", "skipped-check"]},
+      "selector": {"type": "string", "minLength": 1, "description": "style: CSS selector the differing element must match in the TEST document (\"*\" for any). token and token-raw: optional selector the anchor element must match."},
+      "token": {"type": "string", "description": "Token kinds: custom property name or /regex/."},
+      "pseudo": {"type": "string", "description": "style only: \"\" for the element itself, \"::before\", \"::after\", \"::marker\", \"::placeholder\", \"::file-selector-button\", \"::backdrop\", \"*\" or /regex/. Omitted means any."},
+      "property": {"type": "string", "description": "style: longhand name; token: the probe property the token was resolved through. Exact, \"*\" or /regex/."},
+      "reference": {"type": "string", "description": "Value on the 2.1.1 side: exact, \"*\" or /regex/."},
+      "femto": {"type": "string", "description": "Value on the femto side: exact, \"*\" or /regex/."},
+      "check": {"type": "string", "description": "skipped-check: the check name (media:dark, media:light, pseudo:::backdrop, ...), exact or /regex/."},
+      "where": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Optional filters; every listed key must match the comparison cell.",
+        "properties": {
+          "browsers": {"type": "array", "minItems": 1, "items": {"enum": ["chrome", "firefox", "safari"]}},
+          "presets": {"type": "array", "minItems": 1, "items": {"type": "string"}, "description": "Preset names from tests/variants.json (default, classless, theme-jade, option-no-transitions, ...)."},
+          "entries": {"type": "array", "minItems": 1, "items": {"enum": ["default", "classless", "fluid-classless", "colors"]}},
+          "variants": {"type": "array", "minItems": 1, "items": {"type": "string"}, "description": "Matches the preset name, the entry, the page variant label (plain, class=modal-is-open) or the comparison kind (direct, self, hybrid, control)."},
+          "pages": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+          "schemes": {"type": "array", "minItems": 1, "items": {"enum": ["light", "dark", "theme-light", "theme-dark"]}},
+          "widths": {"type": "array", "minItems": 1, "items": {"oneOf": [{"type": "integer"}, {"type": "object", "additionalProperties": false, "properties": {"min": {"type": "integer"}, "max": {"type": "integer"}}}]}},
+          "dirs": {"type": "array", "minItems": 1, "items": {"enum": ["ltr", "rtl"]}},
+          "states": {"type": "array", "minItems": 1, "items": {"enum": ["base", "hover", "focus", "focus-visible", "active"]}}
+        }
+      },
+      "category": {"enum": ["natural-fix", "dropped-hack", "new-token", "option-mechanism", "browser-limit"]},
+      "reason": {"type": "string", "minLength": 1, "pattern": "\\S"},
+      "notes": {"type": "string"}
+    },
+    "allOf": [
+      {"if": {"properties": {"kind": {"const": "style"}}}, "then": {"required": ["selector", "property", "reference", "femto"]}},
+      {"if": {"properties": {"kind": {"const": "token"}}}, "then": {"required": ["token", "property", "reference", "femto"]}},
+      {"if": {"properties": {"kind": {"const": "token-raw"}}}, "then": {"required": ["token", "reference", "femto"]}},
+      {"if": {"properties": {"kind": {"enum": ["surface-added", "surface-missing"]}}}, "then": {"required": ["token"]}},
+      {"if": {"properties": {"kind": {"const": "skipped-check"}}}, "then": {"required": ["check"], "properties": {"category": {"const": "browser-limit"}}}}
+    ]
+  }
+}

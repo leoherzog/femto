@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>forms/input-color</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="forms/input-color">
+  <h1>Input type color</h1>
+  <label for="ic-1">Color</label>
+  <input type="color" id="ic-1" name="color" value="#0172ad" data-states="hover focus focus-visible active">
+  <label>Color inside a label <input type="color" name="color-2" value="#d93526"></label>
+  <label>Disabled color <input type="color" name="color-disabled" value="#398712" disabled></label>
+  <label>Invalid color <input type="color" name="color-invalid" value="#ffbf00" aria-invalid="true"></label>
+  <label>Valid color <input type="color" name="color-valid" value="#9236a4" aria-invalid="false"></label>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <input type="color" name="l-color" value="#0172ad">
+    <input type="color" name="l-color-invalid" value="#d93526" aria-invalid="true">
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <input type="color" name="d-color" value="#0172ad">
+    <input type="color" name="d-color-invalid" value="#d93526" aria-invalid="true">
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>layout/document</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="layout/document">
+  <h1>Document</h1>
+  <p>Root styles set the background, color, font, line height, underline offset, wrapping and tab size.
+    A very long unbroken word wraps: Pneumonoultramicroscopicsilicovolcanoconiosis_Pneumonoultramicroscopicsilicovolcanoconiosis_Pneumonoultramicroscopicsilicovolcanoconiosis.</p>
+  <pre>	Tab	separated	text</pre>
+  <p><u>Underlined <span>text</span></u> and <sub>subscript</sub> with pseudo-elements inheriting decoration.</p>
+  <div>A plain div with <span>a span</span>.</div>
+  <ul><li>A list item, whose marker is a pseudo-element</li></ul>
+
+  <div data-shadow>
+    <template>
+      <p>Shadow paragraph: the :where(:host) rule styles the host.</p>
+      <pre>	Shadow	tab	text</pre>
+      <span>Shadow span</span>
+    </template>
+  </div>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <p>Light text <u>underlined</u>.</p>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <p>Dark text <u>underlined</u>.</p>
+  </div>
+</div>
+</body>
+</html>

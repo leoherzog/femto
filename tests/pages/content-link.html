@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>content/link</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="content/link">
+  <h1>Links</h1>
+  <p>
+    <a href="#link" data-states="hover focus focus-visible active">Plain link</a>
+    <a>Link without href</a>
+    <span role="link" tabindex="0" data-states="hover focus focus-visible active">Span with role link</span>
+    <a href="#role-button" role="button" data-states="hover focus">Link with role button</a>
+  </p>
+  <p>
+    aria-current:
+    <a href="#page" aria-current="page">page</a>
+    <a href="#true" aria-current="true">true</a>
+    <a href="#step" aria-current="step">step</a>
+    <a href="#location" aria-current="location">location</a>
+    <a href="#date" aria-current="date">date</a>
+    <a href="#time" aria-current="time">time</a>
+    <a href="#empty" aria-current="">empty value</a>
+    <a href="#false" aria-current="false" data-states="hover">false</a>
+    <span role="link" tabindex="0" aria-current="page">role link, page</span>
+    <span role="link" tabindex="0" aria-current="false">role link, false</span>
+  </p>
+  <p>A paragraph with an <a href="#inline">inline link</a> inside running text.</p>
+  <ul>
+    <li><a href="#list">Link in a list</a></li>
+  </ul>
+  <h2><a href="#heading">Link in a heading</a></h2>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <p><a href="#l" data-states="hover focus-visible">Light link</a> <a href="#lc" aria-current="page">Light current</a> <span role="link" tabindex="0">Light role link</span></p>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <p><a href="#d" data-states="hover focus-visible">Dark link</a> <a href="#dc" aria-current="page">Dark current</a> <span role="link" tabindex="0">Dark role link</span></p>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>content/button</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="content/button">
+  <h1>Buttons</h1>
+  <p>
+    <button data-states="hover focus focus-visible active">Button</button>
+    <button type="button">Type button</button>
+    <button type="reset">Type reset</button>
+    <button type="submit">Type submit</button>
+    <button disabled>Disabled button</button>
+    <button aria-current="page" data-states="focus">Current button</button>
+    <button aria-current="false">aria-current false</button>
+  </p>
+  <div>
+    <input type="submit" value="Input submit" data-states="hover focus focus-visible active">
+    <input type="button" value="Input button" data-states="hover focus active">
+    <input type="reset" value="Input reset" data-states="hover focus focus-visible active">
+    <input type="submit" value="Disabled submit" disabled>
+    <input type="reset" value="Disabled reset" disabled>
+    <input type="reset" value="Current reset" aria-current="true" data-states="focus">
+    <input type="submit" value="Current submit" aria-current="page" data-states="focus">
+    <input type="button" value="Current input button" aria-current="step" data-states="focus">
+    <input type="file" name="file" data-states="hover focus">
+    <input type="file" name="current-file" aria-current="true" data-states="focus">
+  </div>
+  <p>
+    <a href="#a" role="button" data-states="hover focus focus-visible active">Link with role button</a>
+    <a href="#ac" role="button" aria-current="page" data-states="focus">Current link button</a>
+    <a role="button" disabled>Link button with disabled attribute</a>
+  </p>
+  <p><span role="button" tabindex="0" data-states="hover focus">Span button</span></p>
+  <div role="button" tabindex="0">Div with role button</div>
+  <fieldset disabled>
+    <legend>Disabled fieldset</legend>
+    <button>Button in disabled fieldset</button>
+    <input type="submit" value="Submit in disabled fieldset">
+    <input type="button" value="Button input in disabled fieldset">
+    <input type="reset" value="Reset in disabled fieldset">
+    <a href="#fd" role="button">Role button in disabled fieldset</a>
+  </fieldset>
+
+  <div dir="rtl">
+    <button>RTL button</button>
+    <input type="file" name="rtl-file">
+  </div>
+
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <button data-states="hover focus">Light button</button>
+    <input type="submit" value="Light submit">
+    <input type="reset" value="Light reset" data-states="focus">
+    <a href="#l" role="button">Light role button</a>
+    <input type="file" name="l-file">
+    <button disabled>Light disabled</button>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <button data-states="hover focus">Dark button</button>
+    <input type="submit" value="Dark submit">
+    <input type="reset" value="Dark reset" data-states="focus">
+    <a href="#d" role="button">Dark role button</a>
+    <input type="file" name="d-file">
+    <button disabled>Dark disabled</button>
+  </div>
+</div>
+</body>
+</html>

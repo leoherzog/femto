@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>classes/container</title>
+<script src="/tests/harness/page.js"></script>
+</head>
+<body>
+<div data-module="classes/container">
+  <div class="container">
+    <h1>Container</h1>
+    <p>A .container is centered with a max width per breakpoint.</p>
+    <div class="container">A nested .container</div>
+  </div>
+  <div class="container-fluid">
+    <h2>Container fluid</h2>
+    <p>A .container-fluid spans the full width with side padding.</p>
+  </div>
+  <main class="container">
+    <p>main.container</p>
+  </main>
+  <section class="container-fluid">
+    <p>section.container-fluid</p>
+  </section>
+  <div data-theme="light" class="container">
+    <h2>Light island that is a container</h2>
+  </div>
+  <div data-theme="light">
+    <h2>Light island</h2>
+    <div class="container"><p>Light .container</p></div>
+  </div>
+  <div data-theme="dark">
+    <h2>Dark island</h2>
+    <div class="container-fluid"><p>Dark .container-fluid</p></div>
+  </div>
+</div>
+</body>
+</html>
