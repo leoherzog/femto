@@ -8,7 +8,6 @@
    "layout/document",
    "layout/elements",
    "layout/landmarks",
-   "layout/landmarks-container",
    "layout/section",
    "content/link",
    "content/typography",
@@ -33,17 +32,12 @@
    "components/nav",
    "components/progress",
    "components/tooltip",
-   "classes/container",
-   "classes/grid",
-   "classes/overflow-auto",
-   "classes/dropdown",
-   "classes/buttons",
-   "classes/links",
-   "classes/table-striped",
-   "classes/modal",
+   "layout/container",
+   "layout/grid",
+   "layout/overflow-auto",
+   "components/dropdown",
    "utilities/accessibility",
    "utilities/reduce-motion",
-   "options/fluid",
    "options/responsive-spacings",
    "options/fixed-typography",
    "options/no-transitions"
@@ -85,9 +79,7 @@
    "Reduce Motion Features"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -120,9 +112,7 @@
    "Styles"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -143,9 +133,7 @@
    "Modal (<dialog>)"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -162,9 +150,7 @@
    "Color schemes"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -181,9 +167,7 @@
    "Document"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -200,9 +184,7 @@
    "Styles"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -220,28 +202,7 @@
    "Landmarks"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
-  ],
-  "variants": [
-   {}
-  ],
-  "rtl": false,
-  "media": true
- },
- {
-  "page": "layout-landmarks-container.html",
-  "modules": [
-   "layout/landmarks-container",
-   "options/fluid"
-  ],
-  "sections": [
-   "Landmarks"
-  ],
-  "entries": [
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -259,9 +220,7 @@
    "Section"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -279,9 +238,7 @@
    "Typography"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -298,9 +255,7 @@
    "Link"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -317,9 +272,7 @@
    "Button"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -336,9 +289,7 @@
    "Table"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -355,9 +306,7 @@
    "Embedded content"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -374,9 +323,7 @@
    "Code"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -393,9 +340,7 @@
    "Figure"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -412,9 +357,7 @@
    "Misc"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -431,9 +374,7 @@
    "Basics form elements"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -450,9 +391,7 @@
    "Checkboxes, Radios and Switches"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -469,9 +408,7 @@
    "Input type color"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -488,9 +425,7 @@
    "Input type datetime"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -507,9 +442,7 @@
    "Input type file"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -526,9 +459,7 @@
    "Input type range"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -545,9 +476,7 @@
    "Input type search"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -564,9 +493,7 @@
    "Accordion (<details>)"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -584,9 +511,7 @@
    "Card (<article>)"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -603,9 +528,7 @@
    "Group ([role=\"group\"], [role=\"search\"])"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -622,9 +545,7 @@
    "Loading ([aria-busy=true])"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -641,9 +562,7 @@
    "Modal (<dialog>)"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -654,16 +573,13 @@
  {
   "page": "components-modal-show.html",
   "modules": [
-   "components/modal",
-   "classes/modal"
+   "components/modal"
   ],
   "sections": [
    "Modal (<dialog>)"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {},
@@ -683,9 +599,7 @@
    "Nav"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -702,9 +616,7 @@
    "Progress"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -721,9 +633,7 @@
    "Tooltip ([data-tooltip])"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -734,7 +644,7 @@
  {
   "page": "classes-container.html",
   "modules": [
-   "classes/container"
+   "layout/container"
   ],
   "sections": [
    "Container"
@@ -751,7 +661,7 @@
  {
   "page": "classes-grid.html",
   "modules": [
-   "classes/grid"
+   "layout/grid"
   ],
   "sections": [
    "Grid"
@@ -768,7 +678,7 @@
  {
   "page": "classes-overflow-auto.html",
   "modules": [
-   "classes/overflow-auto"
+   "layout/overflow-auto"
   ],
   "sections": [
    "Overflow auto"
@@ -785,7 +695,7 @@
  {
   "page": "classes-dropdown.html",
   "modules": [
-   "classes/dropdown"
+   "components/dropdown"
   ],
   "sections": [
    "Dropdown (details.dropdown)"
@@ -802,7 +712,7 @@
  {
   "page": "classes-dropdown-open.html",
   "modules": [
-   "classes/dropdown"
+   "components/dropdown"
   ],
   "sections": [
    "Dropdown (details.dropdown)"
@@ -819,7 +729,7 @@
  {
   "page": "classes-buttons.html",
   "modules": [
-   "classes/buttons"
+   "content/button"
   ],
   "sections": [
    "Button"
@@ -836,7 +746,7 @@
  {
   "page": "classes-links.html",
   "modules": [
-   "classes/links"
+   "content/link"
   ],
   "sections": [
    "Link"
@@ -853,7 +763,7 @@
  {
   "page": "classes-table-striped.html",
   "modules": [
-   "classes/table-striped"
+   "content/table"
   ],
   "sections": [
    "Table"
@@ -870,7 +780,7 @@
  {
   "page": "classes-modal.html",
   "modules": [
-   "classes/modal"
+   "components/modal"
   ],
   "sections": [
    "Modal (<dialog>)"
@@ -905,9 +815,7 @@
    "Accessibility & User interaction"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}
@@ -925,9 +833,7 @@
    "Reduce Motion Features"
   ],
   "entries": [
-   "default",
-   "classless",
-   "fluid-classless"
+   "default"
   ],
   "variants": [
    {}

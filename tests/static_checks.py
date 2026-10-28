@@ -46,7 +46,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-ENTRIES = ("femto.css", "femto.classless.css", "femto.fluid.classless.css")
+ENTRIES = ("femto.css",)
 EXEMPT_NAME_PATHS = ("docs/research/", "tests/")  # PLAN Decision 10
 EXEMPT_NAME_FILES = ("PLAN.md", "PROMPT.md")
 MAX_LINES = 12  # evidence lines per finding list
@@ -359,7 +359,7 @@ def criterion_5(root: Path) -> Result:
 
 
 def criterion_6(root: Path) -> Result:
-    r = Result("Criterion 6: only the three entry files use @import, and imports precede every other rule")
+    r = Result("Criterion 6: Only femto.css contains @import, and its imports come before every other rule")
     shipped, skipped = shipped_files(root)
     css_files = describe_shipped(r, shipped, skipped)
     css = root / "css"
@@ -402,7 +402,7 @@ def criterion_6(root: Path) -> Result:
                 if not dest.is_file():
                     r.fail(f"{rel}:{line_of(text, o)}: imported file does not exist: {target}")
                 elif dest.parent == css.resolve() and dest.name in ENTRIES:
-                    r.fail(f"{rel}:{line_of(text, o)}: imports another entry ({target}); chains must be one level deep")
+                    r.fail(f"{rel}:{line_of(text, o)}: imports the entry ({target}); chains must be one level deep")
             elif seen_rule is None:
                 seen_rule = o
         r.ok(f"{rel}: {len(imports)} @import rules, all before the first other rule" if not any(f.startswith(rel) for f in r.failures) else f"{rel}: {len(imports)} @import rules")

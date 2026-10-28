@@ -9,7 +9,7 @@
 <body>
 <div data-module="tokens/schemes">
   <h1>Color schemes</h1>
-  <p>Scheme tokens on every color-bearing element: on the page, in light and dark islands nested several deep both ways, on elements that carry data-theme themselves, and in shadow roots whose host has no theme, a dark theme or a light theme.</p>
+  <p>Scheme tokens on every color-bearing element: on the page, in light and dark islands nested several deep both ways, on elements that carry data-theme themselves, in shadow roots whose host has no theme, a dark theme or a light theme, and under an author's inline color-scheme on an element without data-theme (a registered difference: light-dark() tokens follow it, 2.1.1's literals did not).</p>
   <h2>Page scheme</h2>
   <div data-module="tokens/schemes">
     <h1>page h1</h1><h2>page h2</h2><h3>page h3</h3><h4>page h4</h4><h5>page h5</h5><h6>page h6</h6>
@@ -298,6 +298,11 @@
   <p><button data-theme="dark">Dark button</button> <button data-theme="light" class="contrast">Light contrast button</button> <input type="submit" data-theme="dark" value="Dark submit"></p>
   <input type="text" name="own-dark" data-theme="dark" placeholder="Input with a dark theme">
   <label><input type="checkbox" name="own-dark-check" data-theme="dark" checked> Checkbox with a dark theme</label>
+  <select name="own-dark-select" data-theme="dark"><option>Select with a dark theme</option></select>
+  <textarea name="own-dark-textarea" data-theme="dark">Textarea with a dark theme</textarea>
+  <h1 data-theme="dark">Heading with a dark theme</h1>
+  <p><a href="#own-a" data-theme="dark">Link with a dark theme</a>, <a href="#own-a-light" data-theme="light" class="secondary">secondary link with a light theme</a> and <span role="button" tabindex="0" data-theme="dark">role=button with a dark theme</span></p>
+  <details><summary data-theme="dark">Summary with a dark theme</summary><p>Content</p></details>
   <details data-theme="dark"><summary role="button" class="contrast">Dark details, contrast summary</summary><p>Content</p></details>
   <section data-theme="dark"><p>Dark section with <mark>mark</mark></p></section>
   <span data-theme="dark">Dark span with <a href="#own">a link</a></span>
@@ -392,12 +397,12 @@
       <select name="shadow-dark-host-select"><option>Select</option></select>
       <select name="shadow-dark-host-multiple" multiple><option selected>Selected option</option><option>Option</option></select>
       <textarea name="shadow-dark-host-textarea" rows="1" placeholder="Textarea"></textarea>
-      <label><input type="checkbox" name="shadow-dark-host-c1"> Checkbox</label>
+      <label><input type="checkbox" name="shadow-dark-host-c1" data-states="focus"> Checkbox</label>
       <label><input type="checkbox" name="shadow-dark-host-c2" checked> Checked</label>
       <label><input type="checkbox" name="shadow-dark-host-c3" data-indeterminate> Indeterminate</label>
       <label><input type="checkbox" name="shadow-dark-host-c4" checked aria-invalid="true"> Checked invalid</label>
       <label><input type="checkbox" name="shadow-dark-host-c5" checked aria-invalid="false"> Checked valid</label>
-      <label><input type="radio" name="shadow-dark-host-r" checked> Radio</label>
+      <label><input type="radio" name="shadow-dark-host-r" checked data-states="focus"> Radio</label>
       <label><input type="checkbox" role="switch" name="shadow-dark-host-s1"> Switch off</label>
       <label><input type="checkbox" role="switch" name="shadow-dark-host-s2" checked> Switch on</label>
       <input type="range" name="shadow-dark-host-range">
@@ -456,12 +461,12 @@
       <select name="shadow-light-host-select"><option>Select</option></select>
       <select name="shadow-light-host-multiple" multiple><option selected>Selected option</option><option>Option</option></select>
       <textarea name="shadow-light-host-textarea" rows="1" placeholder="Textarea"></textarea>
-      <label><input type="checkbox" name="shadow-light-host-c1"> Checkbox</label>
+      <label><input type="checkbox" name="shadow-light-host-c1" data-states="focus"> Checkbox</label>
       <label><input type="checkbox" name="shadow-light-host-c2" checked> Checked</label>
       <label><input type="checkbox" name="shadow-light-host-c3" data-indeterminate> Indeterminate</label>
       <label><input type="checkbox" name="shadow-light-host-c4" checked aria-invalid="true"> Checked invalid</label>
       <label><input type="checkbox" name="shadow-light-host-c5" checked aria-invalid="false"> Checked valid</label>
-      <label><input type="radio" name="shadow-light-host-r" checked> Radio</label>
+      <label><input type="radio" name="shadow-light-host-r" checked data-states="focus"> Radio</label>
       <label><input type="checkbox" role="switch" name="shadow-light-host-s1"> Switch off</label>
       <label><input type="checkbox" role="switch" name="shadow-light-host-s2" checked> Switch on</label>
       <input type="range" name="shadow-light-host-range">
@@ -500,6 +505,23 @@
         <progress value="40" max="100"></progress>
       </template>
     </div>
+  </div>
+  <h2>Author color-scheme on an element without data-theme</h2>
+  <div id="cs-dark" style="color-scheme: dark">
+    <p>color-scheme: dark. Text with <a href="#cs-dark-a">link</a>, <a href="#cs-dark-s" class="secondary">secondary</a>, <mark>mark</mark>, <ins>ins</ins>, <del>del</del> and <code>code</code>.</p>
+    <p><button>Primary</button> <button class="secondary">Secondary</button> <button class="contrast">Contrast</button> <button class="outline">Outline</button></p>
+    <input type="text" name="cs-dark-text" placeholder="Placeholder">
+    <input type="text" name="cs-dark-invalid" value="Invalid" aria-invalid="true">
+    <label><input type="checkbox" name="cs-dark-c" checked> Checked</label>
+    <progress value="40" max="100"></progress>
+  </div>
+  <div id="cs-light" style="color-scheme: light">
+    <p>color-scheme: light. Text with <a href="#cs-light-a">link</a>, <a href="#cs-light-s" class="secondary">secondary</a>, <mark>mark</mark>, <ins>ins</ins>, <del>del</del> and <code>code</code>.</p>
+    <p><button>Primary</button> <button class="secondary">Secondary</button> <button class="contrast">Contrast</button> <button class="outline">Outline</button></p>
+    <input type="text" name="cs-light-text" placeholder="Placeholder">
+    <input type="text" name="cs-light-invalid" value="Invalid" aria-invalid="true">
+    <label><input type="checkbox" name="cs-light-c" checked> Checked</label>
+    <progress value="40" max="100"></progress>
   </div>
 </div>
 </body>

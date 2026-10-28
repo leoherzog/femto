@@ -1,0 +1,138 @@
+/*
+ * Element tokens: per-element overrides of the base tokens (font size and weight, line height,
+ * border and outline widths, spacing) and the icon filters on filled buttons (the spinner's follows
+ * the theme). They sit before the color schemes and every module, as in 2.1.1, including the
+ * overrides that serve class rules.
+ */
+a {
+  --femto-text-decoration: underline;
+}
+a.secondary, a.contrast {
+  --femto-text-decoration: underline;
+}
+
+small {
+  --femto-font-size: 0.875em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  --femto-font-weight: 700;
+}
+
+h1 {
+  --femto-font-size: 2rem;
+  --femto-line-height: 1.125;
+  --femto-typography-spacing-top: 3rem;
+}
+
+h2 {
+  --femto-font-size: 1.75rem;
+  --femto-line-height: 1.15;
+  --femto-typography-spacing-top: 2.625rem;
+}
+
+h3 {
+  --femto-font-size: 1.5rem;
+  --femto-line-height: 1.175;
+  --femto-typography-spacing-top: 2.25rem;
+}
+
+h4 {
+  --femto-font-size: 1.25rem;
+  --femto-line-height: 1.2;
+  --femto-typography-spacing-top: 1.874rem;
+}
+
+h5 {
+  --femto-font-size: 1.125rem;
+  --femto-line-height: 1.225;
+  --femto-typography-spacing-top: 1.6875rem;
+}
+
+h6 {
+  --femto-font-size: 1rem;
+  --femto-line-height: 1.25;
+  --femto-typography-spacing-top: 1.5rem;
+}
+
+thead th,
+thead td,
+tfoot th,
+tfoot td {
+  --femto-font-weight: 600;
+  --femto-border-width: 0.1875rem;
+}
+
+pre,
+code,
+kbd,
+samp {
+  --femto-font-family: var(--femto-font-family-monospace);
+}
+
+kbd {
+  --femto-font-weight: bolder;
+}
+
+input:not([type=submit], [type=button], [type=reset], [type=checkbox], [type=radio], [type=file]),
+:where(select, textarea) {
+  --femto-outline-width: 0.0625rem;
+}
+
+[type=search] {
+  --femto-border-radius: 5rem;
+}
+
+[type=checkbox],
+[type=radio] {
+  --femto-border-width: 0.125rem;
+}
+
+[type=checkbox][role=switch] {
+  --femto-border-width: 0.1875rem;
+}
+
+details.dropdown summary:not([role=button]) {
+  --femto-outline-width: 0.0625rem;
+}
+
+nav details.dropdown summary:focus-visible {
+  --femto-outline-width: 0.125rem;
+}
+
+[role=search] {
+  --femto-border-radius: 5rem;
+}
+
+[role=search]:has(button.secondary:focus, [type=submit].secondary:focus, [type=button].secondary:focus, [role=button].secondary:focus),
+[role=group]:has(button.secondary:focus, [type=submit].secondary:focus, [type=button].secondary:focus, [role=button].secondary:focus) {
+  --femto-group-box-shadow-focus-with-button: 0 0 0 var(--femto-outline-width) var(--femto-secondary-focus);
+}
+[role=search]:has(button.contrast:focus, [type=submit].contrast:focus, [type=button].contrast:focus, [role=button].contrast:focus),
+[role=group]:has(button.contrast:focus, [type=submit].contrast:focus, [type=button].contrast:focus, [role=button].contrast:focus) {
+  --femto-group-box-shadow-focus-with-button: 0 0 0 var(--femto-outline-width) var(--femto-contrast-focus);
+}
+[role=search] button,
+[role=search] [type=submit],
+[role=search] [type=button],
+[role=search] [role=button],
+[role=group] button,
+[role=group] [type=submit],
+[role=group] [type=button],
+[role=group] [role=button] {
+  --femto-form-element-spacing-horizontal: 2rem;
+}
+
+details summary[role=button]:not(.outline)::after {
+  filter: brightness(0) invert(1);
+}
+
+/* The spinner follows --femto-primary-inverse: themes whose inverse is black set the filter token to brightness(0) invert(0). */
+[aria-busy=true]:not(input, select, textarea):is(button, [type=submit], [type=button], [type=reset], [role=button]):not(.outline)::before {
+  filter: var(--femto-primary-inverse-filter);
+}

@@ -37,7 +37,7 @@ Python runs only through `uv`: `tests/run.py` carries PEP 723 metadata pinning
 | `divergences/` | harness (schema, seeds); module agents add entries | divergence registry, `schema.json` |
 | `pages/` | fixtures | fixture pages, `pages.json` manifest, `assets/` |
 | `reference/` | refs | renamed 2.1.1 CSS (gitignored, rebuilt from tag `v2.1.1` by `run.py` when missing) and committed option references, provenance in `reference/README.md` |
-| `sections.json` | refs | 2.1.1 banner sections mapped to femto files, per entry |
+| `sections.json` | refs | 2.1.1 banner sections of the default entry mapped to femto files |
 | `static_checks.py` | refs | mechanical checks for acceptance criteria 4 to 7, 10, 11 |
 | `build/`, `results/` | generated | gitignored |
 
@@ -106,7 +106,10 @@ direction, with a reference stylesheet list and a test stylesheet list.
 - **Surface**: names only in the reference are `surface-missing`, names only in the test are
   `surface-added`. Both must be registered. Resolution is compared only for names on both sides.
 - **Anchors**: `html`, `body`, every `[data-theme]` element, every `article`, `dialog` and
-  `[data-module]` wrapper, and each shadow host's shadow root.
+  `[data-module]` wrapper, and each shadow host's shadow root. When an anchor element is itself a
+  shadow host, its probes go in its shadow root: a light-DOM child of a host is unslotted, and
+  `getComputedStyle()` returns empty values for it (found in Phase 1 on `tokens-schemes.html`, where
+  a host's own anchor read every token as `""` whenever its probe group started there).
 - **Resolution**: under each anchor the harness appends a hidden `femto-probe` container with
   `all: initial; color-scheme: inherit; display: none` and one child per token whose inline style
   sets each probe property to `var(<token>)`: `color`, `background-color`, `border-top-color`,
@@ -166,11 +169,11 @@ and are separated by `;`.
 
 | Mode | What it runs |
 |---|---|
-| `fast` | For module agents. `--modules forms/basics,...` or `--sections "Basics form elements;Input type file"`: the manifest pages of those modules or sections, Chrome and Firefox, widths 390 and 1280, legs `light` and `dark` (media), ltr plus rtl on pages with `rtl: true`, with states. By default the test side is a hybrid build of the preset's reference with those sections replaced by their femto files; `--direct` compares the preset's own test list instead. A section is replaced as a whole, so every femto file `tests/sections.json` maps to it must exist (Link needs `content/link.css` and `classes/links.css`); missing files stop the run with exit 2. `--kitchen-sink` adds the kitchen sink; `--presets` picks entries (default `default`). Phase 1 example: `fast --sections "Styles;Color schemes;Document"`. |
+| `fast` | For module agents. `--modules forms/basics,...` or `--sections "Basics form elements;Input type file"`: the manifest pages of those modules or sections, Chrome and Firefox, widths 390 and 1280, legs `light` and `dark` (media), ltr plus rtl on pages with `rtl: true`, with states. By default the test side is a hybrid build of the preset's reference with those sections replaced by their femto files; `--direct` compares the preset's own test list instead. A section is replaced as a whole, so every femto file `tests/sections.json` maps to it must exist (Styles needs `tokens/base.css`, `tokens/breakpoints.css` and `layout/elements.css`); missing files stop the run with exit 2. `--kitchen-sink` adds the kitchen sink; `--presets` picks entries (default `default`). Phase 1 example: `fast --sections "Styles;Color schemes;Document"`. |
 | `full` | The whole matrix below. Chrome and Firefox run 2 workers each, Safari 1, all at once (subject to the slot lock). `--self` compares every preset's reference against itself; `--control` compares every preset that has hybrid settings (all but `colors`, which has no banners) against its chunk control; `--states-only` keeps only the cells that run interactive states and `--stateless-only` only the others, so a Safari leg can be split into two invocations whose union is the matrix. Command-line filters (`--pages`, `--widths`, ...) cut the matrix and are logged as a cap. |
 | `compare` | Direct comparison: `--ref` against `--test` (root-relative lists), or each `--presets` preset's own lists. `--entry` picks pages for `--ref`. Defaults to the fast axes; `--full-widths` and `--all-legs` widen them. |
 | `self` | A reference against itself (acceptance criterion 1). |
-| `hybrid` | A preset's reference against a hybrid build: `--modules`, `--sections`, or `--control` (no section replaced: the chunk control). |
+| `hybrid` | A preset's reference against a hybrid build: `--modules`, `--sections`, or `--control` (no section replaced: the chunk control). Defaults to the fast axes; `--full-widths` and `--all-legs` widen them to every width and leg on every page, with states everywhere, which is far heavier than the full matrix. `--full-plan` instead plans the full matrix's own cells and reductions (below) for `--presets` (default `default`), with the hybrid build as the test side, and takes the same command-line filters as `full`. Use `--full-plan` for a phase's wide check: on Phase 1's sections it runs 3,296 cells in Chrome and Firefox where `--full-widths --all-legs` ran 9,576 per preset. |
 | `coverage` | `--css <stylesheet> --entry <entry>`: selector coverage (below). |
 | `rig` | Starts each browser and reports versions, pseudo-element support, input verification, widths, color-scheme mechanisms and screenshot timing to `results/<run>/rig.json`. |
 | `selftest` | The negative controls (below), each a real `run.py` subprocess. `--cases`, `--browsers`, `--no-states`. |
@@ -221,9 +224,8 @@ Widths: one inside each band, 375, 640, 900, 1150, 1400 and 1700, plus 575/576/5
 1023/1024/1025, 1279/1280/1281 and 1535/1536/1537 (21 widths). Every reduction is printed as a
 `cap:` line in `log.txt` and stored in `result.json` (`caps`):
 
-- Entries `default`, `classless`, `fluid-classless`: the kitchen sink and pages with
-  `"media": true` run all 21 widths in all four legs; other pages and non-plain page variants run
-  widths 390 and 1280 in all four legs.
+- Entry `default`: the kitchen sink and pages with `"media": true` run all 21 widths in all four
+  legs; other pages and non-plain page variants run widths 390 and 1280 in all four legs.
 - rtl runs only on pages with `"rtl": true`: band widths for the kitchen sink and media pages, 390
   and 1280 otherwise, in legs `light` and `theme-dark`.
 - Interactive states and screenshots run at widths 375 and 1280 for wide pages (every ltr leg),
@@ -235,27 +237,29 @@ Widths: one inside each band, 375, 640, 900, 1150, 1400 and 1700, plus 575/576/5
   `theme-dark`. The other pages are needed because `femto.no-transitions.css` changes rules the
   kitchen sink cannot hold: the `modal-is-opening`/`-closing` animations (`classes-modal.html`
   variants), the open dropdown list, and the left and right tooltip slides in hover.
-- Themes (`theme-<color>` and `classless-theme-<color>`, 40 presets): the kitchen sink only, 1280,
-  every leg, with states. Every rule whose declarations differ between a theme reference and its
-  entry reference has a selector that matches on the kitchen sink (checked 2026-10-27).
+- Themes (`theme-<color>`, 20 presets): the kitchen sink only, 1280, every leg, with states. Every
+  rule whose declarations differ between a theme reference and `femto.css` has a selector that
+  matches on the kitchen sink (checked 2026-10-27).
 
-That is 4,969 cells per browser (4,965 in `--control`, which has no `colors` cells). See Measured throughput.
+That is 2,089 cells per browser, 606 of them with states (2,085 and 602 in `--control`, which has
+no `colors` cells): `default` 1,648, `colors` 4, each option 119 and each theme 4. Counted on
+2026-10-27 with the harness's own planner (`harness.cli.plan`, which starts no browser) after the
+classless presets were removed. See Measured throughput.
 
 ## Presets: `tests/variants.json`
 
 `presets.<name>`: `entry` (selects pages whose manifest `entries` include it), `ref` and `test`
 (root-relative stylesheet lists, loaded in order), optional `group` (`option`, `theme`) and
 `hybrid` (`sections`: the `tests/sections.json` entry used to split `ref`; `append`: URLs imported
-after the chunks once any section is replaced, for theme and option files).
+after the chunks once any section is replaced, for theme and option files). There are 25 presets:
+`default`, `colors`, 3 options and 20 themes.
 
-- `default`, `classless`, `fluid-classless`: `tests/reference/femto[.classless|.fluid.classless].css`
-  against `css/femto[...].css`.
+- `default`: `tests/reference/femto.css` against `css/femto.css`.
 - `colors`: `tests/reference/femto.colors.css` against `css/femto.colors.css`.
 - `option-<option>`: `tests/reference/options/femto.<option>.css` against `css/femto.css` plus
   `css/options/<option>.css`.
-- `theme-<color>`, `classless-theme-<color>`: `tests/reference/femto[.classless].<color>.css`
-  against the entry plus `css/themes/<color>.css`. Azure is built into `tokens/`, so its reference
-  is the entry reference itself.
+- `theme-<color>`: `tests/reference/femto.<color>.css` against `css/femto.css` plus
+  `css/themes/<color>.css`. Azure is built into `tokens/`, so its reference is `femto.css` itself.
 
 ## Hybrid builds and `tests/sections.json`
 
@@ -269,6 +273,15 @@ The banner titles of the reference must equal the sections of the chosen entry, 
 femto files stop the run before any browser starts. With nothing replaced it is the chunk control,
 which must compare clean. Files are written atomically and only when they change, so concurrent
 runs can share them.
+
+The name is `hybrid-<section slugs joined by +>`, followed by `--<appended file slugs>` when the
+preset appends files (`/css/` and `.css` dropped; a long tail is cut and hashed), so the name fixes
+the content: for example `hybrid-styles+color-schemes+document.css` for `default` and
+`hybrid-styles+color-schemes+document--themes-azure.css` for `theme-azure`. Until Phase 1's review
+the name left out the append list, so `default` and `theme-azure`, which share
+`tests/reference/femto.css`, wrote one file, and in a run planning both, the `default` cells also
+loaded `themes/azure.css`. A run now stops with a build error if it would write one hybrid path with
+two contents.
 
 ## Fixture page contract
 
@@ -297,7 +310,7 @@ runs can share them.
 ## Manifest contract: `tests/pages/pages.json`
 
 A JSON array with one object per page: `page` (file name), `modules` (module ids), `sections`
-(2.1.1 banner titles), `entries` (`default`, `classless`, `fluid-classless`, or `colors`),
+(2.1.1 banner titles), `entries` (`default` or `colors`),
 `variants` (query variants besides theme and dir; `{}` is the plain load, e.g.
 `{"class": "modal-is-open"}`; a variant may not set `css`, `theme` or `dir`), `rtl` (the module has
 `[dir=rtl]` rules), `media` (its CSS has media queries), and optional `stateless_variants`
@@ -336,10 +349,31 @@ every entry that matches counts a hit. The summary lists entries with no hit in 
 unregistered skipped checks, fail the run.
 
 Seed entries (from PLAN, written broadly; later phases tighten them): `tokens.json`
-(`tokens-light-dark-raw-text`, `tokens-root-user-override-style`/`-token` for a future
-`user-root-override` preset, `tokens-new-names`), `components-group.json` (island focus rings),
-`classes-table-striped.json` (classless), `forms-basics.json` (Firefox focus ring after dropping
-`:-moz-focusring`), and `rig.json` (`safari-no-media-dark`).
+(`tokens-light-dark-raw-text`, `tokens-group-island-focus-ring`, `tokens-root-user-override-style`/`-token`
+for a future `user-root-override` preset, `tokens-new-names`), `components-group.json` (the island
+focus-ring style), `forms-basics.json` (Firefox focus ring after dropping `:-moz-focusring`), and
+`rig.json` (`safari-no-media-dark`). Phase 1 narrowed the tokens and island entries to what its runs
+reported. Its review added `tokens-author-color-scheme-dark` and `-light`: an author's inline
+`color-scheme` on an element without `data-theme` now switches femto's `light-dark()` colors in that
+subtree, where 2.1.1's literals kept the page's colors (fixtures `#cs-dark` and `#cs-light` in
+`tokens-schemes.html`). Its second round added `tokens-own-data-theme-style`, `-token` and `-raw`
+for Decision 12: color tokens are declared once on `:root, :host`, so an element that carries
+`data-theme` itself (`<button data-theme=dark>`, the inputs under "Elements with their own
+data-theme" in `tokens-schemes.html`) keeps its own color tokens in its scheme, where 2.1.1
+redeclared the page's. It also pinned the two island focus-ring entries to a single-ring value and
+moved the author `color-scheme` entries to `natural-fix`. After the third round, the Decision 12
+entries were narrowed to the 11 tokens, the color, background and box-shadow properties and the
+page that runs report, and `tokens-schemes.html` gained a dark `select`, `textarea`, `h1`, links
+and a `role=button` so each element kind in their selector is exercised (a `summary` carrying
+`data-theme` shows no difference, so it is not listed). `tokens-dark-shadow-host-input-focus`
+records the one flat `input:is(...)` rule that replaces 2.1.1's three per-scheme copies of
+`--femto-form-element-focus-color`: in a shadow root whose host carries `data-theme=dark`, a
+focused checkbox or radio now draws the `primary-focus` ring like every other one (fixtures
+`shadow-dark-host-c1` and `shadow-dark-host-r`, with `data-states="focus"`).
+The owner then chose that a shadow host carrying `data-theme=dark` is dark (Decision 12): the
+forced-dark rules add `:host([data-theme=dark])`, and `tokens-dark-shadow-host-contrast-filter`
+records its one harness-visible effect, the contrast summary and busy contrast icons in the
+`shadow-dark-host` template taking the dark filter.
 
 ## Output
 
@@ -512,9 +546,10 @@ pixel ratio 1, appearance Light) with Google Chrome Beta 157.0.8103.15 and chrom
 - Firefox applies `scrollTo()` asynchronously, and a scroll-into-view queued by a keyboard focus can
   land after it; before a screenshot the harness scrolls to the top until the position holds for two
   frames. Pointer states wait two frames after scrolling the target into view.
-- Chrome's raster varies by 1/255 in some dark-scheme areas between identical loads (a self run
-  showed such cells, none above 8/255). The summary counts pixels off by more than 8/255 separately,
-  and images are saved only for those.
+- Chrome's raster varies by 1/255 in some dark-scheme areas between identical loads, and Chrome
+  self runs also show isolated cells above 8/255 (three in Phase 1's gate self run, comparing the
+  reference with itself), so isolated cells above 8/255 in hybrid runs are rig noise, not CSS. The
+  summary counts pixels off by more than 8/255 separately, and images are saved only for those.
 - `select`: pointer down opens the native picker in Chrome and Firefox (`:open`), and Firefox keeps
   it open after release, which made later states nondeterministic until `mousedown` on `select` was
   cancelled.
@@ -522,7 +557,8 @@ pixel ratio 1, appearance Light) with Google Chrome Beta 157.0.8103.15 and chrom
 ## Measured throughput
 
 The harness agent's first measurements, on 2026-10-27, on the 4,693-cell matrix of that time (numbers
-from `result.json` timings). The proving runs on the current 4,969-cell matrix are in Harness proof below.
+from `result.json` timings). The proving runs on the 4,969-cell matrix of Phase 0 are in Harness proof
+below; the current matrix has 2,089 cells per browser (see The full matrix and its reductions).
 
 | Run | Cells | Wall clock | Notes |
 |---|---|---|---|
@@ -553,6 +589,10 @@ appearance Light; Google Chrome Beta 157.0.8103.15 with chromedriver 157.0.8103.
 with geckodriver 0.37.1, Safari 27.0.1 with its safaridriver, Selenium 4.51.0. Run ids are folders
 in `tests/results/` (gitignored, so they exist only on the test machine). Chrome and Firefox are
 the beta channels installed there; that was accepted for this gate.
+
+Later on 2026-10-27, after these runs, the classless and fluid classless presets, references, fixture
+page, sections and seed divergence were removed from `tests/` under the amended PLAN (Decision 2), so
+the classless rows and commands below are a record of what ran and can no longer be rerun.
 
 ### What changed while proving
 
@@ -605,7 +645,8 @@ option presets now run every page.
 
 `uv run tests/run.py full --self --browsers chrome,firefox` and, in Safari, the same matrix split
 into `--states-only` and `--stateless-only`. Every preset in `tests/variants.json`: `default`,
-`classless`, `fluid-classless`, `colors`, 38 theme presets, 3 option presets.
+`classless`, `fluid-classless`, `colors`, 40 theme presets (20 for the default entry, 20 for
+classless), 3 option presets.
 
 | Browser | Run ids | Cells | Elements + pseudo-element snapshots | Style values | Token values | State applications per side | Differences | Harness errors | Wall clock |
 |---|---|---|---|---|---|---|---|---|---|
@@ -755,9 +796,17 @@ config ignores). Both are expected before any femto CSS exists.
   Safari interactive states need an unlocked screen.
 - 19 of the 24 selftest controls run only the `light` leg, so on a dark OS Safari skips them and
   they report FAIL without comparing anything. Run Safari's selftest in the light pass.
-- Computed styles cannot show `::selection`, `::-webkit-*`/`::-moz-*` vendor pseudo-elements (range
-  thumbs and tracks, progress bars, spin buttons, calendar pickers, details markers), `:visited`, or
-  `:user-invalid`; token resolution and screenshots are the only signal for those.
+- No fixture loads femto only inside a shadow root: every page loads the stylesheet in the outer
+  document too, so a shadow host's own scheme is never the only one in play. Phase 1 checked that
+  case with a standalone Selenium script (five hosts, every computed longhand of 230 elements and
+  their `::before`, Chrome and Firefox, light and dark media). Hosts without `data-theme`, with
+  `data-theme=light` and inside a dark island match 2.1.1 exactly. Hosts with `data-theme=dark` are
+  dark, where 2.1.1 gave them no color tokens at all (Decision 12).
+- Computed styles cannot show `::-webkit-*`/`::-moz-*` vendor pseudo-elements (range thumbs and
+  tracks, progress bars, spin buttons, calendar pickers, details markers), `:visited`, or
+  `:user-invalid`; token resolution and screenshots are the only signal for those. `::selection` is
+  reported by `getComputedStyle` in all three browsers, but the harness does not collect it; Phase
+  1's review compared it by hand, on the page and in both islands, in Chrome, Firefox and Safari.
 - The loading spinner is an SVG whose internal animation cannot be frozen; screenshots cover every
   `[aria-busy=true]` element on both sides. Media controls draw their time display asynchronously
   (Firefox), so `video[controls]` and `audio[controls]` are covered too.
@@ -774,3 +823,11 @@ config ignores). Both are expected before any femto CSS exists.
   femto theme file that wrongly styled an element only other pages hold would go unseen there.
 - The `progress:indeterminate[value]::-webkit-progress-value` selector can never match, so no
   fixture covers it.
+- Safari 27 paints a color that arrives through `light-dark()` slightly differently from the same
+  literal: a fractional channel is truncated instead of rounded (`rgb(26, 30.5, 40.25)` paints as
+  30, not 31, in the green channel; `rgb(251, 251.5, 252.25)` as 251, not 252), and composited
+  overlays drift by up to 5/255 (the open modal backdrop). `getComputedStyle` reports identical values on
+  both sides, so only screenshots see it. Found in Phase 1's review: every Safari
+  `tokens-breakpoints.html` cell (the page with the open dialog) has pixel differences, none above
+  8/255, while Safari's self run of the same page has none. Pixel diffs do not gate, and flat areas
+  stay within the 1/255 tolerance; Chrome and Firefox show none of it. Do not chase these in triage.

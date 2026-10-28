@@ -1,0 +1,18 @@
+/*
+ * Theme color: azure, which femto.css already uses, so loading this file after femto.css changes
+ * nothing. Like every theme file, it is one rule on :root, :host that sets the ten theme tokens,
+ * with light-dark() where the light and dark values differ.
+ */
+:root,
+:host {
+  --femto-text-selection-color: light-dark(rgba(2, 154, 232, 0.25), rgba(1, 170, 255, 0.1875));
+  --femto-primary: light-dark(#0172ad, #01aaff);
+  --femto-primary-background: #0172ad;
+  --femto-primary-underline: light-dark(rgba(1, 114, 173, 0.5), rgba(1, 170, 255, 0.5));
+  --femto-primary-hover: light-dark(#015887, #79c0ff);
+  --femto-primary-hover-background: light-dark(#02659a, #017fc0);
+  --femto-primary-focus: light-dark(rgba(2, 154, 232, 0.5), rgba(1, 170, 255, 0.375));
+  --femto-primary-inverse: #fff;
+  --femto-primary-inverse-filter: brightness(0) invert(1);
+  --femto-switch-thumb-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}

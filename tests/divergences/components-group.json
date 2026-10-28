@@ -1,29 +1,22 @@
 [
   {
-    "id": "group-island-focus-ring-tokens",
-    "module": "components/group",
-    "kind": "token",
-    "token": "/^--femto-group-box-shadow-focus-with-(button|input)$/",
-    "selector": "div[data-theme], div[data-theme] *",
-    "property": "*",
-    "reference": "*",
-    "femto": "*",
-    "category": "natural-fix",
-    "reason": "2.1.1 builds the group focus-ring tokens in _styles.scss with var() substituted on :root, so a nested data-theme island inherits the page scheme's ring color. With light-dark() the token resolves per element, so the island gets its own scheme's color.",
-    "notes": "Seed from PLAN (spike 05: --pico-group-box-shadow-focus-with-button/-input inside islands)."
-  },
-  {
     "id": "group-island-focus-ring-style",
     "module": "components/group",
     "kind": "style",
-    "selector": "div[data-theme] :is([role=group], [role=search])",
+    "selector": "[data-theme]:not(:root) :is([role=group], [role=search])",
     "pseudo": "",
     "property": "box-shadow",
-    "reference": "*",
-    "femto": "*",
-    "where": {"states": ["hover", "focus", "focus-visible", "active"]},
+    "reference": "/^rgba?\\([^)]*\\) 0px 0px 0px [0-9.]+px$/",
+    "femto": "/^rgba?\\([^)]*\\) 0px 0px 0px [0-9.]+px$/",
+    "where": {
+      "states": [
+        "focus",
+        "focus-visible",
+        "active"
+      ]
+    },
     "category": "natural-fix",
-    "reason": "Consequence of group-island-focus-ring-tokens: the [role=group] and [role=search] focus ring inside a nested data-theme island uses the island's scheme color instead of the page's.",
-    "notes": "Seed from PLAN."
+    "reason": "Consequence of tokens-group-island-focus-ring (tokens.json): the [role=group] and [role=search] focus ring inside a nested data-theme island whose scheme differs from the page uses the island's scheme color instead of the page's. 2.1.1 fixed the ring color in the root's scheme; light-dark() resolves it per element.",
+    "notes": "Seed from PLAN. Narrowed in Phase 1: any element carrying data-theme other than the root (the seed only matched div), and only the states that focus a control inside the group (hover never does). Review round 2 pinned both values to the single-ring shape (a color, three zero offsets and a spread in px)."
   }
 ]

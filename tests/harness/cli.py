@@ -20,6 +20,7 @@ MODES_HELP = """modes:
   compare   direct comparison of --ref against --test (or a preset's ref and test lists).
   self      a reference against itself (acceptance criterion 1).
   hybrid    a preset's reference against a hybrid build (--sections/--modules), or --control.
+            --full-plan uses the full matrix's cells and reductions instead of the fast axes.
   coverage  selector coverage of a stylesheet over the fixture pages.
   rig       verify the browser mechanisms and print what each browser supports.
   registry  validate tests/divergences/*.json.
@@ -83,13 +84,16 @@ def parse(argv):
         add_common(p)
         p.add_argument("--ref", help="comma list of reference stylesheet URLs (overrides the preset)")
         p.add_argument("--test", help="comma list of test stylesheet URLs (compare only)")
-        p.add_argument("--entry", help="page entry filter when --ref is given (default, classless, fluid-classless, colors)")
+        p.add_argument("--entry", help="page entry filter when --ref is given (default, colors)")
         p.add_argument("--full-widths", action="store_true", help="every width of the full matrix")
         p.add_argument("--all-legs", action="store_true", help="all four scheme legs")
         if name == "hybrid":
             p.add_argument("--modules")
             p.add_argument("--sections", help="banner titles separated by ';'")
             p.add_argument("--control", action="store_true", help="no section replaced (chunk control)")
+            p.add_argument("--full-plan", action="store_true",
+                           help="the full matrix's cells for the chosen presets (default: default), as full mode plans "
+                                "them, instead of the fast axes or --full-widths/--all-legs")
 
     p = sub.add_parser("coverage", help="selector coverage of a stylesheet")
     p.add_argument("--css", required=True, help="stylesheet URL or path, e.g. /tests/reference/femto.css")
@@ -206,6 +210,15 @@ def plan(args, mode, caps):
         cells = matrix.full_cells(browsers, presets, pages, lambda n, pr: resolve_tests(args, n, pr, mode, caps), caps,
                                   preset_filter=names or None)
         return filter_cells(args, cells, caps)
+    if mode == "hybrid" and getattr(args, "full_plan", False):
+        if getattr(args, "full_widths", False) or getattr(args, "all_legs", False):
+            raise SystemExit("--full-plan sets the widths and legs itself; drop --full-widths and --all-legs")
+        if getattr(args, "ref", None):
+            raise SystemExit("--full-plan takes --presets, not --ref")
+        cells = matrix.full_cells(browsers, presets, pages,
+                                  lambda n, pr: resolve_tests(args, n, pr, mode, caps, wanted_sections(args, pr)),
+                                  caps, preset_filter=names or ["default"])
+        return filter_cells(args, cells, caps)
     widths = ints(args.widths) or (matrix.ALL_WIDTHS if getattr(args, "full_widths", False) else matrix.FAST_WIDTHS)
     legs = csv(args.schemes) or (matrix.ALL_LEGS if getattr(args, "all_legs", False) else ["light", "dark"])
     for leg in legs:
@@ -244,13 +257,14 @@ def plan(args, mode, caps):
 
 
 def filter_cells(args, cells, caps):
-    pages = set(csv(args.pages)) if getattr(args, "pages", None) and args.mode == "full" else None
-    widths = set(ints(args.widths)) if args.mode == "full" and args.widths else None
-    legs = set(csv(args.schemes)) if args.mode == "full" and args.schemes else None
-    dirs = set(csv(args.dirs)) if args.mode == "full" and args.dirs else None
-    variants = set(csv(args.variants)) if args.mode == "full" and args.variants else None
-    states_only = args.mode == "full" and getattr(args, "states_only", False)
-    stateless_only = args.mode == "full" and getattr(args, "stateless_only", False)
+    full = args.mode == "full" or getattr(args, "full_plan", False)
+    pages = set(csv(args.pages)) if getattr(args, "pages", None) and full else None
+    widths = set(ints(args.widths)) if full and args.widths else None
+    legs = set(csv(args.schemes)) if full and args.schemes else None
+    dirs = set(csv(args.dirs)) if full and args.dirs else None
+    variants = set(csv(args.variants)) if full and args.variants else None
+    states_only = full and getattr(args, "states_only", False)
+    stateless_only = full and getattr(args, "stateless_only", False)
     out = [c for c in cells if (not pages or c["page"] in pages) and (not widths or c["width"] in widths)
            and (not legs or c["scheme"] in legs) and (not dirs or c["dir"] in dirs)
            and (not variants or c["variant_label"] in variants) and (not states_only or c["states"])
@@ -340,7 +354,7 @@ def run_build(args):
 
 
 def ensure_references():
-    """Rebuild the 42 renamed 2.1.1 copies from the tag when any is missing (they are gitignored)."""
+    """Rebuild the 21 renamed 2.1.1 copies from the tag when any is missing (they are gitignored)."""
     spec = importlib.util.spec_from_file_location("build_references", REFERENCE / "build_references.py")
     refs = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(refs)

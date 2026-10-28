@@ -25,8 +25,8 @@
         "description": "Optional filters; every listed key must match the comparison cell.",
         "properties": {
           "browsers": {"type": "array", "minItems": 1, "items": {"enum": ["chrome", "firefox", "safari"]}},
-          "presets": {"type": "array", "minItems": 1, "items": {"type": "string"}, "description": "Preset names from tests/variants.json (default, classless, theme-jade, option-no-transitions, ...)."},
-          "entries": {"type": "array", "minItems": 1, "items": {"enum": ["default", "classless", "fluid-classless", "colors"]}},
+          "presets": {"type": "array", "minItems": 1, "items": {"type": "string"}, "description": "Preset names from tests/variants.json (default, colors, theme-jade, option-no-transitions, ...)."},
+          "entries": {"type": "array", "minItems": 1, "items": {"enum": ["default", "colors"]}},
           "variants": {"type": "array", "minItems": 1, "items": {"type": "string"}, "description": "Matches the preset name, the entry, the page variant label (plain, class=modal-is-open) or the comparison kind (direct, self, hybrid, control)."},
           "pages": {"type": "array", "minItems": 1, "items": {"type": "string"}},
           "schemes": {"type": "array", "minItems": 1, "items": {"enum": ["light", "dark", "theme-light", "theme-dark"]}},

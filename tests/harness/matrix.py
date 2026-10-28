@@ -129,7 +129,7 @@ def full_cells(browsers, presets, pages, tests_for, caps, preset_filter=None):
     """
     cells = []
     note = caps.append
-    core = ["default", "classless", "fluid-classless"]
+    core = ["default"]
     note(f"full: widths {ALL_WIDTHS} (bands {BANDS} plus each boundary -1/0/+1) only for the kitchen sink "
          f"and pages with media rules; other pages use {FAST_WIDTHS}")
     note("full: rtl runs only on pages with rtl rules (manifest rtl: true), at band widths for wide pages "

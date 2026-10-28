@@ -5,9 +5,9 @@
 # ///
 """Builds and checks the parity oracle in tests/reference/ from git tag v2.1.1.
 
-  uv run tests/reference/build_references.py copies     write the 42 renamed 2.1.1 files, then check them
+  uv run tests/reference/build_references.py copies     write the 21 renamed 2.1.1 files, then check them
   uv run tests/reference/build_references.py options    compile the 3 option references (needs npm and network)
-  uv run tests/reference/build_references.py check      verify all 45 references (offline, stdlib only)
+  uv run tests/reference/build_references.py check      verify all 24 references (offline, stdlib only)
 
 The rename touches identifiers only: "--pico-" becomes "--femto-" and the ".pico-" class prefix
 (only used by pico.colors.css) becomes ".femto-". Comments, including the "Pico CSS" header, are kept
@@ -35,14 +35,12 @@ COLORS = (
     "violet yellow zinc"
 ).split()
 
-# Published reference name -> 2.1.1 source path.
+# Published reference name -> 2.1.1 source path. The classless and fluid classless builds are not
+# copied: PLAN Decision 2 drops them.
 COPIES = {
     "femto.css": "css/pico.css",
-    "femto.classless.css": "css/pico.classless.css",
-    "femto.fluid.classless.css": "css/pico.fluid.classless.css",
     "femto.colors.css": "css/pico.colors.css",
     **{f"femto.{c}.css": f"css/pico.{c}.css" for c in COLORS},
-    **{f"femto.classless.{c}.css": f"css/pico.classless.{c}.css" for c in COLORS},
 }
 
 # Option references: output name -> Sass configuration, in the style of scss/pico.classless.scss.

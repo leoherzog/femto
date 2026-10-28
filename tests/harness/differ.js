@@ -561,7 +561,9 @@
     add(doc.documentElement, doc.documentElement);
     if (doc.body) add(doc.body, doc.body);
     for (const el of els) {
-      if (el.hasAttribute("data-theme") || el.localName === "article" || el.localName === "dialog" || el.hasAttribute("data-module")) add(el, el);
+      // A shadow host's light-DOM children are unslotted, and getComputedStyle() returns empty values
+      // for them, so the probe for a host's own anchor goes in its shadow root, which inherits from it.
+      if (el.hasAttribute("data-theme") || el.localName === "article" || el.localName === "dialog" || el.hasAttribute("data-module")) add(el, el.shadowRoot || el);
       if (el.shadowRoot) add(el, el.shadowRoot, " >>> shadow root");
     }
     return list;
