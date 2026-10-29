@@ -1,0 +1,18 @@
+/*
+ * Theme color: slate, loaded after femto.css and before any stylesheet of yours that overrides the
+ * theme tokens. Like every theme file, it is one rule on :root, :host that sets the ten theme
+ * tokens, with light-dark() where the light and dark values differ.
+ */
+:root,
+:host {
+  --femto-text-selection-color: light-dark(rgba(129, 145, 181, 0.25), rgba(144, 158, 190, 0.1875));
+  --femto-primary: light-dark(#5d6b89, #909ebe);
+  --femto-primary-background: #525f7a;
+  --femto-primary-underline: light-dark(rgba(93, 107, 137, 0.5), rgba(144, 158, 190, 0.5));
+  --femto-primary-hover: light-dark(#48536b, #b0b9d0);
+  --femto-primary-hover-background: light-dark(#48536b, #5d6b89);
+  --femto-primary-focus: light-dark(rgba(129, 145, 181, 0.5), rgba(144, 158, 190, 0.375));
+  --femto-primary-inverse: #fff;
+  --femto-primary-inverse-filter: brightness(0) invert(1);
+  --femto-switch-thumb-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}

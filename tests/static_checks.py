@@ -3,14 +3,14 @@
 # requires-python = ">=3.11"
 # dependencies = []
 # ///
-"""Mechanical checks for PLAN.md acceptance criteria 4, 5, 6, 7, 10 and 11, plus shipped-file hygiene.
+"""Mechanical checks for PLAN.md acceptance criteria 4, 5, 6, 7, 10 and 11, plus shipped-file hygiene and theme-file text.
 
   uv run tests/static_checks.py                 run every check
-  uv run tests/static_checks.py --only 6,7      run some (ids: 4 5 6 7 hygiene vendor 10 11)
-  uv run tests/static_checks.py --root DIR      check another checkout (6, 7, hygiene and vendor need no git)
+  uv run tests/static_checks.py --only 6,7      run some (ids: 4 5 6 7 hygiene vendor themes 10 11)
+  uv run tests/static_checks.py --root DIR      check another checkout (6, 7, hygiene, vendor and themes need no git)
 
 Each check prints PASS or FAIL with evidence lines; the exit status is 1 if any check fails.
-"hygiene" and "vendor" are not acceptance criteria. They cover PLAN rules the lint
+"hygiene", "vendor" and "themes" are not acceptance criteria. The first two cover PLAN rules the lint
 (eslint.config.mjs, @eslint/css 2.0.1) cannot see:
 
   lint gap                                                     covered by
@@ -29,6 +29,9 @@ Each check prints PASS or FAIL with evidence lines; the exit status is 1 if any 
 Not covered by either, so reviewers must check: declarations placed directly inside an @media
 or @supports nested in a rule (use-baseline only inspects declarations whose parent is a rule),
 nesting traps (docs/research/scripts/nesting_traps.py), and duplicate rules.
+
+"themes" covers what the harness cannot see in a theme file: tokens-light-dark-raw-text accepts
+any light-dark() text, so it compares each file's ten tokens with its 2.1.1 reference as text.
 
 "Shipped files" are everything under css/ except the 2.1.1 build output css/pico*.css and
 css/postcss.config.js, which Phase 5 deletes. Until then those two are skipped, not checked.
@@ -464,7 +467,7 @@ def hygiene(root: Path) -> Result:
         if not m or not re.search(r"\w", m.group(1)):
             r.fail(f"{rel}: does not start with a header comment" + (" (leading whitespace or BOM)" if text.lstrip().startswith("/*") else ""))
         else:
-            words = re.sub(r"\s+", " ", m.group(1)).strip()
+            words = re.sub(r"\s+", " ", m.group(1).lstrip("!")).strip()
             sentences = len(re.findall(r"[.!?](\s|$)", words))
             if sentences > 3:
                 r.note(f"{rel}: header comment has about {sentences} sentences (PLAN asks for one to three)")
@@ -524,6 +527,95 @@ def vendor(root: Path) -> Result:
                 used.setdefault(m.group(1), []).append(f"{rel}:{line_of(text, m.start())}")
     for prop, where in sorted(used.items()):
         r.note(f"prefixed property not in the PLAN keep list: {prop} ({len(where)}x, first {where[0]}); keep only if 03 §2 says it is needed")
+    return r
+
+
+THEME_TOKENS = (
+    "text-selection-color",
+    "primary",
+    "primary-background",
+    "primary-underline",
+    "primary-hover",
+    "primary-hover-background",
+    "primary-focus",
+    "primary-inverse",
+    "primary-inverse-filter",
+    "switch-thumb-box-shadow",
+)
+THEME_BLOCKS = {
+    "light": "[data-theme=light], :root:not([data-theme=dark]), :host(:not([data-theme=dark]))",
+    "dark-media": "@media only screen and (prefers-color-scheme: dark) >> :root:not([data-theme]), :host(:not([data-theme]))",
+    "dark": "[data-theme=dark]",
+    "spinner": "[aria-busy=true]:not(input, select, textarea):is(button, [type=submit], [type=button], [type=reset], [role=button]):not(.outline)::before",
+}
+
+
+def reference_rules(text: str) -> dict[str, dict[str, str]]:
+    """Declarations of each rule in a compiled 2.1.1 reference, keyed by its at-rule path and selector."""
+    rules: dict[str, dict[str, str]] = {}
+    stack: list[str] = []
+    pending: list[str] = []
+    for line in re.sub(r"/\*.*?\*/", "", text, flags=re.S).splitlines():
+        s = line.strip()
+        if not s:
+            continue
+        if s.endswith("{"):
+            stack.append(" ".join(pending + [s[:-1].strip()]))
+            pending = []
+        elif s == "}":
+            if stack:
+                stack.pop()
+        elif s.endswith(","):
+            pending.append(s)
+        elif m := re.fullmatch(r"([\w-]+):\s*(.*);", s):
+            rules.setdefault(" >> ".join(stack), {})[m.group(1)] = m.group(2)
+    return rules
+
+
+def themes(root: Path) -> Result:
+    r = Result("Theme files: each css/themes/<color>.css is the ten tokens of its 2.1.1 reference, text for text")
+    files = sorted((root / "css/themes").glob("*.css"))
+    if not files:
+        r.note("no css/themes/*.css yet")
+        return r
+    for p in files:
+        rel = p.relative_to(root).as_posix()
+        color = p.stem
+        ref = root / "tests/reference" / ("femto.css" if color == "azure" else f"femto.{color}.css")
+        if not ref.exists():
+            r.fail(f"{rel}: no reference {ref.relative_to(root).as_posix()}")
+            continue
+        rules = reference_rules(ref.read_text())
+        blocks = {name: rules.get(sel, {}) for name, sel in THEME_BLOCKS.items()}
+        light, dark = blocks["light"], blocks["dark"]
+        expected = []
+        for t in THEME_TOKENS:
+            if t == "primary-inverse-filter":
+                value = blocks["spinner"].get("filter")
+            else:
+                name = "--femto-" + t
+                if blocks["dark-media"].get(name) != dark.get(name):
+                    r.fail(f"{rel}: reference {name} differs between the prefers-color-scheme and data-theme=dark blocks")
+                value = None
+                if name in light and name in dark:
+                    value = light[name] if light[name] == dark[name] else f"light-dark({light[name]}, {dark[name]})"
+            if value is None:
+                r.fail(f"{rel}: reference has no value for --femto-{t}")
+            expected.append((f"--femto-{t}", value))
+        code = re.sub(r"/\*.*?\*/", "", p.read_text(), flags=re.S)
+        m = re.fullmatch(r"\s*:root,\s*:host\s*\{([^{}]*)\}\s*", code)
+        if not m:
+            r.fail(f"{rel}: not a single rule on :root, :host")
+            continue
+        got = [tuple(part.strip() for part in d.split(":", 1)) for d in m.group(1).split(";") if d.strip()]
+        if [g[0] for g in got] != [e[0] for e in expected]:
+            r.fail(f"{rel}: declares {[g[0] for g in got]}, expected the ten theme tokens in azure.css order")
+            continue
+        for (name, value), (_, want) in zip(got, expected):
+            if want is not None and value != want:
+                r.fail(f"{rel}: {name}: {value} (2.1.1 reference text: {want})")
+    if r.passed:
+        r.ok(f"{len(files)} theme files match their references")
     return r
 
 
@@ -592,6 +684,7 @@ CHECKS = {
     "7": criterion_7,
     "hygiene": hygiene,
     "vendor": vendor,
+    "themes": themes,
     "10": criterion_10,
     "11": criterion_11,
 }

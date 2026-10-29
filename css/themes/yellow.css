@@ -1,0 +1,20 @@
+/*
+ * Theme color: yellow, loaded after femto.css and before any stylesheet of yours that overrides the
+ * theme tokens. Like every theme file, it is one rule on :root, :host that sets the ten theme
+ * tokens, with light-dark() where the light and dark values differ. Yellow is a light color, so
+ * primary buttons have black text, filled buttons show black loading spinners, checked radios have
+ * a black dot, and the switch thumb casts a shadow.
+ */
+:root,
+:host {
+  --femto-text-selection-color: light-dark(rgba(158, 146, 0, 0.25), rgba(173, 159, 0, 0.1875));
+  --femto-primary: light-dark(#756b00, #ad9f00);
+  --femto-primary-background: #f2df0d;
+  --femto-primary-underline: light-dark(rgba(117, 107, 0, 0.5), rgba(173, 159, 0, 0.5));
+  --femto-primary-hover: light-dark(#5b5300, #caba01);
+  --femto-primary-hover-background: light-dark(#e8d600, rgb(247.5, 232, 96.5));
+  --femto-primary-focus: light-dark(rgba(158, 146, 0, 0.5), rgba(173, 159, 0, 0.375));
+  --femto-primary-inverse: #000;
+  --femto-primary-inverse-filter: brightness(0) invert(0);
+  --femto-switch-thumb-box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.25);
+}

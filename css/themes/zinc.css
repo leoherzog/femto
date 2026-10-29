@@ -1,0 +1,18 @@
+/*
+ * Theme color: zinc, loaded after femto.css and before any stylesheet of yours that overrides the
+ * theme tokens. Like every theme file, it is one rule on :root, :host that sets the ten theme
+ * tokens, with light-dark() where the light and dark values differ.
+ */
+:root,
+:host {
+  --femto-text-selection-color: light-dark(rgba(136, 145, 164, 0.25), rgba(150, 158, 175, 0.1875));
+  --femto-primary: light-dark(#646b79, #969eaf);
+  --femto-primary-background: #646b79;
+  --femto-primary-underline: light-dark(rgba(100, 107, 121, 0.5), rgba(150, 158, 175, 0.5));
+  --femto-primary-hover: light-dark(#4d535e, #b3b9c5);
+  --femto-primary-hover-background: light-dark(#5c6370, #6f7887);
+  --femto-primary-focus: light-dark(rgba(136, 145, 164, 0.5), rgba(150, 158, 175, 0.375));
+  --femto-primary-inverse: #fff;
+  --femto-primary-inverse-filter: brightness(0) invert(1);
+  --femto-switch-thumb-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}

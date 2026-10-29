@@ -1,7 +1,8 @@
 /*
- * Theme color: azure, which femto.css already uses, so loading this file after femto.css changes
- * nothing. Like every theme file, it is one rule on :root, :host that sets the ten theme tokens,
- * with light-dark() where the light and dark values differ.
+ * Theme color: azure, which femto.css already uses, so loading this file after femto.css and
+ * before any stylesheet of yours that overrides the theme tokens changes nothing. Like every theme
+ * file, it is one rule on :root, :host that sets the ten theme tokens, with light-dark() where the
+ * light and dark values differ.
  */
 :root,
 :host {

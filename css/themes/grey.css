@@ -1,0 +1,20 @@
+/*
+ * Theme color: grey, loaded after femto.css and before any stylesheet of yours that overrides the
+ * theme tokens. Like every theme file, it is one rule on :root, :host that sets the ten theme
+ * tokens, with light-dark() where the light and dark values differ. Grey is a light color, so
+ * primary buttons have black text, filled buttons show black loading spinners, checked radios have
+ * a black dot, and the switch thumb casts a shadow.
+ */
+:root,
+:host {
+  --femto-text-selection-color: light-dark(rgba(145, 145, 145, 0.25), rgba(158, 158, 158, 0.1875));
+  --femto-primary: light-dark(#6a6a6a, #9e9e9e);
+  --femto-primary-background: #ababab;
+  --femto-primary-underline: light-dark(rgba(106, 106, 106, 0.5), rgba(158, 158, 158, 0.5));
+  --femto-primary-hover: light-dark(#525252, #b9b9b9);
+  --femto-primary-hover-background: light-dark(#9e9e9e, #b9b9b9);
+  --femto-primary-focus: light-dark(rgba(145, 145, 145, 0.5), rgba(158, 158, 158, 0.375));
+  --femto-primary-inverse: #000;
+  --femto-primary-inverse-filter: brightness(0) invert(0);
+  --femto-switch-thumb-box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.25);
+}

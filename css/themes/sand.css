@@ -1,0 +1,20 @@
+/*
+ * Theme color: sand, loaded after femto.css and before any stylesheet of yours that overrides the
+ * theme tokens. Like every theme file, it is one rule on :root, :host that sets the ten theme
+ * tokens, with light-dark() where the light and dark values differ. Sand is a light color, so
+ * primary buttons have black text, filled buttons show black loading spinners, checked radios have
+ * a black dot, and the switch thumb casts a shadow.
+ */
+:root,
+:host {
+  --femto-text-selection-color: light-dark(rgba(149, 144, 130, 0.25), rgba(163, 158, 143, 0.1875));
+  --femto-primary: light-dark(#6e6a60, #a39e8f);
+  --femto-primary-background: #ccc6b4;
+  --femto-primary-underline: light-dark(rgba(110, 106, 96, 0.5), rgba(163, 158, 143, 0.5));
+  --femto-primary-hover: light-dark(#55524a, #beb8a7);
+  --femto-primary-hover-background: light-dark(#beb8a7, #dad4c2);
+  --femto-primary-focus: light-dark(rgba(149, 144, 130, 0.5), rgba(163, 158, 143, 0.375));
+  --femto-primary-inverse: #000;
+  --femto-primary-inverse-filter: brightness(0) invert(0);
+  --femto-switch-thumb-box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.25);
+}

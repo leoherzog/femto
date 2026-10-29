@@ -1,0 +1,66 @@
+/*
+ * Responsive spacings option: the page's header, main and footer, sections and cards get more
+ * vertical block spacing (and cards more horizontal spacing) at each breakpoint, from 1.25 to 2.25
+ * times --femto-spacing. Load it after femto.css and before your own stylesheets: from 576px up it
+ * re-sets the block-spacing tokens, so an override of them loaded before it is lost.
+ */
+@media (min-width: 576px) {
+  body > header,
+  body > main,
+  body > footer,
+  section {
+    --femto-block-spacing-vertical: calc(var(--femto-spacing) * 1.25);
+  }
+  article {
+    --femto-block-spacing-vertical: calc(var(--femto-spacing) * 1.25);
+    --femto-block-spacing-horizontal: calc(var(--femto-spacing) * 1.25);
+  }
+}
+@media (min-width: 768px) {
+  body > header,
+  body > main,
+  body > footer,
+  section {
+    --femto-block-spacing-vertical: calc(var(--femto-spacing) * 1.5);
+  }
+  article {
+    --femto-block-spacing-vertical: calc(var(--femto-spacing) * 1.5);
+    --femto-block-spacing-horizontal: calc(var(--femto-spacing) * 1.5);
+  }
+}
+@media (min-width: 1024px) {
+  body > header,
+  body > main,
+  body > footer,
+  section {
+    --femto-block-spacing-vertical: calc(var(--femto-spacing) * 1.75);
+  }
+  article {
+    --femto-block-spacing-vertical: calc(var(--femto-spacing) * 1.75);
+    --femto-block-spacing-horizontal: calc(var(--femto-spacing) * 1.75);
+  }
+}
+@media (min-width: 1280px) {
+  body > header,
+  body > main,
+  body > footer,
+  section {
+    --femto-block-spacing-vertical: calc(var(--femto-spacing) * 2);
+  }
+  article {
+    --femto-block-spacing-vertical: calc(var(--femto-spacing) * 2);
+    --femto-block-spacing-horizontal: calc(var(--femto-spacing) * 2);
+  }
+}
+@media (min-width: 1536px) {
+  body > header,
+  body > main,
+  body > footer,
+  section {
+    --femto-block-spacing-vertical: calc(var(--femto-spacing) * 2.25);
+  }
+  article {
+    --femto-block-spacing-vertical: calc(var(--femto-spacing) * 2.25);
+    --femto-block-spacing-horizontal: calc(var(--femto-spacing) * 2.25);
+  }
+}

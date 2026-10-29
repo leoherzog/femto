@@ -385,6 +385,23 @@ elements that set no outline of their own, and adds `firefox-user-invalid-focus-
 which never hits (see Known limits). `components-group.json` splits the island focus ring by the
 island's scheme (`group-island-focus-ring-style` and `-light-island`). The other 26 modules needed no
 entry.
+Phase 3 added `options-no-transitions.json`, six entries limited to the `option-no-transitions`
+preset. 2.1.1 builds that option by compiling the gated `transition` declarations, the modal
+animations and the tooltip slides out; an appended file can only reset them, so
+`options/no-transitions.css` sets `--femto-transition: 0s` and repeats each dropped rule's selector
+list with a reset. What a reset cannot undo is `option-mechanism`: the token's raw text and resolved
+value, the two tooltip slide tokens (reset but still declared), and `transition-property: all` on a
+submit, reset or button input, dropdown list or modal close button that also carries `role=group` or
+`role=search` (fixture: the submit button with `role=group` in `components-group.html`). The group's
+own transition, which 2.1.1 does not gate, follows the token to 0s (`natural-fix`). The four
+`@keyframes` stay defined; no record kind can show an at-rule. Phase 3 also changed three fixtures.
+`colors.html` gained a "Two classes" block in which each span carries two neighboring utility
+classes in file order, so a change of rule order in `femto.colors.css` now shows as a difference
+(before it, all 13 reordering mutations the colors unit tried passed). `components-tooltip.html`
+gained tooltips on an open accordion summary and on two dropdown summaries, which exercise the
+option's chevron rules, and now runs for `components/accordion`, `components/dropdown` and
+`components/nav` too. `tokens-light-dark-raw-text` accepts any `light-dark()` text, so a theme
+file's ten tokens are compared with its reference as text by `static_checks.py --only themes`.
 
 ## Output
 

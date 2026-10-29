@@ -1,0 +1,18 @@
+/*
+ * Theme color: green, loaded after femto.css and before any stylesheet of yours that overrides the
+ * theme tokens. Like every theme file, it is one rule on :root, :host that sets the ten theme
+ * tokens, with light-dark() where the light and dark values differ.
+ */
+:root,
+:host {
+  --femto-text-selection-color: light-dark(rgba(71, 164, 23, 0.25), rgba(78, 179, 27, 0.1875));
+  --femto-primary: light-dark(#33790f, #4eb31b);
+  --femto-primary-background: #398712;
+  --femto-primary-underline: light-dark(rgba(51, 121, 15, 0.5), rgba(78, 179, 27, 0.5));
+  --femto-primary-hover: light-dark(#265e09, #5dd121);
+  --femto-primary-hover-background: light-dark(#33790f, #409614);
+  --femto-primary-focus: light-dark(rgba(71, 164, 23, 0.5), rgba(78, 179, 27, 0.375));
+  --femto-primary-inverse: #fff;
+  --femto-primary-inverse-filter: brightness(0) invert(1);
+  --femto-switch-thumb-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}

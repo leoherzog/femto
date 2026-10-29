@@ -627,10 +627,16 @@
  {
   "page": "components-tooltip.html",
   "modules": [
-   "components/tooltip"
+   "components/tooltip",
+   "components/accordion",
+   "components/dropdown",
+   "components/nav"
   ],
   "sections": [
-   "Tooltip ([data-tooltip])"
+   "Tooltip ([data-tooltip])",
+   "Accordion (<details>)",
+   "Dropdown (details.dropdown)",
+   "Nav"
   ],
   "entries": [
    "default"

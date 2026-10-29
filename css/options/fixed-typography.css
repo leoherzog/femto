@@ -1,0 +1,10 @@
+/*
+ * Fixed typography option: the root font size stays at 100% at every width instead of stepping up
+ * at each breakpoint; every other breakpoint token is left as it is. Load it after femto.css and
+ * before your own stylesheets: it re-sets the root and shadow-host --femto-font-size, so an
+ * override of that token loaded before it is lost.
+ */
+:root,
+:host {
+  --femto-font-size: 100%;
+}

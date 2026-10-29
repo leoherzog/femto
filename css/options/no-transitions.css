@@ -1,0 +1,175 @@
+/*
+ * No transitions option: --femto-transition is 0s; links, buttons, form fields, the switch, range,
+ * progress, accordion, dropdown and modal close button lose their transitions; the modal opens and
+ * closes without animating; and tooltips show in place without sliding in. Load it right after
+ * femto.css, before your own stylesheets and in femto's cascade layer if you use one
+ * (@import url(options/no-transitions.css) layer(femto)): its rules repeat femto's selectors, so
+ * they override your rules of the same specificity loaded before them and, left unlayered, every
+ * layered rule; the tooltip rules must outrank femto's slide-in rules, so on a hovered or focused
+ * tooltip's ::before and ::after they also override your rules below (0,2,1), or (0,3,1) for the
+ * bottom, left and right placements, even loaded after them. With a custom module set, copy this
+ * file too and delete the rules for the modules you left out.
+ */
+:root,
+:host {
+  --femto-transition: 0s;
+}
+
+/* Each rule below except the last three repeats the selector list of the femto rule it undoes, so it
+   has the same specificity and reach. The transition and modal rules reset what that rule declares
+   to its initial value, less what an earlier rule here already resets; the tooltip rules restore
+   the static values. */
+:where(a:not([role=button])),
+[role=link] {
+  transition: initial;
+}
+
+button,
+[type=submit],
+[type=reset],
+[type=button],
+[type=file]::file-selector-button,
+[role=button] {
+  transition: initial;
+}
+
+input,
+select,
+textarea {
+  transition: initial;
+}
+
+[type=checkbox][role=switch]:before {
+  transition: initial;
+}
+
+[type=range]::-webkit-slider-runnable-track {
+  transition: initial;
+}
+[type=range]::-moz-range-track {
+  transition: initial;
+}
+[type=range]::-webkit-slider-thumb {
+  transition: initial;
+}
+[type=range]::-moz-range-thumb {
+  transition: initial;
+}
+
+details summary {
+  transition: initial;
+}
+details summary::after {
+  transition: initial;
+}
+
+details.dropdown > summary:not([role]) {
+  transition: initial;
+}
+details.dropdown > summary + ul {
+  transition: initial;
+}
+details.dropdown[open] > summary + ul {
+  transition: initial;
+}
+
+dialog > article .close, dialog > article :is(a, button)[rel=prev] {
+  transition: initial;
+}
+:where(.modal-is-opening, .modal-is-closing) dialog,
+:where(.modal-is-opening, .modal-is-closing) dialog > article {
+  animation-duration: initial;
+  animation-timing-function: initial;
+  animation-fill-mode: initial;
+}
+:where(.modal-is-opening, .modal-is-closing) dialog {
+  animation-name: initial;
+}
+:where(.modal-is-opening, .modal-is-closing) dialog > article {
+  animation-delay: initial;
+  animation-name: initial;
+}
+.modal-is-closing dialog,
+.modal-is-closing dialog > article {
+  animation-delay: initial;
+  animation-direction: initial;
+}
+
+progress[value]::-webkit-progress-value {
+  transition: initial;
+}
+
+/* Tooltips: no slide-in. Hovered and focused tooltips keep opacity 1 and the transform that wins
+   without the slide rules: their placement's resting transform from the rules outside this media
+   query or, in the last three rules, the chevron transform of an open accordion summary or a
+   dropdown's summary, button or link, whose selectors outrank [data-tooltip]::after when the
+   tooltip has no top, bottom, left or right placement. Those three put all but [data-tooltip], the
+   state and ::after in :where(), so at (0,2,1) they win over the rules above by order alone and
+   outrank none of your rules those do not; they skip top placement, and the bottom, left and right
+   rules above outrank them. */
+@media (hover: hover) and (pointer: fine) {
+  [data-tooltip]:focus::before,
+  [data-tooltip]:focus::after,
+  [data-tooltip]:hover::before,
+  [data-tooltip]:hover::after {
+    --femto-tooltip-slide-to: initial;
+    transform: translate(-50%, -0.25rem);
+    animation-duration: initial;
+    animation-fill-mode: initial;
+    animation-name: initial;
+    opacity: 1;
+  }
+  [data-tooltip]:focus::after,
+  [data-tooltip]:hover::after {
+    --femto-tooltip-caret-slide-to: initial;
+    transform: translate(-50%, 0rem);
+  }
+  [data-tooltip][data-placement=bottom]:focus::before,
+  [data-tooltip][data-placement=bottom]:focus::after,
+  [data-tooltip][data-placement=bottom]:hover::before,
+  [data-tooltip][data-placement=bottom]:hover::after {
+    --femto-tooltip-slide-to: initial;
+    transform: translate(-50%, 0.25rem);
+    animation-name: initial;
+  }
+  [data-tooltip][data-placement=bottom]:focus::after,
+  [data-tooltip][data-placement=bottom]:hover::after {
+    --femto-tooltip-caret-slide-to: initial;
+    transform: translate(-50%, -0.3rem);
+  }
+  [data-tooltip][data-placement=left]:focus::before,
+  [data-tooltip][data-placement=left]:focus::after,
+  [data-tooltip][data-placement=left]:hover::before,
+  [data-tooltip][data-placement=left]:hover::after {
+    --femto-tooltip-slide-to: initial;
+    transform: translate(-0.25rem, -50%);
+    animation-name: initial;
+  }
+  [data-tooltip][data-placement=left]:focus::after,
+  [data-tooltip][data-placement=left]:hover::after {
+    --femto-tooltip-caret-slide-to: initial;
+    transform: translate(0.3rem, -50%);
+  }
+  [data-tooltip][data-placement=right]:focus::before,
+  [data-tooltip][data-placement=right]:focus::after,
+  [data-tooltip][data-placement=right]:hover::before,
+  [data-tooltip][data-placement=right]:hover::after {
+    --femto-tooltip-slide-to: initial;
+    transform: translate(0.25rem, -50%);
+    animation-name: initial;
+  }
+  [data-tooltip][data-placement=right]:focus::after,
+  [data-tooltip][data-placement=right]:hover::after {
+    --femto-tooltip-caret-slide-to: initial;
+    transform: translate(-0.3rem, -50%);
+  }
+  :where(details[open] > summary:not([data-placement=top]))[data-tooltip]:is(:focus, :hover)::after {
+    transform: rotate(0);
+  }
+  :where(details.dropdown > :is(summary, button, a):not([data-placement=top]))[data-tooltip]:is(:focus, :hover)::after {
+    transform: rotate(0deg) translateX(0.2rem);
+  }
+  :where(nav details.dropdown > summary:not([data-placement=top]))[data-tooltip]:is(:focus, :hover)::after {
+    transform: rotate(0deg) translateX(0rem);
+  }
+}
