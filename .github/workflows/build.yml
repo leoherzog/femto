@@ -1,0 +1,38 @@
+# Rebuilds dist/ from css/ on every push to a branch, and commits dist/ only when the build changed
+# it, for example after a commit that edited css/ without running npm run build. A push made with
+# the workflow's own token does not start another run.
+name: Build
+
+on:
+  push:
+    branches: ["**"]
+
+permissions:
+  contents: write
+
+# A newer push to the same branch cancels an older run; the newer run builds everything.
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: lts/*
+      - run: npm ci --ignore-scripts
+      - run: npm run build
+      - name: Commit dist/ if the build changed it
+        run: |
+          git add --all dist/
+          if git diff --cached --quiet; then
+            echo "dist/ is up to date."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit --message "Rebuild Dist"
+            git push origin "HEAD:$GITHUB_REF"
+          fi

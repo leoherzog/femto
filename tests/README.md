@@ -38,7 +38,7 @@ Python runs only through `uv`: `tests/run.py` carries PEP 723 metadata pinning
 | `pages/` | fixtures | fixture pages, `pages.json` manifest, `assets/` |
 | `reference/` | refs | renamed 2.1.1 CSS (gitignored, rebuilt from tag `v2.1.1` by `run.py` when missing) and committed option references, provenance in `reference/README.md` |
 | `sections.json` | refs | 2.1.1 banner sections of the default entry mapped to femto files |
-| `static_checks.py` | refs | mechanical checks for acceptance criteria 4 to 7, 10, 11 |
+| `static_checks.py` | refs | mechanical checks for acceptance criteria 4 to 7 and 10 to 12 (12: `dist/` matches a fresh `npm run build`) |
 | `build/`, `results/` | generated | gitignored |
 
 Python modules in `harness/`: `cli.py` (modes and planning), `matrix.py` (presets, pages, full-matrix
@@ -566,6 +566,17 @@ but does not flag a change. Phase 2's gate runs all used 158. Counts measured on
   and a session refused as "already paired" is retried once after terminating them again. Run the Safari leg with the screen unlocked, the automation window in
   front, and nobody using the machine; or pass `--no-states` and accept that Safari states stay
   unverified.
+- Safari 27.2 (it updated itself by 2026-10-29, safaridriver 22625.2.8.11.9): while the user's own
+  Safari is open, a new WebDriver session brings that Safari to the front and never completes, and
+  every attempt fails after 30 s with "The session timed out while connecting to a Safari instance"
+  (the rig probe shows only `SessionNotCreatedException()`). Selenium is not involved: a bare W3C
+  new-session request to safaridriver behaves the same. With Safari quit (⌘Q), safaridriver launches
+  its own `--automation` instance in about 1 s. Quit Safari before every Safari gate.
+- The screen locks once the display sleeps (about 5 minutes after the last input here), and from
+  then on every states cell reports "interactive states not run". The desktop app's keep-awake holds
+  only system sleep. Run the states leg as `caffeinate -d -i uv run tests/run.py full --browsers
+  safari --states-only ...`, which holds a display-awake assertion only while the harness runs and
+  changes no setting. Phase 4 ran both Safari passes that way.
 
 **All three.**
 - The iframe gives `innerWidth` equal to the width and `(width: Wpx)` matching in both `matchMedia`
@@ -814,6 +825,32 @@ Every Safari session logged `OS scheme dark`, and no run had a harness error.
 The chunk control's state cells were not rerun in dark. With the light pass, Safari has now run
 every leg of criterion 1: `light`, `dark`, and `theme-light` and `theme-dark` on both a light and a
 dark OS.
+
+### Full gate (Phase 4, criterion 2)
+
+femto against 2.1.1, the whole matrix (2,089 cells per browser), with the registry in
+`tests/divergences/`, run on 2026-10-29 with Chrome Beta 158.0.8127.2, Firefox 160.0, Safari 27.2
+(safaridriver 22625.2.8.11.9) on macOS 27.2, and Selenium 4.51.0. Each Safari leg ran under
+`caffeinate -d -i` with Safari quit and nobody using the machine (see Rig notes).
+
+| Run | Run id | Cells | States | Unregistered | Harness errors | Skipped checks (all registered) |
+|---|---|---|---|---|---|---|
+| Chrome and Firefox | `p4-full-cf-1` | 4,178 | 17,294 | **0** | 0 | none |
+| Safari, light OS, no states | `p4-safari-light-stateless` | 1,483 | 0 | **0** | 0 | `media:dark` 624 cells |
+| Safari, light OS, states | `p4-safari-light-states-2` | 606 | 6,941 | **0** | 0 | `media:dark` 226 cells; date-input `:focus-visible` 11 cells |
+| Safari, dark OS, no states | `p4-safari-dark-stateless` | 1,483 | 0 | **0** | 0 | `media:light` 859 cells |
+| Safari, dark OS, states | `p4-safari-dark-states` | 606 | 5,230 | **0** | 0 | `media:light` 380 cells; date-input `:focus-visible` 7 cells |
+
+No Safari cell was retried after real input. Pixel differences above 8/255: 6 Chrome and Firefox
+cells (rig noise, see Rig notes), none in Safari. The first light states run (`p4-safari-light-states`)
+was stopped when the screen locked after 53 clean state cells; `-2` is its complete rerun.
+
+Three registry entries fired in no run. `tokens-root-user-override-style` and
+`tokens-root-user-override-token` are scoped to a `user-root-override` preset that
+`tests/variants.json` does not define, so the natural fix they describe (a user's
+`:root { --femto-primary: ... }` now wins everywhere) is not exercised by the matrix.
+`firefox-user-invalid-focus-ring-restored` needs a field the user has already left invalid, which
+no fixture produces.
 
 ### Static checks and lint
 

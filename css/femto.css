@@ -1,9 +1,10 @@
 /*!
  * femto 3.0.0 | https://github.com/leoherzog/femto | MIT License
  *
- * This entry imports every femto module in cascade order; load themes/<color>.css and any
- * options/ files right after it, before your own stylesheets. For a custom module set, save a copy
- * beside this file (its paths are relative) and delete lines; for a cascade layer, write
+ * css/femto.css imports every femto module in cascade order; dist/femto.css is the same CSS in one
+ * file, built by npm run build. Load css/themes/<color>.css and any css/options/ files right after
+ * it, before your own stylesheets. For a custom module set, save a copy of css/femto.css beside it
+ * (its paths are relative) and delete lines; for a cascade layer, write
  * @import url(femto.css) layer(femto) and import those files into the same layer.
  */
 @import "tokens/base.css";

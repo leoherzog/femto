@@ -3,10 +3,10 @@
 # requires-python = ">=3.11"
 # dependencies = []
 # ///
-"""Mechanical checks for PLAN.md acceptance criteria 4, 5, 6, 7, 10 and 11, plus shipped-file hygiene and theme-file text.
+"""Mechanical checks for PLAN.md acceptance criteria 4, 5, 6, 7, 10, 11 and 12, plus shipped-file hygiene and theme-file text.
 
   uv run tests/static_checks.py                 run every check
-  uv run tests/static_checks.py --only 6,7      run some (ids: 4 5 6 7 hygiene vendor themes 10 11)
+  uv run tests/static_checks.py --only 6,7      run some (ids: 4 5 6 7 hygiene vendor themes 10 11 12)
   uv run tests/static_checks.py --root DIR      check another checkout (6, 7, hygiene, vendor and themes need no git)
 
 Each check prints PASS or FAIL with evidence lines; the exit status is 1 if any check fails.
@@ -35,6 +35,7 @@ any light-dark() text, so it compares each file's ten tokens with its 2.1.1 refe
 
 "Shipped files" are everything under css/ except the 2.1.1 build output css/pico*.css and
 css/postcss.config.js, which Phase 5 deletes. Until then those two are skipped, not checked.
+dist/ ships too, but npm run build writes it from css/, so criterion 12 checks it against a fresh build.
 CSS checks look at code only: comments are removed first and, for the forbidden-syntax scans,
 string contents (including url("data:...") icons) are blanked, so a comment that mentions
 @layer, or an SVG that uses rgb(), is not a violation. Mentions in comments are listed as notes.
@@ -45,11 +46,15 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import shutil
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 ENTRIES = ("femto.css",)
+BUILD_SCRIPT = "node build.mjs"  # PLAN Decision 1: the one build, esbuild via build.mjs
+DEV_DEPENDENCIES = {"esbuild", "eslint", "@eslint/css"}
 EXEMPT_NAME_PATHS = ("docs/research/", "tests/")  # PLAN Decision 10
 EXEMPT_NAME_FILES = ("PLAN.md", "PROMPT.md")
 MAX_LINES = 12  # evidence lines per finding list
@@ -273,7 +278,7 @@ def describe_shipped(r: Result, shipped: list[Path], skipped: list[str]) -> list
 
 
 def criterion_4(root: Path) -> Result:
-    r = Result("Criterion 4: no *.scss, scripts/, PostCSS config or yarn.lock in git; no build script")
+    r = Result("Criterion 4: no *.scss, scripts/, PostCSS config or yarn.lock in git; the only build script runs build.mjs")
     files = effective_files(root)
     r.ok(f"{len(files)} files tracked or to be tracked (git ls-files, minus deleted, plus untracked not ignored)")
     checks = [
@@ -295,15 +300,26 @@ def criterion_4(root: Path) -> Result:
     if not pkg.exists():
         r.fail("package.json missing")
         return r
-    scripts = json.loads(pkg.read_text()).get("scripts", {}) or {}
-    build = [k for k in scripts if re.match(r"(pre|post)?build(:|$)", k)]
+    data = json.loads(pkg.read_text())
+    scripts = data.get("scripts", {}) or {}
+    build = [k for k in scripts if re.match(r"(pre|post)?build(:|$)", k) and k != "build"]
     tools = [k for k, v in scripts.items() if re.search(r"\b(sass|postcss|autoprefixer|clean-?css|cleancss|esbuild|lightningcss)\b", str(v))]
+    bad = []
+    if scripts.get("build") != BUILD_SCRIPT:
+        bad.append(f"package.json build script is {scripts.get('build')!r}, expected {BUILD_SCRIPT!r}")
     if build:
-        r.fail(f"package.json build scripts: {', '.join(build)}")
+        bad.append(f"package.json build scripts besides build: {', '.join(build)}")
     if tools:
-        r.fail(f"package.json scripts that run a CSS build tool: {', '.join(sorted(set(tools) - set(build)) or tools)}")
-    if not build and not tools:
-        r.ok(f"package.json scripts: {', '.join(scripts) or '(none)'}; no build script")
+        bad.append(f"package.json scripts that run a CSS build tool directly: {', '.join(tools)}")
+    for line in bad:
+        r.fail(line)
+    if not bad:
+        r.ok(f"package.json scripts: {', '.join(scripts)}; build is {BUILD_SCRIPT!r}")
+    extra = sorted(set(data.get("devDependencies", {})) - DEV_DEPENDENCIES)
+    if extra or data.get("dependencies"):
+        r.fail(f"package.json depends on more than {', '.join(sorted(DEV_DEPENDENCIES))}: {', '.join(extra + sorted(data.get('dependencies', {})))}")
+    else:
+        r.ok(f"package.json devDependencies: {', '.join(data.get('devDependencies', {}))}")
     return r
 
 
@@ -620,7 +636,7 @@ def themes(root: Path) -> Result:
 
 
 def criterion_10(root: Path) -> Result:
-    r = Result("Criterion 10: npm pack --dry-run lists only css/, README.md, LICENSE.md and package.json")
+    r = Result("Criterion 10: npm pack --dry-run lists only css/, dist/, README.md, LICENSE.md and package.json")
     proc = subprocess.run(["npm", "pack", "--dry-run", "--json", "--ignore-scripts"], cwd=root, capture_output=True, text=True)
     if proc.returncode != 0:
         r.fail(f"npm pack --dry-run failed: {proc.stderr.strip()[:200]}")
@@ -628,9 +644,9 @@ def criterion_10(root: Path) -> Result:
     data = json.loads(proc.stdout)
     files = [f["path"] for pack in data for f in pack.get("files", [])]
     r.ok(f"npm pack --dry-run --json --ignore-scripts: {len(files)} files in {data[0].get('filename', '?')}")
-    bad = [f for f in files if not (f.startswith("css/") or f in ("README.md", "LICENSE.md", "package.json"))]
+    bad = [f for f in files if not (f.startswith(("css/", "dist/")) or f in ("README.md", "LICENSE.md", "package.json"))]
     if bad:
-        r.fail(f"{len(bad)} packed file(s) outside css/, README.md, LICENSE.md, package.json:")
+        r.fail(f"{len(bad)} packed file(s) outside css/, dist/, README.md, LICENSE.md, package.json:")
         r.failures += ["    " + b for b in capped(sorted(bad), "files")]
     else:
         top = sorted({f.split("/")[0] + ("/" if "/" in f else "") for f in files})
@@ -677,6 +693,42 @@ def criterion_11(root: Path) -> Result:
     return r
 
 
+def criterion_12(root: Path) -> Result:
+    r = Result("Criterion 12: dist/ is exactly what npm run build writes from css/")
+    if not (root / "node_modules/esbuild").is_dir():
+        r.fail("node_modules/esbuild is missing; run npm ci")
+        return r
+    with tempfile.TemporaryDirectory() as tmp:
+        work = Path(tmp)
+        shutil.copytree(root / "css", work / "css")
+        for name in ("package.json", "build.mjs"):
+            shutil.copy2(root / name, work / name)
+        (work / "node_modules").symlink_to(root / "node_modules", target_is_directory=True)
+        proc = subprocess.run(["npm", "run", "build", "--silent"], cwd=work, capture_output=True, text=True)
+        if proc.returncode != 0:
+            r.fail(f"npm run build failed: {(proc.stderr or proc.stdout).strip()[:300]}")
+            return r
+        if proc.stderr.strip():
+            r.note(f"build warnings: {proc.stderr.strip()[:300]}")
+        fresh = {p.relative_to(work).as_posix(): p.read_bytes() for p in sorted((work / "dist").rglob("*")) if p.is_file()}
+    have = {p.relative_to(root).as_posix(): p.read_bytes() for p in sorted((root / "dist").rglob("*")) if p.is_file() and p.name != ".DS_Store"}
+    tracked = set(effective_files(root))
+    for f in sorted(fresh.keys() | have.keys()):
+        if f not in have:
+            r.fail(f"{f}: missing (npm run build writes it)")
+        elif f not in fresh:
+            r.fail(f"{f}: not written by npm run build")
+        elif have[f] != fresh[f]:
+            r.fail(f"{f}: differs from a fresh build")
+        elif f not in tracked:
+            r.fail(f"{f}: up to date but ignored by git")
+        else:
+            r.ok(f"{f}: {len(fresh[f])} bytes, same as a fresh build")
+    if not r.passed:
+        r.fail("run npm run build (the Build workflow also commits a rebuilt dist/ after each push)")
+    return r
+
+
 CHECKS = {
     "4": criterion_4,
     "5": criterion_5,
@@ -687,6 +739,7 @@ CHECKS = {
     "themes": themes,
     "10": criterion_10,
     "11": criterion_11,
+    "12": criterion_12,
 }
 
 
