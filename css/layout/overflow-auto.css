@@ -1,0 +1,7 @@
+/*
+ * Overflow auto: the .overflow-auto class scrolls content that overflows its box, such as a wide
+ * table.
+ */
+.overflow-auto {
+  overflow: auto;
+}

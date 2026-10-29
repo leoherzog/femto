@@ -1,0 +1,18 @@
+/*
+ * Input type color: removes the padding around the color swatch and gives the swatch no border
+ * and half the border radius, through the WebKit and Firefox pseudo-elements.
+ */
+[type=color]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+[type=color]::-moz-focus-inner {
+  padding: 0;
+}
+[type=color]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--femto-border-radius) * 0.5);
+}
+[type=color]::-moz-color-swatch {
+  border: 0;
+  border-radius: calc(var(--femto-border-radius) * 0.5);
+}

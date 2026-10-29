@@ -1,0 +1,32 @@
+/*
+ * Card: article as a padded block with rounded corners, a background and a shadow. A direct
+ * header or footer reaches the card's edges, with its own background and a border toward the body.
+ */
+article {
+  margin-bottom: var(--femto-block-spacing-vertical);
+  padding: var(--femto-block-spacing-vertical) var(--femto-block-spacing-horizontal);
+  border-radius: var(--femto-border-radius);
+  background: var(--femto-card-background-color);
+  box-shadow: var(--femto-card-box-shadow);
+}
+article > header,
+article > footer {
+  margin-right: calc(var(--femto-block-spacing-horizontal) * -1);
+  margin-left: calc(var(--femto-block-spacing-horizontal) * -1);
+  padding: calc(var(--femto-block-spacing-vertical) * 0.66) var(--femto-block-spacing-horizontal);
+  background-color: var(--femto-card-sectioning-background-color);
+}
+article > header {
+  margin-top: calc(var(--femto-block-spacing-vertical) * -1);
+  margin-bottom: var(--femto-block-spacing-vertical);
+  border-bottom: var(--femto-border-width) solid var(--femto-card-border-color);
+  border-top-right-radius: var(--femto-border-radius);
+  border-top-left-radius: var(--femto-border-radius);
+}
+article > footer {
+  margin-top: var(--femto-block-spacing-vertical);
+  margin-bottom: calc(var(--femto-block-spacing-vertical) * -1);
+  border-top: var(--femto-border-width) solid var(--femto-card-border-color);
+  border-bottom-right-radius: var(--femto-border-radius);
+  border-bottom-left-radius: var(--femto-border-radius);
+}

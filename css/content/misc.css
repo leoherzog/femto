@@ -1,0 +1,21 @@
+/*
+ * Misc: hr as a single muted top border with vertical typography spacing, [hidden] and template
+ * always hidden, and canvas as an inline block. The reboot rules follow normalize.css v8.0.1 and
+ * sanitize.css v13.0.0.
+ */
+hr {
+  height: 0;
+  margin: var(--femto-typography-spacing-vertical) 0;
+  border: 0;
+  border-top: 1px solid var(--femto-muted-border-color);
+  color: inherit;
+}
+
+[hidden],
+template {
+  display: none !important;
+}
+
+canvas {
+  display: inline-block;
+}

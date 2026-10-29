@@ -1,0 +1,18 @@
+/*
+ * Reduce motion: when the user prefers reduced motion, every element and its ::before and ::after,
+ * except those of [aria-busy=true], end animations at once and drop transitions, fixed background
+ * attachments and smooth scrolling. Based on sanitize.css v13.0.0.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *:not([aria-busy=true]),
+  :not([aria-busy=true])::before,
+  :not([aria-busy=true])::after {
+    background-attachment: initial !important;
+    animation-duration: 1ms !important;
+    animation-delay: -1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-delay: 0s !important;
+    transition-duration: 0s !important;
+  }
+}

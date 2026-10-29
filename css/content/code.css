@@ -1,0 +1,59 @@
+/*
+ * Code: pre, code, kbd and samp in the code colors at 0.875em, with pre as a scrolling block whose
+ * code or samp child carries the padding, and kbd in its own colors. The reboot rules follow
+ * normalize.css v8.0.1 and sanitize.css v13.0.0.
+ */
+pre,
+code,
+kbd,
+samp {
+  font-size: 0.875em;
+  font-family: var(--femto-font-family);
+}
+
+pre code,
+pre samp {
+  font-size: inherit;
+  font-family: inherit;
+}
+
+pre {
+  overflow: auto;
+}
+
+pre,
+code,
+kbd,
+samp {
+  border-radius: var(--femto-border-radius);
+  background: var(--femto-code-background-color);
+  color: var(--femto-code-color);
+  font-weight: var(--femto-font-weight);
+  line-height: initial;
+}
+
+code,
+kbd,
+samp {
+  display: inline-block;
+  padding: 0.375rem;
+}
+
+pre {
+  display: block;
+  margin-bottom: var(--femto-spacing);
+  overflow-x: auto;
+}
+pre > code,
+pre > samp {
+  display: block;
+  padding: var(--femto-spacing);
+  background: none;
+  line-height: var(--femto-line-height);
+}
+
+kbd {
+  background-color: var(--femto-code-kbd-background-color);
+  color: var(--femto-code-kbd-color);
+  vertical-align: baseline;
+}

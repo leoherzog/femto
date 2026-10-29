@@ -1,0 +1,25 @@
+/*
+ * Input type file: a borderless input in the muted color whose selector button is a compact
+ * button that takes the secondary hover colors on hover, press and focus, plus a focus ring. The
+ * input shifts left by the outline width and pads it back, so that ring is not clipped.
+ */
+[type=file] {
+  --femto-color: var(--femto-muted-color);
+  margin-left: calc(var(--femto-outline-width) * -1);
+  padding: calc(var(--femto-form-element-spacing-vertical) * 0.5) 0;
+  padding-left: var(--femto-outline-width);
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+[type=file]::file-selector-button {
+  margin-right: calc(var(--femto-spacing) / 2);
+  padding: calc(var(--femto-form-element-spacing-vertical) * 0.5) var(--femto-form-element-spacing-horizontal);
+}
+[type=file]:is(:hover, :active, :focus)::file-selector-button {
+  --femto-background-color: var(--femto-secondary-hover-background);
+  --femto-border-color: var(--femto-secondary-hover-border);
+}
+[type=file]:focus::file-selector-button {
+  --femto-box-shadow: var(--femto-button-hover-box-shadow, 0 0 0 rgba(0, 0, 0, 0)), 0 0 0 var(--femto-outline-width) var(--femto-secondary-focus);
+}

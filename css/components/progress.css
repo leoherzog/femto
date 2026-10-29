@@ -1,0 +1,61 @@
+/*
+ * Progress: <progress> as a full-width rounded bar in the progress colors, through the WebKit and
+ * Firefox bar pseudo-elements. Without a value it is indeterminate and, unless the user prefers
+ * reduced motion, runs a sliding stripe animation that reverses in rtl. The display and
+ * vertical-align reboot follows normalize.css v8.0.1 and sanitize.css v13.0.0.
+ */
+progress {
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+progress {
+  display: inline-block;
+  appearance: none;
+  width: 100%;
+  height: 0.5rem;
+  margin-bottom: calc(var(--femto-spacing) * 0.5);
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--femto-border-radius);
+  background-color: var(--femto-progress-background-color);
+  color: var(--femto-progress-color);
+}
+progress::-webkit-progress-bar {
+  border-radius: var(--femto-border-radius);
+  background: none;
+}
+progress[value]::-webkit-progress-value {
+  background-color: var(--femto-progress-color);
+  transition: inline-size var(--femto-transition);
+}
+progress::-moz-progress-bar {
+  background-color: var(--femto-progress-color);
+}
+@media (prefers-reduced-motion: no-preference) {
+  progress:indeterminate {
+    background: var(--femto-progress-background-color) linear-gradient(to right, var(--femto-progress-color) 30%, var(--femto-progress-background-color) 30%) top left/150% 150% no-repeat;
+    animation: progress-indeterminate 1s linear infinite;
+  }
+  progress:indeterminate[value]::-webkit-progress-value {
+    background-color: transparent;
+  }
+  progress:indeterminate::-moz-progress-bar {
+    background-color: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [dir=rtl] progress:indeterminate {
+    animation-direction: reverse;
+  }
+}
+
+@keyframes progress-indeterminate {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

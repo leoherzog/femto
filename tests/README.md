@@ -169,7 +169,7 @@ and are separated by `;`.
 
 | Mode | What it runs |
 |---|---|
-| `fast` | For module agents. `--modules forms/basics,...` or `--sections "Basics form elements;Input type file"`: the manifest pages of those modules or sections, Chrome and Firefox, widths 390 and 1280, legs `light` and `dark` (media), ltr plus rtl on pages with `rtl: true`, with states. By default the test side is a hybrid build of the preset's reference with those sections replaced by their femto files; `--direct` compares the preset's own test list instead. A section is replaced as a whole, so every femto file `tests/sections.json` maps to it must exist (Styles needs `tokens/base.css`, `tokens/breakpoints.css` and `layout/elements.css`); missing files stop the run with exit 2. `--kitchen-sink` adds the kitchen sink; `--presets` picks entries (default `default`). Phase 1 example: `fast --sections "Styles;Color schemes;Document"`. |
+| `fast` | For module agents. `--modules forms/basics,...` or `--sections "Basics form elements;Input type file"`: the manifest pages of those modules or sections, Chrome and Firefox, widths 390 and 1280, legs `light` and `dark` (media), ltr plus rtl on pages with `rtl: true`, with states. By default the test side is a hybrid build of the preset's reference with those sections replaced by their femto files; `--direct` compares the preset's own test list instead. A section is replaced as a whole, so every femto file `tests/sections.json` maps to it must exist (Styles needs `tokens/base.css`, `tokens/breakpoints.css` and `layout/elements.css`); missing files stop the run with exit 2. `--kitchen-sink` adds the kitchen sink; `--presets` picks entries (default `default`). Phase 1 example: `fast --sections "Styles;Color schemes;Document"`. `layout/grid` reads `--femto-grid-template-columns` from `tokens/breakpoints.css` (Styles), so name `tokens/breakpoints` with `layout/grid`; without it the hybrid keeps 2.1.1's Styles and `.grid` stays one column at 768px and wider. |
 | `full` | The whole matrix below. Chrome and Firefox run 2 workers each, Safari 1, all at once (subject to the slot lock). `--self` compares every preset's reference against itself; `--control` compares every preset that has hybrid settings (all but `colors`, which has no banners) against its chunk control; `--states-only` keeps only the cells that run interactive states and `--stateless-only` only the others, so a Safari leg can be split into two invocations whose union is the matrix. Command-line filters (`--pages`, `--widths`, ...) cut the matrix and are logged as a cap. |
 | `compare` | Direct comparison: `--ref` against `--test` (root-relative lists), or each `--presets` preset's own lists. `--entry` picks pages for `--ref`. Defaults to the fast axes; `--full-widths` and `--all-legs` widen them. |
 | `self` | A reference against itself (acceptance criterion 1). |
@@ -374,6 +374,17 @@ The owner then chose that a shadow host carrying `data-theme=dark` is dark (Deci
 forced-dark rules add `:host([data-theme=dark])`, and `tokens-dark-shadow-host-contrast-filter`
 records its one harness-visible effect, the contrast summary and busy contrast icons in the
 `shadow-dark-host` template taking the dark filter.
+Phase 2 added one file per module that needed entries. `tokens-breakpoints.json`
+(`breakpoints-new-tokens`) registers `--femto-grid-template-columns`, which `tokens/breakpoints.css`
+sets from 768px for `.grid`. `.container` and the modal keep 2.1.1's literal media queries: a
+token-read `max-width` would be declared at every width and override `img`, `legend` and author
+rules below 576px (guard fixtures `img.container` and `legend.container` in
+`classes-container.html`). `forms-basics.json` narrows `firefox-focus-ring-restored` to the
+`[data-tooltip][tabindex]` targets of `components-tooltip.html` in the focus state, the only fixture
+elements that set no outline of their own, and adds `firefox-user-invalid-focus-ring-restored`,
+which never hits (see Known limits). `components-group.json` splits the island focus ring by the
+island's scheme (`group-island-focus-ring-style` and `-light-island`). The other 26 modules needed no
+entry.
 
 ## Output
 
@@ -465,6 +476,11 @@ Verified on 2026-10-27 on this machine (macOS, 10 CPUs, 16 GB, one 1920×1080 di
 pixel ratio 1, appearance Light) with Google Chrome Beta 157.0.8103.15 and chromedriver
 157.0.8103.15, Firefox 160.0b1 and geckodriver 0.37.1, Safari 27.0.1 and its safaridriver, Selenium
 4.51.0. `uv run tests/run.py rig` repeats the checks and writes `rig.json`.
+
+Chrome Beta updates itself. On 2026-10-28 at 15:34, during Phase 2, it moved to 158.0.8127.2, and
+Selenium fetched the matching chromedriver; the harness records the version in each run's rig line
+but does not flag a change. Phase 2's gate runs all used 158. Counts measured on 157 (such as the
+480 enumerated properties under Comparison) have not been rechecked on 158.
 
 **Chrome Beta (headless).**
 - Options: `--headless`, window 1800×1000 (inner 1800×857), `--force-device-scale-factor=1`,
@@ -807,12 +823,30 @@ config ignores). Both are expected before any femto CSS exists.
   `:user-invalid`; token resolution and screenshots are the only signal for those. `::selection` is
   reported by `getComputedStyle` in all three browsers, but the harness does not collect it; Phase
   1's review compared it by hand, on the page and in both islands, in Chrome, Firefox and Safari.
+- No state puts a field into `:user-invalid` (that takes typing into it and leaving it). The one
+  known difference there, Firefox losing 2.1.1's `:-moz-ui-invalid { box-shadow: none }`, was
+  recorded with a standalone probe as `firefox-user-invalid-focus-ring-restored`, so every run lists
+  that entry as unused.
+- Hover and press land on an element's centre. A full-width file input's centre is its "No file
+  chosen" text, so the `::file-selector-button` hover and active rules are compared as text only.
+  Firefox does not apply user-action states to `::file-selector-button` under automation at all.
+- The progress bar pseudo-elements are checked only by `components-progress.html`'s screenshots: the
+  kitchen sink's progress block sits below its 800 px screenshot, and the theme presets run only the
+  kitchen sink.
+- Interactive states run only at 1280, and the right-to-left widths of wide pages (the kitchen sink
+  and pages with media rules) are the band widths, which leave out 1280, so right-to-left states
+  never run on those pages.
+- Animations are finished before styles are read, so intermediate `@keyframes` steps are never
+  compared; Phase 2 compared the keyframe bodies as text.
 - The loading spinner is an SVG whose internal animation cannot be frozen; screenshots cover every
   `[aria-busy=true]` element on both sides. Media controls draw their time display asynchronously
   (Firefox), so `video[controls]` and `audio[controls]` are covered too.
 - Screenshots cover the iframe viewport (the top 800 px after scrolling to the top), not the full page.
 - `select:active` is checked without focus and without the native picker (see States).
-- `prefers-reduced-motion` is not an axis; both sides run with the OS setting (no preference).
+- `prefers-reduced-motion` is not an axis; both sides run with the OS setting (no preference). So no
+  run applies `utilities/reduce-motion.css`: leaving it out passes every mode. Phase 2 checked it as
+  text (identical to 2.1.1's section) and with a standalone wrapper that emulates `reduce` in Chrome
+  and Firefox.
 - Hover and active move the real (synthesized) pointer: in Safari, moving the physical mouse over the
   automation window during a run, or using the machine over Screen Sharing, disturbs them (seen in
   the proving run: every state in the cells that ran during that minute failed to match on one side

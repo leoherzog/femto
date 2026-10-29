@@ -1,0 +1,44 @@
+/*
+ * Input type datetime: date, datetime-local, month, time and week inputs draw a calendar or clock
+ * icon at the right, under the native picker indicator, which is made transparent but stays
+ * clickable. Firefox, which draws its own icon on date, datetime-local and time inputs and
+ * shows month and week as text fields, gets neither the icon nor its padding, and right-to-left
+ * text is right-aligned.
+ */
+input:not([type=checkbox], [type=radio], [type=range], [type=file]):is([type=date], [type=datetime-local], [type=month], [type=time], [type=week]) {
+  --femto-icon-position: 0.75rem;
+  --femto-icon-width: 1rem;
+  padding-right: calc(var(--femto-icon-width) + var(--femto-icon-position));
+  background-image: var(--femto-icon-date);
+  background-position: center right var(--femto-icon-position);
+  background-size: var(--femto-icon-width) auto;
+  background-repeat: no-repeat;
+}
+input:not([type=checkbox], [type=radio], [type=range], [type=file])[type=time] {
+  background-image: var(--femto-icon-time);
+}
+
+[type=date]::-webkit-calendar-picker-indicator,
+[type=datetime-local]::-webkit-calendar-picker-indicator,
+[type=month]::-webkit-calendar-picker-indicator,
+[type=time]::-webkit-calendar-picker-indicator,
+[type=week]::-webkit-calendar-picker-indicator {
+  width: var(--femto-icon-width);
+  margin-right: calc(var(--femto-icon-width) * -1);
+  margin-left: var(--femto-icon-position);
+  opacity: 0;
+}
+
+@-moz-document url-prefix() {
+  [type=date],
+  [type=datetime-local],
+  [type=month],
+  [type=time],
+  [type=week] {
+    padding-right: var(--femto-form-element-spacing-horizontal) !important;
+    background-image: none !important;
+  }
+}
+[dir=rtl] :is([type=date], [type=datetime-local], [type=month], [type=time], [type=week]) {
+  text-align: right;
+}

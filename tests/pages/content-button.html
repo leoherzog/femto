@@ -27,8 +27,13 @@
     <input type="reset" value="Current reset" aria-current="true" data-states="focus">
     <input type="submit" value="Current submit" aria-current="page" data-states="focus">
     <input type="button" value="Current input button" aria-current="step" data-states="focus">
-    <input type="file" name="file" data-states="hover focus">
+    <input type="file" name="file" data-states="hover focus active">
     <input type="file" name="current-file" aria-current="true" data-states="focus">
+  </div>
+  <!-- Narrow enough that the input's centre, where the harness points, is on the selector button,
+       so the flat ::file-selector-button :hover and :active rules run. -->
+  <div style="width: 8rem">
+    <input type="file" name="narrow-file" data-states="hover active">
   </div>
   <p>
     <a href="#a" role="button" data-states="hover focus focus-visible active">Link with role button</a>

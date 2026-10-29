@@ -1,0 +1,56 @@
+/*
+ * Input type range: a full-width slider with a thin rounded track and a round bordered thumb,
+ * styled through the WebKit and Firefox track and thumb pseudo-elements. Pressing or focusing it
+ * switches the track and thumb to their active colors, and pressing grows the thumb.
+ */
+[type=range] {
+  appearance: none;
+  width: 100%;
+  height: 1.25rem;
+  background: none;
+}
+[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 0.375rem;
+  border-radius: var(--femto-border-radius);
+  background-color: var(--femto-range-border-color);
+  transition: background-color var(--femto-transition), box-shadow var(--femto-transition);
+}
+[type=range]::-moz-range-track {
+  width: 100%;
+  height: 0.375rem;
+  border-radius: var(--femto-border-radius);
+  background-color: var(--femto-range-border-color);
+  transition: background-color var(--femto-transition), box-shadow var(--femto-transition);
+}
+[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: -0.4375rem;
+  border: 2px solid var(--femto-range-thumb-border-color);
+  border-radius: 50%;
+  background-color: var(--femto-range-thumb-color);
+  cursor: pointer;
+  transition: background-color var(--femto-transition), transform var(--femto-transition);
+}
+[type=range]::-moz-range-thumb {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: -0.4375rem;
+  border: 2px solid var(--femto-range-thumb-border-color);
+  border-radius: 50%;
+  background-color: var(--femto-range-thumb-color);
+  cursor: pointer;
+  transition: background-color var(--femto-transition), transform var(--femto-transition);
+}
+[type=range]:active, [type=range]:focus-within {
+  --femto-range-border-color: var(--femto-range-active-border-color);
+  --femto-range-thumb-color: var(--femto-range-thumb-active-color);
+}
+[type=range]:active::-webkit-slider-thumb {
+  transform: scale(1.25);
+}
+[type=range]:active::-moz-range-thumb {
+  transform: scale(1.25);
+}

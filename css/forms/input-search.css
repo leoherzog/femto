@@ -1,0 +1,29 @@
+/*
+ * Input type search: a magnifier icon at the inline start with padding to clear it, and, with
+ * aria-invalid, the validation icon at the far side as a second background. Right-to-left
+ * mirrors both icon positions.
+ */
+input:not([type=checkbox], [type=radio], [type=range], [type=file])[type=search] {
+  padding-inline-start: calc(var(--femto-form-element-spacing-horizontal) + 1.75rem);
+  background-image: var(--femto-icon-search);
+  background-position: center left calc(var(--femto-form-element-spacing-horizontal) + 0.125rem);
+  background-size: 1rem auto;
+  background-repeat: no-repeat;
+}
+input:not([type=checkbox], [type=radio], [type=range], [type=file])[type=search][aria-invalid] {
+  padding-inline-start: calc(var(--femto-form-element-spacing-horizontal) + 1.75rem) !important;
+  background-position: center left 1.125rem, center right 0.75rem;
+}
+input:not([type=checkbox], [type=radio], [type=range], [type=file])[type=search][aria-invalid=false] {
+  background-image: var(--femto-icon-search), var(--femto-icon-valid);
+}
+input:not([type=checkbox], [type=radio], [type=range], [type=file])[type=search][aria-invalid=true] {
+  background-image: var(--femto-icon-search), var(--femto-icon-invalid);
+}
+
+[dir=rtl] :where(input):not([type=checkbox], [type=radio], [type=range], [type=file])[type=search] {
+  background-position: center right 1.125rem;
+}
+[dir=rtl] :where(input):not([type=checkbox], [type=radio], [type=range], [type=file])[type=search][aria-invalid] {
+  background-position: center right 1.125rem, center left 0.75rem;
+}

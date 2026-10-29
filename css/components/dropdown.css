@@ -1,0 +1,159 @@
+/*
+ * Dropdown: details.dropdown as a select-like or button summary with a chevron, whose list opens
+ * below it as a floating menu, with valid and invalid summaries, tighter summaries inside nav, and a
+ * transparent overlay behind an open dropdown that catches outside clicks.
+ */
+details.dropdown {
+  position: relative;
+  border-bottom: none;
+}
+details.dropdown > summary::after,
+details.dropdown > button::after,
+details.dropdown > a::after {
+  display: block;
+  width: 1rem;
+  height: calc(1rem * var(--femto-line-height, 1.5));
+  margin-inline-start: 0.25rem;
+  float: right;
+  transform: rotate(0deg) translateX(0.2rem);
+  background-image: var(--femto-icon-chevron);
+  background-position: right center;
+  background-size: 1rem auto;
+  background-repeat: no-repeat;
+  content: "";
+}
+
+nav details.dropdown {
+  margin-bottom: 0;
+}
+
+details.dropdown > summary:not([role]) {
+  height: calc(1rem * var(--femto-line-height) + var(--femto-form-element-spacing-vertical) * 2 + var(--femto-border-width) * 2);
+  padding: var(--femto-form-element-spacing-vertical) var(--femto-form-element-spacing-horizontal);
+  border: var(--femto-border-width) solid var(--femto-form-element-border-color);
+  border-radius: var(--femto-border-radius);
+  background-color: var(--femto-form-element-background-color);
+  color: var(--femto-form-element-placeholder-color);
+  line-height: inherit;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  transition: background-color var(--femto-transition), border-color var(--femto-transition), color var(--femto-transition), box-shadow var(--femto-transition);
+}
+details.dropdown > summary:not([role]):active, details.dropdown > summary:not([role]):focus {
+  border-color: var(--femto-form-element-active-border-color);
+  background-color: var(--femto-form-element-active-background-color);
+}
+details.dropdown > summary:not([role]):focus {
+  box-shadow: 0 0 0 var(--femto-outline-width) var(--femto-form-element-focus-color);
+}
+details.dropdown > summary:not([role]):focus-visible {
+  outline: none;
+}
+details.dropdown > summary:not([role])[aria-invalid=false] {
+  --femto-form-element-border-color: var(--femto-form-element-valid-border-color);
+  --femto-form-element-active-border-color: var(--femto-form-element-valid-focus-color);
+  --femto-form-element-focus-color: var(--femto-form-element-valid-focus-color);
+}
+details.dropdown > summary:not([role])[aria-invalid=true] {
+  --femto-form-element-border-color: var(--femto-form-element-invalid-border-color);
+  --femto-form-element-active-border-color: var(--femto-form-element-invalid-focus-color);
+  --femto-form-element-focus-color: var(--femto-form-element-invalid-focus-color);
+}
+
+nav details.dropdown {
+  display: inline;
+  margin: calc(var(--femto-nav-element-spacing-vertical) * -1) 0;
+}
+nav details.dropdown > summary::after {
+  transform: rotate(0deg) translateX(0rem);
+}
+nav details.dropdown > summary:not([role]) {
+  height: calc(1rem * var(--femto-line-height) + var(--femto-nav-link-spacing-vertical) * 2);
+  padding: calc(var(--femto-nav-link-spacing-vertical) - var(--femto-border-width) * 2) var(--femto-nav-link-spacing-horizontal);
+}
+nav details.dropdown > summary:not([role]):focus-visible {
+  box-shadow: 0 0 0 var(--femto-outline-width) var(--femto-primary-focus);
+}
+
+details.dropdown > summary + ul {
+  display: flex;
+  z-index: 99;
+  position: absolute;
+  left: 0;
+  flex-direction: column;
+  width: 100%;
+  min-width: fit-content;
+  margin: 0;
+  margin-top: var(--femto-outline-width);
+  padding: 0;
+  border: var(--femto-border-width) solid var(--femto-dropdown-border-color);
+  border-radius: var(--femto-border-radius);
+  background-color: var(--femto-dropdown-background-color);
+  box-shadow: var(--femto-dropdown-box-shadow);
+  color: var(--femto-dropdown-color);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity var(--femto-transition), transform 0s ease-in-out 1s;
+}
+details.dropdown > summary + ul[dir=rtl] {
+  right: 0;
+  left: auto;
+}
+details.dropdown > summary + ul li {
+  width: 100%;
+  margin-bottom: 0;
+  padding: calc(var(--femto-form-element-spacing-vertical) * 0.5) var(--femto-form-element-spacing-horizontal);
+  list-style: none;
+}
+details.dropdown > summary + ul li:first-of-type {
+  margin-top: calc(var(--femto-form-element-spacing-vertical) * 0.5);
+}
+details.dropdown > summary + ul li:last-of-type {
+  margin-bottom: calc(var(--femto-form-element-spacing-vertical) * 0.5);
+}
+details.dropdown > summary + ul li a {
+  display: block;
+  margin: calc(var(--femto-form-element-spacing-vertical) * -0.5) calc(var(--femto-form-element-spacing-horizontal) * -1);
+  padding: calc(var(--femto-form-element-spacing-vertical) * 0.5) var(--femto-form-element-spacing-horizontal);
+  overflow: hidden;
+  border-radius: 0;
+  color: var(--femto-dropdown-color);
+  text-decoration: none;
+  text-overflow: ellipsis;
+}
+details.dropdown > summary + ul li a:hover, details.dropdown > summary + ul li a:focus, details.dropdown > summary + ul li a:active, details.dropdown > summary + ul li a:focus-visible, details.dropdown > summary + ul li a[aria-current]:not([aria-current=false]) {
+  background-color: var(--femto-dropdown-hover-background-color);
+}
+details.dropdown > summary + ul li label {
+  width: 100%;
+}
+details.dropdown > summary + ul li:has(label):hover {
+  background-color: var(--femto-dropdown-hover-background-color);
+}
+
+details.dropdown[open] > summary {
+  margin-bottom: 0;
+}
+
+details.dropdown[open] > summary + ul {
+  transform: scaleY(1);
+  opacity: 1;
+  transition: opacity var(--femto-transition), transform 0s ease-in-out 0s;
+}
+
+details.dropdown[open] > summary::before {
+  display: block;
+  z-index: 1;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  inset: 0;
+  background: none;
+  content: "";
+  cursor: default;
+}
+
+label > details.dropdown {
+  margin-top: calc(var(--femto-spacing) * 0.25);
+}

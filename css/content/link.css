@@ -1,0 +1,55 @@
+/*
+ * Link: links and [role=link] in the primary color with a themed underline, their hover, active,
+ * focus and aria-current states, a focus-visible ring, the .secondary and .contrast classes, and
+ * links with role=button as inline blocks.
+ */
+:where(a:not([role=button])),
+[role=link] {
+  --femto-color: var(--femto-primary);
+  --femto-background-color: transparent;
+  --femto-underline: var(--femto-primary-underline);
+  outline: none;
+  background-color: var(--femto-background-color);
+  color: var(--femto-color);
+  /* Safari before 26.2 reads text-decoration as the line only; the -webkit- shorthand also resets the style. */
+  -webkit-text-decoration: var(--femto-text-decoration);
+  text-decoration: var(--femto-text-decoration);
+  text-decoration-color: var(--femto-underline);
+  text-underline-offset: 0.125em;
+  /* 2.1.1's effective line, kept as written: browsers compute the -webkit-text-decoration item, and Safari before 26.2 animates the underline color only through it. */
+  transition: background-color var(--femto-transition), color var(--femto-transition), text-decoration var(--femto-transition), box-shadow var(--femto-transition), -webkit-text-decoration var(--femto-transition);
+}
+:where(a:not([role=button])):is([aria-current]:not([aria-current=false]), :hover, :active, :focus),
+[role=link]:is([aria-current]:not([aria-current=false]), :hover, :active, :focus) {
+  --femto-color: var(--femto-primary-hover);
+  --femto-underline: var(--femto-primary-hover-underline);
+  --femto-text-decoration: underline;
+}
+:where(a:not([role=button])):focus-visible,
+[role=link]:focus-visible {
+  box-shadow: 0 0 0 var(--femto-outline-width) var(--femto-primary-focus);
+}
+:where(a:not([role=button])).secondary,
+[role=link].secondary {
+  --femto-color: var(--femto-secondary);
+  --femto-underline: var(--femto-secondary-underline);
+}
+:where(a:not([role=button])).secondary:is([aria-current]:not([aria-current=false]), :hover, :active, :focus),
+[role=link].secondary:is([aria-current]:not([aria-current=false]), :hover, :active, :focus) {
+  --femto-color: var(--femto-secondary-hover);
+  --femto-underline: var(--femto-secondary-hover-underline);
+}
+:where(a:not([role=button])).contrast,
+[role=link].contrast {
+  --femto-color: var(--femto-contrast);
+  --femto-underline: var(--femto-contrast-underline);
+}
+:where(a:not([role=button])).contrast:is([aria-current]:not([aria-current=false]), :hover, :active, :focus),
+[role=link].contrast:is([aria-current]:not([aria-current=false]), :hover, :active, :focus) {
+  --femto-color: var(--femto-contrast-hover);
+  --femto-underline: var(--femto-contrast-hover-underline);
+}
+
+a[role=button] {
+  display: inline-block;
+}

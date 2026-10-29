@@ -1,0 +1,6 @@
+/*
+ * Section: a bottom margin of one vertical block spacing on every section.
+ */
+section {
+  margin-bottom: var(--femto-block-spacing-vertical);
+}

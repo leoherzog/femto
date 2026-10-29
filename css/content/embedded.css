@@ -1,0 +1,37 @@
+/*
+ * Embedded content: media elements align to the middle of the line, images scale down to their
+ * container, iframes lose their border, audio without controls is hidden and inline SVG without a
+ * fill takes the text color. The reboot rules follow normalize.css v8.0.1 and sanitize.css v13.0.0.
+ */
+:where(audio, canvas, iframe, img, svg, video) {
+  vertical-align: middle;
+}
+
+audio,
+video {
+  display: inline-block;
+}
+
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+
+:where(iframe) {
+  border-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-style: none;
+}
+
+:where(svg:not([fill])) {
+  fill: currentColor;
+}
+
+svg:not(:root),
+svg:not(:host) {
+  overflow: hidden;
+}

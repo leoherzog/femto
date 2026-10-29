@@ -1,0 +1,13 @@
+/*
+ * Grid: a minimal grid system with auto-layout columns. .grid stacks its children in one column,
+ * and from 768px (tokens/breakpoints.css) lays them out in equal columns.
+ */
+.grid {
+  grid-column-gap: var(--femto-grid-column-gap);
+  grid-row-gap: var(--femto-grid-row-gap);
+  display: grid;
+  grid-template-columns: var(--femto-grid-template-columns, 1fr);
+}
+.grid > * {
+  min-width: 0;
+}

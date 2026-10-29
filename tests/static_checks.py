@@ -62,7 +62,7 @@ FORBIDDEN = [
     ("@container style(", re.compile(r"@container\b[^{;]*?(?<![\w-])style\(", re.I)),
 ]
 DROPPED_PSEUDO = re.compile(
-    r"::-webkit-file-upload-button|::-webkit-input-placeholder|::-moz-list-bullet|::-moz-selection|:-moz-ui-invalid|:-moz-focusring",
+    r"::-webkit-input-placeholder|::-moz-list-bullet|::-moz-selection|:-moz-ui-invalid|:-moz-focusring",
     re.I,
 )
 KEPT_PREFIXED_PROPERTIES = {
@@ -71,6 +71,8 @@ KEPT_PREFIXED_PROPERTIES = {
     "-webkit-backdrop-filter",
     "-webkit-tap-highlight-color",
     "-webkit-appearance",
+    # Link only (content/link.css): before 26.2, Safari's text-decoration sets only the line.
+    "-webkit-text-decoration",
 }
 COLOR_FUNCTION = re.compile(
     r"(?<![\w-])(rgba?|hsla?|hwb|lab|lch|oklab|oklch|color|color-mix|light-dark|contrast-color)\(", re.I

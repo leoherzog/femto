@@ -1,0 +1,157 @@
+/*
+ * Button: button, the button-like inputs, the file input's selector button and [role=button], with
+ * their hover, active, focus and aria-current states, the .secondary, .contrast and .outline classes,
+ * and the disabled state. The reboot rules follow normalize.css v8.0.1 and sanitize.css v13.0.0.
+ */
+button {
+  margin: 0;
+  overflow: visible;
+  font-family: inherit;
+  text-transform: none;
+}
+
+button,
+[type=submit],
+[type=reset],
+[type=button] {
+  -webkit-appearance: button;
+}
+
+button,
+[type=submit],
+[type=reset],
+[type=button],
+[type=file]::file-selector-button,
+[role=button] {
+  --femto-background-color: var(--femto-primary-background);
+  --femto-border-color: var(--femto-primary-border);
+  --femto-color: var(--femto-primary-inverse);
+  --femto-box-shadow: var(--femto-button-box-shadow, 0 0 0 rgba(0, 0, 0, 0));
+  padding: var(--femto-form-element-spacing-vertical) var(--femto-form-element-spacing-horizontal);
+  border: var(--femto-border-width) solid var(--femto-border-color);
+  border-radius: var(--femto-border-radius);
+  outline: none;
+  background-color: var(--femto-background-color);
+  box-shadow: var(--femto-box-shadow);
+  color: var(--femto-color);
+  font-weight: var(--femto-font-weight);
+  font-size: 1rem;
+  line-height: var(--femto-line-height);
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  transition: background-color var(--femto-transition), border-color var(--femto-transition), color var(--femto-transition), box-shadow var(--femto-transition);
+}
+button:is([aria-current]:not([aria-current=false])), button:is(:hover, :active, :focus),
+[type=submit]:is([aria-current]:not([aria-current=false])),
+[type=submit]:is(:hover, :active, :focus),
+[type=reset]:is([aria-current]:not([aria-current=false])),
+[type=reset]:is(:hover, :active, :focus),
+[type=button]:is([aria-current]:not([aria-current=false])),
+[type=button]:is(:hover, :active, :focus),
+[type=file]::file-selector-button:is([aria-current]:not([aria-current=false])),
+[type=file]::file-selector-button:is(:hover, :active, :focus),
+[role=button]:is([aria-current]:not([aria-current=false])),
+[role=button]:is(:hover, :active, :focus) {
+  --femto-background-color: var(--femto-primary-hover-background);
+  --femto-border-color: var(--femto-primary-hover-border);
+  --femto-box-shadow: var(--femto-button-hover-box-shadow, 0 0 0 rgba(0, 0, 0, 0));
+  --femto-color: var(--femto-primary-inverse);
+}
+button:focus, button:is([aria-current]:not([aria-current=false])):focus,
+[type=submit]:focus,
+[type=submit]:is([aria-current]:not([aria-current=false])):focus,
+[type=reset]:focus,
+[type=reset]:is([aria-current]:not([aria-current=false])):focus,
+[type=button]:focus,
+[type=button]:is([aria-current]:not([aria-current=false])):focus,
+[type=file]::file-selector-button:focus,
+[type=file]::file-selector-button:is([aria-current]:not([aria-current=false])):focus,
+[role=button]:focus,
+[role=button]:is([aria-current]:not([aria-current=false])):focus {
+  --femto-box-shadow: var(--femto-button-hover-box-shadow, 0 0 0 rgba(0, 0, 0, 0)), 0 0 0 var(--femto-outline-width) var(--femto-primary-focus);
+}
+
+[type=submit],
+[type=reset],
+[type=button] {
+  margin-bottom: var(--femto-spacing);
+}
+
+:is(button, [type=submit], [type=button], [role=button]).secondary,
+[type=reset],
+[type=file]::file-selector-button {
+  --femto-background-color: var(--femto-secondary-background);
+  --femto-border-color: var(--femto-secondary-border);
+  --femto-color: var(--femto-secondary-inverse);
+  cursor: pointer;
+}
+:is(button, [type=submit], [type=button], [role=button]).secondary:is([aria-current]:not([aria-current=false]), :hover, :active, :focus),
+[type=reset]:is([aria-current]:not([aria-current=false]), :hover, :active, :focus),
+[type=file]::file-selector-button:is([aria-current]:not([aria-current=false]), :hover, :active, :focus) {
+  --femto-background-color: var(--femto-secondary-hover-background);
+  --femto-border-color: var(--femto-secondary-hover-border);
+  --femto-color: var(--femto-secondary-inverse);
+}
+:is(button, [type=submit], [type=button], [role=button]).secondary:focus, :is(button, [type=submit], [type=button], [role=button]).secondary:is([aria-current]:not([aria-current=false])):focus,
+[type=reset]:focus,
+[type=reset]:is([aria-current]:not([aria-current=false])):focus,
+[type=file]::file-selector-button:focus,
+[type=file]::file-selector-button:is([aria-current]:not([aria-current=false])):focus {
+  --femto-box-shadow: var(--femto-button-hover-box-shadow, 0 0 0 rgba(0, 0, 0, 0)), 0 0 0 var(--femto-outline-width) var(--femto-secondary-focus);
+}
+
+:is(button, [type=submit], [type=button], [role=button]).contrast {
+  --femto-background-color: var(--femto-contrast-background);
+  --femto-border-color: var(--femto-contrast-border);
+  --femto-color: var(--femto-contrast-inverse);
+}
+:is(button, [type=submit], [type=button], [role=button]).contrast:is([aria-current]:not([aria-current=false]), :hover, :active, :focus) {
+  --femto-background-color: var(--femto-contrast-hover-background);
+  --femto-border-color: var(--femto-contrast-hover-border);
+  --femto-color: var(--femto-contrast-inverse);
+}
+:is(button, [type=submit], [type=button], [role=button]).contrast:focus, :is(button, [type=submit], [type=button], [role=button]).contrast:is([aria-current]:not([aria-current=false])):focus {
+  --femto-box-shadow: var(--femto-button-hover-box-shadow, 0 0 0 rgba(0, 0, 0, 0)), 0 0 0 var(--femto-outline-width) var(--femto-contrast-focus);
+}
+
+:is(button, [type=submit], [type=button], [role=button]).outline,
+[type=reset].outline {
+  --femto-background-color: transparent;
+  --femto-color: var(--femto-primary);
+  --femto-border-color: var(--femto-primary);
+}
+:is(button, [type=submit], [type=button], [role=button]).outline:is([aria-current]:not([aria-current=false]), :hover, :active, :focus),
+[type=reset].outline:is([aria-current]:not([aria-current=false]), :hover, :active, :focus) {
+  --femto-background-color: transparent;
+  --femto-color: var(--femto-primary-hover);
+  --femto-border-color: var(--femto-primary-hover);
+}
+
+:is(button, [type=submit], [type=button], [role=button]).outline.secondary,
+[type=reset].outline {
+  --femto-color: var(--femto-secondary);
+  --femto-border-color: var(--femto-secondary);
+}
+:is(button, [type=submit], [type=button], [role=button]).outline.secondary:is([aria-current]:not([aria-current=false]), :hover, :active, :focus),
+[type=reset].outline:is([aria-current]:not([aria-current=false]), :hover, :active, :focus) {
+  --femto-color: var(--femto-secondary-hover);
+  --femto-border-color: var(--femto-secondary-hover);
+}
+
+:is(button, [type=submit], [type=button], [role=button]).outline.contrast {
+  --femto-color: var(--femto-contrast);
+  --femto-border-color: var(--femto-contrast);
+}
+:is(button, [type=submit], [type=button], [role=button]).outline.contrast:is([aria-current]:not([aria-current=false]), :hover, :active, :focus) {
+  --femto-color: var(--femto-contrast-hover);
+  --femto-border-color: var(--femto-contrast-hover);
+}
+
+:where(button, [type=submit], [type=reset], [type=button], [role=button])[disabled],
+:where(fieldset[disabled]) :is(button, [type=submit], [type=button], [type=reset], [role=button]) {
+  opacity: 0.5;
+  pointer-events: none;
+}

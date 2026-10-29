@@ -1,0 +1,13 @@
+/*
+ * Figure: a block without margin or padding, whose figcaption gets vertical padding and the muted
+ * text color.
+ */
+figure {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+figure figcaption {
+  padding: calc(var(--femto-spacing) * 0.5) 0;
+  color: var(--femto-muted-color);
+}

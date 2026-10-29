@@ -1,0 +1,33 @@
+/*
+ * Loading: any element with aria-busy=true, other than form fields, html and form, shows the
+ * spinner icon before its content, centered when the element is empty. Busy buttons and links
+ * ignore the pointer.
+ */
+[aria-busy=true]:not(input, select, textarea, html, form) {
+  white-space: nowrap;
+}
+[aria-busy=true]:not(input, select, textarea, html, form)::before {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-image: var(--femto-icon-loading);
+  background-size: 1em auto;
+  background-repeat: no-repeat;
+  content: "";
+  vertical-align: -0.125em;
+}
+[aria-busy=true]:not(input, select, textarea, html, form):not(:empty)::before {
+  margin-inline-end: calc(var(--femto-spacing) * 0.5);
+}
+[aria-busy=true]:not(input, select, textarea, html, form):empty {
+  text-align: center;
+}
+
+button[aria-busy=true],
+[type=submit][aria-busy=true],
+[type=button][aria-busy=true],
+[type=reset][aria-busy=true],
+[role=button][aria-busy=true],
+a[aria-busy=true] {
+  pointer-events: none;
+}

@@ -1,0 +1,33 @@
+/*
+ * Table: full-width tables with collapsed borders, padded cells with a bottom border, a top border
+ * on the footer, and the .striped class, which shades the odd body rows. The reboot rules follow
+ * normalize.css v8.0.1 and sanitize.css v13.0.0.
+ */
+:where(table) {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  text-indent: 0;
+}
+
+th,
+td {
+  padding: calc(var(--femto-spacing) / 2) var(--femto-spacing);
+  border-bottom: var(--femto-border-width) solid var(--femto-table-border-color);
+  background-color: var(--femto-background-color);
+  color: var(--femto-color);
+  font-weight: var(--femto-font-weight);
+  text-align: left;
+  text-align: start;
+}
+
+tfoot th,
+tfoot td {
+  border-top: var(--femto-border-width) solid var(--femto-table-border-color);
+  border-bottom: 0;
+}
+
+table.striped tbody tr:nth-child(odd) th,
+table.striped tbody tr:nth-child(odd) td {
+  background-color: var(--femto-table-row-stripped-background-color);
+}

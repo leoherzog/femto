@@ -40,6 +40,18 @@
       <p>The dialog card is 510px wide from 576px and 700px wide from 768px.</p>
     </article>
   </dialog>
+  <div style="--femto-grid-template-columns: initial">
+    <div data-shadow>
+      <template>
+        <p>Shadow root whose host cannot inherit the grid token from :root, so it relies on :host.</p>
+        <div class="container"><p>Shadow .container</p></div>
+        <div class="grid">
+          <div>Shadow grid 1</div>
+          <div>Shadow grid 2</div>
+        </div>
+      </template>
+    </div>
+  </div>
 </main>
 <footer data-module="tokens/breakpoints">
   <p>Body footer.</p>

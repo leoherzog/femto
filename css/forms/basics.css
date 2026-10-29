@@ -1,0 +1,247 @@
+/*
+ * Basic form elements: the reboot of inputs, selects, textareas, fieldsets and legends, then their
+ * labels, sizes, colors, focus, disabled and aria-invalid states, placeholders, the select chevron and
+ * helper text. Reboot based on normalize.css v8.0.1 (MIT License, github.com/necolas/normalize.css) and
+ * sanitize.css v13.0.0 (CC0 1.0 Universal, github.com/csstools/sanitize.css).
+ */
+input,
+optgroup,
+select,
+textarea {
+  margin: 0;
+  font-size: 1rem;
+  line-height: var(--femto-line-height);
+  font-family: inherit;
+  letter-spacing: inherit;
+}
+
+input {
+  overflow: visible;
+}
+
+select {
+  text-transform: none;
+}
+
+legend {
+  max-width: 100%;
+  padding: 0;
+  color: inherit;
+  white-space: normal;
+}
+
+textarea {
+  overflow: auto;
+}
+
+[type=checkbox],
+[type=radio] {
+  padding: 0;
+}
+
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  height: auto;
+}
+
+[type=search] {
+  -webkit-appearance: textfield;
+  outline-offset: -2px;
+}
+
+[type=search]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/* Chrome and Safari alias this to ::file-selector-button; without it the file button takes the UA's Arial. */
+::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  font: inherit;
+}
+
+[type=file],
+[type=range] {
+  padding: 0;
+  border-width: 0;
+}
+
+input:not([type=checkbox], [type=radio], [type=range]) {
+  height: calc(1rem * var(--femto-line-height) + var(--femto-form-element-spacing-vertical) * 2 + var(--femto-border-width) * 2);
+}
+
+fieldset {
+  width: 100%;
+  margin: 0;
+  margin-bottom: var(--femto-spacing);
+  padding: 0;
+  border: 0;
+}
+
+label,
+fieldset legend {
+  display: block;
+  margin-bottom: calc(var(--femto-spacing) * 0.375);
+  color: var(--femto-color);
+  font-weight: var(--femto-form-label-font-weight, var(--femto-font-weight));
+}
+
+fieldset legend {
+  margin-bottom: calc(var(--femto-spacing) * 0.5);
+}
+
+input:not([type=checkbox], [type=radio]),
+button[type=submit],
+select,
+textarea {
+  width: 100%;
+}
+
+input:not([type=checkbox], [type=radio], [type=range], [type=file]),
+select,
+textarea {
+  appearance: none;
+  padding: var(--femto-form-element-spacing-vertical) var(--femto-form-element-spacing-horizontal);
+}
+
+input,
+select,
+textarea {
+  --femto-background-color: var(--femto-form-element-background-color);
+  --femto-border-color: var(--femto-form-element-border-color);
+  --femto-color: var(--femto-form-element-color);
+  --femto-box-shadow: none;
+  border: var(--femto-border-width) solid var(--femto-border-color);
+  border-radius: var(--femto-border-radius);
+  outline: none;
+  background-color: var(--femto-background-color);
+  box-shadow: var(--femto-box-shadow);
+  color: var(--femto-color);
+  font-weight: var(--femto-font-weight);
+  transition: background-color var(--femto-transition), border-color var(--femto-transition), color var(--femto-transition), box-shadow var(--femto-transition);
+}
+
+input:not([type=submit], [type=button], [type=reset], [type=checkbox], [type=radio], [readonly]):is(:active, :focus),
+:where(select, textarea):not([readonly]):is(:active, :focus) {
+  --femto-background-color: var(--femto-form-element-active-background-color);
+}
+
+input:not([type=submit], [type=button], [type=reset], [role=switch], [readonly]):is(:active, :focus),
+:where(select, textarea):not([readonly]):is(:active, :focus) {
+  --femto-border-color: var(--femto-form-element-active-border-color);
+}
+
+input:not([type=submit], [type=button], [type=reset], [type=range], [type=file], [readonly]):focus,
+:where(select, textarea):not([readonly]):focus {
+  --femto-box-shadow: 0 0 0 var(--femto-outline-width) var(--femto-form-element-focus-color);
+}
+
+input:not([type=submit], [type=button], [type=reset])[disabled],
+select[disabled],
+textarea[disabled],
+label[aria-disabled=true],
+:where(fieldset[disabled]) :is(input:not([type=submit], [type=button], [type=reset]), select, textarea) {
+  opacity: var(--femto-form-element-disabled-opacity);
+  pointer-events: none;
+}
+
+label[aria-disabled=true] input[disabled] {
+  opacity: 1;
+}
+
+:where(input, select, textarea):not([type=checkbox], [type=radio], [type=date], [type=datetime-local], [type=month], [type=time], [type=week], [type=range])[aria-invalid] {
+  padding-right: calc(var(--femto-form-element-spacing-horizontal) + 1.5rem) !important;
+  padding-left: var(--femto-form-element-spacing-horizontal);
+  padding-inline-start: var(--femto-form-element-spacing-horizontal) !important;
+  padding-inline-end: calc(var(--femto-form-element-spacing-horizontal) + 1.5rem) !important;
+  background-position: center right 0.75rem;
+  background-size: 1rem auto;
+  background-repeat: no-repeat;
+}
+:where(input, select, textarea):not([type=checkbox], [type=radio], [type=date], [type=datetime-local], [type=month], [type=time], [type=week], [type=range])[aria-invalid=false]:not(select) {
+  background-image: var(--femto-icon-valid);
+}
+:where(input, select, textarea):not([type=checkbox], [type=radio], [type=date], [type=datetime-local], [type=month], [type=time], [type=week], [type=range])[aria-invalid=true]:not(select) {
+  background-image: var(--femto-icon-invalid);
+}
+:where(input, select, textarea)[aria-invalid=false] {
+  --femto-border-color: var(--femto-form-element-valid-border-color);
+}
+:where(input, select, textarea)[aria-invalid=false]:is(:active, :focus) {
+  --femto-border-color: var(--femto-form-element-valid-active-border-color) !important;
+}
+:where(input, select, textarea)[aria-invalid=false]:is(:active, :focus):not([type=checkbox], [type=radio]) {
+  --femto-box-shadow: 0 0 0 var(--femto-outline-width) var(--femto-form-element-valid-focus-color) !important;
+}
+:where(input, select, textarea)[aria-invalid=true] {
+  --femto-border-color: var(--femto-form-element-invalid-border-color);
+}
+:where(input, select, textarea)[aria-invalid=true]:is(:active, :focus) {
+  --femto-border-color: var(--femto-form-element-invalid-active-border-color) !important;
+}
+:where(input, select, textarea)[aria-invalid=true]:is(:active, :focus):not([type=checkbox], [type=radio]) {
+  --femto-box-shadow: 0 0 0 var(--femto-outline-width) var(--femto-form-element-invalid-focus-color) !important;
+}
+
+[dir=rtl] :where(input, select, textarea):not([type=checkbox], [type=radio]):is([aria-invalid], [aria-invalid=true], [aria-invalid=false]) {
+  background-position: center left 0.75rem;
+}
+
+input::placeholder,
+textarea::placeholder,
+select:invalid {
+  color: var(--femto-form-element-placeholder-color);
+  opacity: 1;
+}
+
+input:not([type=checkbox], [type=radio]),
+select,
+textarea {
+  margin-bottom: var(--femto-spacing);
+}
+
+select:not([multiple], [size]) {
+  padding-right: calc(var(--femto-form-element-spacing-horizontal) + 1.5rem);
+  padding-left: var(--femto-form-element-spacing-horizontal);
+  padding-inline-start: var(--femto-form-element-spacing-horizontal);
+  padding-inline-end: calc(var(--femto-form-element-spacing-horizontal) + 1.5rem);
+  background-image: var(--femto-icon-chevron);
+  background-position: center right 0.75rem;
+  background-size: 1rem auto;
+  background-repeat: no-repeat;
+}
+select[multiple] option:checked {
+  background: var(--femto-form-element-selected-background-color);
+  color: var(--femto-form-element-color);
+}
+
+[dir=rtl] select:not([multiple], [size]) {
+  background-position: center left 0.75rem;
+}
+
+textarea {
+  display: block;
+  resize: vertical;
+}
+textarea[aria-invalid] {
+  --femto-icon-height: calc(1rem * var(--femto-line-height) + var(--femto-form-element-spacing-vertical) * 2 + var(--femto-border-width) * 2);
+  background-position: top right 0.75rem !important;
+  background-size: 1rem var(--femto-icon-height) !important;
+}
+
+:where(input, select, textarea, fieldset, .grid) + small {
+  display: block;
+  width: 100%;
+  margin-top: calc(var(--femto-spacing) * -0.75);
+  margin-bottom: var(--femto-spacing);
+  color: var(--femto-muted-color);
+}
+:where(input, select, textarea, fieldset, .grid)[aria-invalid=false] + small {
+  color: var(--femto-ins-color);
+}
+:where(input, select, textarea, fieldset, .grid)[aria-invalid=true] + small {
+  color: var(--femto-del-color);
+}
+
+label > :where(input, select, textarea) {
+  margin-top: calc(var(--femto-spacing) * 0.25);
+}
