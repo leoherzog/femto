@@ -30,6 +30,14 @@
     "css/",
     "dist/"
   ],
+  "browserslist": [
+    "Chrome >= 125",
+    "Edge >= 125",
+    "Firefox >= 128",
+    "Safari >= 17.5",
+    "iOS >= 17.5",
+    "Samsung >= 27"
+  ],
   "scripts": {
     "build": "node build.mjs",
     "lint": "eslint css"

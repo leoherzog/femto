@@ -5,21 +5,10 @@ import { defineConfig } from "eslint/config";
 import css from "@eslint/css";
 
 export default defineConfig([
-  // Only css/ is linted. The 2.1.1 build output (css/pico*.css) and its PostCSS config stay until
-  // Phase 5 deletes them; the other folders hold Sass, scripts and test tooling, not shipped CSS.
-  // dist/ is esbuild's one-file build of css/ (build.mjs).
+  // Only css/ is linted: it holds the hand-written CSS that ships. dist/ is esbuild's one-file
+  // build of css/ (build.mjs), and the other paths are build, research and test tooling.
   {
-    ignores: [
-      "css/pico*.css",
-      "css/postcss.config.js",
-      "dist/",
-      "build.mjs",
-      "docs/",
-      "scripts/",
-      "scss/",
-      "tests/",
-      "eslint.config.mjs",
-    ],
+    ignores: ["dist/", "build.mjs", "docs/", "tests/", "eslint.config.mjs"],
   },
   {
     files: ["css/**/*.css"],

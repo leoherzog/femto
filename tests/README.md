@@ -23,7 +23,7 @@ Every run writes `tests/results/<run-id>/result.json`, `summary.txt` and `log.tx
 summary, and exits 0 only when nothing unregistered differs and no harness error occurred.
 
 Python runs only through `uv`: `tests/run.py` carries PEP 723 metadata pinning
-`selenium==4.51.0` and `pillow==13.0.0`. Selenium Manager fetches chromedriver and geckodriver into
+`selenium==4.52.0` and `pillow==13.0.0`. Selenium Manager fetches chromedriver and geckodriver into
 `~/.cache/selenium`; Safari uses `/usr/bin/safaridriver`.
 
 ## Layout and ownership

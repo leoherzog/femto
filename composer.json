@@ -1,6 +1,6 @@
 {
-  "name": "picocss/pico",
-  "description": "Minimal CSS Framework for semantic HTML.",
+  "name": "leoherzog/femto",
+  "description": "Minimal CSS framework for semantic HTML, written as plain CSS modules",
   "keywords": [
     "css",
     "css-framework",
@@ -11,20 +11,17 @@
     "minimalist",
     "minimalistic",
     "native-html",
-    "scss-framework",
     "semantic"
   ],
-  "homepage": "https://picocss.com",
+  "homepage": "https://github.com/leoherzog/femto",
   "authors": [
     {
-      "name": "Lucas Larroche",
-      "email": "lucas@larroche.com",
-      "homepage": "https://lucaslarroche.com",
-      "role": "Developer"
+      "name": "Leo Herzog",
+      "homepage": "https://github.com/leoherzog"
     }
   ],
   "support": {
-    "issues": "https://github.com/picocss/pico/issues/"
+    "issues": "https://github.com/leoherzog/femto/issues"
   },
   "license": "MIT"
 }

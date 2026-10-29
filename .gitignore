@@ -28,9 +28,6 @@ Thumbs.db
 # Folders to ignore
 /node_modules/
 
-# Pico
-.pico
-
 # Parity harness output (tests/README.md)
 /tests/build/
 /tests/results/

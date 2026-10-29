@@ -33,9 +33,8 @@ nesting traps (docs/research/scripts/nesting_traps.py), and duplicate rules.
 "themes" covers what the harness cannot see in a theme file: tokens-light-dark-raw-text accepts
 any light-dark() text, so it compares each file's ten tokens with its 2.1.1 reference as text.
 
-"Shipped files" are everything under css/ except the 2.1.1 build output css/pico*.css and
-css/postcss.config.js, which Phase 5 deletes. Until then those two are skipped, not checked.
-dist/ ships too, but npm run build writes it from css/, so criterion 12 checks it against a fresh build.
+"Shipped files" are everything under css/. dist/ ships too, but npm run build writes it from css/,
+so criterion 12 checks it against a fresh build.
 CSS checks look at code only: comments are removed first and, for the forbidden-syntax scans,
 string contents (including url("data:...") icons) are blanked, so a comment that mentions
 @layer, or an SVG that uses rgb(), is not a violation. Mentions in comments are listed as notes.
@@ -246,27 +245,16 @@ def name_exempt(path: str) -> bool:
     return path.startswith(EXEMPT_NAME_PATHS) or path in EXEMPT_NAME_FILES
 
 
-def shipped_files(root: Path) -> tuple[list[Path], list[str]]:
-    """(shipped files under css/, skipped 2.1.1 leftovers)."""
+def shipped_files(root: Path) -> list[Path]:
+    """Shipped files under css/."""
     css = root / "css"
-    shipped, skipped = [], []
     if not css.is_dir():
-        return shipped, skipped
-    for p in sorted(css.rglob("*")):
-        if not p.is_file() or p.name == ".DS_Store":
-            continue
-        rel = p.relative_to(root).as_posix()
-        if p.parent == css and (re.match(r"pico.*\.css$", p.name) or p.name == "postcss.config.js"):
-            skipped.append(rel)
-            continue
-        shipped.append(p)
-    return shipped, skipped
+        return []
+    return [p for p in sorted(css.rglob("*")) if p.is_file() and p.name != ".DS_Store"]
 
 
-def describe_shipped(r: Result, shipped: list[Path], skipped: list[str]) -> list[Path]:
+def describe_shipped(r: Result, shipped: list[Path]) -> list[Path]:
     css_files = [p for p in shipped if p.suffix == ".css"]
-    if skipped:
-        r.note(f"skipped {len(skipped)} 2.1.1 build files in css/ (css/pico*.css, css/postcss.config.js) until Phase 5")
     if not css_files:
         r.fail("no shipped femto CSS files under css/ (nothing converted yet)")
     else:
@@ -381,8 +369,8 @@ def criterion_5(root: Path) -> Result:
 
 def criterion_6(root: Path) -> Result:
     r = Result("Criterion 6: Only femto.css contains @import, and its imports come before every other rule")
-    shipped, skipped = shipped_files(root)
-    css_files = describe_shipped(r, shipped, skipped)
+    shipped = shipped_files(root)
+    css_files = describe_shipped(r, shipped)
     css = root / "css"
     for entry in ENTRIES:
         if not (css / entry).exists():
@@ -432,8 +420,8 @@ def criterion_6(root: Path) -> Result:
 
 def criterion_7(root: Path) -> Result:
     r = Result("Criterion 7: no @layer, @scope, if(, @function, @mixin, @apply, @custom-media, @container style(; no 'from' in color functions; every color-mix( uses 'in srgb'")
-    shipped, skipped = shipped_files(root)
-    css_files = describe_shipped(r, shipped, skipped)
+    shipped = shipped_files(root)
+    css_files = describe_shipped(r, shipped)
     counts = {"color-mix": 0, "color functions": 0}
     for p in css_files:
         rel = p.relative_to(root).as_posix()
@@ -463,8 +451,8 @@ def criterion_7(root: Path) -> Result:
 
 def hygiene(root: Path) -> Result:
     r = Result("Shipped-file hygiene: no --pico- names, ASCII only, each file starts with a header comment, CSS only")
-    shipped, skipped = shipped_files(root)
-    css_files = describe_shipped(r, shipped, skipped)
+    shipped = shipped_files(root)
+    css_files = describe_shipped(r, shipped)
     for p in shipped:
         if p.suffix != ".css":
             r.fail(f"{p.relative_to(root).as_posix()}: not a CSS file")
@@ -521,8 +509,8 @@ def split_selectors(prelude: str) -> list[str]:
 
 def vendor(root: Path) -> Result:
     r = Result("Vendor prefixes (PLAN Conversion rules): no -ms-, none of the dropped pseudo-classes and pseudo-elements, each -moz- pseudo in its own rule")
-    shipped, skipped = shipped_files(root)
-    css_files = describe_shipped(r, shipped, skipped)
+    shipped = shipped_files(root)
+    css_files = describe_shipped(r, shipped)
     used = {}
     for p in css_files:
         rel = p.relative_to(root).as_posix()
