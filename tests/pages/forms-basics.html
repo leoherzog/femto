@@ -167,6 +167,13 @@
     <textarea name="rtl-textarea" rows="2" aria-invalid="true">RTL textarea</textarea>
   </div>
 
+  <h2>Left invalid</h2>
+  <form data-user-invalid>
+    <input type="email" name="user-invalid-email" value="not an email" required data-states="focus active">
+    <input type="email" name="user-invalid-aria" value="not an email" required aria-invalid="true" data-states="focus">
+    <textarea name="user-invalid-textarea" rows="2" required data-states="focus"></textarea>
+  </form>
+
   <div data-theme="light">
     <h2>Light island</h2>
     <input type="text" name="li-text" placeholder="Light placeholder" data-states="focus">

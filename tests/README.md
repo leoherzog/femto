@@ -38,7 +38,7 @@ Python runs only through `uv`: `tests/run.py` carries PEP 723 metadata pinning
 | `pages/` | fixtures | fixture pages, `pages.json` manifest, `assets/` |
 | `reference/` | refs | renamed 2.1.1 CSS (gitignored, rebuilt from tag `v2.1.1` by `run.py` when missing) and committed option references, provenance in `reference/README.md` |
 | `sections.json` | refs | 2.1.1 banner sections of the default entry mapped to femto files |
-| `static_checks.py` | refs | mechanical checks for acceptance criteria 4 to 7 and 10 to 12 (12: `dist/` matches a fresh `npm run build`) |
+| `static_checks.py` | refs | mechanical checks for acceptance criteria 4 to 7 and 9 to 12 (9: the coverage table in Coverage below; 12: `dist/` matches a fresh `npm run build`) |
 | `build/`, `results/` | generated | gitignored |
 
 Python modules in `harness/`: `cli.py` (modes and planning), `matrix.py` (presets, pages, full-matrix
@@ -170,7 +170,7 @@ and are separated by `;`.
 | Mode | What it runs |
 |---|---|
 | `fast` | For module agents. `--modules forms/basics,...` or `--sections "Basics form elements;Input type file"`: the manifest pages of those modules or sections, Chrome and Firefox, widths 390 and 1280, legs `light` and `dark` (media), ltr plus rtl on pages with `rtl: true`, with states. By default the test side is a hybrid build of the preset's reference with those sections replaced by their femto files; `--direct` compares the preset's own test list instead. A section is replaced as a whole, so every femto file `tests/sections.json` maps to it must exist (Styles needs `tokens/base.css`, `tokens/breakpoints.css` and `layout/elements.css`); missing files stop the run with exit 2. `--kitchen-sink` adds the kitchen sink; `--presets` picks entries (default `default`). Phase 1 example: `fast --sections "Styles;Color schemes;Document"`. `layout/grid` reads `--femto-grid-template-columns` from `tokens/breakpoints.css` (Styles), so name `tokens/breakpoints` with `layout/grid`; without it the hybrid keeps 2.1.1's Styles and `.grid` stays one column at 768px and wider. |
-| `full` | The whole matrix below. Chrome and Firefox run 2 workers each, Safari 1, all at once (subject to the slot lock). `--self` compares every preset's reference against itself; `--control` compares every preset that has hybrid settings (all but `colors`, which has no banners) against its chunk control; `--states-only` keeps only the cells that run interactive states and `--stateless-only` only the others, so a Safari leg can be split into two invocations whose union is the matrix. Command-line filters (`--pages`, `--widths`, ...) cut the matrix and are logged as a cap. |
+| `full` | The whole matrix below. Chrome and Firefox run 2 workers each, Safari 1, all at once (subject to the slot lock). `--self` compares every preset's reference against itself; `--control` compares every preset that has hybrid settings (all but `colors`, which has no banners, and `user-root-override`, which loads two stylesheets) against its chunk control; `--states-only` keeps only the cells that run interactive states and `--stateless-only` only the others, so a Safari leg can be split into two invocations whose union is the matrix. Command-line filters (`--pages`, `--widths`, ...) cut the matrix and are logged as a cap. |
 | `compare` | Direct comparison: `--ref` against `--test` (root-relative lists), or each `--presets` preset's own lists. `--entry` picks pages for `--ref`. Defaults to the fast axes; `--full-widths` and `--all-legs` widen them. |
 | `self` | A reference against itself (acceptance criterion 1). |
 | `hybrid` | A preset's reference against a hybrid build: `--modules`, `--sections`, or `--control` (no section replaced: the chunk control). Defaults to the fast axes; `--full-widths` and `--all-legs` widen them to every width and leg on every page, with states everywhere, which is far heavier than the full matrix. `--full-plan` instead plans the full matrix's own cells and reductions (below) for `--presets` (default `default`), with the hybrid build as the test side, and takes the same command-line filters as `full`. Use `--full-plan` for a phase's wide check: on Phase 1's sections it runs 3,296 cells in Chrome and Firefox where `--full-widths --all-legs` ran 9,576 per preset. |
@@ -237,22 +237,25 @@ Widths: one inside each band, 375, 640, 900, 1150, 1400 and 1700, plus 575/576/5
   `theme-dark`. The other pages are needed because `femto.no-transitions.css` changes rules the
   kitchen sink cannot hold: the `modal-is-opening`/`-closing` animations (`classes-modal.html`
   variants), the open dropdown list, and the left and right tooltip slides in hover.
-- Themes (`theme-<color>`, 20 presets): the kitchen sink only, 1280, every leg, with states. Every
-  rule whose declarations differ between a theme reference and `femto.css` has a selector that
-  matches on the kitchen sink (checked 2026-10-27).
+- Themes (`theme-<color>`, 20 presets, and `user-root-override`, which is in the same group): the
+  kitchen sink only, 1280, every leg, with states. Every rule whose declarations differ between a
+  theme reference and `femto.css` has a selector that matches on the kitchen sink (checked
+  2026-10-27).
 
-That is 2,089 cells per browser, 606 of them with states (2,085 and 602 in `--control`, which has
-no `colors` cells): `default` 1,648, `colors` 4, each option 119 and each theme 4. Counted on
-2026-10-27 with the harness's own planner (`harness.cli.plan`, which starts no browser) after the
-classless presets were removed. See Measured throughput.
+That is 2,093 cells per browser, 610 of them with states (2,085 and 602 in `--control`, which has
+no `colors` or `user-root-override` cells): `default` 1,648, `colors` 4, each option 119, each theme
+4 and `user-root-override` 4. Counted on 2026-10-27 with the harness's own planner
+(`harness.cli.plan`, which starts no browser) after the classless presets were removed, and again
+on 2026-10-29 after Phase 6 added `user-root-override` (2,089 and 606 before it). See Measured
+throughput.
 
 ## Presets: `tests/variants.json`
 
 `presets.<name>`: `entry` (selects pages whose manifest `entries` include it), `ref` and `test`
 (root-relative stylesheet lists, loaded in order), optional `group` (`option`, `theme`) and
 `hybrid` (`sections`: the `tests/sections.json` entry used to split `ref`; `append`: URLs imported
-after the chunks once any section is replaced, for theme and option files). There are 25 presets:
-`default`, `colors`, 3 options and 20 themes.
+after the chunks once any section is replaced, for theme and option files). There are 26 presets:
+`default`, `colors`, 3 options, 20 themes and `user-root-override`.
 
 - `default`: `tests/reference/femto.css` against `css/femto.css`.
 - `colors`: `tests/reference/femto.colors.css` against `css/femto.colors.css`.
@@ -260,6 +263,11 @@ after the chunks once any section is replaced, for theme and option files). Ther
   `css/options/<option>.css`.
 - `theme-<color>`: `tests/reference/femto.<color>.css` against `css/femto.css` plus
   `css/themes/<color>.css`. Azure is built into `tokens/`, so its reference is `femto.css` itself.
+- `user-root-override`: `tests/reference/femto.css` against `css/femto.css`, each followed by
+  `tests/pages/assets/user-root-override.css`, a page author's own primary color on plain `:root`
+  (the seed natural fix of Decision 12). It is in the `theme` group, so the full matrix runs it like
+  a theme, and it has no `hybrid` settings: a hybrid splits a single reference stylesheet, so
+  `hybrid` and `full --control` leave it out.
 
 ## Hybrid builds and `tests/sections.json`
 
@@ -294,11 +302,13 @@ two contents.
 - `page.js` reads the query string: `css` (comma-separated root-relative URLs, written as blocking
   `<link rel="stylesheet">`s with `document.write`), `theme=light|dark` (`data-theme` on `<html>`),
   `dir=rtl`, `class` (comma-separated classes on `<html>`). After `DOMContentLoaded` it sets
-  `.indeterminate = true` on every `[data-indeterminate]`, calls `showModal()` on every
-  `dialog[data-show-modal]`, and gives every `[data-shadow]` host an open shadow root holding the
-  same stylesheets followed by a clone of its `<template>` child. `window.__femto.ready` resolves
-  when every stylesheet has loaded or failed; `window.__femto.errors` lists failures (a failed
-  stylesheet is a harness error).
+  `.indeterminate = true` on every `[data-indeterminate]`, calls `requestSubmit()` on every
+  `form[data-user-invalid]` (validation puts its invalid fields in `:user-invalid` without typing,
+  fires no `submit` and focuses the first invalid field, which `page.js` blurs again), calls
+  `showModal()` on every `dialog[data-show-modal]`, and gives every `[data-shadow]` host an open
+  shadow root holding the same stylesheets followed by a clone of its `<template>` child.
+  `window.__femto.ready` resolves when every stylesheet has loaded or failed;
+  `window.__femto.errors` lists failures (a failed stylesheet is a harness error).
 - Content sits in `<div data-module="<module id>">` wrappers. Landmark pages put `data-module` on
   `body > header`, `main` and `footer`.
 - Every page has a light island `<div data-theme="light">` and a dark island
@@ -349,8 +359,8 @@ every entry that matches counts a hit. The summary lists entries with no hit in 
 unregistered skipped checks, fail the run.
 
 Seed entries (from PLAN, written broadly; later phases tighten them): `tokens.json`
-(`tokens-light-dark-raw-text`, `tokens-group-island-focus-ring`, `tokens-root-user-override-style`/`-token`
-for a future `user-root-override` preset, `tokens-new-names`), `components-group.json` (the island
+(`tokens-light-dark-raw-text`, `tokens-group-island-focus-ring`, `tokens-root-user-override-style`/`-token`/`-raw`
+for the `user-root-override` preset, `tokens-new-names`), `components-group.json` (the island
 focus-ring style), `forms-basics.json` (Firefox focus ring after dropping `:-moz-focusring`), and
 `rig.json` (`safari-no-media-dark`). Phase 1 narrowed the tokens and island entries to what its runs
 reported. Its review added `tokens-author-color-scheme-dark` and `-light`: an author's inline
@@ -381,10 +391,10 @@ token-read `max-width` would be declared at every width and override `img`, `leg
 rules below 576px (guard fixtures `img.container` and `legend.container` in
 `classes-container.html`). `forms-basics.json` narrows `firefox-focus-ring-restored` to the
 `[data-tooltip][tabindex]` targets of `components-tooltip.html` in the focus state, the only fixture
-elements that set no outline of their own, and adds `firefox-user-invalid-focus-ring-restored`,
-which never hits (see Known limits). `components-group.json` splits the island focus ring by the
-island's scheme (`group-island-focus-ring-style` and `-light-island`). The other 26 modules needed no
-entry.
+elements that set no outline of their own, and adds `firefox-user-invalid-focus-ring-restored`
+(fixture since Phase 6: the "Left invalid" form of `forms-basics.html`). `components-group.json`
+splits the island focus ring by the island's scheme (`group-island-focus-ring-style` and
+`-light-island`). The other 26 modules needed no entry.
 Phase 3 added `options-no-transitions.json`, six entries limited to the `option-no-transitions`
 preset. 2.1.1 builds that option by compiling the gated `transition` declarations, the modal
 animations and the tooltip slides out; an appended file can only reset them, so
@@ -402,6 +412,23 @@ gained tooltips on an open accordion summary and on two dropdown summaries, whic
 option's chevron rules, and now runs for `components/accordion`, `components/dropdown` and
 `components/nav` too. `tokens-light-dark-raw-text` accepts any `light-dark()` text, so a theme
 file's ten tokens are compared with its reference as text by `static_checks.py --only themes`.
+Phase 6 narrowed `tokens-root-user-override-style` and `-token` to the colors of
+`tests/pages/assets/user-root-override.css` and added `tokens-root-user-override-raw` for the raw
+text of the primary tokens and the seven tokens derived from them. It also added
+`tokens-input-focus-color-author-override`, which is documentation only, scoped to a
+`user-element-override` preset that does not exist: Decision 12's flat `input:is(...)` rule sets
+`--femto-form-element-focus-color` at (0,1,1), so an author rule loaded after femto, from (0,1,1) up
+to the matching 2.1.1 scheme copy at (0,2,1) or (0,3,1), now sets a checkbox's or radio's focus ring
+color. Phase 6 also added the `user-root-override` preset, which the three override entries are
+scoped to, and the "Left invalid" form of `forms-basics.html` (`form[data-user-invalid]`), whose
+fields `page.js` puts in `:user-invalid`, so `firefox-user-invalid-focus-ring-restored` now fires;
+that entry is limited to `forms-basics.html`. In Chrome and Firefox, both against themselves
+(`full --self`, runs `p6-fix-tests-self-uro-1` and `p6-fix-tests-self-fb-1`) had 0 differences.
+Against femto, the preset on the kitchen sink at 1280 in every leg, ltr and rtl
+(`p6-fix-tests-cmp-uro-1`), passed with 37,436 style, 40,716 token and 10,656 raw-text records on
+the three override entries, and `forms-basics.html` in `default` and the three option presets at 390
+and 1280 in every leg (`p6-fix-tests-cmp-fb-1`) passed with 4 records on the user-invalid entry in
+each of its 64 Firefox cells and none in Chrome.
 
 ## Output
 
@@ -429,12 +456,97 @@ Unregistered record shapes: `style` {`state`, `el`, `label`, `path`, `pseudo`, `
 `test`}, `token` {`anchor`, `label`, `path`, `token`, `prop`, `ref`, `test`}, `token-raw`
 {`anchor`, `label`, `path`, `token`, `ref`, `test`}, `surface-added`/`surface-missing` {`token`}.
 
+## Coverage: 2.1.1 modules and settings (criterion 9)
+
+This section maps every key of 2.1.1's `$modules` map and every 2.1.1 Sass setting to the femto
+file or mechanism that replaces it, with the check that covers it. Sources are
+`git show v2.1.1:scss/_settings.scss` and `scss/colors/utilities/_settings.scss`. Modules are listed
+in `$modules` order. `css/femto.css` imports them in the order 2.1.1 emits them
+(`tests/sections.json`), so each femto file carries its position among those imports in
+parentheses. That order puts Section before Container, Typography before Link, and Button and Table
+before Embedded content. `uv run tests/static_checks.py --only 9` checks the Modules and Settings
+tables against the tag, `tests/sections.json`, `tests/pages/pages.json` and `css/femto.css`.
+
+### Modules
+
+| 2.1.1 module | 2.1.1 section in `pico.css` | femto file (position in `css/femto.css`) | Fixture pages besides `kitchen-sink.html` |
+|---|---|---|---|
+| `themes/default` | Styles; Color schemes | `tokens/base.css` (1), `tokens/breakpoints.css` (2) and `layout/elements.css` (3) for Styles; `tokens/schemes.css` (4) for Color schemes. Azure is built in; `themes/azure.css` restates its ten tokens | `tokens-base.html`, `tokens-breakpoints.html`, `layout-elements.html`, `tokens-schemes.html` |
+| `layout/document` | Document | `layout/document.css` (5) | `layout-document.html` |
+| `layout/landmarks` | Landmarks | `layout/landmarks.css` (6) | `layout-landmarks.html` |
+| `layout/container` | Container | `layout/container.css` (8) | `classes-container.html` |
+| `layout/section` | Section | `layout/section.css` (7) | `layout-section.html` |
+| `layout/grid` | Grid | `layout/grid.css` (9), which reads `--femto-grid-template-columns` from `tokens/breakpoints.css` | `classes-grid.html` |
+| `layout/overflow-auto` | Overflow auto | `layout/overflow-auto.css` (10) | `classes-overflow-auto.html` |
+| `content/link` | Link | `content/link.css` (12) | `content-link.html`, `classes-links.html` |
+| `content/typography` | Typography | `content/typography.css` (11) | `content-typography.html` |
+| `content/embedded` | Embedded content | `content/embedded.css` (15) | `content-embedded.html` |
+| `content/button` | Button | `content/button.css` (13) | `content-button.html`, `classes-buttons.html` |
+| `content/table` | Table | `content/table.css` (14) | `content-table.html`, `classes-table-striped.html` |
+| `content/code` | Code | `content/code.css` (16) | `content-code.html` |
+| `content/figure` | Figure | `content/figure.css` (17) | `content-figure.html` |
+| `content/misc` | Misc | `content/misc.css` (18) | `content-misc.html` |
+| `forms/basics` | Basics form elements | `forms/basics.css` (19) | `forms-basics.html` |
+| `forms/checkbox-radio-switch` | Checkboxes, Radios and Switches | `forms/checkbox-radio-switch.css` (20) | `forms-checkbox-radio-switch.html` |
+| `forms/input-color` | Input type color | `forms/input-color.css` (21) | `forms-input-color.html` |
+| `forms/input-date` | Input type datetime | `forms/input-date.css` (22) | `forms-input-date.html` |
+| `forms/input-file` | Input type file | `forms/input-file.css` (23) | `forms-input-file.html` |
+| `forms/input-range` | Input type range | `forms/input-range.css` (24) | `forms-input-range.html` |
+| `forms/input-search` | Input type search | `forms/input-search.css` (25) | `forms-input-search.html` |
+| `components/accordion` | Accordion (`<details>`) | `components/accordion.css` (26) | `components-accordion.html`, `components-tooltip.html` |
+| `components/card` | Card (`<article>`) | `components/card.css` (27) | `components-card.html` |
+| `components/dropdown` | Dropdown (`details.dropdown`) | `components/dropdown.css` (28) | `classes-dropdown.html`, `classes-dropdown-open.html`, `components-tooltip.html` |
+| `components/group` | Group (`[role="group"]`, `[role="search"]`) | `components/group.css` (29) | `components-group.html` |
+| `components/loading` | Loading (`[aria-busy=true]`) | `components/loading.css` (30) | `components-loading.html` |
+| `components/modal` | Modal (`<dialog>`) | `components/modal.css` (31) | `components-modal.html`, `components-modal-show.html`, `classes-modal.html` |
+| `components/nav` | Nav | `components/nav.css` (32) | `components-nav.html`, `components-tooltip.html` |
+| `components/progress` | Progress | `components/progress.css` (33) | `components-progress.html` |
+| `components/tooltip` | Tooltip (`[data-tooltip]`) | `components/tooltip.css` (34) | `components-tooltip.html` |
+| `utilities/accessibility` | Accessibility & User interaction | `utilities/accessibility.css` (35) | `utilities-accessibility.html` |
+| `utilities/reduce-motion` | Reduce Motion Features | `utilities/reduce-motion.css` (36) | `utilities-reduce-motion.html` (no run applies `reduce`; see Known limits) |
+
+The `default` preset compares `css/femto.css` with `tests/reference/femto.css`. `npm run build`
+inlines every file above into `dist/femto.css` and `dist/femto.min.css`, and `static_checks.py`
+check 12 plus the criterion 12 compare runs check them against `css/`.
+
+### Settings
+
+| 2.1.1 setting | 2.1.1 default | femto file or mechanism | Checked by |
+|---|---|---|---|
+| `$theme-color` | `"azure"` | Azure is built into `tokens/schemes.css` and `tokens/base.css` (`--femto-primary-inverse-filter`). Each of the 20 colors, azure included, is `css/themes/<color>.css`: one `:root, :host` rule with ten tokens, loaded after femto | presets `theme-<color>` against `tests/reference/femto.<color>.css` (`femto.css` for azure); `static_checks.py --only themes` |
+| `$css-var-prefix` | `"--pico-"` | Dropped: always `--femto-` | `static_checks.py` shipped-file hygiene (no `--pico-` names) |
+| `$semantic-root-element` | `"body"` | Hardcoded `body` (`body > header`, `body > main`, `body > footer` in `layout/landmarks.css` and `options/responsive-spacings.css`) | `default` and `option-responsive-spacings` presets, `layout-landmarks.html` |
+| `$enable-semantic-container` | `false` | Dropped with the classless builds (PLAN Decision 2). `.container` gives centered widths | `default` preset (the default build's output) |
+| `$enable-viewport` | `true` | Dropped with the classless builds; it applied only inside the semantic container | nothing to compare: no output in the default build |
+| `$enable-responsive-spacings` | `false` | Opt-in `css/options/responsive-spacings.css` | preset `option-responsive-spacings` against `tests/reference/options/femto.responsive-spacings.css` |
+| `$enable-responsive-typography` | `true` | On: five `--femto-font-size` root steps in `tokens/breakpoints.css`. Opt-out `css/options/fixed-typography.css` | `default` preset at 21 widths; preset `option-fixed-typography` against `tests/reference/options/femto.fixed-typography.css` |
+| `$enable-classes` | `true` | Always on; class rules stay in their module files | `default` preset (`classes-*.html`) |
+| `$enable-transitions` | `true` | On. Opt-out `css/options/no-transitions.css` | preset `option-no-transitions` against `tests/reference/options/femto.no-transitions.css`; `divergences/options-no-transitions.json` |
+| `$enable-important` | `true` | Dropped; the default output's 20 `!important` declarations are kept | `default` preset; `css/no-important` off in `eslint.config.mjs` |
+| `$parent-selector` | `""` | Dropped with the conditional builds | nothing to compare: the default build has no parent selector |
+| `$breakpoints` | 576, 768, 1024, 1280 and 1536px; viewports 510 to 1450px; root font sizes 106.25% to 131.25% | Literal media queries: the root font-size steps and `--femto-grid-template-columns` in `tokens/breakpoints.css`, `.container` max-widths in `layout/container.css`, `dialog > article` max-widths in `components/modal.css` | `default` preset at 21 widths (1px either side of each breakpoint); `divergences/tokens-breakpoints.json` |
+| `$modules` | all 33 on | One file per module (table above). A custom set is a copy of `css/femto.css` with lines removed | `tests/sections.json`, which `fast --modules` and `hybrid` builds use to swap femto module files into the 2.1.1 reference section by section; `static_checks.py --only 9` |
+| pico.colors `$css-var-prefix`, `$css-class-prefix` | `"--pico-"`, `"pico-"` | Dropped: `--femto-color-*`, `.femto-color-*`, `.femto-background-*` | preset `colors` against `tests/reference/femto.colors.css` |
+| pico.colors `$palette`, `$properties`, `$utilities` | 20 color families and 19 shades, main colors on, black and white off, hex values; `color` and `background` names; all four utilities on | Dropped: `css/femto.colors.css` is static, created from `pico.colors.css` with the rename | preset `colors`, `colors.html` |
+
+### Builds
+
+| 2.1.1 file | femto |
+|---|---|
+| `css/pico.css`, `css/pico.min.css` | `css/femto.css` (the `@import` entry), `dist/femto.css`, `dist/femto.min.css` |
+| `css/pico.<color>.css` and `.min.css` (19 colors) | `dist/femto.min.css` plus `css/themes/<color>.css` (Decision 13) |
+| `css/pico.colors.css`, `css/pico.colors.min.css` | `css/femto.colors.css`, `dist/femto.colors.css`, `dist/femto.colors.min.css` |
+| Responsive spacings on, transitions off, responsive typography off (never shipped) | `css/options/responsive-spacings.css`, `no-transitions.css`, `fixed-typography.css` |
+| Classless, fluid classless and conditional, with their colors | Dropped (Decision 2) |
+
 ## Selector coverage
 
 `uv run tests/run.py coverage --css /tests/reference/femto.css --entry default [--pages ...]` parses
-the stylesheet (banner sections, conditional at-rules, nested rules resolved against their parent),
-strips pseudo-elements and dynamic pseudo-classes from every selector (a `:not()` containing one is
-dropped whole, an `:is()`/`:where()` argument left empty becomes `*`), and evaluates it with
+the stylesheet (banner sections, conditional at-rules, nested rules resolved against their parent,
+and the files it `@import`s, read from disk in its place and reported per file, so
+`--css /css/femto.css` reports by module), strips pseudo-elements and dynamic pseudo-classes from
+every selector (a `:not()` containing one is dropped whole, an `:is()`/`:where()` argument left
+empty becomes `*`), and evaluates it with
 `querySelectorAll` in Chrome on every page of the entry, every manifest variant and rtl for rtl
 pages, shadow roots included (`:host` selectors count shadow hosts). It reports selectors that match
 nothing anywhere, grouped by section, and rules with `:hover`, `:active`, `:focus`, `:focus-visible`
@@ -602,7 +714,7 @@ but does not flag a change. Phase 2's gate runs all used 158. Counts measured on
 
 The harness agent's first measurements, on 2026-10-27, on the 4,693-cell matrix of that time (numbers
 from `result.json` timings). The proving runs on the 4,969-cell matrix of Phase 0 are in Harness proof
-below; the current matrix has 2,089 cells per browser (see The full matrix and its reductions).
+below; the current matrix has 2,093 cells per browser (see The full matrix and its reductions).
 
 | Run | Cells | Wall clock | Notes |
 |---|---|---|---|
@@ -677,6 +789,14 @@ The one selector left is `progress:indeterminate[value]::-webkit-progress-value`
 `prefers-reduced-motion: no-preference`). It cannot match in any browser: a `progress` with a `value`
 attribute is never `:indeterminate`. Before the fixture changes the default entry had 4 unmatched
 selectors and 3 dynamic rules without states (`prove-cov-default`).
+
+Until Phase 6 the coverage parser did not follow `@import`, so `--css /css/femto.css` reported 0
+selectors and only `/dist/femto.css` could be measured. It now parses each imported file in place:
+on 2026-10-29, with the "Left invalid" form in `forms-basics.html`, `css/femto.css` had 691
+selectors over the same 43 pages (57 loads), the same one matching nothing (now under
+`css/components/progress.css`) and 0 dynamic rules without states (`p6-fix-tests-cov-femto-1`; the
+parsed rules equal those of `dist/femto.css`), and `tests/reference/femto.css` still had 715, 1 and
+0 (`p6-fix-tests-cov-ref-1`).
 
 Theme and option presets run the kitchen sink (options also the other pages). Every rule whose
 declarations differ between a theme reference and its entry reference (3 or 4 rules per theme, 38
@@ -850,13 +970,41 @@ Three registry entries fired in no run. `tokens-root-user-override-style` and
 `tests/variants.json` does not define, so the natural fix they describe (a user's
 `:root { --femto-primary: ... }` now wins everywhere) is not exercised by the matrix.
 `firefox-user-invalid-focus-ring-restored` needs a field the user has already left invalid, which
-no fixture produces.
+no fixture produces. Phase 6 added that preset, and a fixture whose fields are left invalid (the
+"Left invalid" form of `forms-basics.html`).
+
+### Phase 5 gate (Selenium 4.52.0, criterion 12)
+
+Run on 2026-10-29 after the Sass toolchain was removed, with Selenium 4.52.0, Chrome Beta
+158.0.8127.2 and Firefox 160.0. `css/` and `dist/` are unchanged since 709ca519, the commit the
+Phase 4 runs used.
+
+| Run | Run id | Cells | Result |
+|---|---|---|---|
+| Full matrix, Chrome and Firefox | `p5-gate-full-1` | 4,178 (17,294 states) | PASS: 0 unregistered, 0 harness errors, 539 s |
+| Selftest, Chrome and Firefox | `p5-gate-selftest-1` | 24 controls | all pass |
+| `css/femto.css` against `dist/femto.min.css`, empty registry | `p5-gate-c12-min` | 456 | FAIL by design: 13,016 `token-raw` records on `--femto-box-shadow`, `--femto-card-box-shadow` and `--femto-dropdown-box-shadow`, all equal once whitespace is collapsed, as criterion 12 allows |
+| `css/femto.css` against `dist/femto.css`, empty registry | `p5-gate-c12-plain` | 456 | FAIL by design: the same 13,016 records |
+| `css/femto.colors.css` against both `dist/femto.colors*.css`, empty registry | `p5-gate-c12-colors-min`, `-plain` | 8 each | PASS: 0 differences |
+
+Safari has not run on Selenium 4.52.0.
 
 ### Static checks and lint
 
-`uv run tests/static_checks.py` runs (exit 1, 0 of 8 pass) and `npx eslint css` runs (exit 2, "all
-of the files matching the glob pattern are ignored", because `css/` holds only the 2.1.1 files the
-config ignores). Both are expected before any femto CSS exists.
+On 2026-10-29 at a60bca07, `uv run tests/static_checks.py` exited 0 with 10 PASS and 0 FAIL:
+criteria 4, 5, 6, 7, 10, 11 and 12, shipped-file hygiene, vendor prefixes, and the 20 theme files
+against their references. `npm run lint` (ESLint 10.13.0, `@eslint/css` 2.0.1) exited 0 with no
+error or warning in the 61 files of `css/`. `uv run tests/run.py registry` validated 25 entries in 6
+files. In Phase 0, before any femto CSS existed, the static checks passed 0 of 8 and ESLint exited 2,
+as expected.
+
+Phase 6 added check 9, which compares the Coverage tables above with tag `v2.1.1`,
+`tests/sections.json`, `tests/pages/pages.json` and `css/femto.css`; a scratch script that mutates
+copies of those inputs (a module row dropped or moved, a wrong position, an extra import, a wrong
+section title or page, a setting dropped or moved out of pico.colors, an empty cell) made it fail in
+each case. Later on 2026-10-29, with Phase 6's changes in the working tree, `static_checks.py`
+exited 0 with 11 PASS and 0 FAIL, `npm run lint` exited 0, and the registry held 27 entries in 6
+files.
 
 ## Known limits
 
@@ -873,14 +1021,16 @@ config ignores). Both are expected before any femto CSS exists.
   `data-theme=light` and inside a dark island match 2.1.1 exactly. Hosts with `data-theme=dark` are
   dark, where 2.1.1 gave them no color tokens at all (Decision 12).
 - Computed styles cannot show `::-webkit-*`/`::-moz-*` vendor pseudo-elements (range thumbs and
-  tracks, progress bars, spin buttons, calendar pickers, details markers), `:visited`, or
-  `:user-invalid`; token resolution and screenshots are the only signal for those. `::selection` is
-  reported by `getComputedStyle` in all three browsers, but the harness does not collect it; Phase
-  1's review compared it by hand, on the page and in both islands, in Chrome, Firefox and Safari.
-- No state puts a field into `:user-invalid` (that takes typing into it and leaving it). The one
-  known difference there, Firefox losing 2.1.1's `:-moz-ui-invalid { box-shadow: none }`, was
-  recorded with a standalone probe as `firefox-user-invalid-focus-ring-restored`, so every run lists
-  that entry as unused.
+  tracks, progress bars, spin buttons, calendar pickers, details markers) or `:visited`; token
+  resolution and screenshots are the only signal for those. `::selection` is reported by
+  `getComputedStyle` in all three browsers, but the harness does not collect it; Phase 1's review
+  compared it by hand, on the page and in both islands, in Chrome, Firefox and Safari.
+- Only the "Left invalid" form of `forms-basics.html` reaches `:user-invalid`: `page.js` calls
+  `requestSubmit()` on `form[data-user-invalid]`, which marks its invalid fields without typing
+  (Chrome 158, Firefox 160), and no harness state puts any other field there. The one known
+  difference, Firefox losing 2.1.1's `:-moz-ui-invalid { box-shadow: none }`, is
+  `firefox-user-invalid-focus-ring-restored`; runs without that page list the entry as unused.
+  Safari has not run the form yet; its validation may show a bubble.
 - Hover and press land on an element's centre. A full-width file input's centre is its "No file
   chosen" text, so the `::file-selector-button` hover and active rules are compared as text only.
   Firefox does not apply user-action states to `::file-selector-button` under automation at all.

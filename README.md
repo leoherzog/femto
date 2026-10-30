@@ -83,6 +83,9 @@ Most of femto works from the elements alone. These are the classes and attribute
 | `aria-busy="true"` | A loading spinner |
 | `data-tooltip`, `data-placement` | A tooltip with that text, above the element or where `data-placement` (`top`, `bottom`, `left`, `right`) puts it |
 | `<dialog>` holding an `<article>` | A modal. The `.modal-is-open`, `.modal-is-opening` and `.modal-is-closing` classes, which your script sets on `<html>`, lock scrolling and run the opening and closing animations |
+| `.close`, or `rel="prev"` on a link or button, in a modal's `<article>` | A close button: an × icon at the top right, in the header if there is one |
+| `aria-current` (any value but `"false"`) | Shows a link, button or dropdown item as current, with its hover colors; in breadcrumbs, the current page as plain text |
+| `role="link"` | An element that looks like a link |
 
 ## Files
 
@@ -199,7 +202,7 @@ To load only some modules, save a copy of `css/femto.css` in the same folder, si
 @import "utilities/reduce-motion.css";
 ```
 
-Keep the lines in their order, which is the cascade order, and keep the three `tokens/` files, which the modules read. The copy loads module by module, like `css/femto.css`; a bundler that inlines `@import` turns it into one file. If you also load `no-transitions.css`, copy it too and delete its rules for the modules you left out.
+Keep the lines in their order, which is the cascade order, and keep the first four: `tokens/base.css`, `tokens/breakpoints.css`, `layout/elements.css` and `tokens/schemes.css`. They hold the tokens and per-element settings the other modules read; without `layout/elements.css`, for example, headings lose their sizes and weights, and search fields their rounded ends. The copy loads module by module, like `css/femto.css`; a bundler that inlines `@import` turns it into one file. If you also load `no-transitions.css`, copy it too and delete its rules for the modules you left out.
 
 ## Cascade layer
 
@@ -335,7 +338,7 @@ Color tokens are now declared once, and `data-theme` sets the scheme instead of 
 
 - `data-theme` on a button, heading or form field keeps that element's own colors in the chosen scheme. In Pico 2.1.1 such an element took the page's background and text colors: on a dark page, `<button data-theme="light">` was a white box that turned blue on hover.
 - `data-theme="dark"` on a web component's host makes its shadow root dark when the component loads femto there. Pico 2.1.1 gave that shadow root no color tokens.
-- Custom color overrides work on plain `:root` and reach inside `data-theme` elements. Pico 2.1.1 ignored them in the light and automatic dark schemes, where its scheme selectors outranked `:root`, and inside every nested `data-theme` element, which redeclared the tokens.
+- Custom color overrides work on plain `:root` and reach inside `data-theme` elements. Pico 2.1.1 ignored them in the light and automatic dark schemes, where its scheme selectors outranked `:root`, and inside every nested `data-theme` element, which redeclared the tokens. Likewise, your own rules that set `--femto-form-element-focus-color` on a checkbox or radio now take effect from specificity (0,1,1); Pico 2.1.1's scheme selectors outranked them below (0,2,1) or (0,3,1).
 - A `color-scheme` set on an element without `data-theme` now switches femto's colors in that subtree. `data-theme` remains the way to theme an element.
 
 Every other difference from Pico 2.1.1 that the parity tests found is registered, with its reason, in [tests/divergences/](tests/divergences/).

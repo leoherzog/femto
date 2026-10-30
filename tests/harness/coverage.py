@@ -4,10 +4,11 @@ For every style rule (inside @media, @supports and other conditional blocks too,
 resolved against their parent), each selector in the list is stripped of dynamic pseudo-classes and
 pseudo-elements and evaluated with querySelectorAll on every page of the entry, in every manifest
 variant and in rtl for rtl pages, plus the shadow roots of [data-shadow] hosts. Selectors that match
-nothing anywhere are reported per 2.1.1 banner section. Rules with :hover, :active, :focus,
-:focus-visible or :focus-within are also checked against data-states: the element that carries the
-pseudo-class (or, for hover, active and focus-within, one of its descendants) must declare a
-matching state somewhere.
+nothing anywhere are reported per 2.1.1 banner section; the files a stylesheet @imports are parsed
+in its place and reported per file, so css/femto.css reports by module. Rules with :hover, :active,
+:focus, :focus-visible or :focus-within are also checked against data-states: the element that
+carries the pseudo-class (or, for hover, active and focus-within, one of its descendants) must
+declare a matching state somewhere.
 """
 import json
 import re
@@ -310,14 +311,38 @@ def section_rules(text):
     return out
 
 
+IMPORT = re.compile(r"""@import\s+(?:url\(\s*)?(["']?)([^"')\s]+)\1\s*\)?\s*(.*)""", re.I | re.S)
+
+
+def stylesheet_rules(path, title=None, at=None):
+    """section_rules() of a stylesheet, preceded by the rules of each top-level @import, read from disk
+    relative to it, so an @import entry such as css/femto.css is parsed module by module. An imported
+    file's rules before its first banner are titled by its path; a media or layer() condition on an
+    @import becomes the at-rule context of its rules."""
+    text = path.read_text()
+    out = []
+    for prelude, body in _blocks(_strip_comments(text)):
+        m = IMPORT.fullmatch(prelude) if body is None else None
+        if not m:
+            continue
+        child = (REPO / m.group(2).lstrip("/")) if m.group(2).startswith("/") else (path.parent / m.group(2))
+        if not child.is_file():
+            raise SystemExit(f"{path.relative_to(REPO).as_posix()} imports {m.group(2)}, which does not exist on disk")
+        cond = f"@import {m.group(3).strip()}" if m.group(3).strip() else None
+        ctx = " ".join(c for c in (at, cond) if c) or None
+        out += stylesheet_rules(child.resolve(), child.resolve().relative_to(REPO).as_posix(), ctx)
+    for t, sels, a in section_rules(text):
+        out.append((title if title and t == "(preamble)" else t, sels, " ".join(c for c in (at, a) if c) or None))
+    return out
+
+
 def run_coverage(args):
     path = REPO / args.css.lstrip("/") if args.css.startswith("/") else (REPO / args.css)
     if not path.exists():
         raise SystemExit(f"{args.css} does not exist")
     url = "/" + path.resolve().relative_to(REPO).as_posix()
-    text = path.read_text()
     items = []
-    for title, sels, at in section_rules(text):
+    for title, sels, at in stylesheet_rules(path.resolve()):
         for s in sels:
             st, prefixes = strip(s)
             items.append({"id": str(len(items)), "section": title, "selector": s, "stripped": st, "at": at,

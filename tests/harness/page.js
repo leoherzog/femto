@@ -7,7 +7,8 @@
  *   dir   = rtl                   -> dir="rtl" on <html>
  *   class = comma-separated list  -> classes added to <html>
  *
- * After DOMContentLoaded: sets .indeterminate on [data-indeterminate], calls showModal() on
+ * After DOMContentLoaded: sets .indeterminate on [data-indeterminate], calls requestSubmit() on
+ * form[data-user-invalid] so its invalid fields match :user-invalid, calls showModal() on
  * dialog[data-show-modal], and gives every [data-shadow] host an open shadow root holding the same
  * stylesheets followed by a clone of the host's <template> child.
  *
@@ -62,6 +63,14 @@
       femto.stage = "dom";
       var pending = [];
       document.querySelectorAll("[data-indeterminate]").forEach(function (el) { el.indeterminate = true; });
+      // Puts the invalid fields of form[data-user-invalid] in :user-invalid without typing: requestSubmit()
+      // runs validation, fires no submit while a field is invalid, and focuses the first invalid field,
+      // which is blurred again.
+      document.querySelectorAll("form[data-user-invalid]").forEach(function (form) {
+        form.addEventListener("submit", function (e) { e.preventDefault(); });
+        form.requestSubmit();
+        if (document.activeElement && form.contains(document.activeElement)) document.activeElement.blur();
+      });
       document.querySelectorAll("dialog[data-show-modal]").forEach(function (d) {
         try { d.showModal(); } catch (e) { femto.errors.push("showModal failed: " + e); }
       });

@@ -1,5 +1,5 @@
 {
-  "$comment": "Comparison presets. ref and test are root-relative stylesheet lists loaded in order through the fixture page's css= parameter. entry selects fixture pages from tests/pages/pages.json (page.entries). hybrid.sections names the tests/sections.json entry used to split ref for hybrid builds; hybrid.append is imported after the chunks once any section is replaced. Azure is built into tokens/, so femto.css is the azure reference. Owned by the harness; see tests/README.md.",
+  "$comment": "Comparison presets. ref and test are root-relative stylesheet lists loaded in order through the fixture page's css= parameter. entry selects fixture pages from tests/pages/pages.json (page.entries). hybrid.sections names the tests/sections.json entry used to split ref for hybrid builds; hybrid.append is imported after the chunks once any section is replaced. Azure is built into tokens/, so femto.css is the azure reference. user-root-override loads tests/pages/assets/user-root-override.css after both sides and has no hybrid settings, because a hybrid splits a single reference stylesheet. Owned by the harness; see tests/README.md.",
   "presets": {
     "default": {
       "entry": "default",
@@ -412,6 +412,18 @@
           "/css/themes/zinc.css"
         ]
       }
+    },
+    "user-root-override": {
+      "entry": "default",
+      "group": "theme",
+      "ref": [
+        "/tests/reference/femto.css",
+        "/tests/pages/assets/user-root-override.css"
+      ],
+      "test": [
+        "/css/femto.css",
+        "/tests/pages/assets/user-root-override.css"
+      ]
     }
   }
 }

@@ -1,0 +1,9 @@
+/* A page author's own primary color on plain :root, loaded after femto on both sides by the user-root-override preset (PLAN Decision 12, seed natural fix). */
+:root {
+  --femto-primary: #8a2be2;
+  --femto-primary-background: #8a2be2;
+  --femto-primary-underline: rgba(138, 43, 226, 0.5);
+  --femto-primary-hover: #6a1fb0;
+  --femto-primary-hover-background: #6a1fb0;
+  --femto-primary-focus: rgba(138, 43, 226, 0.5);
+}

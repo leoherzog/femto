@@ -3,10 +3,10 @@
 # requires-python = ">=3.11"
 # dependencies = []
 # ///
-"""Mechanical checks for PLAN.md acceptance criteria 4, 5, 6, 7, 10, 11 and 12, plus shipped-file hygiene and theme-file text.
+"""Mechanical checks for PLAN.md acceptance criteria 4, 5, 6, 7, 9, 10, 11 and 12, plus shipped-file hygiene and theme-file text.
 
   uv run tests/static_checks.py                 run every check
-  uv run tests/static_checks.py --only 6,7      run some (ids: 4 5 6 7 hygiene vendor themes 10 11 12)
+  uv run tests/static_checks.py --only 6,7      run some (ids: 4 5 6 7 hygiene vendor themes 9 10 11 12)
   uv run tests/static_checks.py --root DIR      check another checkout (6, 7, hygiene, vendor and themes need no git)
 
 Each check prints PASS or FAIL with evidence lines; the exit status is 1 if any check fails.
@@ -32,6 +32,10 @@ nesting traps (docs/research/scripts/nesting_traps.py), and duplicate rules.
 
 "themes" covers what the harness cannot see in a theme file: tokens-light-dark-raw-text accepts
 any light-dark() text, so it compares each file's ten tokens with its 2.1.1 reference as text.
+
+Criterion 9 checks the coverage table in tests/README.md ("Coverage: 2.1.1 modules and settings")
+against tag v2.1.1's $modules keys and settings, tests/sections.json, tests/pages/pages.json and the
+imports of css/femto.css.
 
 "Shipped files" are everything under css/. dist/ ships too, but npm run build writes it from css/,
 so criterion 12 checks it against a fresh build.
@@ -623,6 +627,106 @@ def themes(root: Path) -> Result:
     return r
 
 
+COVERAGE_HEADING = "Coverage: 2.1.1 modules and settings"  # the criterion 9 section of tests/README.md
+
+
+def table_rows(lines: list[str]) -> list[list[str]]:
+    """Body rows of the Markdown tables in lines, as stripped cells (header and rule rows dropped)."""
+    rows, body = [], False
+    for line in lines:
+        if not line.startswith("|"):
+            body = False
+        elif re.fullmatch(r"\|(\s*:?-+:?\s*\|)+", line.strip()):
+            body = True
+        elif body:
+            rows.append([c.strip() for c in line.strip().strip("|").split("|")])
+    return rows
+
+
+def criterion_9(root: Path) -> Result:
+    r = Result("Criterion 9: tests/README.md maps every 2.1.1 $modules key and Sass setting to its femto file or mechanism")
+    lines = (root / "tests/README.md").read_text(encoding="utf-8").split("\n")
+    sections = markdown_sections(lines)
+    top = next(((s, e) for s, e, h in sections if h.startswith(COVERAGE_HEADING)), None)
+    if top is None:
+        r.fail(f"tests/README.md has no '{COVERAGE_HEADING}' section")
+        return r
+    sub = {h: table_rows(lines[s:e]) for s, e, h in sections if top[0] < s < top[1]}
+    for h in ("Modules", "Settings"):
+        if not sub.get(h):
+            r.fail(f"tests/README.md '{COVERAGE_HEADING}' has no '{h}' table")
+    if not r.passed:
+        return r
+    shown = {}
+    for f in ("scss/_settings.scss", "scss/colors/utilities/_settings.scss"):
+        proc = git(root, "show", f"v2.1.1:{f}", check=False)
+        if proc.returncode != 0:
+            r.fail(f"git show v2.1.1:{f} failed (run git fetch --tags): {proc.stderr.strip()[:200]}")
+            return r
+        shown[f] = proc.stdout
+    block = re.search(r"\$modules: map\.merge\(\s*\((.*?)\),\s*\$modules", shown["scss/_settings.scss"], re.S)
+    keys = re.findall(r'"([\w/-]+)":\s*true', block.group(1)) if block else []
+    if len(keys) != 33:
+        r.fail(f"expected 33 $modules keys in v2.1.1:scss/_settings.scss, found {len(keys)}")
+    # Modules: every key once, in $modules order, with the femto files of its sections at their import positions.
+    mods = sub["Modules"]
+    listed = [m.group(1) if (m := re.fullmatch(r"`([^`]+)`", row[0])) else row[0] for row in mods]
+    if set(listed) != set(keys) or len(listed) != len(keys):
+        r.fail(f"Modules table lists {len(listed)} modules; missing {[k for k in keys if k not in listed]}, "
+               f"extra or repeated {[k for k in listed if k not in keys or listed.count(k) > 1]}")
+    elif listed != keys:
+        r.fail("Modules table rows are not in $modules order")
+    imports = re.findall(r'^@import "([^"]+)";', (root / "css/femto.css").read_text(encoding="utf-8"), re.M)
+    want_pos = {f: i + 1 for i, f in enumerate(imports)}
+    sections_json = json.loads((root / "tests/sections.json").read_text(encoding="utf-8"))
+    by_title = {s["title"]: s["files"] for s in sections_json["entries"]["default"]["sections"] if s["title"] != "(preamble)"}
+    pages = {p["page"] for p in json.loads((root / "tests/pages/pages.json").read_text(encoding="utf-8"))}
+    got_pos, titles_seen = {}, []
+    for name, row in zip(listed, mods):
+        if len(row) != 4:
+            r.fail(f"Modules row {name}: {len(row)} cells, expected 4")
+            continue
+        titles = [t.strip() for t in row[1].replace("`", "").split(";")]
+        titles_seen += titles
+        unknown = [t for t in titles if t not in by_title]
+        if unknown:
+            r.fail(f"Modules row {name}: sections not in tests/sections.json: {unknown}")
+        files = re.findall(r"`([\w/.-]+\.css)` \((\d+)\)", row[2])
+        for f, n in files:
+            if f in got_pos:
+                r.fail(f"Modules row {name}: {f} is numbered in more than one row")
+            got_pos[f] = int(n)
+        expected = sorted(f for t in titles if t in by_title for f in by_title[t])
+        if sorted(f for f, _ in files) != expected:
+            r.fail(f"Modules row {name}: numbered files {sorted(f for f, _ in files)}, tests/sections.json gives {expected}")
+        missing_pages = [p for p in re.findall(r"`([\w.-]+\.html)`", row[3]) if p not in pages]
+        if missing_pages:
+            r.fail(f"Modules row {name}: pages not in tests/pages/pages.json: {missing_pages}")
+    if got_pos != want_pos:
+        bad = sorted(set(got_pos.items()) ^ set(want_pos.items()))
+        r.fail(f"Modules table positions differ from css/femto.css's {len(imports)} imports: " + ", ".join(f"{f} ({n})" for f, n in bad[:MAX_LINES]))
+    left = sorted(set(by_title) - set(titles_seen))
+    if left:
+        r.fail(f"tests/sections.json sections in no Modules row: {left}")
+    # Settings: every !default setting of both 2.1.1 settings files, the pico.colors ones marked as such.
+    setting = lambda text: set(re.findall(r"^\$([\w-]+):[^;]*!default;", text, re.M))
+    want = {"core": setting(shown["scss/_settings.scss"]), "pico.colors": setting(shown["scss/colors/utilities/_settings.scss"])}
+    got = {"core": set(), "pico.colors": set()}
+    for row in sub["Settings"]:
+        names = re.findall(r"`\$([\w-]+)`", row[0])
+        if not names or len(row) != 4 or not all(row[1:]):
+            r.fail(f"Settings row {row[0]!r}: expected a setting name and three non-empty cells")
+        got["pico.colors" if "pico.colors" in row[0] else "core"].update(names)
+    for k in want:
+        if got[k] != want[k]:
+            r.fail(f"Settings table, {k} settings: missing {sorted(want[k] - got[k])}, extra {sorted(got[k] - want[k])}")
+    if r.passed:
+        r.ok(f"{len(keys)} $modules keys from v2.1.1:scss/_settings.scss, in order, each with its tests/sections.json sections and fixture pages")
+        r.ok(f"{len(imports)} imports of css/femto.css, each in one Modules row at its position")
+        r.ok(f"{len(want['core'])} settings from scss/_settings.scss and {len(want['pico.colors'])} from scss/colors/utilities/_settings.scss in the Settings table")
+    return r
+
+
 def criterion_10(root: Path) -> Result:
     r = Result("Criterion 10: npm pack --dry-run lists only css/, dist/, README.md, LICENSE.md and package.json")
     proc = subprocess.run(["npm", "pack", "--dry-run", "--json", "--ignore-scripts"], cwd=root, capture_output=True, text=True)
@@ -725,6 +829,7 @@ CHECKS = {
     "hygiene": hygiene,
     "vendor": vendor,
     "themes": themes,
+    "9": criterion_9,
     "10": criterion_10,
     "11": criterion_11,
     "12": criterion_12,
