@@ -16,8 +16,9 @@
   vertical-align: inherit;
 }
 
+/* :host stays outside :where(): Safari before 18.2 never matches :host inside :is() or :where(). */
 :where(:root),
-:where(:host) {
+:host {
   -webkit-tap-highlight-color: transparent;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;

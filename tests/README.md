@@ -727,6 +727,12 @@ against themselves with 0 differences, and against femto every record they produ
 (the preset on the kitchen sink at 1280 in every leg, ltr and rtl; the form in `default` and the
 three option presets at 390 and 1280 in every leg). Safari has not run either yet.
 
+On 2026-10-30 the root rule's `:host` moved out of `:where()`, where Safari 17.5 to 18.1 never match
+it. `compare --presets default --all-legs` over the six default-entry pages with shadow hosts
+(`components-modal.html`, `kitchen-sink.html`, `layout-document.html`, `tokens-base.html`,
+`tokens-breakpoints.html`, `tokens-schemes.html`) then found 0 unregistered differences in Chrome
+and Firefox; Safari has not run it.
+
 `coverage --css /css/femto.css --entry default` reports 691 selectors over 43 pages (57 loads), 0
 dynamic rules without `data-states`, and one selector that matches nothing and never can (see Known
 limits). `uv run tests/static_checks.py` and `npm run lint` pass.
