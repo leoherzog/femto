@@ -426,7 +426,7 @@
     {
       "section": "Styles",
       "topic": "theme-color-dependent declaration outside Color schemes",
-      "note": "For the six light-primary themes (amber, grey, lime, pumpkin, sand, yellow; --femto-primary-inverse: #000) the Styles rule '[aria-busy=true]...:not(.outline)::before' becomes 'filter: brightness(0) invert(0)' instead of invert(1) in femto.<color>.css. The neighbouring 'details summary[role=button]:not(.outline)::after' keeps invert(1) in every theme (a 2.1.1 inconsistency to keep). So themes/<color>.css for those six must override one declaration from the Styles section, not only scheme tokens. This is the 28th theme-dependent declaration counted in PLAN."
+      "note": "For the six light-primary themes (amber, grey, lime, pumpkin, sand, yellow; --femto-primary-inverse: #000) the Styles rule '[aria-busy=true]...:not(.outline)::before' becomes 'filter: brightness(0) invert(0)' instead of invert(1) in femto.<color>.css. The neighbouring 'details summary[role=button]:not(.outline)::after' keeps invert(1) in every theme (a 2.1.1 inconsistency to keep). femto writes that filter as the token --femto-primary-inverse-filter, which every themes/<color>.css sets. This is the 28th theme-dependent declaration."
     },
     {
       "section": "Styles",
@@ -446,7 +446,7 @@
     {
       "section": "Color schemes",
       "topic": "scheme selectors",
-      "note": "2.1.1 writes the light block as '[data-theme=light], :root:not([data-theme=dark]), :host(:not([data-theme=dark]))', the dark media block as '@media only screen and (prefers-color-scheme: dark) { :root:not([data-theme]), :host(:not([data-theme])) }', and '[data-theme=dark]'. PLAN's 'Light and dark' snippet keeps both :host() forms and 'only screen and'. Without 'only screen', print output with a dark OS preference turns dark where 2.1.1 stays light; without :host(), shadow roots lose their scheme."
+      "note": "2.1.1 writes the light block as '[data-theme=light], :root:not([data-theme=dark]), :host(:not([data-theme=dark]))', the dark media block as '@media only screen and (prefers-color-scheme: dark) { :root:not([data-theme]), :host(:not([data-theme])) }', and '[data-theme=dark]'. femto's tokens/schemes.css keeps both :host() forms and 'only screen and'. Without 'only screen', print output with a dark OS preference turns dark where 2.1.1 stays light; without :host(), shadow roots lose their scheme."
     },
     {
       "section": "Color schemes",

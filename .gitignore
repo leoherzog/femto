@@ -36,6 +36,3 @@ __pycache__/
 # Renamed 2.1.1 copies, rebuilt from tag v2.1.1 by the harness (tests/reference/README.md)
 /tests/reference/femto*.css
 
-# Conversion plan and prompt, kept local
-/PLAN.md
-/PROMPT.md

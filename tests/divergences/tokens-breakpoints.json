@@ -6,6 +6,6 @@
     "token": "--femto-grid-template-columns",
     "category": "new-token",
     "reason": "2.1.1 compiles the Sass $breakpoints map into literal media queries inside each module, among them one 768px block that switches .grid to equal columns. femto writes that value as the token --femto-grid-template-columns, set to repeat(auto-fit, minmax(0%, 1fr)) on :root, :host in tokens/breakpoints.css's 768px block, beside the root font-size step; .grid reads it as grid-template-columns: var(--femto-grid-template-columns, 1fr). Both sides declare grid-template-columns on .grid at specificity (0,1,0) at every width, so the cascade and the computed columns match the reference; only the token's name is new, and the harness reports it as surface-added at every width, because it collects token names from every rule in the stylesheets, media rules included. .container and dialog > article keep 2.1.1's literal media queries, because a token-reading max-width would apply below 576px too and override lower-specificity rules such as img { max-width: 100% }.",
-    "notes": "Added in Phase 2 (unit bp); narrowed in fix round 1 to the one token that remains. The shadow host in tokens-breakpoints.html sits in a wrapper that resets the token to initial, so the shadow root's .grid depends on the :host half of the declaration."
+    "notes": "The shadow host in tokens-breakpoints.html sits in a wrapper that resets the token to initial, so the shadow root's .grid depends on the :host half of the declaration."
   }
 ]

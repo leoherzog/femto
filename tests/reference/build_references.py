@@ -11,7 +11,7 @@
 
 The rename touches identifiers only: "--pico-" becomes "--femto-" and the ".pico-" class prefix
 (only used by pico.colors.css) becomes ".femto-". Comments, including the "Pico CSS" header, are kept
-byte for byte as provenance. tests/ is exempt from the name rule (PLAN Decision 10).
+byte for byte as provenance. tests/ is exempt from the name check in tests/static_checks.py.
 """
 
 from __future__ import annotations
@@ -36,7 +36,7 @@ COLORS = (
 ).split()
 
 # Published reference name -> 2.1.1 source path. The classless and fluid classless builds are not
-# copied: PLAN Decision 2 drops them.
+# copied: femto drops them.
 COPIES = {
     "femto.css": "css/pico.css",
     "femto.colors.css": "css/pico.colors.css",

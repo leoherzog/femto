@@ -10,8 +10,8 @@
       ]
     },
     "category": "browser-limit",
-    "reason": "Safari has no WebDriver emulation of prefers-color-scheme, and agents never change the macOS appearance. Each Safari session runs the OS scheme (matchMedia in the host page) plus data-theme light and dark on <html>, and skips the other media leg. At each Safari gate the owner switches macOS to dark for a second Safari pass (tests/README.md, Safari dark pass), so the two passes together run every leg.",
-    "notes": "A Safari iframe whose embedding element has color-scheme: dark reports prefers-color-scheme: dark to matchMedia, but its stylesheets and light-dark() still follow the OS (verified 2026-10-27, Safari 27.0.1), so that is not usable as emulation. The Phase 0 dark pass (dark-* run ids, 2026-10-27) ran the media-dark leg and the dark-media half of theme-light in Safari with zero differences."
+    "reason": "Safari has no WebDriver emulation of prefers-color-scheme, and the harness never changes the macOS appearance. Each Safari session runs the OS scheme (matchMedia in the host page) plus data-theme light and dark on <html>, and skips the other media leg. A second Safari pass with macOS switched to dark by hand (tests/README.md, Safari dark pass) runs the rest, so the two passes together run every leg.",
+    "notes": "A Safari iframe whose embedding element has color-scheme: dark reports prefers-color-scheme: dark to matchMedia, but its stylesheets and light-dark() still follow the OS (verified 2026-10-27, Safari 27.0.1), so that is not usable as emulation. A dark pass on 2026-10-27 ran the media-dark leg and the dark-media half of theme-light in Safari with zero differences."
   },
   {
     "id": "safari-no-focus-visible-date-input",

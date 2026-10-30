@@ -3,42 +3,42 @@
 # requires-python = ">=3.11"
 # dependencies = []
 # ///
-"""Mechanical checks for PLAN.md acceptance criteria 4, 5, 6, 7, 9, 10, 11 and 12, plus shipped-file hygiene and theme-file text.
+"""Mechanical checks on the repository, the shipped files and dist/.
 
-  uv run tests/static_checks.py                 run every check
-  uv run tests/static_checks.py --only 6,7      run some (ids: 4 5 6 7 hygiene vendor themes 9 10 11 12)
-  uv run tests/static_checks.py --root DIR      check another checkout (6, 7, hygiene, vendor and themes need no git)
+  uv run tests/static_checks.py                        run every check
+  uv run tests/static_checks.py --only imports,syntax  run some (ids: toolchain name imports syntax hygiene vendor themes coverage package license dist)
+  uv run tests/static_checks.py --root DIR             check another checkout (imports, syntax, hygiene, vendor and themes need no git)
 
 Each check prints PASS or FAIL with evidence lines; the exit status is 1 if any check fails.
-"hygiene", "vendor" and "themes" are not acceptance criteria. The first two cover PLAN rules the lint
+"imports", "syntax", "hygiene" and "vendor" cover conversion rules the lint
 (eslint.config.mjs, @eslint/css 2.0.1) cannot see:
 
   lint gap                                                     covered by
-  @layer (Baseline Widely, so use-baseline allows it)          7
-  @container style() queries (@container itself is Widely)     7
-  relative color syntax, rgb(from ...) (rgb() is Widely)       7
-  color-mix(in oklab, ...) or any other space                  7
+  @layer (Baseline Widely, so use-baseline allows it)          syntax
+  @container style() queries (@container itself is Widely)     syntax
+  relative color syntax, rgb(from ...) (rgb() is Widely)       syntax
+  color-mix(in oklab, ...) or any other space                  syntax
   anything inside custom property values: use-baseline skips
     --* declarations, so light-dark(), if(), rgb(from ...) and
-    color-mix() there are never checked                        7
-  @import with layer()/supports()/media, or in a module file   6
+    color-mix() there are never checked                        syntax
+  @import with layer()/supports()/media, or in a module file   imports
   --pico- names, non-ASCII bytes, missing header comment        hygiene
   -ms- rules, dropped -moz-/-webkit- pseudo-classes and
     pseudo-elements, a -moz- pseudo inside a selector list     vendor
 
 Not covered by either, so reviewers must check: declarations placed directly inside an @media
 or @supports nested in a rule (use-baseline only inspects declarations whose parent is a rule),
-nesting traps (docs/research/scripts/nesting_traps.py), and duplicate rules.
+nesting traps (rules where native nesting differs from Sass nesting), and duplicate rules.
 
 "themes" covers what the harness cannot see in a theme file: tokens-light-dark-raw-text accepts
 any light-dark() text, so it compares each file's ten tokens with its 2.1.1 reference as text.
 
-Criterion 9 checks the coverage table in tests/README.md ("Coverage: 2.1.1 modules and settings")
+"coverage" checks the coverage table in tests/README.md ("Coverage: 2.1.1 modules and settings")
 against tag v2.1.1's $modules keys and settings, tests/sections.json, tests/pages/pages.json and the
 imports of css/femto.css.
 
 "Shipped files" are everything under css/. dist/ ships too, but npm run build writes it from css/,
-so criterion 12 checks it against a fresh build.
+so "dist" checks it against a fresh build.
 CSS checks look at code only: comments are removed first and, for the forbidden-syntax scans,
 string contents (including url("data:...") icons) are blanked, so a comment that mentions
 @layer, or an SVG that uses rgb(), is not a violation. Mentions in comments are listed as notes.
@@ -56,10 +56,9 @@ import tempfile
 from pathlib import Path
 
 ENTRIES = ("femto.css",)
-BUILD_SCRIPT = "node build.mjs"  # PLAN Decision 1: the one build, esbuild via build.mjs
+BUILD_SCRIPT = "node build.mjs"  # the one build, esbuild via build.mjs
 DEV_DEPENDENCIES = {"esbuild", "eslint", "@eslint/css"}
-EXEMPT_NAME_PATHS = ("docs/research/", "tests/")  # PLAN Decision 10
-EXEMPT_NAME_FILES = ("PLAN.md", "PROMPT.md")
+EXEMPT_NAME_PATHS = ("tests/",)  # the 2.1.1 references and fixtures may say pico
 MAX_LINES = 12  # evidence lines per finding list
 
 FORBIDDEN = [
@@ -246,7 +245,7 @@ def effective_files(root: Path) -> list[str]:
 
 
 def name_exempt(path: str) -> bool:
-    return path.startswith(EXEMPT_NAME_PATHS) or path in EXEMPT_NAME_FILES
+    return path.startswith(EXEMPT_NAME_PATHS)
 
 
 def shipped_files(root: Path) -> list[Path]:
@@ -266,11 +265,11 @@ def describe_shipped(r: Result, shipped: list[Path]) -> list[Path]:
     return css_files
 
 
-# ---------------------------------------------------------------------------- criteria
+# ---------------------------------------------------------------------------- checks
 
 
-def criterion_4(root: Path) -> Result:
-    r = Result("Criterion 4: no *.scss, scripts/, PostCSS config or yarn.lock in git; the only build script runs build.mjs")
+def toolchain(root: Path) -> Result:
+    r = Result("Toolchain: no *.scss, scripts/, PostCSS config or yarn.lock in git; the only build script runs build.mjs")
     files = effective_files(root)
     r.ok(f"{len(files)} files tracked or to be tracked (git ls-files, minus deleted, plus untracked not ignored)")
     checks = [
@@ -335,9 +334,9 @@ def markdown_sections(lines: list[str]) -> list[tuple[int, int, str]]:
     return out
 
 
-def criterion_5(root: Path) -> Result:
-    r = Result("Criterion 5: 'pico' only in LICENSE.md and the README migration section (outside docs/research, tests, PLAN.md, PROMPT.md)")
-    spec = ["--", ".", ":!docs/research", ":!tests", ":!PLAN.md", ":!PROMPT.md"]
+def name(root: Path) -> Result:
+    r = Result("Name: 'pico' only in LICENSE.md and the README migration section (outside tests)")
+    spec = ["--", ".", ":!tests"]
     literal = git(root, "grep", "-il", "pico", *spec, check=False).stdout.split()
     untracked = git(root, "grep", "-il", "--untracked", "pico", *spec, check=False).stdout.split()
     hits = sorted(set(literal) | set(untracked))
@@ -371,8 +370,8 @@ def criterion_5(root: Path) -> Result:
     return r
 
 
-def criterion_6(root: Path) -> Result:
-    r = Result("Criterion 6: Only femto.css contains @import, and its imports come before every other rule")
+def imports(root: Path) -> Result:
+    r = Result("Imports: only femto.css contains @import, and its imports come before every other rule")
     shipped = shipped_files(root)
     css_files = describe_shipped(r, shipped)
     css = root / "css"
@@ -422,8 +421,8 @@ def criterion_6(root: Path) -> Result:
     return r
 
 
-def criterion_7(root: Path) -> Result:
-    r = Result("Criterion 7: no @layer, @scope, if(, @function, @mixin, @apply, @custom-media, @container style(; no 'from' in color functions; every color-mix( uses 'in srgb'")
+def syntax(root: Path) -> Result:
+    r = Result("Syntax: no @layer, @scope, if(, @function, @mixin, @apply, @custom-media, @container style(; no 'from' in color functions; every color-mix( uses 'in srgb'")
     shipped = shipped_files(root)
     css_files = describe_shipped(r, shipped)
     counts = {"color-mix": 0, "color functions": 0}
@@ -478,7 +477,7 @@ def hygiene(root: Path) -> Result:
             words = re.sub(r"\s+", " ", m.group(1).lstrip("!")).strip()
             sentences = len(re.findall(r"[.!?](\s|$)", words))
             if sentences > 3:
-                r.note(f"{rel}: header comment has about {sentences} sentences (PLAN asks for one to three)")
+                r.note(f"{rel}: header comment has about {sentences} sentences (one to three is the norm)")
     if css_files and r.passed:
         r.ok("all shipped CSS files pass")
     return r
@@ -512,7 +511,7 @@ def split_selectors(prelude: str) -> list[str]:
 
 
 def vendor(root: Path) -> Result:
-    r = Result("Vendor prefixes (PLAN Conversion rules): no -ms-, none of the dropped pseudo-classes and pseudo-elements, each -moz- pseudo in its own rule")
+    r = Result("Vendor prefixes: no -ms-, none of the dropped pseudo-classes and pseudo-elements, each -moz- pseudo in its own rule")
     shipped = shipped_files(root)
     css_files = describe_shipped(r, shipped)
     used = {}
@@ -534,7 +533,7 @@ def vendor(root: Path) -> Result:
             if m.group(1) not in KEPT_PREFIXED_PROPERTIES:
                 used.setdefault(m.group(1), []).append(f"{rel}:{line_of(text, m.start())}")
     for prop, where in sorted(used.items()):
-        r.note(f"prefixed property not in the PLAN keep list: {prop} ({len(where)}x, first {where[0]}); keep only if 03 §2 says it is needed")
+        r.note(f"prefixed property not in the keep list: {prop} ({len(where)}x, first {where[0]}); keep it only if a browser at the target still needs it")
     return r
 
 
@@ -627,7 +626,7 @@ def themes(root: Path) -> Result:
     return r
 
 
-COVERAGE_HEADING = "Coverage: 2.1.1 modules and settings"  # the criterion 9 section of tests/README.md
+COVERAGE_HEADING = "Coverage: 2.1.1 modules and settings"  # the section of tests/README.md that coverage reads
 
 
 def table_rows(lines: list[str]) -> list[list[str]]:
@@ -643,8 +642,8 @@ def table_rows(lines: list[str]) -> list[list[str]]:
     return rows
 
 
-def criterion_9(root: Path) -> Result:
-    r = Result("Criterion 9: tests/README.md maps every 2.1.1 $modules key and Sass setting to its femto file or mechanism")
+def coverage(root: Path) -> Result:
+    r = Result("Coverage: tests/README.md maps every 2.1.1 $modules key and Sass setting to its femto file or mechanism")
     lines = (root / "tests/README.md").read_text(encoding="utf-8").split("\n")
     sections = markdown_sections(lines)
     top = next(((s, e) for s, e, h in sections if h.startswith(COVERAGE_HEADING)), None)
@@ -727,8 +726,8 @@ def criterion_9(root: Path) -> Result:
     return r
 
 
-def criterion_10(root: Path) -> Result:
-    r = Result("Criterion 10: npm pack --dry-run lists only css/, dist/, README.md, LICENSE.md and package.json")
+def package(root: Path) -> Result:
+    r = Result("Package: npm pack --dry-run lists only css/, dist/, README.md, LICENSE.md and package.json")
     proc = subprocess.run(["npm", "pack", "--dry-run", "--json", "--ignore-scripts"], cwd=root, capture_output=True, text=True)
     if proc.returncode != 0:
         r.fail(f"npm pack --dry-run failed: {proc.stderr.strip()[:200]}")
@@ -746,8 +745,8 @@ def criterion_10(root: Path) -> Result:
     return r
 
 
-def criterion_11(root: Path) -> Result:
-    r = Result("Criterion 11: LICENSE.md keeps the Pico copyright and adds a femto line; no Pico logo files")
+def license(root: Path) -> Result:
+    r = Result("License: LICENSE.md keeps the Pico copyright and adds a femto line; no Pico logo files")
     lic = root / "LICENSE.md"
     if not lic.exists():
         r.fail("LICENSE.md missing")
@@ -781,12 +780,12 @@ def criterion_11(root: Path) -> Result:
         r.fail(f"{len(logos) + len(images)} logo or Pico image file(s) remain:")
         r.failures += ["    " + f for f in capped(sorted(logos + images), "files")]
     else:
-        r.ok("no logo files and no image mentioning pico outside docs/research and tests")
+        r.ok("no logo files and no image mentioning pico outside tests")
     return r
 
 
-def criterion_12(root: Path) -> Result:
-    r = Result("Criterion 12: dist/ is exactly what npm run build writes from css/")
+def dist(root: Path) -> Result:
+    r = Result("Dist: dist/ is exactly what npm run build writes from css/")
     if not (root / "node_modules/esbuild").is_dir():
         r.fail("node_modules/esbuild is missing; run npm ci")
         return r
@@ -822,17 +821,17 @@ def criterion_12(root: Path) -> Result:
 
 
 CHECKS = {
-    "4": criterion_4,
-    "5": criterion_5,
-    "6": criterion_6,
-    "7": criterion_7,
+    "toolchain": toolchain,
+    "name": name,
+    "imports": imports,
+    "syntax": syntax,
     "hygiene": hygiene,
     "vendor": vendor,
     "themes": themes,
-    "9": criterion_9,
-    "10": criterion_10,
-    "11": criterion_11,
-    "12": criterion_12,
+    "coverage": coverage,
+    "package": package,
+    "license": license,
+    "dist": dist,
 }
 
 

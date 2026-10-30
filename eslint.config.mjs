@@ -1,14 +1,14 @@
-// Lint for the hand-written CSS in css/. It only checks, never transforms (PLAN Decision 1).
-// Target: Baseline Widely Available on the release date, no earlier than 2026-11-13 (PLAN Decision 7).
+// Lint for the hand-written CSS in css/. It only checks, never transforms.
+// Target: Baseline Widely Available on the release date, no earlier than 2026-11-13.
 // Run: npx eslint css
 import { defineConfig } from "eslint/config";
 import css from "@eslint/css";
 
 export default defineConfig([
   // Only css/ is linted: it holds the hand-written CSS that ships. dist/ is esbuild's one-file
-  // build of css/ (build.mjs), and the other paths are build, research and test tooling.
+  // build of css/ (build.mjs), and the other paths are build and test tooling.
   {
-    ignores: ["dist/", "build.mjs", "docs/", "tests/", "eslint.config.mjs"],
+    ignores: ["dist/", "build.mjs", "tests/", "eslint.config.mjs"],
   },
   {
     files: ["css/**/*.css"],
@@ -21,7 +21,7 @@ export default defineConfig([
         atrules: {
           ...syntax.atrules,
           // 2.1.1 writes `@-moz-document url-prefix() { ... }` with an empty argument, which Firefox
-          // accepts and PLAN Conversion rules say to keep as it is. CSSTree's grammar requires a
+          // accepts and femto keeps as it is. CSSTree's grammar requires a
           // string inside url-prefix(), so the argument is made optional here.
           "-moz-document": {
             prelude:
@@ -32,7 +32,7 @@ export default defineConfig([
     },
     rules: {
       // femto keeps 2.1.1's default output, including its 20 !important declarations
-      // (PLAN Settings: $enable-important is dropped and its default output stays).
+      // ($enable-important is dropped and its default output stays).
       "css/no-important": "off",
 
       // Tokens are defined in tokens/*.css and used from every other file, and the rule only
@@ -57,7 +57,7 @@ export default defineConfig([
             "light-dark",
           ],
 
-          // (a) Standard halves of the hand-written prefix pairs PLAN Conversion rules keep. Each
+          // (a) Standard halves of the hand-written prefix pairs femto keeps. Each
           // is written next to its prefixed form, which the target browsers without the
           // standard property use.
           allowProperties: [
@@ -72,7 +72,7 @@ export default defineConfig([
             "user-select",
 
             // (c) 2.1.1 features that are not Baseline but that browsers without them ignore
-            // harmlessly, kept for parity (owner decision, 2026-10-27).
+            // harmlessly, kept for parity.
             // accent-color (Color schemes): Limited because iOS Safari lacks it.
             "accent-color",
             // resize (Basics form elements: textarea): Limited on iOS.

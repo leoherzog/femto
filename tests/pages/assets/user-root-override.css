@@ -1,4 +1,4 @@
-/* A page author's own primary color on plain :root, loaded after femto on both sides by the user-root-override preset (PLAN Decision 12, seed natural fix). */
+/* A page author's own primary color on plain :root, loaded after femto on both sides by the user-root-override preset (registered as natural fixes in tests/divergences/tokens.json). */
 :root {
   --femto-primary: #8a2be2;
   --femto-primary-background: #8a2be2;

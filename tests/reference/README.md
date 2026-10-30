@@ -1,6 +1,6 @@
 # Reference CSS
 
-The parity oracle: the compiled CSS of Pico 2.1.1 (git tag `v2.1.1`) with the PLAN rename applied, plus three option states 2.1.1 never shipped, compiled from the 2.1.1 Sass. Fixture pages load these and the femto files with the same class and token names, so one page works for both sides.
+The parity oracle: the compiled CSS of Pico 2.1.1 (git tag `v2.1.1`) with the femto rename applied, plus three option states 2.1.1 never shipped, compiled from the 2.1.1 Sass. Fixture pages load these and the femto files with the same class and token names, so one page works for both sides.
 
 Nothing here is published. Do not edit these files by hand; regenerate them with `build_references.py`.
 
@@ -24,7 +24,7 @@ uv run tests/reference/build_references.py options   # recompiles the 3 option r
 | `options/femto.fixed-typography.css` | 2.1.1 Sass, `$enable-responsive-typography: false` |
 | `build_references.py` | the script that writes and checks all of the above |
 
-`<color>` is each of amber, blue, cyan, fuchsia, green, grey, indigo, jade, lime, orange, pink, pumpkin, purple, red, sand, slate, violet, yellow and zinc. Azure is the default theme, so `femto.css` is the azure reference. Not copied, by design: `.min.css` files, the `.conditional` builds (dropped with `$parent-selector`), and the classless and fluid classless builds with their themes (`pico.classless.css`, `pico.fluid.classless.css`, `pico.classless.<color>.css`), which PLAN Decision 2 drops.
+`<color>` is each of amber, blue, cyan, fuchsia, green, grey, indigo, jade, lime, orange, pink, pumpkin, purple, red, sand, slate, violet, yellow and zinc. Azure is the default theme, so `femto.css` is the azure reference. Not copied, by design: `.min.css` files, the `.conditional` builds (dropped with `$parent-selector`), and the classless and fluid classless builds with their themes (`pico.classless.css`, `pico.fluid.classless.css`, `pico.classless.<color>.css`), which femto drops.
 
 The option references are compiled on the default entry only. `$enable-semantic-container` and `$enable-viewport` are dropped with the classless builds, and `$enable-classes` is always on, as in the default build, so none of them needs a reference.
 
@@ -50,7 +50,7 @@ Kept byte for byte: everything else, including `@charset "UTF-8";`, the literal 
  */
 ```
 
-The header stays as provenance. `tests/` is exempt from the name rule (PLAN Decision 10), and leaving comments untouched keeps the rename a pure identifier change that can be reversed exactly. The non-ASCII bytes are fine here because these files are never shipped; the shipped-file checks do not look at `tests/`.
+The header stays as provenance. `tests/` is exempt from the name check in `tests/static_checks.py`, and leaving comments untouched keeps the rename a pure identifier change that can be reversed exactly. The non-ASCII bytes are fine here because these files are never shipped; the shipped-file checks do not look at `tests/`.
 
 Verification, run by `check` and repeated independently with `sed`:
 

@@ -18,7 +18,7 @@ MODES_HELP = """modes:
             sections replaced, unless --direct.
   full      the whole matrix (see tests/README.md); Chrome and Firefox in parallel, Safari serialized.
   compare   direct comparison of --ref against --test (or a preset's ref and test lists).
-  self      a reference against itself (acceptance criterion 1).
+  self      a reference against itself (proves the harness finds no difference).
   hybrid    a preset's reference against a hybrid build (--sections/--modules), or --control.
             --full-plan uses the full matrix's cells and reductions instead of the fast axes.
   coverage  selector coverage of a stylesheet over the fixture pages.

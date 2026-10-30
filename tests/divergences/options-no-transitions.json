@@ -10,8 +10,8 @@
       "presets": ["option-no-transitions"]
     },
     "category": "option-mechanism",
-    "reason": "2.1.1's $enable-transitions: false compiles the gated transition declarations out but still emits --femto-transition: 0.2s ease-in-out on :root, :host (v2.1.1:scss/themes/default/_styles.scss:35 is not gated). An appended file cannot compile declarations out, so options/no-transitions.css sets --femto-transition: 0s on :root, :host, as PLAN Settings ($enable-transitions) specifies, and resets each gated declaration with its own rule. The raw token text at every anchor is therefore 0s.",
-    "notes": "Every anchor on every page reports it in Chrome and Firefox (run p3-notrans-fast-2: 2,456 records, base state only, since states collect no tokens)."
+    "reason": "2.1.1's $enable-transitions: false compiles the gated transition declarations out but still emits --femto-transition: 0.2s ease-in-out on :root, :host (v2.1.1:scss/themes/default/_styles.scss:35 is not gated). An appended file cannot compile declarations out, so options/no-transitions.css sets --femto-transition: 0s on :root, :host, and resets each gated declaration with its own rule. The raw token text at every anchor is therefore 0s.",
+    "notes": "Every anchor on every page reports it in Chrome and Firefox (base state only, since states collect no tokens)."
   },
   {
     "id": "notrans-transition-token",
@@ -26,7 +26,7 @@
     },
     "category": "option-mechanism",
     "reason": "Same cause as notrans-transition-token-raw: the option sets --femto-transition to 0s, so the token resolves through the transition probe to the initial transition (all 0s ease 0s) where the reference's 0.2s ease-in-out stays. It is the only probe property a time value is valid for.",
-    "notes": "Chrome 158 and Firefox 160 serialize the probe as '0.2s ease-in-out' and 'all' (run p3-notrans-fast-2: 2,456 records). The patterns also accept the long forms with the initial property, delay and behavior written out, for a browser that serializes the shorthand in full."
+    "notes": "Chrome 158 and Firefox 160 serialize the probe as '0.2s ease-in-out' and 'all'. The patterns also accept the long forms with the initial property, delay and behavior written out, for a browser that serializes the shorthand in full."
   },
   {
     "id": "notrans-group-transition-duration",
@@ -41,8 +41,8 @@
       "presets": ["option-no-transitions"]
     },
     "category": "natural-fix",
-    "reason": "2.1.1 does not gate the group's 'transition: box-shadow var(--femto-transition)' on $enable-transitions (v2.1.1:scss/components/_group.scss:18), so its no-transitions build still fades the [role=group] and [role=search] focus ring over 0.2s, the one transition left in that build besides reduce-motion. femto's option sets --femto-transition: 0s (PLAN Settings), which group.css reads, so the ring changes at once like every other control. A user who turns transitions off expects none; the simpler token mechanism fixes the omission.",
-    "notes": "Run p3-notrans-fast-2 reported it on div[role=group], div[role=search] and fieldset[role=group] of components-group.html, kitchen-sink.html and utilities-reduce-motion.html, in every state, Chrome and Firefox. transition-property stays box-shadow and the delay 0s on both sides."
+    "reason": "2.1.1 does not gate the group's 'transition: box-shadow var(--femto-transition)' on $enable-transitions (v2.1.1:scss/components/_group.scss:18), so its no-transitions build still fades the [role=group] and [role=search] focus ring over 0.2s, the one transition left in that build besides reduce-motion. femto's option sets --femto-transition: 0s, which group.css reads, so the ring changes at once like every other control. A user who turns transitions off expects none; the simpler token mechanism fixes the omission.",
+    "notes": "Reported on div[role=group], div[role=search] and fieldset[role=group] of components-group.html, kitchen-sink.html and utilities-reduce-motion.html, in every state, Chrome and Firefox. transition-property stays box-shadow and the delay 0s on both sides."
   },
   {
     "id": "notrans-group-transition-timing",
@@ -58,7 +58,7 @@
     },
     "category": "natural-fix",
     "reason": "Same cause as notrans-group-transition-duration: with --femto-transition: 0s the group's 'transition: box-shadow var(--femto-transition)' has no timing function, so it computes to the initial ease where the reference keeps 0.2s ease-in-out. With a 0s duration the timing function has no effect.",
-    "notes": "Reported with notrans-group-transition-duration, on the same elements, pages and states (run p3-notrans-fast-2)."
+    "notes": "Reported with notrans-group-transition-duration, on the same elements, pages and states."
   },
   {
     "id": "notrans-group-role-reset-collision",
@@ -74,7 +74,7 @@
     },
     "category": "option-mechanism",
     "reason": "In the no-transitions reference the group's 'transition: box-shadow var(--femto-transition)' (v2.1.1:scss/components/_group.scss:18, css/components/group.css:15, specificity (0,1,0)) is the only transition left, so it reaches every [role=group] and [role=search] element. options/no-transitions.css resets each dropped transition with the dropped rule's own selector list, and the resets load after group.css, so on an element that also matches a reset of specificity (0,1,0) or more ([type=submit], [type=reset] and [type=button] at (0,1,0), the dropdown list at (0,1,3) and (0,2,3), the modal close button at (0,1,2) and (0,1,3)) the reset wins and transition-property computes to the initial 'all'. The duration is 0s either way under the option (notrans-group-transition-duration), so the property has no effect; restoring it would take extra rules.",
-    "notes": "Fixture: the input[type=submit][role=group] in components-group.html (line 53); full runs p4-full-cf-1 and p5-gate-full-1 register 86 records each, Safari p4-safari-light-states-2 42. Probe evidence: tests/build/p3-notrans-review/probe3.py (review round 1) and tests/build/p3-notrans/edge_probe.py, on input[type=submit][role=group], input[type=button][role=search] and a dropdown ul[role=group], Chrome and Firefox, base and focus states: transition-property box-shadow -> all, with duration 0.2s -> 0s and timing ease-in-out -> ease, which notrans-group-transition-duration and notrans-group-transition-timing already match."
+    "notes": "Fixture: the input[type=submit][role=group] in components-group.html (line 53); a full Chrome and Firefox run registers 86 records, and Safari's light-OS states pass 42. Standalone probes on input[type=submit][role=group], input[type=button][role=search] and a dropdown ul[role=group], Chrome and Firefox, base and focus states: transition-property box-shadow -> all, with duration 0.2s -> 0s and timing ease-in-out -> ease, which notrans-group-transition-duration and notrans-group-transition-timing already match."
   },
   {
     "id": "notrans-tooltip-slide-tokens",
@@ -86,6 +86,6 @@
     },
     "category": "option-mechanism",
     "reason": "The no-transitions reference leaves out the tooltip's '@media (hover: hover) and (pointer: fine)' slide block, so it never declares --femto-tooltip-slide-to or --femto-tooltip-caret-slide-to. femto declares them in css/components/tooltip.css, and an appended file cannot undeclare a custom property. options/no-transitions.css resets both to initial in rules with the same selectors, so on hovered and focused tooltips they compute to the guaranteed-invalid value, as when undeclared, but the names stay in the stylesheets.",
-    "notes": "Every cell reports both names once (run p3-notrans-fast-2: 232 records each). Keyframes, recorded here because the schema has no record kind for at-rules: the option also leaves four @keyframes defined, two of them the modal's, modal-overlay and modal (css/components/modal.css:123 and :130), and two the tooltip's, tooltip-slide and tooltip-caret-slide (css/components/tooltip.css:166 and :173). The no-transitions reference defines none of the four ('grep -n @keyframes tests/reference/options/femto.no-transitions.css' finds only progress-indeterminate and the escaped text inside --femto-icon-loading). An appended file cannot undefine a @keyframes rule. Under the option no femto rule names them any more (every animation-name that does is reset to initial), so they matter only to an author rule that names them."
+    "notes": "Every cell reports both names once. Keyframes, recorded here because the schema has no record kind for at-rules: the option also leaves four @keyframes defined, two of them the modal's, modal-overlay and modal (css/components/modal.css:123 and :130), and two the tooltip's, tooltip-slide and tooltip-caret-slide (css/components/tooltip.css:166 and :173). The no-transitions reference defines none of the four ('grep -n @keyframes tests/reference/options/femto.no-transitions.css' finds only progress-indeterminate and the escaped text inside --femto-icon-loading). An appended file cannot undefine a @keyframes rule. Under the option no femto rule names them any more (every animation-name that does is reset to initial), so they matter only to an author rule that names them."
   }
 ]
