@@ -60,6 +60,8 @@ BUILD_SCRIPT = "node build.mjs"  # the one build, esbuild via build.mjs
 DEV_DEPENDENCIES = {"esbuild", "eslint", "@eslint/css"}
 EXEMPT_NAME_PATHS = ("tests/",)  # the 2.1.1 references and fixtures may say pico
 MAX_LINES = 12  # evidence lines per finding list
+PICO_COPYRIGHT = "Copyright (c) 2019-2024 Pico"  # kept by LICENSE.md and repeated in the license headers
+NAME_FILES = ("LICENSE.md", "README.md", "CHANGELOG.md")  # may name Pico; README.md only in its migration section
 
 FORBIDDEN = [
     ("@layer", re.compile(r"@layer\b", re.I)),
@@ -335,15 +337,15 @@ def markdown_sections(lines: list[str]) -> list[tuple[int, int, str]]:
 
 
 def name(root: Path) -> Result:
-    r = Result("Name: 'pico' only in LICENSE.md and the README migration section (outside tests)")
+    r = Result("Name: 'pico' only in LICENSE.md, CHANGELOG.md, the README migration section and the copyright notice (outside tests)")
     spec = ["--", ".", ":!tests"]
     literal = git(root, "grep", "-il", "pico", *spec, check=False).stdout.split()
     untracked = git(root, "grep", "-il", "--untracked", "pico", *spec, check=False).stdout.split()
     hits = sorted(set(literal) | set(untracked))
     r.ok(f"git grep -il pico (tracked: {len(literal)} files; with --untracked: {len(untracked)} files)")
-    bad = [h for h in hits if h not in ("LICENSE.md", "README.md")]
+    bad = [h for h in hits if h not in NAME_FILES and re.search(r"pico", (root / h).read_text(errors="replace").replace(PICO_COPYRIGHT, ""), re.I)]
     if bad:
-        r.fail(f"{len(bad)} file(s) other than LICENSE.md and README.md mention pico:")
+        r.fail(f"{len(bad)} file(s) other than {', '.join(NAME_FILES)} mention pico beyond its copyright notice:")
         r.failures += ["    " + b for b in capped(bad, "files")]
     else:
         r.ok("only " + (", ".join(hits) if hits else "no files") + " mention pico")
@@ -746,13 +748,13 @@ def package(root: Path) -> Result:
 
 
 def license(root: Path) -> Result:
-    r = Result("License: LICENSE.md keeps the Pico copyright and adds a femto line; no Pico logo files")
+    r = Result("License: LICENSE.md keeps the Pico copyright and adds a femto line; no Pico logo or image")
     lic = root / "LICENSE.md"
     if not lic.exists():
         r.fail("LICENSE.md missing")
     else:
         lines = [l.strip() for l in lic.read_text(encoding="utf-8").split("\n")]
-        pico = "Copyright (c) 2019-2024 Pico"
+        pico = PICO_COPYRIGHT
         if pico in lines:
             r.ok(f"LICENSE.md keeps '{pico}'")
         else:
@@ -765,10 +767,11 @@ def license(root: Path) -> Result:
         else:
             r.fail("LICENSE.md has no copyright line besides the Pico one")
     files = effective_files(root)
-    logos = [f for f in files if not name_exempt(f) and (re.search(r"logo", Path(f).name, re.I) or f in (".github/logo-dark.svg", ".github/logo-light.svg"))]
-    for f in (".github/logo-dark.svg", ".github/logo-light.svg"):
-        if (root / f).exists() and f not in logos:
-            logos.append(f)
+    # Pico's own logo files, as tag v2.1.1 has them; femto's logos may reuse the paths but not the files.
+    pico_logos = {git(root, "show", f"v2.1.1:{p}", check=False).stdout for p in (".github/logo-dark.svg", ".github/logo-light.svg")} - {""}
+    if not pico_logos:
+        r.fail("tag v2.1.1 is missing, so Pico's logo files cannot be compared")
+    logos = [f for f in files if not name_exempt(f) and (root / f).is_file() and f.endswith(".svg") and (root / f).read_text(errors="replace") in pico_logos]
     images = []
     for f in files:
         if name_exempt(f) or not re.search(r"\.(svg|png|ico|jpe?g|gif|webp|avif)$", f, re.I):
@@ -780,7 +783,7 @@ def license(root: Path) -> Result:
         r.fail(f"{len(logos) + len(images)} logo or Pico image file(s) remain:")
         r.failures += ["    " + f for f in capped(sorted(logos + images), "files")]
     else:
-        r.ok("no logo files and no image mentioning pico outside tests")
+        r.ok("no Pico logo file and no image mentioning pico outside tests")
     return r
 
 
@@ -792,7 +795,7 @@ def dist(root: Path) -> Result:
     with tempfile.TemporaryDirectory() as tmp:
         work = Path(tmp)
         shutil.copytree(root / "css", work / "css")
-        for name in ("package.json", "build.mjs"):
+        for name in ("package.json", "build.mjs", "LICENSE.md"):
             shutil.copy2(root / name, work / name)
         (work / "node_modules").symlink_to(root / "node_modules", target_is_directory=True)
         proc = subprocess.run(["npm", "run", "build", "--silent"], cwd=work, capture_output=True, text=True)

@@ -1,5 +1,6 @@
 /*!
  * femto.colors | https://github.com/leoherzog/femto | MIT License
+ * Copyright (c) 2019-2024 Pico, Copyright (c) 2026 Leo Herzog
  *
  * The static color palette: every palette token on :root, :host, then the femto-color-* (text color)
  * and femto-background-* (background color with a readable text color) utility classes. It loads on

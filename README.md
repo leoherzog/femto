@@ -1,6 +1,11 @@
-# femto
+<h1>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/leoherzog/femto/HEAD/.github/logo-dark.svg">
+    <img alt="femto" src="https://raw.githubusercontent.com/leoherzog/femto/HEAD/.github/logo-light.svg" height="60">
+  </picture>
+</h1>
 
-femto is a minimal CSS framework for semantic HTML. Link one stylesheet and plain HTML looks clean and readable: headings, text, links, buttons, forms, tables, cards (`<article>`), accordions (`<details>`) and modals (`<dialog>`) are styled from their elements alone, with no classes needed. A few classes cover what HTML has no element for, such as `.container` and `.grid` for layout and `.secondary`, `.contrast` and `.outline` for button styles.
+femto styles semantic HTML with plain CSS. Link one stylesheet and plain HTML looks clean and readable: headings, text, links, buttons, forms, tables, cards (`<article>`), accordions (`<details>`) and modals (`<dialog>`) are styled from their elements alone, with no classes needed. A few classes cover what HTML has no element for, such as `.container` and `.grid` for layout and `.secondary`, `.contrast` and `.outline` for button styles.
 
 - Plain CSS: no Sass, and no build step to use or customize it.
 - Light and dark color schemes that follow the visitor's system setting, or that you set with `data-theme`.
@@ -11,16 +16,16 @@ femto is a minimal CSS framework for semantic HTML. Link one stylesheet and plai
 
 ## Quick start
 
-femto 3.0 is in alpha, so names and files may still change before 3.0.0. The links and commands below are for 3.0.0 and work once it is released. Until then, load the alpha by its version from jsDelivr:
+femto 3.0 is in alpha, so names and files may still change before 3.0.0. Every `@3` link and command in this README is for 3.0.0 and works once it is released: jsDelivr and npm skip prereleases when they resolve `@3`. Until then, load the alpha by its version from jsDelivr, or write `@alpha` in place of `@3` in any link:
 
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@leoherzog/femto@3.0.0-alpha.1/dist/femto.min.css">
 ```
 
-or install it from npm:
+or install it from npm, pinned to that version so that a later alpha, which may rename things, is not installed on its own:
 
 ```sh
-npm install @leoherzog/femto@alpha
+npm install --save-exact @leoherzog/femto@alpha
 ```
 
 The alpha has no Composer package or download link; use the files in this repository instead.
@@ -47,7 +52,18 @@ Link femto from [jsDelivr](https://www.jsdelivr.com/package/npm/@leoherzog/femto
 npm install @leoherzog/femto
 ```
 
-The [package](https://www.npmjs.com/package/@leoherzog/femto)'s main file is `dist/femto.min.css`, and it exports every file in `css/` and `dist/` by its path, such as `@leoherzog/femto/css/themes/jade.css`.
+The [package](https://www.npmjs.com/package/@leoherzog/femto)'s main file is `dist/femto.min.css`, and it exports every file in `css/` and `dist/` by its path, such as `@leoherzog/femto/css/themes/jade.css`. In a CSS file that a bundler processes, import it by those paths:
+
+```css
+@import "@leoherzog/femto";
+@import "@leoherzog/femto/css/themes/jade.css";
+```
+
+A bundler that rewrites CSS for older browsers can break femto's color schemes. Vite 8's production build, for example, minifies CSS with Lightning CSS for browsers older than femto supports, and rewrites every `light-dark()` into variables that resolve once on `:root`, so `data-theme` on an element no longer changes its colors. Set the bundler's CSS targets to femto's [minimum versions](#browser-support), for example in `vite.config.js`:
+
+```js
+export default { build: { cssTarget: ["chrome125", "edge125", "firefox128", "safari17.5"] } };
+```
 
 ### Composer
 
@@ -85,7 +101,7 @@ Most of femto works from the elements alone. These are the classes and attribute
 | `.grid` | Lays its children out in equal columns from 768px, in one column below |
 | `.overflow-auto` | Scrolls content that overflows it, such as a wide table |
 | `.secondary`, `.contrast`, `.outline` | Button styles; `.secondary` and `.contrast` also color links |
-| `<a role="button">` | A link that looks like a button |
+| `role="button"` | An element that looks like a button, such as a link or a `<summary>` |
 | `<table class="striped">` | Shades the odd body rows |
 | `<input type="checkbox" role="switch">` | A switch |
 | `aria-invalid="true"` or `"false"` on a form field | Invalid or valid border colors, an icon in most text fields, and a matching color on a `<small>` right after the field |
@@ -94,10 +110,13 @@ Most of femto works from the elements alone. These are the classes and attribute
 | `<nav aria-label="breadcrumb">` | Breadcrumbs |
 | `aria-busy="true"` | A loading spinner |
 | `data-tooltip`, `data-placement` | A tooltip with that text, above the element or where `data-placement` (`top`, `bottom`, `left`, `right`) puts it |
-| `<dialog>` holding an `<article>` | A modal. The `.modal-is-open`, `.modal-is-opening` and `.modal-is-closing` classes, which your script sets on `<html>`, lock scrolling and run the opening and closing animations |
+| `<dialog>` holding an `<article>` | A modal. The `.modal-is-open`, `.modal-is-opening` and `.modal-is-closing` classes, which your script sets on `<html>`, lock scrolling and run the opening and closing animations. To keep the page from shifting when `.modal-is-open` hides the scrollbar, your script can also set `--femto-scrollbar-width` on `<html>` to the scrollbar's width |
 | `.close`, or `rel="prev"` on a link or button, in a modal's `<article>` | A close button: an × icon at the top right, in the header if there is one |
 | `aria-current` (any value but `"false"`) | Shows a link, button or dropdown item as current, with its hover colors; in breadcrumbs, the current page as plain text |
 | `role="link"` | An element that looks like a link |
+| `disabled`, `aria-disabled="true"` | A not-allowed cursor; `aria-disabled="true"` on a `<label>` also dims it like a disabled field |
+| `aria-controls` | A pointer cursor |
+| `dir="rtl"` | Right-to-left text, with the form field icons, chevrons, breadcrumb separators and progress animation mirrored |
 
 ## Files
 
@@ -168,7 +187,7 @@ Load an option like a theme: right after femto, before your own stylesheets, and
 
 ## Color utilities
 
-`femto.colors.css` is a separate, standalone file that works with or without femto. It holds the palette as custom properties, `--femto-color-<color>-<shade>` for the 20 theme colors in shades from 50 to 950, and two kinds of utility class: `.femto-color-*` sets the text color, and `.femto-background-*` sets the background color with a readable text color.
+`femto.colors.css` is a separate, standalone file that works with or without femto. It holds the palette as custom properties, `--femto-color-<color>-<shade>` for the 20 theme colors in shades from 50 to 950, and two kinds of utility class: `.femto-color-*` sets the text color, and `.femto-background-*` sets the background color with a readable text color. Each color also has an unshaded name for one of its shades, such as `--femto-color-jade` (jade-550) with `.femto-color-jade` and `.femto-background-jade`, and `--femto-color-light` and `--femto-color-dark` are the white and black text colors the background classes use.
 
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@leoherzog/femto@3/dist/femto.colors.min.css">
@@ -177,7 +196,7 @@ Load an option like a theme: right after femto, before your own stylesheets, and
 <p class="femto-background-pumpkin-300">Text on a pumpkin background</p>
 ```
 
-Use `dist/femto.colors.min.css` (about 78 KB, 4.4 KB with Brotli), `dist/femto.colors.css`, or the source, `css/femto.colors.css`.
+Use `dist/femto.colors.min.css` (about 78 KB, 7 KB gzipped and under 5 KB with Brotli), `dist/femto.colors.css`, or the source, `css/femto.colors.css`.
 
 ## Color schemes
 
@@ -214,7 +233,7 @@ To load only some modules, save a copy of `css/femto.css` in the same folder, si
 @import "utilities/reduce-motion.css";
 ```
 
-Keep the lines in their order, which is the cascade order, and keep the first four: `tokens/base.css`, `tokens/breakpoints.css`, `layout/elements.css` and `tokens/schemes.css`. They hold the tokens and per-element settings the other modules read; without `layout/elements.css`, for example, headings lose their sizes and weights, and search fields their rounded ends. The copy loads module by module, like `css/femto.css`; a bundler that inlines `@import` turns it into one file. If you also load `no-transitions.css`, copy it too and delete its rules for the modules you left out.
+Keep the lines in their order, which is the cascade order, and keep the first four: `tokens/base.css`, `tokens/breakpoints.css`, `layout/elements.css` and `tokens/schemes.css`. They hold the tokens and per-element settings the other modules read; without `layout/elements.css`, for example, headings lose their sizes and weights, and search fields their rounded ends. The copy loads module by module, like `css/femto.css`; a bundler that inlines `@import` turns it into one file. If you install femto from npm, write the same list in your own CSS with package paths, such as `@import "@leoherzog/femto/css/tokens/base.css";`, instead of copying the file. If you also load `no-transitions.css`, copy it too and delete its rules for the modules you left out.
 
 ## Cascade layer
 
@@ -229,7 +248,7 @@ femto is not in a cascade layer. To put it in one, import it with `layer()`, and
 /* Your own rules follow, unlayered */
 ```
 
-Your unlayered rules then override femto's, whatever their specificity, except femto's few `!important` declarations. Theme and option files belong in femto's layer: left unlayered, they would compete with your unlayered rules by specificity instead of always losing to them, and would override any rules you put in layers of your own. `dist/femto.min.css` can be imported into a layer the same way.
+From npm, use package paths instead, such as `@import "@leoherzog/femto/css/femto.css" layer(femto);`. Your unlayered rules then override femto's, whatever their specificity, except femto's few `!important` declarations. Theme and option files belong in femto's layer: left unlayered, they would compete with your unlayered rules by specificity instead of always losing to them, and would override any rules you put in layers of your own. `dist/femto.min.css` can be imported into a layer the same way.
 
 ## Shadow roots
 
@@ -255,7 +274,9 @@ femto targets Baseline Widely Available on its release date, which is no earlier
 | Safari, macOS and iOS | 17.5 |
 | Samsung Internet | 27 |
 
-`npm run lint` checks every file in `css/` against that target. Its exceptions, each explained in `eslint.config.mjs`, are `light-dark()`, the standard properties and pseudo-elements written beside the vendor-prefixed ones the target browsers still need (such as `backdrop-filter` and `::marker`), and a few features, such as `accent-color`, that browsers without them ignore. The parity tests run in recent Chrome, Firefox and Safari; the minimum versions come from Baseline data and the lint, not from testing in those versions.
+`npm run lint` checks every file in `css/` against that target. Its exceptions, each explained in `eslint.config.mjs`, are `light-dark()`, the standard properties and pseudo-elements written beside the vendor-prefixed ones the target browsers still need (such as `backdrop-filter` and `::marker`), and a few features, such as `accent-color`, that browsers without them ignore. Each minimum version supports every feature femto uses, Safari 17.5 being the first Safari with `light-dark()`, and each is at or above what Baseline Widely Available maps to on 2026-11-13. The parity tests run in recent Chrome, Firefox and Safari, not in these versions.
+
+Older browsers do not get a plainer femto: they get a broken one. Without `light-dark()`, every color token is invalid, so form fields lose their borders and backgrounds and some button labels disappear. Tools that rewrite CSS for older browsers cause a similar break in supported ones; see [npm](#npm).
 
 ## Contributing
 
@@ -267,7 +288,7 @@ npm run lint
 npm run build
 ```
 
-`npm run build` runs `build.mjs`, which uses esbuild to inline `css/femto.css` and `css/femto.colors.css` into `dist/`, plain and minified; it only inlines and minifies. Commit `dist/` with your change. The Build workflow (`.github/workflows/build.yml`) rebuilds `dist/` on every push to a branch and commits it when it changed, so if you forget, pull before your next push. The parity tests are described in [tests/README.md](tests/README.md).
+`npm run build` runs `build.mjs`, which uses esbuild to inline `css/femto.css` and `css/femto.colors.css` into `dist/`, plain and minified; it only inlines and minifies. Commit `dist/` with your change. The Build workflow (`.github/workflows/build.yml`) lints `css/` and rebuilds `dist/` on every push and pull request. On `dev` it commits `dist/` when the build changed it, so if you forget, pull before your next push; anywhere else, a stale `dist/` fails the check. The parity tests are described in [tests/README.md](tests/README.md).
 
 Read [.github/CONTRIBUTING.md](.github/CONTRIBUTING.md) before you open an issue or a pull request.
 
@@ -280,7 +301,7 @@ femto 3.0 is derived from Pico CSS 2.1.1, copyright 2019-2024 Pico, under the MI
 | Pico 2.1.1 | femto 3.0 |
 |---|---|
 | npm `@picocss/pico` | npm `@leoherzog/femto` |
-| Composer `picocss/pico` | Composer `leoherzog/femto` |
+| Composer `picocss/pico` | Composer `leoherzog/femto`, from 3.0.0 |
 | `css/pico.min.css`, `css/pico.css` | `dist/femto.min.css`, `dist/femto.css` |
 | `css/pico.colors.min.css`, `css/pico.colors.css` | `dist/femto.colors.min.css`, `dist/femto.colors.css` |
 | `css/pico.<color>.min.css` | `dist/femto.min.css`, then `css/themes/<color>.css` |
@@ -344,16 +365,31 @@ femto has no Sass. Each Pico 2.1.1 setting is now a file, a custom property, or 
 
 Any other change is a custom property override on `:root`, after femto, such as `:root { --femto-border-radius: 0; }`. Sass palette variables such as `$azure-550` are custom properties in `femto.colors.css`, such as `var(--femto-color-azure-550)`.
 
+If your project still builds with Sass, `@use "pkg:@leoherzog/femto";` includes `dist/femto.min.css`. Do not `@use` `css/femto.css`: Sass leaves its `@import`s as they are, and they would not resolve from your output file.
+
 ### Color scheme changes
 
-Color tokens are now declared once, and `data-theme` sets the scheme instead of redeclaring the color tokens (see [Color schemes](#color-schemes)). That changes four things:
+Color tokens are now declared once, and `data-theme` sets the scheme instead of redeclaring the color tokens (see [Color schemes](#color-schemes)). That changes five things:
 
 - `data-theme` on a button, heading or form field keeps that element's own colors in the chosen scheme. In Pico 2.1.1 such an element took the page's background and text colors: on a dark page, `<button data-theme="light">` was a white box that turned blue on hover.
-- `data-theme="dark"` on a web component's host makes its shadow root dark when the component loads femto there. Pico 2.1.1 gave that shadow root no color tokens.
+- `data-theme="dark"` on a web component's host makes its shadow root dark when the component loads femto there. When only the shadow root loaded Pico 2.1.1, it gave that shadow root no color tokens.
 - Custom color overrides work on plain `:root` and reach inside `data-theme` elements. Pico 2.1.1 ignored them in the light and automatic dark schemes, where its scheme selectors outranked `:root`, and inside every nested `data-theme` element, which redeclared the tokens. Likewise, your own rules that set `--femto-form-element-focus-color` on a checkbox or radio now take effect from specificity (0,1,1); Pico 2.1.1's scheme selectors outranked them below (0,2,1) or (0,3,1).
 - A `color-scheme` set on an element without `data-theme` now switches femto's colors in that subtree. `data-theme` remains the way to theme an element.
+- A script that reads a color token with `getPropertyValue()` gets `light-dark(...)` text where the schemes differ, such as for `--femto-primary`, where Pico 2.1.1 gave a color. To get the color in effect, set the token on a property, such as `color: var(--femto-primary)`, and read that property's computed value.
 
-Every other difference from Pico 2.1.1 that the parity tests found is registered, with its reason, in [tests/divergences/](tests/divergences/).
+### Supported browsers
+
+Pico 2.1.1 supported every browser in browserslist's `defaults`, with prefixes added by autoprefixer. femto 3.0 needs Chrome and Edge 125, Firefox 128, Safari 17.5 and Samsung Internet 27 (see [Browser support](#browser-support)), and drops the `-ms-` rules, `::-webkit-input-placeholder` and `::-moz-list-bullet`. In older browsers, femto's colors and form fields break rather than degrade, so stay on Pico 2.1.1 if you need them.
+
+### Other changes
+
+- Firefox shows its keyboard focus ring again on elements that set no outline of their own, such as `video` and tooltips with `tabindex`: femto drops 2.1.1's `:-moz-focusring { outline: none }`. It also draws the focus and `aria-invalid` rings on a field the user has left invalid, as Chrome and Safari already did, because femto drops `:-moz-ui-invalid { box-shadow: none }`.
+- The focus ring of `role="group"` and `role="search"` inside a `data-theme` element follows that element's scheme.
+- With `no-transitions.css`, `--femto-transition` is `0s` (2.1.1 kept `0.2s ease-in-out`), so your own rules that read it stop animating too, and the group focus ring no longer fades.
+- Two new tokens: `--femto-primary-inverse-filter`, the filter for the loading spinner on primary buttons, which a theme of your own sets to `brightness(0) invert(0)` when its `--femto-primary-inverse` is dark, and `--femto-grid-template-columns`, which `.grid` reads.
+- If you used a classless build, classes such as `.grid`, `.secondary`, `.dropdown` and `.striped` that it ignored are now styled.
+
+Every difference from Pico 2.1.1 that the parity tests found is registered, with its reason, in [tests/divergences/](tests/divergences/), and [CHANGELOG.md](CHANGELOG.md) lists the changes in each release.
 
 ## License
 

@@ -4,7 +4,7 @@ The parity oracle: the compiled CSS of Pico 2.1.1 (git tag `v2.1.1`) with the fe
 
 Nothing here is published. Do not edit these files by hand; regenerate them with `build_references.py`.
 
-The 21 renamed copies are gitignored. `tests/run.py` rebuilds them from the tag whenever one is missing, so a clone needs tag `v2.1.1` (`git fetch --tags`). The option references, this README and the script are committed.
+The 21 renamed copies are gitignored. `tests/run.py` rebuilds them from the tag whenever one is missing, so a clone needs tag `v2.1.1`, which upstream Pico publishes: `git fetch --no-tags https://github.com/picocss/pico.git tag v2.1.1`. The option references, this README and the script are committed.
 
 ```sh
 uv run tests/reference/build_references.py check     # offline: verifies all 24 files (round trip, no "pico" outside comments)

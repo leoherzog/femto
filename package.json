@@ -1,8 +1,12 @@
 {
   "name": "@leoherzog/femto",
   "version": "3.0.0-alpha.1",
-  "description": "Minimal CSS framework for semantic HTML, written as plain CSS modules",
+  "description": "Semantic HTML, styled with plain CSS: light and dark schemes, 20 theme colors, no build step",
   "license": "MIT",
+  "author": {
+    "name": "Leo Herzog",
+    "url": "https://github.com/leoherzog"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/leoherzog/femto.git"
@@ -22,6 +26,7 @@
   "main": "dist/femto.min.css",
   "style": "dist/femto.min.css",
   "exports": {
+    "./package.json": "./package.json",
     ".": "./dist/femto.min.css",
     "./css/*": "./css/*",
     "./dist/*": "./dist/*"
@@ -43,7 +48,9 @@
   ],
   "scripts": {
     "build": "node build.mjs",
-    "lint": "eslint css"
+    "lint": "eslint css",
+    "prepublishOnly": "npm run build && git diff --exit-code -- dist",
+    "version": "npm run build && git add dist"
   },
   "devDependencies": {
     "@eslint/css": "2.0.1",

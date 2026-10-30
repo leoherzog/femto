@@ -1,11 +1,13 @@
-# Rebuilds dist/ from css/ on every push to a branch, and commits dist/ only when the build changed
-# it, for example after a commit that edited css/ without running npm run build. A push made with
-# the workflow's own token does not start another run.
+# Lints css/ and rebuilds dist/ on every push and pull request. On a push to dev, it commits dist/
+# only when the build changed it, for example after a commit that edited css/ without running
+# npm run build; anywhere else, a stale dist/ fails the run, so main only receives dist/ from dev.
+# A push made with the workflow's own token does not start another run.
 name: Build
 
 on:
   push:
     branches: ["**"]
+  pull_request:
 
 permissions:
   contents: write
@@ -24,8 +26,10 @@ jobs:
         with:
           node-version: lts/*
       - run: npm ci --ignore-scripts
+      - run: npm run lint
       - run: npm run build
       - name: Commit dist/ if the build changed it
+        if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
         run: |
           git add --all dist/
           if git diff --cached --quiet; then
@@ -35,4 +39,13 @@ jobs:
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git commit --message "Rebuild Dist"
             git push origin "HEAD:$GITHUB_REF"
+          fi
+      - name: Fail if dist/ is stale
+        if: github.event_name != 'push' || github.ref != 'refs/heads/dev'
+        run: |
+          git add --all dist/
+          if ! git diff --cached --quiet; then
+            echo "::error::dist/ differs from what npm run build writes. Run npm run build and commit dist/."
+            git diff --cached --stat
+            exit 1
           fi

@@ -1,5 +1,6 @@
 /*!
  * femto | https://github.com/leoherzog/femto | MIT License
+ * Copyright (c) 2019-2024 Pico, Copyright (c) 2026 Leo Herzog
  *
  * css/femto.css imports every femto module in cascade order; dist/femto.css is the same CSS in one
  * file, built by npm run build. Load css/themes/<color>.css and any css/options/ files right after

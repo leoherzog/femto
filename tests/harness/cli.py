@@ -364,7 +364,7 @@ def ensure_references():
     try:
         status = refs.cmd_copies(None)
     except subprocess.CalledProcessError as e:
-        raise SystemExit(f"cannot read tag {refs.TAG}: {e.stderr.decode().strip()} (run git fetch --tags)") from None
+        raise SystemExit(f"cannot read tag {refs.TAG}: {e.stderr.decode().strip()} (run git fetch --no-tags https://github.com/picocss/pico.git tag {refs.TAG})") from None
     if status:
         raise SystemExit("the rebuilt references fail build_references.py check")
 

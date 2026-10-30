@@ -4,6 +4,8 @@ import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { build } from "esbuild";
 
 const { version } = JSON.parse(readFileSync("package.json", "utf8"));
+// The copyright lines of LICENSE.md, so a dist file served on its own still carries them.
+const copyright = readFileSync("LICENSE.md", "utf8").split("\n").filter((line) => line.startsWith("Copyright")).join(", ");
 
 // Unminified, esbuild puts each item of a value with three or more commas on its own line. Browsers
 // keep a custom property's whitespace, so getPropertyValue() would return those line breaks: put
@@ -24,7 +26,7 @@ for (const name of ["femto", "femto.colors"]) {
       minifyWhitespace: minify,
       // esbuild writes an entry's own comments after the files it imports, so the header is a banner.
       legalComments: "none",
-      banner: { css: `/*! ${name} ${version} | https://github.com/leoherzog/femto | MIT License */` },
+      banner: { css: `/*! ${name} ${version} | https://github.com/leoherzog/femto | MIT License, ${copyright} */` },
       logLevel: "warning",
       write: false,
     });

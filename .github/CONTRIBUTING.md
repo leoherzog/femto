@@ -19,7 +19,9 @@ The [`dev`](https://github.com/leoherzog/femto/tree/dev) branch is open for pull
 
 - `npm run build`, and commit the `dist/` files it changes
 - `npm run lint`
-- `uv run tests/static_checks.py` (in a new clone, first run `uv run tests/reference/build_references.py copies`, which writes the gitignored 2.1.1 references from tag `v2.1.1`)
+- `uv run tests/static_checks.py` (in a new clone, first fetch tag `v2.1.1` as [`tests/reference/README.md`](../tests/reference/README.md) describes, then run `uv run tests/reference/build_references.py copies`, which writes the gitignored 2.1.1 references from it)
 - for a change to the CSS, the parity harness, as [`tests/README.md`](../tests/README.md) describes
 
-If a push to this repository forgets the build, the [Build workflow](workflows/build.yml) commits `dist/` after it, so pull before your next push. A pull request that forgets it gets `dist/` rebuilt when it is merged.
+The [Build workflow](workflows/build.yml) lints `css/` and rebuilds `dist/` on every push and pull request. If a push to `dev` forgets the build, the workflow commits `dist/` after it, so pull before your next push. Anywhere else, including a pull request, a stale `dist/` fails the check.
+
+Please follow the [code of conduct](CODE_OF_CONDUCT.md), and report security problems privately as [SECURITY.md](SECURITY.md) describes.

@@ -1,6 +1,6 @@
 {
   "name": "leoherzog/femto",
-  "description": "Minimal CSS framework for semantic HTML, written as plain CSS modules",
+  "description": "Semantic HTML, styled with plain CSS: light and dark schemes, 20 theme colors, no build step",
   "keywords": [
     "css",
     "css-framework",
