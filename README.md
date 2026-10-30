@@ -11,14 +11,26 @@ femto is a minimal CSS framework for semantic HTML. Link one stylesheet and plai
 
 ## Quick start
 
-femto 3.0 is not released yet. The download link, the npm and Composer packages and the jsDelivr links below are where it will be published; until then, use the files in this repository.
+femto 3.0 is in alpha, so names and files may still change before 3.0.0. The links and commands below are for 3.0.0 and work once it is released. Until then, load the alpha by its version from jsDelivr:
+
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@leoherzog/femto@3.0.0-alpha.1/dist/femto.min.css">
+```
+
+or install it from npm:
+
+```sh
+npm install @leoherzog/femto@alpha
+```
+
+The alpha has no Composer package or download link; use the files in this repository instead.
 
 ### From a CDN
 
-Link femto from [jsDelivr](https://www.jsdelivr.com/package/npm/femto.css) in the `<head>` of your page:
+Link femto from [jsDelivr](https://www.jsdelivr.com/package/npm/@leoherzog/femto) in the `<head>` of your page:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/femto.css@3/dist/femto.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@leoherzog/femto@3/dist/femto.min.css">
 ```
 
 ### Download
@@ -32,10 +44,10 @@ Link femto from [jsDelivr](https://www.jsdelivr.com/package/npm/femto.css) in th
 ### npm
 
 ```sh
-npm install femto.css
+npm install @leoherzog/femto
 ```
 
-The [package](https://www.npmjs.com/package/femto.css)'s main file is `dist/femto.min.css`, and it exports every file in `css/` and `dist/` by its path, such as `femto.css/css/themes/jade.css`.
+The [package](https://www.npmjs.com/package/@leoherzog/femto)'s main file is `dist/femto.min.css`, and it exports every file in `css/` and `dist/` by its path, such as `@leoherzog/femto/css/themes/jade.css`.
 
 ### Composer
 
@@ -52,7 +64,7 @@ composer require leoherzog/femto
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/femto.css@3/dist/femto.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@leoherzog/femto@3/dist/femto.min.css">
     <title>Hello, world!</title>
   </head>
   <body>
@@ -121,8 +133,8 @@ Use `css/` for a [custom module set](#custom-module-set), which can also go in a
 femto's built-in color is azure. Each of the 19 others is one file in `css/themes/`: amber, blue, cyan, fuchsia, green, grey, indigo, jade, lime, orange, pink, pumpkin, purple, red, sand, slate, violet, yellow and zinc. Load it right after femto and before your own stylesheets, and in femto's [cascade layer](#cascade-layer) if you use one:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/femto.css@3/dist/femto.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/femto.css@3/css/themes/jade.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@leoherzog/femto@3/dist/femto.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@leoherzog/femto@3/css/themes/jade.css">
 <link rel="stylesheet" href="styles.css">
 ```
 
@@ -131,7 +143,7 @@ A theme file is one `:root, :host` rule that sets ten theme tokens. That is the 
 femto ships no prebuilt themed copies: there is no `dist/femto.jade.min.css`. To fetch femto and a theme in one request, join them in a jsDelivr combine URL:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/femto.css@3/dist/femto.min.css,npm/femto.css@3/css/themes/jade.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/@leoherzog/femto@3/dist/femto.min.css,npm/@leoherzog/femto@3/css/themes/jade.css">
 ```
 
 This should work once femto is published, because neither file has an `@import` and every `url()` in them is a `data:` URI, but it is not yet confirmed. It does not work with `css/femto.css`: jsDelivr does not rewrite relative paths in combined files, so the entry's `@import`s would not resolve.
@@ -149,8 +161,8 @@ Each file in `css/options/` changes one default:
 Load an option like a theme: right after femto, before your own stylesheets, and in femto's [cascade layer](#cascade-layer) if you use one. Each file's header says what it overrides.
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/femto.css@3/dist/femto.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/femto.css@3/css/options/fixed-typography.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@leoherzog/femto@3/dist/femto.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@leoherzog/femto@3/css/options/fixed-typography.css">
 <link rel="stylesheet" href="styles.css">
 ```
 
@@ -159,7 +171,7 @@ Load an option like a theme: right after femto, before your own stylesheets, and
 `femto.colors.css` is a separate, standalone file that works with or without femto. It holds the palette as custom properties, `--femto-color-<color>-<shade>` for the 20 theme colors in shades from 50 to 950, and two kinds of utility class: `.femto-color-*` sets the text color, and `.femto-background-*` sets the background color with a readable text color.
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/femto.css@3/dist/femto.colors.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@leoherzog/femto@3/dist/femto.colors.min.css">
 
 <p class="femto-color-jade-600">Jade text</p>
 <p class="femto-background-pumpkin-300">Text on a pumpkin background</p>
@@ -267,7 +279,7 @@ femto 3.0 is derived from Pico CSS 2.1.1, copyright 2019-2024 Pico, under the MI
 
 | Pico 2.1.1 | femto 3.0 |
 |---|---|
-| npm `@picocss/pico` | npm `femto.css` |
+| npm `@picocss/pico` | npm `@leoherzog/femto` |
 | Composer `picocss/pico` | Composer `leoherzog/femto` |
 | `css/pico.min.css`, `css/pico.css` | `dist/femto.min.css`, `dist/femto.css` |
 | `css/pico.colors.min.css`, `css/pico.colors.css` | `dist/femto.colors.min.css`, `dist/femto.colors.css` |
@@ -275,17 +287,17 @@ femto 3.0 is derived from Pico CSS 2.1.1, copyright 2019-2024 Pico, under the MI
 | The classless and fluid classless builds, with or without a color | `dist/femto.min.css`, plus a theme file for a color; see [Dropped builds](#dropped-builds) |
 | The conditional builds | None; see [Dropped builds](#dropped-builds) |
 
-The one-file builds moved from `css/` to `dist/`, and `css/femto.css` is now the `@import` entry. On jsDelivr, `https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css` becomes `https://cdn.jsdelivr.net/npm/femto.css@3/dist/femto.min.css`.
+The one-file builds moved from `css/` to `dist/`, and `css/femto.css` is now the `@import` entry. On jsDelivr, `https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css` becomes `https://cdn.jsdelivr.net/npm/@leoherzog/femto@3/dist/femto.min.css`.
 
 A themed build such as `pico.jade.min.css` becomes femto plus `css/themes/jade.css`: one combine URL (expected to work once femto is published, but not yet confirmed; see [Themes](#themes)), or two `<link>` tags.
 
 ```html
 <!-- One request -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/femto.css@3/dist/femto.min.css,npm/femto.css@3/css/themes/jade.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/@leoherzog/femto@3/dist/femto.min.css,npm/@leoherzog/femto@3/css/themes/jade.css">
 
 <!-- Or two -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/femto.css@3/dist/femto.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/femto.css@3/css/themes/jade.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@leoherzog/femto@3/dist/femto.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@leoherzog/femto@3/css/themes/jade.css">
 ```
 
 ### Find and replace

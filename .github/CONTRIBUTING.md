@@ -1,19 +1,17 @@
 # Contributing to femto
 
-Thanks for your interest in contributing to femto! Please take a moment to review this document before submitting a [bug report](https://github.com/leoherzog/femto/issues) or a [pull request](https://github.com/leoherzog/femto/pulls).
+Thanks for your interest in contributing to femto! Please take a moment to review this document before opening an [issue](https://github.com/leoherzog/femto/issues) or a [pull request](https://github.com/leoherzog/femto/pulls).
 
-## Bug reports
+## Issues
 
-The [issue tracker](https://github.com/leoherzog/femto/issues) is the preferred channel for bug reports, but please respect the following restrictions:
-- Please do not use the issue tracker for personal support requests. [Open a question in our discussion forums](https://github.com/leoherzog/femto/discussions) instead.
-- Please do not use the issue tracker for feature requests. Instead, use our discussion forums to [suggest any ideas](https://github.com/leoherzog/femto/discussions) you have.
+The [issue tracker](https://github.com/leoherzog/femto/issues) is the place for bug reports, questions and feature ideas. Please search open and closed issues first. For a bug, use the bug report template and include a reduced test case.
 
 ## Pull requests
 
 Good pull requests, patches, improvements, and new features are a fantastic help.
 
 **Please ask before starting work on any significant new features.**
-We recommend that you first [suggest your feature idea in our discussion forums](https://github.com/leoherzog/femto/discussions).
+We recommend that you first [open an issue](https://github.com/leoherzog/femto/issues/new) to suggest your feature idea.
 
 The [`dev`](https://github.com/leoherzog/femto/tree/dev) branch is open for pull requests.
 

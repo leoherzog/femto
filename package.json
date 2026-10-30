@@ -1,6 +1,6 @@
 {
-  "name": "femto.css",
-  "version": "3.0.0-dev",
+  "name": "@leoherzog/femto",
+  "version": "3.0.0-alpha.1",
   "description": "Minimal CSS framework for semantic HTML, written as plain CSS modules",
   "license": "MIT",
   "repository": {
@@ -30,6 +30,9 @@
     "css/",
     "dist/"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "browserslist": [
     "Chrome >= 125",
     "Edge >= 125",

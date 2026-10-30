@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a bug report if you've already asked for help with a problem and confirmed something is broken with femto.
+about: Create a bug report if something is broken in femto.
 ---
 
 Please search for duplicate or closed issues first.
