@@ -1,0 +1,34 @@
+[
+  {
+    "id": "button-long-label-max-width",
+    "module": "content/button",
+    "kind": "style",
+    "selector": ":is(button, [role=button]):not([aria-busy=true], [aria-busy=true]:not(input, select, textarea, html, form) *, details.dropdown > summary + ul *, nav[aria-label=breadcrumb] ul li a)",
+    "pseudo": "",
+    "property": "/^max-(width|inline-size)$/",
+    "reference": "none",
+    "femto": "100%",
+    "where": {
+      "pages": ["classes-buttons.html", "classes-dropdown.html", "classes-dropdown-open.html", "classes-grid.html", "classes-modal.html", "components-accordion.html", "components-card.html", "components-group.html", "components-loading.html", "components-modal.html", "components-modal-show.html", "components-nav.html", "components-tooltip.html", "content-button.html", "content-link.html", "content-misc.html", "forms-basics.html", "forms-input-date.html", "kitchen-sink.html", "layout-elements.html", "tokens-base.html", "tokens-breakpoints.html", "tokens-schemes.html", "utilities-accessibility.html", "utilities-reduce-motion.html"]
+    },
+    "category": "natural-fix",
+    "reason": "2.1.1 sizes a button or [role=button] link to its content, so a label holding a long unbroken string, such as a URL, hash or ID, sets the button's width and pushes it past its container: 1345px in a 300px box in Chrome. The root's inherited overflow-wrap: break-word never breaks the word, because nothing narrows the button. femto gives button and [role=button] max-width: 100% through a zero-specificity rule, so the label breaks inside the container. Short and multi-word buttons are unchanged when their container is at least as wide as the label's longest word; in a narrower one, such as a .grid cell, a word now breaks inside the button instead of the button overflowing the cell. The rule skips a busy button and the contents of a busy element other than html and form, and dropdown menus, because loading.css and dropdown.css give them white-space: nowrap, so a cap would only push the label past the button's edge; it also keeps the dropdown's negative-margin link items at their width. Buttons in a busy form or a busy html are still capped, since loading.css leaves those wrapping. Breadcrumb links are skipped because of their negative margin-inline-start: their item is sized to the link, and the cap would cut the link by that margin and break its label. Inputs and ::file-selector-button are not matched, since their text cannot wrap. On fixtures without long labels, the only computed difference is max-width and its logical alias max-inline-size: none in 2.1.1, 100% in femto.",
+    "notes": "Fixture: #long-label in content-button.html (button-long-label-geometry records its two elements); every other button and role=button on these pages changes only these computed values. Probed with standalone Selenium pages in Chrome Beta 158 and Firefox 160 beta, media light and dark, reduced motion, against 2.1.1, femto before the fix and the built dist. A 116-character URL label in a 300px box goes from 1345.78px wide (+1045.78 past the box) to 300px in Chrome and from 1280.92px to 300px in Firefox, for button, type=button and reset, a[role=button], .secondary, .contrast.outline, disabled, inline in a paragraph, rtl, light and dark data-theme islands and data-theme=dark on the button; in a 375px page with main.container the document scroll width goes from 1067 to 375 (Firefox 1016 to 375). Hover and focus keep their colors and ring. Unchanged in both browsers: short and multi-word buttons, input submit, button and reset, ::file-selector-button (150.97px in a 60px input), busy buttons (590.08 and 1377.28px in Chrome), a button inside a busy div or article, dropdown items (298px) and buttons in a dropdown, breadcrumb role=button links (74.61x47px at 1280 in Chrome), nav li, table cells, and a short button in a [role=group]. Buttons in a busy form or under html[aria-busy], as Hotwire Turbo sets during a visit, go from 754.6px to 300px (Firefox 693 to 300px). Known gaps, as in 2.1.1: a long button in a [role=group] stops at the group's width but its sibling still sticks out (111px), and buttons in a nav li or a table cell are not capped. A button in a shadow root whose host sits inside a busy article inherits nowrap but is capped, since the exclusion cannot cross the shadow boundary, so its label runs 473.5px past its edge. Author-CSS cases that change: a button set to white-space: nowrap, or inside an author nowrap box narrower than it, is capped and its label runs past its edge (352.39 to 300px with 31.39px of label outside); a button with author negative inline margins in a shrink-wrapped parent shrinks by the margin; a single word in an absolutely positioned button inside a narrower positioned wrapper breaks mid-word; and an author width wider than the container is capped. max-width: none on the button restores 2.1.1's sizing. Upstream issue picocss/pico#485."
+  },
+  {
+    "id": "button-long-label-geometry",
+    "module": "content/button",
+    "kind": "style",
+    "selector": "#long-label > *",
+    "pseudo": "",
+    "property": "/^(width|inline-size|height|block-size|transform-origin|perspective-origin)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": ["content-button.html"]
+    },
+    "category": "natural-fix",
+    "reason": "The box change of button-long-label-max-width: a button or role=button link whose unbroken label is wider than its container is now as wide as the container, and the label wraps onto more lines, so its width, inline-size, height, block-size and the origins at its center change. The fixture's wrapper has a fixed height, so nothing else moves.",
+    "notes": "Fixture: #long-label in content-button.html, a 12rem box with a fixed 16rem height holding a button and an a[role=button] labeled with a 52-character URL. In Chrome Beta 158 each goes from 474.42x50px to 192x98px at 390 and from 578.2x62px to 240x122px at 1280; in Firefox 160 beta from 423.02x74px to 192x122px and from 516.68x92px to 240x152px. Upstream issue picocss/pico#485."
+  }
+]

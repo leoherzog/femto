@@ -40,6 +40,12 @@
     <a href="#ac" role="button" aria-current="page" data-states="focus">Current link button</a>
     <a role="button" disabled>Link button with disabled attribute</a>
   </p>
+  <!-- Narrower than the unbroken labels, so the button and the role=button link wrap them instead
+       of overflowing. The fixed height keeps the elements around it the same size in both builds. -->
+  <div id="long-label" style="width: 12rem; height: 16rem; overflow: hidden">
+    <button>https://example.com/0123456789abcdef0123456789abcdef</button>
+    <a href="#long" role="button">https://example.com/0123456789abcdef0123456789abcdef</a>
+  </div>
   <p><span role="button" tabindex="0" data-states="hover focus">Span button</span></p>
   <div role="button" tabindex="0">Div with role button</div>
   <fieldset disabled>

@@ -584,10 +584,18 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   to the end of the padding, and `overflow-wrap: anywhere`, so code an author makes wrap keeps the
   pre's width (fixture: the long block of `content-code.html`, the only one that overflows and
   changes its box; the other blocks change only those computed values).
+- `content-button.json`: `button-long-label-max-width`, on every button and `role=button` element
+  of the 25 pages that have one, outside busy elements, dropdown menus and breadcrumb links, and
+  `button-long-label-geometry`, limited to `content-button.html`. 2.1.1 sized a button or
+  `role=button` link to its content, so a long unbroken label, such as a URL, widened it past its
+  container; femto gives it `max-width: 100%`, so the label wraps inside the container. Every other
+  button changes only its computed `max-width` and `max-inline-size` (fixture: `#long-label`, a
+  narrow fixed-height box holding a button and a link with a URL label, whose size, height and
+  origins change).
 - `rig.json`: the checks Safari cannot run (`safari-no-media-dark`,
   `safari-no-focus-visible-date-input`).
 
-The other 15 modules need no entry. Two fixtures exist to make the registry's checks meaningful:
+The other 14 modules need no entry. Two fixtures exist to make the registry's checks meaningful:
 `colors.html` has a "Two classes" block in which each span carries two neighboring utility classes
 in file order, so a change of rule order in `femto.colors.css` shows as a difference, and
 `components-tooltip.html` has tooltips on an open accordion summary and on two dropdown summaries,

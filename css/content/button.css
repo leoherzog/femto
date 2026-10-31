@@ -1,7 +1,8 @@
 /*
  * Button: button, the button-like inputs, the file input's selector button and [role=button], with
  * their hover, active, focus and aria-current states, the .secondary, .contrast and .outline classes,
- * and the disabled state. The reboot rules follow normalize.css v8.0.1 and sanitize.css v13.0.0.
+ * and the disabled state. A button is at most as wide as its container, so a long label wraps. The
+ * reboot rules follow normalize.css v8.0.1 and sanitize.css v13.0.0.
  */
 button {
   margin: 0;
@@ -72,6 +73,11 @@ button:focus, button:is([aria-current]:not([aria-current=false])):focus,
 [role=button]:focus,
 [role=button]:is([aria-current]:not([aria-current=false])):focus {
   --femto-box-shadow: var(--femto-button-hover-box-shadow, 0 0 0 rgba(0, 0, 0, 0)), 0 0 0 var(--femto-outline-width) var(--femto-primary-focus);
+}
+
+/* Busy elements and dropdown menus keep text on one line, and breadcrumb links have a negative start margin, so the cap skips them. */
+:where(:is(button, [role=button]):not([aria-busy=true], [aria-busy=true]:not(input, select, textarea, html, form) *, details.dropdown > summary + ul *, nav[aria-label=breadcrumb] ul li a)) {
+  max-width: 100%;
 }
 
 [type=submit],
