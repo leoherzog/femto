@@ -103,7 +103,7 @@ Most of femto works from the elements alone. These are the classes and attribute
 | `<details class="dropdown">` | A dropdown: a `<summary>` and a `<ul>` that opens below it |
 | `<nav aria-label="breadcrumb">` | Breadcrumbs |
 | `aria-busy="true"` | A loading spinner |
-| `data-tooltip`, `data-placement` | A tooltip with that text, above the element or where `data-placement` (`top`, `bottom`, `left`, `right`) puts it |
+| `data-tooltip`, `data-placement` | A tooltip with that text, above the element or where `data-placement` (`top`, `bottom`, `left`, `right`) puts it. A switch shows none, since its `::before` is its thumb, so put the tooltip on the switch's `<label>` |
 | `<dialog>` holding an `<article>` | A modal. The `.modal-is-open`, `.modal-is-opening` and `.modal-is-closing` classes, which your script sets on `<html>`, lock scrolling and run the opening and closing animations. To keep the page from shifting when `.modal-is-open` hides the scrollbar, your script can also set `--femto-scrollbar-width` on `<html>` to the scrollbar's width |
 | `.close`, or `rel="prev"` on a link or button, in a modal's `<article>` | A close button: an × icon at the top right (top left in right-to-left text), in the header if there is one |
 | `aria-current` (any value but `"false"`) | Shows a link, button or dropdown item as current, with its hover colors; in breadcrumbs, the current page as plain text |

@@ -1219,6 +1219,22 @@ input:where([type=radio]:not(:checked)) {
   content: "";
   transition: margin 0.1s ease-in-out;
 }
+[type=checkbox][role=switch][data-tooltip]::before,
+[type=checkbox][role=switch][data-tooltip]:focus::before,
+[type=checkbox][role=switch][data-tooltip]:hover::before {
+  position: static;
+  padding: 0;
+  transform: none;
+  border-radius: 50%;
+  background-color: var(--femto-color);
+  content: "";
+  font-size: inherit;
+  opacity: 1;
+  animation-name: none;
+}
+[type=checkbox][role=switch][data-tooltip]::after {
+  display: none;
+}
 [type=checkbox][role=switch]:focus {
   --femto-background-color: var(--femto-switch-background-color);
   --femto-border-color: var(--femto-switch-background-color);

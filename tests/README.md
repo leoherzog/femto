@@ -568,7 +568,14 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   femto still wins and the no-transitions option's `input` reset still restores `all`. The harness
   finishes transitions, so it shows only the computed property, and the flash was probed outside it
   (fixtures: every unchecked radio, such as `#r-2` and `#r-3` in `forms-checkbox-radio-switch.html`
-  and `#ks-r2` in `kitchen-sink.html`).
+  and `#ks-r2` in `kitchen-sink.html`). `switch-tooltip-thumb`, limited to
+  `forms-checkbox-radio-switch.html`: a switch's `::before` is its thumb, and 2.1.1's tooltip rules
+  reach it too, so a switch with `data-tooltip` had no thumb at rest and, on hover or focus, raised
+  it above the switch with the tooltip's caret; femto restores the thumb and hides the caret at a
+  specificity above every tooltip rule, so the switch renders like one without `data-tooltip` and
+  shows no tooltip (fixtures: the three switches with `data-tooltip` in the "Switches" fieldset,
+  checked, checked with `data-placement="bottom"`, both with hover and focus, and unchecked with
+  `data-placement="top"`).
 - `content-code.json`: `pre-code-scroll-end-padding`, with `-overflow-wrap`, limited to the four
   pages that have a `pre > code` or `pre > samp`, and `-geometry`, limited to `content-code.html`.
   2.1.1 padded the code or samp inside a pre but kept it as wide as the pre, so a longer line
