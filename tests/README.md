@@ -402,7 +402,17 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   targets of `components-tooltip.html` in the focus state, the only fixture elements that set no
   outline of their own, and `firefox-user-invalid-focus-ring-restored`, limited to the "Left
   invalid" form of `forms-basics.html` (`form[data-user-invalid]`), whose fields `page.js` puts in
-  `:user-invalid`.
+  `:user-invalid`. `fieldset-min-width-auto`, limited to the nine pages that have a fieldset, with
+  `fieldset-narrow-column-geometry`, limited to `forms-input-date.html` from 768px: 2.1.1 kept the
+  browsers' `min-width: min-content` on `fieldset`, so a fieldset grew past a narrow column to fit a
+  date field, a long word or a table; femto's `min-width: auto` sizes it like a div (fixture: the
+  fieldset in `#date-narrow-grid`).
+- `forms-input-date.json`: `group-date-input-min-width`, with `-narrow-column-geometry` from 768px,
+  limited to `forms-input-date.html`. 2.1.1 left a date-family input in `[role=group]` or
+  `[role=search]` at a flex item's `min-width: auto`, so it kept the native field's width and pushed
+  the group's button past a narrow column; femto sets `min-width: 0` there, and the field clips its
+  text instead (fixture: `#date-narrow-grid`, a four-column `.grid` holding a datetime-local group
+  and a fieldset with another).
 - `components-group.json`: the island focus ring, split by the island's scheme
   (`group-island-focus-ring-style` and `-light-island`), and `group-hidden-child-corners`, with
   `-margin`, `-geometry` and `-hidden-input`, limited to `components-group.html`. 2.1.1 found a
@@ -432,7 +442,7 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
 - `rig.json`: the checks Safari cannot run (`safari-no-media-dark`,
   `safari-no-focus-visible-date-input`).
 
-The other 24 modules need no entry. Two fixtures exist to make the registry's checks meaningful:
+The other 23 modules need no entry. Two fixtures exist to make the registry's checks meaningful:
 `colors.html` has a "Two classes" block in which each span carries two neighboring utility classes
 in file order, so a change of rule order in `femto.colors.css` shows as a difference, and
 `components-tooltip.html` has tooltips on an open accordion summary and on two dropdown summaries,
@@ -495,7 +505,7 @@ tables against the tag, `tests/sections.json`, `tests/pages/pages.json` and `css
 | `content/code` | Code | `content/code.css` (16) | `content-code.html` |
 | `content/figure` | Figure | `content/figure.css` (17) | `content-figure.html` |
 | `content/misc` | Misc | `content/misc.css` (18) | `content-misc.html` |
-| `forms/basics` | Basics form elements | `forms/basics.css` (19) | `forms-basics.html` |
+| `forms/basics` | Basics form elements | `forms/basics.css` (19) | `forms-basics.html`, `forms-input-date.html` |
 | `forms/checkbox-radio-switch` | Checkboxes, Radios and Switches | `forms/checkbox-radio-switch.css` (20) | `forms-checkbox-radio-switch.html` |
 | `forms/input-color` | Input type color | `forms/input-color.css` (21) | `forms-input-color.html` |
 | `forms/input-date` | Input type datetime | `forms/input-date.css` (22) | `forms-input-date.html` |

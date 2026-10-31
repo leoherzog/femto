@@ -419,10 +419,12 @@
  {
   "page": "forms-input-date.html",
   "modules": [
-   "forms/input-date"
+   "forms/input-date",
+   "forms/basics"
   ],
   "sections": [
-   "Input type datetime"
+   "Input type datetime",
+   "Basics form elements"
   ],
   "entries": [
    "default"

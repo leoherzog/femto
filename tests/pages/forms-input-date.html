@@ -22,6 +22,25 @@
   <label>Valid time <input type="time" name="time-valid" value="09:30" aria-invalid="false"></label>
   <small>Valid time helper.</small>
 
+  <h2>Narrow grid columns</h2>
+  <div class="grid" id="date-narrow-grid">
+    <div role="group">
+      <input type="datetime-local" name="grid-group-datetime" value="2026-01-02T03:04">
+      <button>Go</button>
+    </div>
+    <div>
+      <fieldset>
+        <legend>Fieldset in a column</legend>
+        <div role="group">
+          <input type="datetime-local" name="grid-fieldset-datetime" value="2026-01-02T03:04">
+          <button>Go</button>
+        </div>
+      </fieldset>
+    </div>
+    <div>Third column</div>
+    <div>Fourth column</div>
+  </div>
+
   <div dir="rtl">
     <h2>Right to left block</h2>
     <input type="date" name="rtl-date" value="2026-01-02">

@@ -1,0 +1,43 @@
+[
+  {
+    "id": "group-date-input-min-width",
+    "module": "forms/input-date",
+    "kind": "style",
+    "selector": ":is([role=group], [role=search]) input:is([type=date], [type=datetime-local], [type=month], [type=time], [type=week])",
+    "pseudo": "",
+    "property": "/^min-(width|inline-size)$/",
+    "reference": "auto",
+    "femto": "0px",
+    "where": {
+      "pages": [
+        "forms-input-date.html"
+      ]
+    },
+    "category": "natural-fix",
+    "reason": "In [role=group] and [role=search] a date, datetime-local, month, time or week input is a flex item, and 2.1.1 left its min-width: auto, so it could not shrink below the native field's width (in Chrome 158, 199px for a date and 295px for datetime-local). In a narrow column, such as one of three .grid columns at the medium breakpoint, the group's button spilled past the column and under the next column's field. femto sets min-width: 0 on those inputs inside a group, so the field shares the group's width like a text field and clips its text in its own box. In a group with another field the two now share the width, so at phone widths a date field next to a text field or select can clip its text where 2.1.1 squeezed the other field instead. Date inputs outside a group are unchanged.",
+    "notes": "Fixture: #date-narrow-grid in forms-input-date.html, whose two datetime-local fields sit in a [role=group]; the computed value changes at every width (group-date-input-narrow-column-geometry has the layout). No other fixture puts a date-family input in a group. Probed with standalone Selenium pages in Chrome 158 and Firefox 160 beta at 320 to 1280px, ltr and rtl, light and dark. In a three-column .grid at 800px (221.33px columns), the group's contents went 73.66px past the column with a date field in Chrome (48.93px in Firefox), 95.98px with datetime-local, 28.66px (32.72px) with time, and 95.98 and 90.66px with month and week in Chrome, where Firefox shows them as text fields that fit; [role=search] and an aria-invalid date field the same. After the change every case stays inside the column (rtl keeps the 1.13px border offset that a text-input group already has). A group of date, text field and button in a 358px column goes from 180, 93.2 and 86.8px to 140.8, 132.4 and 86.8px in Chrome. Date inputs in an author's own flex row or 1fr grid keep their 2.1.1 widths, because the rule is limited to groups. Safari is not yet probed. Upstream issue picocss/pico#733."
+  },
+  {
+    "id": "group-date-input-narrow-column-geometry",
+    "module": "forms/input-date",
+    "kind": "style",
+    "selector": "#date-narrow-grid [role=group] > input:is([type=date], [type=datetime-local], [type=month], [type=time], [type=week])",
+    "pseudo": "",
+    "property": "/^(width|inline-size|transform-origin|perspective-origin)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": [
+        "forms-input-date.html"
+      ],
+      "widths": [
+        {
+          "min": 768
+        }
+      ]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of group-date-input-min-width: in a narrow .grid column a datetime-local field in a group shrinks to leave room for the group's button instead of keeping its native width and pushing the button past the column, so its width and its transform and perspective origins change.",
+    "notes": "Fixture: the two datetime-local fields of #date-narrow-grid in forms-input-date.html, a four-column .grid from 768px; the first column holds a [role=group] of a datetime-local field and a button, the second a fieldset with the same group. At 1280 both fields go to 198.86px in Chrome 158 and 198.87px in Firefox 160 beta, from 305px (the first, which then pushed its button 106px past the 305px column) and from 323px or 305.47px (the second, which widened the fieldset). Below 768px the grid has one column and nothing changes. Upstream issue picocss/pico#733."
+  }
+]

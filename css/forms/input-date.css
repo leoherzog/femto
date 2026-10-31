@@ -18,6 +18,10 @@ input:not([type=checkbox], [type=radio], [type=range], [type=file])[type=time] {
   background-image: var(--femto-icon-time);
 }
 
+:is([role=search], [role=group]) input:is([type=date], [type=datetime-local], [type=month], [type=time], [type=week]) {
+  min-width: 0;
+}
+
 [type=date]::-webkit-calendar-picker-indicator,
 [type=datetime-local]::-webkit-calendar-picker-indicator,
 [type=month]::-webkit-calendar-picker-indicator,

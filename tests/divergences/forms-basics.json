@@ -48,5 +48,54 @@
     "category": "dropped-hack",
     "reason": "2.1.1 ships ':-moz-ui-invalid { box-shadow: none }'. Firefox still matches that pseudo-class on a field the user has left invalid (it is the old name of :user-invalid), and at specificity (0,1,0) the rule beat 'input, select, textarea { box-shadow: var(--femto-box-shadow) }' at (0,0,1). So in 2.1.1, Firefox drew no focus ring and no aria-invalid ring on such a field. femto drops the rule, so Firefox now draws both rings, as Chrome already did with 2.1.1. Safari never matches a -moz- pseudo-class, so it already drew them too.",
     "notes": "Fixture: the \"Left invalid\" form of forms-basics.html. page.js calls requestSubmit() on form[data-user-invalid], which puts its required email input, its required email input with aria-invalid=true and its empty required textarea in :user-invalid without typing (Chrome 158, Firefox 160), and the three carry focus states (the first also active). A comparison of the default and the three option presets (widths 390 and 1280, every leg, ltr and rtl) registers 4 records in each of its 64 Firefox cells and none in Chrome, for example box-shadow none -> 'rgb(1, 114, 173) 0px 0px 0px 1px' on the email input at 390 in focus and active. A standalone Selenium probe shows the same difference: it types into a required email input, a second one with aria-invalid=true and a required textarea, blurs them, then focuses each again. Firefox 160: the reference gives box-shadow none on all three; the basics hybrid gives 'rgb(1, 114, 173) 0px 0px 0px 1.125px' on the email input and the textarea and 'rgb(200, 79, 72) 0px 0px 0px 1.125px' on the aria-invalid one; the hybrid plus only the dropped rule gives none on all three. Chrome draws the rings on both sides, in 157.0.8103.15 and again in 158.0.8127.2 after Chrome Beta updated itself on 2026-10-28."
+  },
+  {
+    "id": "fieldset-min-width-auto",
+    "module": "forms/basics",
+    "kind": "style",
+    "selector": "fieldset",
+    "pseudo": "",
+    "property": "/^min-(width|inline-size)$/",
+    "reference": "min-content",
+    "femto": "/^(0px|auto)$/",
+    "where": {
+      "pages": [
+        "classes-container.html",
+        "components-group.html",
+        "content-button.html",
+        "forms-basics.html",
+        "forms-checkbox-radio-switch.html",
+        "forms-input-date.html",
+        "forms-input-file.html",
+        "kitchen-sink.html",
+        "utilities-accessibility.html"
+      ]
+    },
+    "category": "natural-fix",
+    "reason": "Browsers give <fieldset> min-width: min-content, and 2.1.1 kept it, so a fieldset in a narrow column or container grew past it to fit its widest content: a date or time field, a long word, a <pre> or a table. Every 100%-wide field inside stretched with it, and a wide one made the page scroll sideways. femto sets min-width: auto on fieldset, which sizes it like a div: no minimum in normal flow (computed 0px) and its content minimum as a flex or grid item (computed auto). Wide content now overflows the fieldset as it would a div, and scrolls inside .overflow-auto. Where the content fits, nothing moves; only the computed min-width and min-inline-size change.",
+    "notes": "Every fieldset on the listed pages, the pages that have one, goes from min-content to 0px in Chrome 158 and Firefox 160 beta with no layout change, fieldset[role=group] in components-group.html included. A fieldset that is a .grid child already computed 0px from .grid > *. The fixture with a layout change is the second column of #date-narrow-grid in forms-input-date.html (fieldset-narrow-column-geometry). Probed with standalone Selenium pages in Chrome 158 and Firefox 160 beta at 320 to 1280px, ltr and rtl, light and dark. In a three-column .grid at 800px (221.33px columns), a fieldset holding a legend and a date group goes from 294.98px (Chrome) or 270.27px (Firefox) to 221.33px, with datetime-local from 390.98 or 378.58px, and a fieldset holding a label and a datetime-local field from 295 or 282.6px. A fieldset holding a 120-character <pre> goes from 1138px to 221.33px and the page's scrollWidth from 1188 to 800; one holding a table in .overflow-auto goes from 664.5 to 221.33px, and the table scrolls. In an author's flex row or 1fr grid a fieldset keeps its 2.1.1 width, because auto resolves to its content minimum there; min-width: 0 would have shrunk it under its content. Safari is not yet probed. Upstream issue picocss/pico#733."
+  },
+  {
+    "id": "fieldset-narrow-column-geometry",
+    "module": "forms/basics",
+    "kind": "style",
+    "selector": "#date-narrow-grid :is(fieldset, fieldset [role=group])",
+    "pseudo": "",
+    "property": "/^(width|inline-size|transform-origin|perspective-origin)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": [
+        "forms-input-date.html"
+      ],
+      "widths": [
+        {
+          "min": 768
+        }
+      ]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of fieldset-min-width-auto: a fieldset in a narrow .grid column no longer grows past the column to fit a datetime-local group, so the fieldset and its group take the column's width, and their transform and perspective origins follow.",
+    "notes": "Fixture: the second column of #date-narrow-grid in forms-input-date.html, a four-column .grid from 768px holding a fieldset with a legend and a [role=group] of a datetime-local field and a button. At 1280 the fieldset and its group go from 429.14px (Chrome 158) or 411.6px (Firefox 160 beta) to the 305px column. Below 768px the grid has one column and nothing changes. Upstream issue picocss/pico#733."
   }
 ]
