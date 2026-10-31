@@ -46,5 +46,82 @@
     "category": "natural-fix",
     "reason": "Consequence of nested-list-margins-container-size: the breadcrumb dividers are absolutely positioned at their static position with no positioned ancestor, so when the nested lists above them in kitchen-sink.html get shorter, their resolved vertical insets change by the same amount.",
     "notes": "Fixture: the breadcrumb of kitchen-sink.html, below its typography block. At 1280 the top inset goes from 7091.41px to 7076.41px in Chrome Beta 158 and from 7119.5px to 7104.5px in Firefox 160 beta. At 375, 390, 575, 576, 577 and 640 accordion-nav-dropdown-breadcrumb-shift also matches it. Upstream issue picocss/pico#672."
+  },
+  {
+    "id": "small-font-size-token-applied",
+    "module": "content/typography",
+    "kind": "style",
+    "selector": "small, small *",
+    "pseudo": "",
+    "property": "/^(font-size|line-height|width|height|inline-size|block-size|perspective-origin|transform-origin)$/",
+    "reference": "*",
+    "femto": "*",
+    "category": "natural-fix",
+    "reason": "2.1.1 declares --femto-font-size: 0.875em on small, but no rule applies it: only html, :host and h1 to h6 set font-size: var(--femto-font-size). So small keeps the browser's font-size: smaller, the parent size divided by 1.2 (0.8333em: 13.33px under 16px text, 14.17px under 17px). Pico 1.5.13 had small { font-size: var(--font-size) }; 2.0.0 kept the token and lost that rule. femto applies the token in content/typography.css, so small is 0.875em of its parent (14px under 16px text, 14.875px under 17px), 5% larger than in 2.1.1, and its line-height and the em-based sizes of its descendants, such as a code element, grow with it. A small nested in another small or inside a heading compounds as it did with smaller, and the hgroup subtitle rule (1rem) still wins. An author rule that sets small's font-size and loads before femto, or sits in a cascade layer while femto is unlayered, now loses to femto's rule, where it used to beat the browser's smaller; setting --femto-font-size on small now takes effect.",
+    "notes": "Fixtures: every small of the pages listed in small-font-size-container-size: inline in paragraphs (content-typography.html, kitchen-sink.html, tokens-base.html and its shadow root, tokens-schemes.html and its shadow roots), helper text after inputs, selects, valid and invalid fields and a .grid (forms-basics.html, including its data-theme islands, kitchen-sink.html, classes-grid.html, the forms-input-* pages and tokens-schemes.html), small in a figcaption (content-figure.html), small holding code (content-code.html) and the nav helper of components-nav.html. In Chrome Beta 158 and Firefox 160 beta, in every leg and direction, small goes from 13.3333px to 14px at 390 (16px root) and from 16.6667px to 17.5px at 1280 (20px root), its line-height from 20px to 21px and from 25px to 26.25px, a block helper from 19.98px (Firefox 20px) to 21px tall at 390 and from 25px to 26.25px at 1280, and code inside small from 11.6667px to 12.25px at 390. Probed with standalone Selenium pages in Chrome Beta 158 and Firefox 160 beta at 375, 600 and 1300px, light and dark, ltr and rtl, at rest, with a link hovered and an input focused, against 2.1.1, femto before the fix and the built dist. Before, every small was 0.8333 of its parent with both 2.1.1 and femto (14.1667px under 17px text); after, 0.875 (14.875px; Firefox reports 14.8833px, rounded to 1/60px) in a paragraph, an rtl paragraph, h2 (24.79px to 26.03px at 600) and h6, a nested small (11.81px to 13.02px under 17px text), a link, a button, a figcaption, a blockquote footer, li, td, a card footer, data-theme light and dark islands, a small with its own data-theme and a shadow root. code and sub inside small keep 0.875em and 0.75em of it, and the hgroup subtitle small stays 1rem. No color, background, border, margin, padding or display changed anywhere. Upstream pull request picocss/pico#561 adds the same declaration; upstream commit 8b4f1527 (set root font size to 100%) removed 1.x's small rule and kept the token."
+  },
+  {
+    "id": "small-font-size-container-size",
+    "module": "content/typography",
+    "kind": "style",
+    "selector": ":has(small)",
+    "pseudo": "",
+    "property": "/^(height|block-size|perspective-origin|transform-origin)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": ["classes-grid.html", "components-nav.html", "content-code.html", "content-figure.html", "content-typography.html", "forms-basics.html", "forms-input-date.html", "forms-input-file.html", "forms-input-range.html", "forms-input-search.html", "kitchen-sink.html", "layout-elements.html", "tokens-base.html", "tokens-schemes.html"]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of small-font-size-token-applied: a block small, such as helper text under a form field, is taller with its larger font size and line-height, and a small holding code can raise its line, so the elements that contain it, up to the document, get taller, and their transform and perspective origins follow. The entry is limited to the pages that hold a small.",
+    "notes": "Fixtures as for small-font-size-token-applied. forms-basics.html goes from 6828.39px to 6847.69px tall at 390 and from 8421px to 8444.75px at 1280 in Chrome Beta 158 (Firefox 160 beta: 6951.2px to 6970.2px and 8523.5px to 8547.25px). The forms/basics block of kitchen-sink.html goes from 1193.88px to 1197.94px at 390 and from 1388.25px to 1393.25px at 1280 (Firefox: 1212.2px to 1216.2px and 1406.75px to 1411.75px); nested-list-margins-container-size also matches the html and body of that page. In content-code.html the paragraph holding small > code grows by 1px in Chrome at 1280. The selector covers html, body, the data-module wrapper and the divs and paragraphs that hold a small, in the light DOM and inside shadow roots. Upstream pull request picocss/pico#561."
+  },
+  {
+    "id": "small-font-size-shadow-host-size",
+    "module": "content/typography",
+    "kind": "style",
+    "selector": "[data-shadow]",
+    "pseudo": "",
+    "property": "/^(height|block-size|perspective-origin|transform-origin)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": ["tokens-schemes.html"]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of small-font-size-token-applied: a shadow host whose shadow tree holds block small helper text gets taller with it, and its transform and perspective origins follow. :has(small) does not look into a shadow tree, so small-font-size-container-size cannot match the host.",
+    "notes": "Fixtures: the three top-level div[data-shadow] hosts of tokens-schemes.html (plain, data-theme=dark and data-theme=light), whose shadow trees each hold a valid and an invalid helper. The plain host goes from 4076.08px to 4078.11px tall at 390 and from 5065.34px to 5068.5px at 1280 in Chrome Beta 158 (Firefox 160 beta: 4102.58px to 4104.58px and 5093.5px to 5096.67px). The host nested in the data-theme=dark div holds only an inline small and does not change, and neither does the host of tokens-base.html. Upstream pull request picocss/pico#561."
+  },
+  {
+    "id": "small-font-size-breadcrumb-shift",
+    "module": "content/typography",
+    "kind": "style",
+    "selector": "nav[aria-label=breadcrumb] li",
+    "pseudo": "::after",
+    "property": "/^(top|bottom|inset-block-start|inset-block-end)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": ["kitchen-sink.html", "tokens-schemes.html"]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of small-font-size-container-size: the breadcrumb dividers are absolutely positioned at their static position with no positioned ancestor, so when the small helper text above them gets taller, their resolved vertical insets move down by the same amount.",
+    "notes": "Fixtures: the breadcrumbs of tokens-schemes.html, in the page block and in the three shadow roots, below the helpers, and the breadcrumb of kitchen-sink.html, below its form helpers, which nested-list-margins-breadcrumb-shift also matches. In tokens-schemes.html the page breadcrumb's top inset goes from 3407.7px to 3409.73px at 390 and from 3886.06px to 3888.56px at 1280 in Chrome Beta 158 (Firefox 160 beta: 3433.12px to 3435.12px and 3914.12px to 3916.62px), and the third shadow root's from 30806.6px to 30822.9px at 390 (Firefox: 31014.5px to 31030.5px). The entry is limited by page, not by preset, so it applies under every preset that runs these pages. Upstream pull request picocss/pico#561."
+  },
+  {
+    "id": "small-font-size-nav-item-widths",
+    "module": "content/typography",
+    "kind": "style",
+    "selector": "nav:has(small) :is(ul, li, [role=group], input)",
+    "pseudo": "/^(|::placeholder)$/",
+    "property": "/^(width|inline-size|perspective-origin|transform-origin)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": ["components-nav.html"]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of small-font-size-token-applied: in a nav whose item holds a group followed by small helper text, the larger small changes that item's content sizes, so the nav's two lists, their items, the group and its input share the nav's width slightly differently, and their transform and perspective origins follow.",
+    "notes": "Fixture: the \"Group helper\" nav of components-nav.html, a div[role=group] followed by <small>Helper</small> in one item. The group goes from 275.328px to 275.812px wide at 390 and from 343px to 345.219px at 1280 in Chrome Beta 158 (Firefox 160 beta: 285.85px to 286.25px and 400.017px to 402.183px), and the first list from 114.672px to 114.188px at 390 (Firefox: 104.15px to 103.75px). The input's placeholder follows its width in Chrome. Heights do not change, and the other navs of the page show no difference. Upstream pull request picocss/pico#561."
   }
 ]

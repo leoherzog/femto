@@ -486,6 +486,17 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   quarter-spacing top margin and no bottom margin. Their containers up to the document get shorter,
   and the absolutely positioned breadcrumb dividers below them in `kitchen-sink.html` move up
   (fixtures: the nested `ul`, `ol` and `dl` of both pages' typography blocks).
+  `small-font-size-token-applied`, on every `small` and the elements inside it, with
+  `-container-size`, limited to the 14 pages that hold a `<small>`, `-shadow-host-size` and
+  `-breadcrumb-shift`, limited to `tokens-schemes.html` (and the kitchen sink's breadcrumb), and
+  `-nav-item-widths`, limited to `components-nav.html`. 2.1.1
+  declares `--femto-font-size: 0.875em` on `small` but never applies it, so `small` kept the
+  browser's `smaller`, 0.8333em; femto applies it, so `small` and the em-based sizes inside it are
+  5% larger, the elements and shadow hosts holding block helper text get taller, the breadcrumb
+  dividers below them move down, and the nav holding a group and its helper shares its width
+  slightly differently (fixtures: every `<small>` of those pages, such as the form helpers of
+  `forms-basics.html` and `kitchen-sink.html` and the helpers in the shadow roots of
+  `tokens-schemes.html`).
 - `content-table.json`: `striped-row-data-theme`, with `-image`, limited to
   `classes-table-striped.html`. 2.1.1 painted an odd body cell of a `.striped` table with the
   translucent stripe alone, so under a `data-theme` on the table, its `tbody`, the row or the cell

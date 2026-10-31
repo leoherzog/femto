@@ -521,6 +521,9 @@ hgroup > *:not(:first-child):last-child {
   --femto-font-weight: unset;
   font-size: 1rem;
 }
+small {
+  font-size: var(--femto-font-size);
+}
 :where(ol, ul) li {
   margin-bottom: calc(var(--femto-typography-spacing-vertical) * 0.25);
 }
