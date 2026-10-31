@@ -1,0 +1,50 @@
+[
+  {
+    "id": "rtl-breadcrumb-backslash",
+    "module": "components/nav",
+    "kind": "style",
+    "selector": "[dir=rtl] nav[aria-label=breadcrumb] ul li:not(:last-child) *",
+    "pseudo": "::after",
+    "property": "content",
+    "reference": "\"\\\\\"",
+    "femto": "/^(none|normal)$/",
+    "where": {
+      "pages": ["components-nav.html", "kitchen-sink.html"]
+    },
+    "category": "natural-fix",
+    "reason": "2.1.1 sets content: \"\\\\\" with [dir=rtl] nav[aria-label=breadcrumb] ul li:not(:last-child) ::after, a leftover from the old \"/\" divider. Because of the space before ::after, it matches the ::after of every element inside an rtl breadcrumb item except the last, not the item's own ::after, so each link or span showed a stray backslash in its own color after its text, next to the real divider, and a tooltip inside lost its caret. femto drops the rule. Rtl breadcrumbs use the same li::after divider as ltr, from --femto-nav-breadcrumb-divider, which the browser mirrors (\">\" draws as \"<\"). Ltr breadcrumbs are unchanged.",
+    "notes": "Fixtures: every breadcrumb of components-nav.html in its rtl cells and its <div dir=\"rtl\"> breadcrumb in its ltr cells, and the kitchen-sink.html breadcrumb in its rtl cells. where.dirs is not set because the dir=rtl island shows the change in ltr cells. femto accepts none or normal, however a browser reports the missing ::after. Probed with a standalone Selenium page in Chrome 158 and Firefox 160 beta, light and dark, at 390 and 1280: each gap of an rtl breadcrumb goes from the mirrored divider plus a backslash in the link color to a single centered divider, the same as ltr, a custom divider token stays honored, and a full computed-style diff changes nothing outside rtl breadcrumbs. Upstream issue picocss/pico#734."
+  },
+  {
+    "id": "rtl-breadcrumb-backslash-geometry",
+    "module": "components/nav",
+    "kind": "style",
+    "selector": "[dir=rtl] nav[aria-label=breadcrumb] :is(ul, ul li:not(:last-child), ul li:not(:last-child) *)",
+    "pseudo": "",
+    "property": "/^(width|inline-size|perspective-origin|transform-origin)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": ["components-nav.html", "kitchen-sink.html"]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of rtl-breadcrumb-backslash: without the stray backslash, each link or span inside an rtl breadcrumb item except the last is narrower by the glyph's width, so the widths of those elements, their items and the list (and the origins that follow from them) match the ltr breadcrumb instead of 2.1.1's wider rtl one.",
+    "notes": "Probed in Chrome 158 and Firefox 160 beta: rtl link widths go from 63.70/85.84/74.58 to 59.14/81.28/70.02 at 390 and from 78.14/104.34/91.08 to 72.61/98.81/85.55 at 1280, equal to ltr (4.56px and 5.53px narrower). Fixtures and where as for rtl-breadcrumb-backslash. Upstream issue picocss/pico#734."
+  },
+  {
+    "id": "rtl-breadcrumb-backslash-divider-inset",
+    "module": "components/nav",
+    "kind": "style",
+    "selector": "[dir=rtl] nav[aria-label=breadcrumb] ul li:not(:last-child)",
+    "pseudo": "::after",
+    "property": "/^(left|right|inset-inline-start|inset-inline-end)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": ["components-nav.html", "kitchen-sink.html"]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of rtl-breadcrumb-backslash: the item's own divider is absolutely positioned at the end of its narrower content, so its insets move and the divider sits centered in the gap, as in ltr, instead of beside 2.1.1's stray backslash.",
+    "notes": "Probed in Chrome 158 and Firefox 160 beta: the divider moves from 2.5 to 3.5px off center to within 1px of center in every gap, at 390 and 1280, light and dark. Fixtures and where as for rtl-breadcrumb-backslash. Upstream issue picocss/pico#734."
+  }
+]

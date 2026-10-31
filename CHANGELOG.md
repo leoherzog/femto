@@ -42,6 +42,7 @@ The first alpha of femto 3: Pico CSS 2.1.1's default build rewritten as plain CS
 Rendering bugs that Pico 2.1.1 has. Where Pico has an open issue for one, it is linked.
 
 - In Firefox, an indeterminate `<progress>` shows the empty track when the user prefers reduced motion, as in Chrome and Safari, instead of a full bar that looked complete.
+- A right-to-left breadcrumb shows only its divider between items, as a left-to-right one does, instead of also a stray backslash after the link in every item but the last ([picocss/pico#734](https://github.com/picocss/pico/issues/734)).
 
 ### Known issues
 

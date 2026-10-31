@@ -418,10 +418,15 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
 - `components-progress.json`: `firefox-indeterminate-progress-reduced-motion`, documentation only
   (no run applies `reduce`; see Known limits). Firefox's bar on an indeterminate progress is
   transparent whatever the motion preference, where 2.1.1 left a full bar with reduced motion.
+- `components-nav.json`: `rtl-breadcrumb-backslash`, with `-geometry` and `-divider-inset`, limited to
+  `components-nav.html` and `kitchen-sink.html`. 2.1.1's rtl rule gave the `::after` of every element
+  inside a breadcrumb item but the last a backslash; femto drops it, so an rtl breadcrumb shows only
+  its mirrored divider, and its links, items and list are as narrow as in ltr. `where.dirs` is not
+  set: the `<div dir="rtl">` breadcrumb in `components-nav.html` shows the change in its ltr cells.
 - `rig.json`: the checks Safari cannot run (`safari-no-media-dark`,
   `safari-no-focus-visible-date-input`).
 
-The other 25 modules need no entry. Two fixtures exist to make the registry's checks meaningful:
+The other 24 modules need no entry. Two fixtures exist to make the registry's checks meaningful:
 `colors.html` has a "Two classes" block in which each span carries two neighboring utility classes
 in file order, so a change of rule order in `femto.colors.css` shows as a difference, and
 `components-tooltip.html` has tooltips on an open accordion summary and on two dropdown summaries,

@@ -2045,9 +2045,6 @@ aside li a {
 aside li [role=button] {
   margin: inherit;
 }
-[dir=rtl] nav[aria-label=breadcrumb] ul li:not(:last-child) ::after {
-  content: "\\";
-}
 
 /* css/components/progress.css */
 progress {
