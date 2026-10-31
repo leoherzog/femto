@@ -1425,6 +1425,7 @@ details {
   margin-bottom: var(--femto-spacing);
 }
 details summary {
+  display: flow-root;
   line-height: 1rem;
   list-style-type: none;
   cursor: pointer;

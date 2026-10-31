@@ -423,17 +423,17 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   rounded corners and the first one loses the negative overlap margin (fixtures: the last group of
   "Role group", with a `<span hidden>` first and a hidden input last, and the last search of "Role
   search", with a hidden input first). `group-rtl-logical-corners`, limited to
-  `components-group.html` and `kitchen-sink.html`: 2.1.1 rounded the ends and placed the overlap
-  margin with left and right properties, so a right-to-left group rounded its inner corners, drew a
-  double border at one seam and pushed its end item one border width out; femto uses logical
-  properties, which follow each item's own direction, so a right-to-left group mirrors a
-  left-to-right one (fixtures: the "Right to left" block of `components-group.html`, and the kitchen
-  sink's groups in its rtl legs). `group-invalid-field-above-next-item`, limited to
-  `components-group.html`: 2.1.1 left every item at `z-index: auto`, so the next item painted over
-  the border an `aria-invalid="true"` or `"false"` field shares with it; femto gives that field
-  `z-index: 1`, so its whole red or green border shows, and a focused item stays above it at 2
-  (fixtures: the invalid text input and button after "Two inputs" in "Role group", and the valid
-  select, search input and submit in "Role search").
+  `components-group.html`, `components-nav.html` and `kitchen-sink.html`: 2.1.1 rounded the ends and
+  placed the overlap margin with left and right properties, so a right-to-left group rounded its
+  inner corners, drew a double border at one seam and pushed its end item one border width out;
+  femto uses logical properties, which follow each item's own direction, so a right-to-left group
+  mirrors a left-to-right one (fixtures: the "Right to left" block of `components-group.html`, and
+  the kitchen sink's groups and the nav groups of `components-nav.html` in their rtl legs).
+  `group-invalid-field-above-next-item`, limited to `components-group.html`: 2.1.1 left every item
+  at `z-index: auto`, so the next item painted over the border an `aria-invalid="true"` or `"false"`
+  field shares with it; femto gives that field `z-index: 1`, so its whole red or green border shows,
+  and a focused item stays above it at 2 (fixtures: the invalid text input and button after "Two
+  inputs" in "Role group", and the valid select, search input and submit in "Role search").
 - `options-no-transitions.json`: six entries limited to the `option-no-transitions` preset. 2.1.1
   builds that option by compiling the gated `transition` declarations, the modal animations and the
   tooltip slides out; an appended file can only reset them, so `options/no-transitions.css` sets
@@ -453,14 +453,11 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   `display: inline`, but Firefox 128 to 142 lays it out as a block container and lifted the dropdown
   above the nav links; femto sets it to 0. The summary's padding subtracts one border width instead
   of two, so its text lines up with the link text instead of one border width above it. The lift
-  needs the old details layout, so it was probed outside the harness. At 390 the labels of three
-  fixtures wrap, and the chevron on the second line grows the nav item by one border width
-  (`nav-dropdown-wrapped-label-item`, with `-page-shift` and `-breadcrumb-shift` for the rest of
-  `kitchen-sink.html`). `nav-dropdown-block-details`, on the same six pages: 2.1.1's
-  `display: inline` split the details around its block summary, and Firefox 143 and later placed
-  the open list against an empty fragment of it; femto makes the details a block, so only its own
-  display, size and origins change in the harness, and in Firefox (and Safari, per
-  picocss/pico#671) `nav-dropdown-open-list-placement` records the open lists of
+  needs the old details layout, so it was probed outside the harness. `nav-dropdown-block-details`,
+  on the same six pages: 2.1.1's `display: inline` split the details around its block summary, and
+  Firefox 143 and later placed the open list against an empty fragment of it; femto makes the
+  details a block, so only its own display, size and origins change in the harness, and in Firefox
+  (and Safari, per picocss/pico#671) `nav-dropdown-open-list-placement` records the open lists of
   `classes-dropdown-open.html` lining up under their summaries (fixtures: its two `dir="rtl"` nav
   lists and the left-aligned nav list below them).
 - `components-nav.json`: `rtl-breadcrumb-backslash`, with `-geometry` and `-divider-inset`, limited to
@@ -508,10 +505,24 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   only the computed `float` and `text-align` values change (fixtures: the close controls and footers
   of `components-modal.html`, `components-modal-show.html` and `classes-modal.html` in ltr and rtl,
   and the kitchen sink's closed dialogs).
+- `components-accordion.json`: `accordion-summary-flow-root`, on every summary. 2.1.1 floats the
+  chevron at the end of the summary's last line but leaves the summary a list item, which does not
+  contain floats, so a chevron that wraps below a full last line hung out of the summary, half
+  outside a `role=button` background or against the content of an open accordion; femto makes the
+  summary a flow root, which holds the chevron and grows by a row.
+  `accordion-full-last-line-geometry` and `-page-shift`, limited to `components-accordion.html`,
+  record that growth (fixture: `#full-last-line`, a 17rem wrapper whose plain and `role=button`
+  summaries fill their line at every width). A select-like nav dropdown whose label wraps still
+  paints its chevron below its fixed-height summary, but the summary now contains it for layout:
+  `accordion-nav-dropdown-item`, with `-page-shift` and `-breadcrumb-shift` for the rest of
+  `kitchen-sink.html`, records the nav item no longer growing to hold the chevron, and
+  `accordion-nav-dropdown-list-width` the closed list that the escaped chevron no longer narrows
+  (fixtures: the nav dropdowns of `kitchen-sink.html` at 375 to 640, and of `classes-dropdown.html`
+  and `classes-dropdown-open.html` at 390).
 - `rig.json`: the checks Safari cannot run (`safari-no-media-dark`,
   `safari-no-focus-visible-date-input`).
 
-The other 19 modules need no entry. Two fixtures exist to make the registry's checks meaningful:
+The other 18 modules need no entry. Two fixtures exist to make the registry's checks meaningful:
 `colors.html` has a "Two classes" block in which each span carries two neighboring utility classes
 in file order, so a change of rule order in `femto.colors.css` shows as a difference, and
 `components-tooltip.html` has tooltips on an open accordion summary and on two dropdown summaries,

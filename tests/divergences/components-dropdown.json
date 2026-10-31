@@ -43,72 +43,7 @@
     },
     "category": "natural-fix",
     "reason": "2.1.1 pads the fixed-height nav summary with the nav link spacing minus two border widths, which leaves one border width of extra space under the text, so the summary text sat one border width (1 to 1.5px at femto's root sizes) above the text of the nav links beside it. femto subtracts one border width, so the content box holds exactly one line and the text and chevron line up with the links. The summary box keeps its size and position, and a summary with role=button keeps its padding.",
-    "notes": "Fixtures: the plain nav summaries of the six pages in where.pages; the vertical padding goes from 6px to 7px at 390 and from 7.5px to 8.75px at 1280. Probed with a standalone Selenium page in Chrome Beta 158 and Firefox 160 beta at 1300, 1100, 700 and 400px, ltr and rtl, light and dark: the summary text sat 1.5, 1.37, 1.12 and 1px above the link text, and with the fix 0.25, 0.19, 0.06 and 0px (sub-pixel, as the border paints at a snapped 1px), with the same box. The same holds with Firefox's pre-143 details layout once nav-dropdown-no-negative-margin lines the box up. In the harness the pixel differences fall inside the summaries, apart from the 390px wrapped-label case of nav-dropdown-wrapped-label-item. Upstream issue picocss/pico#498."
-  },
-  {
-    "id": "nav-dropdown-wrapped-label-item",
-    "module": "components/dropdown",
-    "kind": "style",
-    "selector": "nav li:has(> details.dropdown > summary:not([role]))",
-    "pseudo": "",
-    "property": "/^(height|block-size|transform-origin|perspective-origin)$/",
-    "reference": "*",
-    "femto": "*",
-    "where": {
-      "pages": [
-        "classes-dropdown.html",
-        "classes-dropdown-open.html",
-        "kitchen-sink.html"
-      ],
-      "widths": [
-        390
-      ]
-    },
-    "category": "natural-fix",
-    "reason": "Consequence of nav-dropdown-summary-padding: when a nav dropdown's label wraps onto a second line, which already overflows the fixed-height summary in 2.1.1, the floated chevron on that line sits one border width lower with the text, and the nav item, which contains the float, grows by that much.",
-    "notes": "Fixtures: at 390 the labels \"Nav dropdown\" (kitchen-sink.html's header nav and classes-dropdown.html) and \"Open nav dropdown\" (classes-dropdown-open.html) wrap onto two lines. The item goes from 111px to 112px in kitchen-sink.html and from 87px to 88px in the other two, in Chrome Beta 158 and Firefox 160 beta, measured in a 390px iframe. At 1280 no label wraps and no item changes. Upstream issue picocss/pico#498."
-  },
-  {
-    "id": "nav-dropdown-wrapped-label-page-shift",
-    "module": "components/dropdown",
-    "kind": "style",
-    "selector": ":is(html, body, header:has(> nav details.dropdown), header > nav:has(details.dropdown), header > nav:has(details.dropdown) > ul)",
-    "pseudo": "",
-    "property": "/^(height|block-size|transform-origin|perspective-origin)$/",
-    "reference": "*",
-    "femto": "*",
-    "where": {
-      "pages": [
-        "kitchen-sink.html"
-      ],
-      "widths": [
-        390
-      ]
-    },
-    "category": "natural-fix",
-    "reason": "Consequence of nav-dropdown-wrapped-label-item: the nav item holding a dropdown with a wrapped label is the tallest in kitchen-sink.html's header nav at 390, so its one border width of growth also makes the nav, both of its lists, the header, the body and the document one border width taller.",
-    "notes": "Fixture: kitchen-sink.html's header nav at 390, where \"Nav dropdown\" wraps. The nav and its lists go from 111px to 112px, the header from 143px to 144px, and the body and document by 1px (8626.27px to 8627.27px in Chrome Beta 158, 8641.1px to 8642.1px in Firefox 160 beta). Everything below the header moves down 1px, so the pixel diff covers the page there. Upstream issue picocss/pico#498."
-  },
-  {
-    "id": "nav-dropdown-wrapped-label-breadcrumb-shift",
-    "module": "components/dropdown",
-    "kind": "style",
-    "selector": "nav[aria-label=breadcrumb] ul li:not(:last-child)",
-    "pseudo": "::after",
-    "property": "/^(top|bottom|inset-block-start|inset-block-end)$/",
-    "reference": "*",
-    "femto": "*",
-    "where": {
-      "pages": [
-        "kitchen-sink.html"
-      ],
-      "widths": [
-        390
-      ]
-    },
-    "category": "natural-fix",
-    "reason": "Consequence of nav-dropdown-wrapped-label-page-shift: the breadcrumb dividers are absolutely positioned at their static position, so when the header above them grows by one border width, their resolved vertical insets change by the same amount.",
-    "notes": "Fixture: the breadcrumb of kitchen-sink.html at 390, below the header whose nav dropdown label wraps; the bottom inset goes from -5553.23px to -5554.23px in Chrome Beta 158 and from -5564.83px to -5565.83px in Firefox 160 beta. Upstream issue picocss/pico#498."
+    "notes": "Fixtures: the plain nav summaries of the six pages in where.pages; the vertical padding goes from 6px to 7px at 390 and from 7.5px to 8.75px at 1280. Probed with a standalone Selenium page in Chrome Beta 158 and Firefox 160 beta at 1300, 1100, 700 and 400px, ltr and rtl, light and dark: the summary text sat 1.5, 1.37, 1.12 and 1px above the link text, and with the fix 0.25, 0.19, 0.06 and 0px (sub-pixel, as the border paints at a snapped 1px), with the same box. The same holds with Firefox's pre-143 details layout once nav-dropdown-no-negative-margin lines the box up. In the harness the pixel differences fall inside the summaries, apart from the 390px cells where a label wraps and the chevron on its second line, below the summary box, sits one border width lower. Upstream issue picocss/pico#498."
   },
   {
     "id": "nav-dropdown-block-details",

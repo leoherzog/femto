@@ -1,0 +1,157 @@
+[
+  {
+    "id": "accordion-summary-flow-root",
+    "module": "components/accordion",
+    "kind": "style",
+    "selector": "details summary",
+    "pseudo": "",
+    "property": "display",
+    "reference": "/^(list-item|block)$/",
+    "femto": "flow-root",
+    "category": "natural-fix",
+    "reason": "2.1.1 floats the accordion chevron (summary::after) to the end of the summary's last line, but leaves the summary a list item (a block in Safari 17.5), which does not contain floats. When the last line is too full for the chevron, it drops below the text and hangs out of the summary: by its full height under a plain summary, against the content of an open accordion and across the keyboard focus ring; half outside the background of a summary[role=button] or role=button dropdown; and below a block heading inside a summary, at every width, pushing the content's first line aside. femto makes every summary a flow root, so it holds its chevron and grows by one row when the chevron needs one. A summary whose chevron fits beside its last line keeps its size and chevron position, the marker stays hidden and toggling is unchanged. As a block formatting context, a summary also contains the bottom margin of a block heading or paragraph inside it, so such a summary grows by that margin plus the chevron row, and it no longer runs under a float from outside it: a summary of auto width narrows beside the float and a full-width summary[role=button] moves below it. The rule is details summary, at specificity (0,0,2), so an author rule that sets a summary's display needs at least that specificity and must come after femto, and bringing back the browser's disclosure triangle also needs display: list-item; a reset loaded before femto that sets summary { display: list-item }, as normalize.css, modern-normalize and Tailwind's preflight do, does not undo it.",
+    "notes": "Seen on every summary of every page, in every state; the fixture #full-last-line in components-accordion.html shows the containment (accordion-full-last-line-geometry). Probed with standalone Selenium pages in Chrome Beta 158 and Firefox 160 beta at widths 240 to 400px in 4px steps, light and dark, ltr and rtl, against 2.1.1, femto before the fix and the built dist (2.1.1 and femto before the fix render alike). Before, a long summary's chevron hung below it in 40 (Chrome) and 44 (Firefox) of 328 cells by 16px for a plain summary, in 32 and 28 by 11px for a role=button summary, in 24 and 28 role=button dropdowns, and in all 164 by 32px under a block h3, which pushed the open content's first line in by 24px. After, none hangs out: each of those summaries grows by exactly 16, 24 or 32px, and every other summary keeps its height, apart from role=button dropdowns right after a long select-like dropdown, whose escaped chevron no longer reaches them. With keyboard focus at 256px the plain summary's chevron reached 6px below the focus ring; it now ends 10px inside it. At 900px, click, click, Enter and Space toggle plain, role=button and role=link summaries open, closed, open, closed with every sheet, the text starts at the content edge (no marker is drawn) and ::marker content is normal. A float from outside, such as the chevron that escapes the link-child dropdown of classes-dropdown.html at 576 and 577px, now narrows the \"Right aligned list\" summary below it by 21.25px instead of covering its corner; the harness runs that page only at 390 and 1280. Safari was not probed: safaridriver could not start a session. display: flow-root is supported from Chrome 58, Firefox 53 and Safari 13; Safari 17.5's summary is display: block, which does not contain floats either, and femto's ::-webkit-details-marker rule still hides its marker. Upstream issue picocss/pico#653."
+  },
+  {
+    "id": "accordion-full-last-line-geometry",
+    "module": "components/accordion",
+    "kind": "style",
+    "selector": "#full-last-line *",
+    "pseudo": "",
+    "property": "/^(width|inline-size|height|block-size|transform-origin|perspective-origin)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": [
+        "components-accordion.html"
+      ]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of accordion-summary-flow-root on the fixture whose summaries fill their last line: each summary now holds the chevron that 2.1.1 hung below it, so it grows by one chevron row (a plain summary from 1rem to 2rem, a role=button summary by 1.5rem) and its details with it. Chrome and Firefox hold the content of a closed details in a ::details-content box that is an independent formatting context, which 2.1.1's escaped chevron narrowed; it now spans the details, which shows only in the computed width of the hidden paragraph.",
+    "notes": "Fixture: #full-last-line in components-accordion.html, a 17rem wrapper holding a closed plain accordion and a closed role=button accordion. Each title is one line that leaves less than the chevron's 1.5rem margin box free (16.38 and 16.49rem for the plain title, 14.17 and 14.25rem for the role=button title, in Chrome and Firefox), so the chevron wraps at every harness width and root size: with 2.1.1 it hangs out in all 44 cells (22 widths, ltr and rtl) per browser, with the default and fixed-typography presets, and with femto in none. At 390 the plain summary goes from 16px to 32px and the role=button summary from 50px to 74px, at 1280 from 20px to 40px and from 62px to 92px; the hidden paragraphs widen from 248px and 231px to 272px at 390 and from 310px and 289px to 340px at 1280, in Chrome Beta 158 and Firefox 160 beta, ltr and rtl. Upstream issue picocss/pico#653."
+  },
+  {
+    "id": "accordion-full-last-line-page-shift",
+    "module": "components/accordion",
+    "kind": "style",
+    "selector": ":is(html, body, [data-module=\"components/accordion\"], #full-last-line)",
+    "pseudo": "",
+    "property": "/^(height|block-size|transform-origin|perspective-origin)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": [
+        "components-accordion.html"
+      ]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of accordion-full-last-line-geometry: the fixture's two summaries grow by 2.5rem together, so its wrapper, the module wrapper, the body and the document grow by the same amount.",
+    "notes": "Fixture: #full-last-line in components-accordion.html. The wrapper goes from 82px to 122px at 390 and from 102px to 152px at 1280, and the module wrapper, the body and the document grow by 40px and 50px (the module wrapper from 1913.38px to 1953.38px at 390 in Chrome Beta 158 and from 1913.4px to 1953.4px in Firefox 160 beta). Upstream issue picocss/pico#653."
+  },
+  {
+    "id": "accordion-nav-dropdown-item",
+    "module": "components/accordion",
+    "kind": "style",
+    "selector": "nav li:has(> details.dropdown > summary:not([role]))",
+    "pseudo": "",
+    "property": "/^(height|block-size|transform-origin|perspective-origin)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": [
+        "classes-dropdown.html",
+        "classes-dropdown-open.html",
+        "kitchen-sink.html"
+      ],
+      "widths": [
+        375,
+        390,
+        575,
+        576,
+        577,
+        640
+      ]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of accordion-summary-flow-root in a squeezed nav. A select-like nav dropdown's summary has a fixed height; when its label wraps, which already overflows that height in 2.1.1, the chevron floats on the second line, below the summary box. 2.1.1's summary did not contain that float, so the nav item, which does, grew to hold it and the nav row became taller than its links. femto's summary contains it, so the item keeps the height of the summary box. The chevron still paints below the box, as in 2.1.1; in a header nav it can now reach a few pixels below the header instead of sitting inside a taller one.",
+    "notes": "Fixtures: the select-like \"Nav dropdown\" of kitchen-sink.html's header nav at 375, 390, 575, 576, 577 and 640, and the select-like nav dropdowns of classes-dropdown.html and classes-dropdown-open.html at 390, the widths where their labels wrap. In kitchen-sink.html the item goes from 111px to 72px at 375 and 390, from 87px to 72px at 575, from 117.88px to 76.5px at 576 and 577 and from 92.38px to 76.5px at 640; in the other two pages from 87px to 72px. Measured in Chrome Beta 158 and Firefox 160 beta, ltr and rtl. With option-fixed-typography the label no longer wraps at 640. Before the fix, the chevron's one border width drop from nav-dropdown-summary-padding grew these items by another 1px. Upstream issue picocss/pico#653."
+  },
+  {
+    "id": "accordion-nav-dropdown-page-shift",
+    "module": "components/accordion",
+    "kind": "style",
+    "selector": ":is(html, body, header:has(> nav details.dropdown), header > nav:has(details.dropdown), header > nav:has(details.dropdown) > ul)",
+    "pseudo": "",
+    "property": "/^(height|block-size|transform-origin|perspective-origin)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": [
+        "kitchen-sink.html"
+      ],
+      "widths": [
+        375,
+        390,
+        575,
+        576,
+        577,
+        640
+      ]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of accordion-nav-dropdown-item: that item was the tallest in kitchen-sink.html's header nav, so the nav, both of its lists, the header, the body and the document get shorter by the same amount, and the nav keeps the height of its other items.",
+    "notes": "Fixture: kitchen-sink.html's header nav. The nav goes from 111px to 80px at 375 and 390, from 87px to 80px at 575, from 117.88px to 85px at 576 and 577 and from 92.38px to 85px at 640, and the header from 143px to 112px, 119px to 112px, 151.88px to 119px and 126.38px to 119px, in Chrome Beta 158 and Firefox 160 beta. Everything below the header moves up, so the pixel diff covers the page there. Upstream issue picocss/pico#653."
+  },
+  {
+    "id": "accordion-nav-dropdown-breadcrumb-shift",
+    "module": "components/accordion",
+    "kind": "style",
+    "selector": "nav[aria-label=breadcrumb] ul li:not(:last-child)",
+    "pseudo": "::after",
+    "property": "/^(top|bottom|inset-block-start|inset-block-end)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": [
+        "kitchen-sink.html"
+      ],
+      "widths": [
+        375,
+        390,
+        575,
+        576,
+        577,
+        640
+      ]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of accordion-nav-dropdown-page-shift: the breadcrumb dividers are absolutely positioned at their static position, so when the header above them gets shorter, their resolved vertical insets change by the same amount.",
+    "notes": "Fixture: the breadcrumb of kitchen-sink.html, below the header nav whose dropdown label wraps at these widths; nested-list-margins-breadcrumb-shift also matches it. Upstream issue picocss/pico#653."
+  },
+  {
+    "id": "accordion-nav-dropdown-list-width",
+    "module": "components/accordion",
+    "kind": "style",
+    "selector": "nav details.dropdown > summary:not([role]) + ul, nav details.dropdown > summary:not([role]) + ul li, nav details.dropdown > summary:not([role]) + ul li a",
+    "pseudo": "",
+    "property": "/^(width|inline-size|transform-origin|perspective-origin)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": [
+        "classes-dropdown.html",
+        "kitchen-sink.html"
+      ],
+      "widths": [
+        390,
+        575,
+        576,
+        577,
+        640
+      ]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of accordion-summary-flow-root in a squeezed nav. Chrome and Firefox hold the list of a closed dropdown in a ::details-content box that is an independent formatting context and the list's containing block. The chevron that 2.1.1 let escape below a wrapped select-like nav summary narrowed that box, and with it the list (width: 100%), its items and links, which were narrower than the summary. Contained in the summary, the chevron no longer reaches it, so the closed list is as wide as the summary, as at the widths where the label does not wrap. The list is not rendered while closed, and an open list was already as wide as the summary.",
+    "notes": "Fixtures: the closed lists of the select-like nav dropdowns of kitchen-sink.html at 575 and 640 (576 and 577 with option-fixed-typography) and of classes-dropdown.html at 390. In kitchen-sink.html the list goes from 86.02px to 115.02px at 575 and from 118.7px to 149.45px at 640 in Chrome Beta 158 (85.97px to 114.97px and 118.45px to 149.2px in Firefox 160 beta), with its item and link; in classes-dropdown.html its item and link go from 88.52px to 117.52px. The open lists of classes-dropdown-open.html do not change. Upstream issue picocss/pico#653."
+  }
+]

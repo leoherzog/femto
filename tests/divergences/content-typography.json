@@ -45,6 +45,6 @@
     },
     "category": "natural-fix",
     "reason": "Consequence of nested-list-margins-container-size: the breadcrumb dividers are absolutely positioned at their static position with no positioned ancestor, so when the nested lists above them in kitchen-sink.html get shorter, their resolved vertical insets change by the same amount.",
-    "notes": "Fixture: the breadcrumb of kitchen-sink.html, below its typography block. At 1280 the top inset goes from 7091.41px to 7076.41px in Chrome Beta 158 and from 7119.5px to 7104.5px in Firefox 160 beta. At 390 nav-dropdown-wrapped-label-breadcrumb-shift also matches it. Upstream issue picocss/pico#672."
+    "notes": "Fixture: the breadcrumb of kitchen-sink.html, below its typography block. At 1280 the top inset goes from 7091.41px to 7076.41px in Chrome Beta 158 and from 7119.5px to 7104.5px in Firefox 160 beta. At 375, 390, 575, 576, 577 and 640 accordion-nav-dropdown-breadcrumb-shift also matches it. Upstream issue picocss/pico#672."
   }
 ]
