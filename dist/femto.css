@@ -1185,6 +1185,12 @@ label:has([type=checkbox], [type=radio]) {
   border-width: 0.35em;
   background-image: none;
 }
+input:where([type=radio]:not(:checked)) {
+  transition-property:
+    border-color,
+    color,
+    box-shadow;
+}
 [type=checkbox][role=switch] {
   --femto-background-color: var(--femto-switch-background-color);
   --femto-color: var(--femto-switch-color);

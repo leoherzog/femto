@@ -538,10 +538,20 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   an author's own cell background still win (fixtures: `#card-table`, a striped table in a card,
   whose head and even cells change in the dark legs, and `#card-table-light` and `#card-table-dark`
   in the islands' cards, of which only the dark one changes).
+- `forms-checkbox-radio-switch.json`: `radio-uncheck-no-background-fade`, limited to the five pages
+  that have an unchecked radio. 2.1.1 faded a radio's background from the dot's color after its
+  border had already thinned, so for about 150ms an unchecked radio was a full disc in that color,
+  white in the dark scheme and black in the light scheme with the six themes whose dot is black;
+  femto leaves `background-color` out of an unchecked radio's `transition-property` with
+  `input:where([type=radio]:not(:checked))`, at (0,0,1), so an author's transition rule loaded after
+  femto still wins and the no-transitions option's `input` reset still restores `all`. The harness
+  finishes transitions, so it shows only the computed property, and the flash was probed outside it
+  (fixtures: every unchecked radio, such as `#r-2` and `#r-3` in `forms-checkbox-radio-switch.html`
+  and `#ks-r2` in `kitchen-sink.html`).
 - `rig.json`: the checks Safari cannot run (`safari-no-media-dark`,
   `safari-no-focus-visible-date-input`).
 
-The other 17 modules need no entry. Two fixtures exist to make the registry's checks meaningful:
+The other 16 modules need no entry. Two fixtures exist to make the registry's checks meaningful:
 `colors.html` has a "Two classes" block in which each span carries two neighboring utility classes
 in file order, so a change of rule order in `femto.colors.css` shows as a difference, and
 `components-tooltip.html` has tooltips on an open accordion summary and on two dropdown summaries,

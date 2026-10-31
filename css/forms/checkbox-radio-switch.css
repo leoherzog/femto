@@ -58,6 +58,10 @@ label:has([type=checkbox], [type=radio]) {
   border-width: 0.35em;
   background-image: none;
 }
+/* An unchecked radio's border snaps back to the thin width, so its background changes at once too. */
+input:where([type=radio]:not(:checked)) {
+  transition-property: border-color, color, box-shadow;
+}
 
 [type=checkbox][role=switch] {
   --femto-background-color: var(--femto-switch-background-color);

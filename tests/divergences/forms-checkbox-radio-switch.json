@@ -1,0 +1,24 @@
+[
+  {
+    "id": "radio-uncheck-no-background-fade",
+    "module": "forms/checkbox-radio-switch",
+    "kind": "style",
+    "selector": "[type=radio]:not(:checked)",
+    "pseudo": "",
+    "property": "transition-property",
+    "reference": "background-color, border-color, color, box-shadow",
+    "femto": "border-color, color, box-shadow",
+    "where": {
+      "pages": [
+        "classes-dropdown.html",
+        "components-group.html",
+        "forms-basics.html",
+        "forms-checkbox-radio-switch.html",
+        "kitchen-sink.html"
+      ]
+    },
+    "category": "natural-fix",
+    "reason": "2.1.1 transitions an input's background-color, border-color, color and box-shadow but not its border-width. A checked radio is a 0.35em border around a --femto-primary-inverse background, so on uncheck the border snaps back to --femto-border-width at once while the background fades to the form background over 0.2s. For about 150ms the whole radio is a disc in the dot's color, which neither state shows: white in the dark scheme, and black in the light scheme with the amber, grey, lime, pumpkin, sand and yellow themes. femto leaves background-color out of an unchecked radio's transition-property, so the background takes the unchecked color at once while the border color, text color and focus ring still fade. Checking still fades the dot in, because the thick border is already in place. The one other effect is that a scheme flip no longer fades an unchecked radio's background. The rule is input:where([type=radio]:not(:checked)) in forms/checkbox-radio-switch.css, at the (0,0,1) of the input transition rule in forms/basics.css and after it, so an author's own transition rule on inputs or radios loaded after femto still wins, and the no-transitions option's input reset, at the same specificity and loaded later, restores transition-property all, so that preset matches the 2.1.1 no-transitions build and shows no difference.",
+    "notes": "Fixtures: every unchecked radio in the harness pages, which are the only ones listed in where.pages: #r-2 (hover, focus, active), the disabled #r-3 and the \"Unchecked invalid\" radio in forms-checkbox-radio-switch.html, the aria-invalid=false \"Valid radio\" (focus) and the fs-radio fieldset radio in forms-basics.html, the g-radio radio in components-group.html, the \"Option two\" radio in classes-dropdown.html and #ks-r2 in kitchen-sink.html. Checked radios, checkboxes and switches are unchanged, and resting screenshots are identical. The harness finishes transitions before comparing, so it shows only the computed property; the flash was probed with a standalone Selenium page in Chrome 158 and Firefox 160 beta, data-theme dark and light and no data-theme with preferred dark and light, ltr and rtl, at 1000 and 390px, unchecking a radio and pausing the transitions at 0, 50, 100 and 150ms. 2.1.1 and femto before the fix in the dark scheme: rgb(255, 255, 255) at 0ms, #e2e2e4 at 50ms, rgb(142, 144, 149) (Chrome) or rgb(142, 144, 150) (Firefox) at 100ms, #393e47 at 150ms, with every pixel inside the 2px border more than 48 luminance above the settled fill until 100ms, and a real click peaking 222.3 above it; amber in the light scheme: #000000, then rgb(126, 126, 126) at 100ms, peaking 251.8 below the fill. femto: rgb(28, 33, 44) in the dark scheme and rgb(251, 252, 252) in the light one in every frame, peak 0, in both browsers. Checking still fades background-color and the four border colors, and an author input or [type=radio] transition rule loaded after femto computes as before. Reduced motion and no-transitions never flashed. Upstream issue picocss/pico#502."
+  }
+]
