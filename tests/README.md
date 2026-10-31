@@ -461,10 +461,18 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   its parent, so the item, its nav and lists, the module wrapper, the body and the document are a
   rem shorter (fixture: the "Groups" nav; the "Group helper" nav above it, a group followed by
   `<small>`, keeps the margin and shows no difference).
+- `content-typography.json`: `nested-list-margins`, with `-container-size` and `-breadcrumb-shift`,
+  limited to `content-typography.html` and `kitchen-sink.html`. 2.1.1's
+  `:where(dl, ol, ul) :where(dl, ol, ul)` has zero specificity and loses to the earlier list rule, so
+  a list nested in another list kept a margin-top of 0 and the full typography spacing below it;
+  femto writes the second half as `:is(dl, ol, ul)`, as 1.x did, so nested lists get the
+  quarter-spacing top margin and no bottom margin. Their containers up to the document get shorter,
+  and the absolutely positioned breadcrumb dividers below them in `kitchen-sink.html` move up
+  (fixtures: the nested `ul`, `ol` and `dl` of both pages' typography blocks).
 - `rig.json`: the checks Safari cannot run (`safari-no-media-dark`,
   `safari-no-focus-visible-date-input`).
 
-The other 22 modules need no entry. Two fixtures exist to make the registry's checks meaningful:
+The other 21 modules need no entry. Two fixtures exist to make the registry's checks meaningful:
 `colors.html` has a "Two classes" block in which each span carries two neighboring utility classes
 in file order, so a change of rule order in `femto.colors.css` shows as a difference, and
 `components-tooltip.html` has tooltips on an open accordion summary and on two dropdown summaries,

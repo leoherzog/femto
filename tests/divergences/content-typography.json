@@ -1,0 +1,50 @@
+[
+  {
+    "id": "nested-list-margins",
+    "module": "content/typography",
+    "kind": "style",
+    "selector": ":where(dl, ol, ul) :is(dl, ol, ul)",
+    "pseudo": "",
+    "property": "/^margin-(top|bottom|block-start|block-end)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": ["content-typography.html", "kitchen-sink.html"]
+    },
+    "category": "natural-fix",
+    "reason": "2.1.1 means to give a list nested in another list a top margin of a quarter of --femto-typography-spacing-vertical and no other margin, in :where(dl, ol, ul) :where(dl, ol, ul). That selector has zero specificity, so the earlier dl, ol, ul rule wins: a nested ul, ol or dl keeps margin-top 0 and the full typography spacing as margin-bottom, and the next item sits 16 to 20px below the nested list instead of the 4 to 5px gap between list items (0 after a nested dl, whose items have no margins). 1.x wrote the second half as :is(dl, ol, ul), and 2.0 changed it to :where(). femto writes :where(dl, ol, ul) :is(dl, ol, ul). Its specificity is (0,0,1) and it comes after the list rule, so nested lists get the quarter-spacing top margin and no bottom margin. Like 1.x's rule, it matches any list inside a list, not only a direct child of li or dd: a list in a card, blockquote, accordion or .grid within a list item also gets margin 0 and the quarter top margin, and in loose items (li > p) the gap after a nested list becomes the item gap (4 to 5px) while the gaps around the paragraphs keep the full spacing. Rules with higher specificity still win: the dropdown menu keeps its margins, and lists inside nav keep margin-bottom 0, so a list nested in a nav list gains only the top margin.",
+    "notes": "Fixtures: content-typography.html (ul > li > ul, ul > li > ol, ol > li > ol, dl > dd > dl and dl > dd > ul) and kitchen-sink.html (ul > li > ul, ol > li > ol and dl > dd > ul). Their margin-top goes from 0 to 4px at 390 and 5px at 1280, and their margin-bottom from 16px and 20px to 0, in Chrome Beta 158 and Firefox 160 beta, ltr and rtl, in every scheme. Probed with standalone Selenium pages in Chrome 158 and Firefox 160 beta at 500, 800 and 1280px (roots of 16, 18 and 20px), ltr and rtl, light media and data-theme=dark, with the same numbers in both browsers: at 800 the gap from a nested ul or ol, or a ul in a div in an item, to the next item goes from 18 to 4.5px, the plain item gap, and a parent item's text to its nested list from 27 to 31.5px; a nested dl to a following ul in the same dd from 18 to 4.5px; a list nested in an aside list from 31.5 to 18px above the next item; in an aside nav (aside > nav > ul > li > ul) the nested list gains a 4.5px top margin and the gap after it stays 9px. In a loose item (li > p, then a nested ul) the gap from the nested list to the next item's paragraph goes from 18 to 4.5px, while the paragraph to nested list step stays 18px, as in 1.x. Unchanged: top-level list margins, the plain item gap, the gap from the last nested item to a following paragraph, dropdown menus in and outside a nav (summary to menu 2.25px) and the docs-style aside (nav > details > ul). A computed-style diff of every tests/pages page at 500 and 1000px, ltr and rtl, changes nothing but these lists, the heights of their containers (nested-list-margins-container-size) and, below them, absolutely positioned elements (nested-list-margins-breadcrumb-shift). The nav case has no harness fixture. Upstream issue picocss/pico#672; upstream commit 00f1486a changed 1.x's :is() to :where()."
+  },
+  {
+    "id": "nested-list-margins-container-size",
+    "module": "content/typography",
+    "kind": "style",
+    "selector": ":has(:is(dl, ol, ul) :is(dl, ol, ul)), :is(dl, ol, ul):has(:is(dl, ol, ul)), :is(dl, ol, ul) :has(:is(dl, ol, ul))",
+    "pseudo": "",
+    "property": "/^(height|block-size|perspective-origin|transform-origin)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": ["content-typography.html", "kitchen-sink.html"]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of nested-list-margins: a nested list trades 2.1.1's full bottom margin for the smaller quarter-spacing top margin, so the li or dd that holds it, the outer list and every ancestor up to the document get shorter by the difference, and their transform and perspective origins follow.",
+    "notes": "Fixtures as for nested-list-margins. The document goes from 3118.36px to 3082.36px at 390 and from 3797.75px to 3752.75px at 1280 for content-typography.html, and from 9998.53px to 9983.53px at 1280 for kitchen-sink.html, in Chrome Beta 158 (Firefox 160 beta: 3119.62px to 3083.62px, 3799.8px to 3754.8px and 10032.3px to 10017.3px). The selector covers html, body, the page's main, the data-module wrapper, the outer list and the item holding the nested list. Upstream issue picocss/pico#672."
+  },
+  {
+    "id": "nested-list-margins-breadcrumb-shift",
+    "module": "content/typography",
+    "kind": "style",
+    "selector": "nav[aria-label=breadcrumb] ul li:not(:last-child)",
+    "pseudo": "::after",
+    "property": "/^(top|bottom|inset-block-start|inset-block-end)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": ["kitchen-sink.html"]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of nested-list-margins-container-size: the breadcrumb dividers are absolutely positioned at their static position with no positioned ancestor, so when the nested lists above them in kitchen-sink.html get shorter, their resolved vertical insets change by the same amount.",
+    "notes": "Fixture: the breadcrumb of kitchen-sink.html, below its typography block. At 1280 the top inset goes from 7091.41px to 7076.41px in Chrome Beta 158 and from 7119.5px to 7104.5px in Firefox 160 beta. At 390 nav-dropdown-wrapped-label-breadcrumb-shift also matches it. Upstream issue picocss/pico#672."
+  }
+]
