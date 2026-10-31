@@ -470,7 +470,14 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   half a rem above the other items and the nav was a rem taller; femto zeroes it when the group ends
   its parent, so the item, its nav and lists, the module wrapper, the body and the document are a
   rem shorter (fixture: the "Groups" nav; the "Group helper" nav above it, a group followed by
-  `<small>`, keeps the margin and shows no difference).
+  `<small>`, keeps the margin and shows no difference). `nav-role-button-link-margin-top`, with
+  `nav-role-button-link-item`, limited to `components-nav.html`. 2.1.1 reset the side and bottom
+  margins of an `<a role="button">` in a nav item but not the links' negative top margin, so it sat
+  about 0.25rem above a `<button>` beside it; femto zeroes it with `nav li :where([role=button])`, so
+  the link lines up and its item is as tall as a button's (fixture: `#cta` in the first nav).
+  At 390 its text wraps and its item is the tallest in the nav, so `-wrap-geometry`, `-page-shift`
+  and `-breadcrumb-shift` record that nav, its lists, the module wrapper, the body and the document
+  growing by 8px and the breadcrumb dividers below moving down with them.
 - `content-typography.json`: `nested-list-margins`, with `-container-size` and `-breadcrumb-shift`,
   limited to `content-typography.html` and `kitchen-sink.html`. 2.1.1's
   `:where(dl, ol, ul) :where(dl, ol, ul)` has zero specificity and loses to the earlier list rule, so

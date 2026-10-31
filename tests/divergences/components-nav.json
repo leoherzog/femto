@@ -94,5 +94,88 @@
     "category": "natural-fix",
     "reason": "Consequence of nav-group-margin-geometry: the nav holding the group is 1rem shorter, so the module wrapper, the body and the document that hold it are 1rem shorter too.",
     "notes": "Fixture: the \"Groups\" nav at the end of components-nav.html. The wrapper, body and document go from 1368.38px to 1352.38px at 390 in Chrome Beta 158 (1368.4px to 1352.4px in Firefox 160 beta) and from 1627.5px to 1607.5px at 1280 in both. Nothing follows the nav, so the pixel difference stays inside it. Upstream issue picocss/pico#699."
+  },
+  {
+    "id": "nav-role-button-link-margin-top",
+    "module": "components/nav",
+    "kind": "style",
+    "selector": "nav li a[role=button]",
+    "pseudo": "",
+    "property": "/^margin-(top|block-start)$/",
+    "reference": "/^-/",
+    "femto": "0px",
+    "where": {
+      "pages": ["components-nav.html"]
+    },
+    "category": "natural-fix",
+    "reason": "2.1.1 gives every link in a nav item a negative margin on all four sides (nav li :where(a, [role=link])). Its next rule, for buttons, [role=button], [type=button], inputs and selects, resets margin-right, margin-bottom and margin-left but not margin-top, and a <button> already has margin 0, so only an <a role=button> kept the links' negative top margin. Its item came out shorter, it sat 3.5 to 4.25px above the links and the <button> or <input type=button> beside it, and a nav whose tallest item was such a link was 7 to 8.5px shorter than one with a <button>. femto adds nav li :where([role=button]) { margin-top: 0 } after that rule, so the link lines up with a button and a nav whose tallest item is such a link is as tall as one with a <button>. The :where() keeps the link rule's specificity, so an author's own margin-top on the link still applies. The rule is separate because the shared rule also matches label > input and label > select in a nav item, which keep their 0.25 * --femto-spacing top margin. aside li [role=button] { margin: inherit } and the breadcrumb and dropdown list link rules are more specific, so link buttons in an aside, a breadcrumb or a dropdown list are unchanged.",
+    "notes": "Fixture: #cta, the <a role=\"button\"> between a <button> and an <input type=\"button\"> in the first nav of components-nav.html. Its margin-top and margin-block-start go from -8px at 390 and -10px at 1280 to 0px in Chrome Beta 158 and Firefox 160 beta, in every leg, both directions and its hover state; at 1280 its top moves from 80.75px to 85px, level with the button and the button input. Probed with a standalone Selenium page in Chrome Beta 158 and Firefox 160 beta at 375 (500 in Firefox), 1000 and 1400px, light and dark OS, ltr, rtl and data-theme light and dark: the link's top went from 3.5, 3.87 and 4.25px above an adjacent <button> to level with it, a nav of links and a link button grew from 63, 70.75 and 78.5px to 70, 78.5 and 87px (the height with a <button>), a link button in a [role=group] in a nav went from 9px taller than the group's button to the same height, and .secondary and .outline link buttons line up too. Buttons, button inputs, label > input and label > select, summaries in nav dropdowns, span and div[role=button], and link buttons in breadcrumbs, aside navs and dropdown lists compute as before. Upstream issues picocss/pico#496 and picocss/pico#568."
+  },
+  {
+    "id": "nav-role-button-link-item",
+    "module": "components/nav",
+    "kind": "style",
+    "selector": "nav li:has(> a[role=button])",
+    "pseudo": "",
+    "property": "/^(height|block-size|perspective-origin|transform-origin)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": ["components-nav.html"]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of nav-role-button-link-margin-top: without the negative top margin, a nav item holding an <a role=button> is as tall as one holding a <button>, and its transform and perspective origins follow.",
+    "notes": "Fixture: the item holding #cta in components-nav.html. It goes from 78.5px to 87px at 1280, the height of the <button> item beside it, and from 86px to 94px at 390, where the link's text wraps to two lines, in Chrome Beta 158 and Firefox 160 beta. Upstream issues picocss/pico#496 and picocss/pico#568."
+  },
+  {
+    "id": "nav-role-button-link-wrap-geometry",
+    "module": "components/nav",
+    "kind": "style",
+    "selector": "nav:has(li > a[role=button]), nav:has(li > a[role=button]) > :is(ul, ol)",
+    "pseudo": "",
+    "property": "/^(height|block-size|perspective-origin|transform-origin)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": ["components-nav.html"],
+      "widths": [390]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of nav-role-button-link-item: a nav whose tallest item holds an <a role=button> grows with that item, and so do its lists, which stretch to the nav's height. At 390 the fixture's link wraps to two lines and its item is the tallest in the nav. At 1280 the link fits on one line and its item is as tall as the <button> item beside it, so the nav keeps its height.",
+    "notes": "Fixture: the first nav of components-nav.html at 390, where \"Role button\" wraps. The nav and both its lists go from 86px to 94px in Chrome Beta 158 and Firefox 160 beta. Upstream issues picocss/pico#496 and picocss/pico#568."
+  },
+  {
+    "id": "nav-role-button-link-page-shift",
+    "module": "components/nav",
+    "kind": "style",
+    "selector": ":is(html, body, [data-module]):has(nav li > a[role=button])",
+    "pseudo": "",
+    "property": "/^(height|block-size|perspective-origin|transform-origin)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": ["components-nav.html"],
+      "widths": [390]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of nav-role-button-link-wrap-geometry: the first nav is 8px taller at 390, so the module wrapper, the body and the document that hold it are 8px taller too.",
+    "notes": "Fixture: components-nav.html at 390. nav-group-margin-page-shift, which takes 16px off, matches the same records, so together the wrapper, body and document go from 1368.38px to 1360.38px in Chrome Beta 158 (1368.4px to 1360.4px in Firefox 160 beta). At 1280 the page height does not change. Upstream issues picocss/pico#496 and picocss/pico#568."
+  },
+  {
+    "id": "nav-role-button-link-breadcrumb-shift",
+    "module": "components/nav",
+    "kind": "style",
+    "selector": "nav[aria-label=breadcrumb] ul li:not(:last-child)",
+    "pseudo": "::after",
+    "property": "/^(top|bottom|inset-block-start|inset-block-end)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": ["components-nav.html"],
+      "widths": [390]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of nav-role-button-link-wrap-geometry: each breadcrumb divider is absolutely positioned with auto insets, so its computed top and bottom follow its static position, which moves 8px down at 390 below the taller first nav.",
+    "notes": "Fixture: every breadcrumb of components-nav.html at 390, including those in its dir=\"rtl\", light and dark islands. Each divider's top grows and its bottom shrinks by 8px (386px to 394px and 390px to 382px for the first breadcrumb) in Chrome Beta 158 and Firefox 160 beta. Upstream issues picocss/pico#496 and picocss/pico#568."
   }
 ]
