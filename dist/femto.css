@@ -2077,6 +2077,9 @@ progress[value]::-webkit-progress-value {
 progress::-moz-progress-bar {
   background-color: var(--femto-progress-color);
 }
+progress:indeterminate::-moz-progress-bar {
+  background-color: transparent;
+}
 @media (prefers-reduced-motion: no-preference) {
   progress:indeterminate {
     background:
@@ -2087,9 +2090,6 @@ progress::-moz-progress-bar {
     animation: progress-indeterminate 1s linear infinite;
   }
   progress:indeterminate[value]::-webkit-progress-value {
-    background-color: transparent;
-  }
-  progress:indeterminate::-moz-progress-bar {
     background-color: transparent;
   }
 }

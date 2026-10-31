@@ -415,10 +415,13 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   (fixture: the submit button with `role=group` in `components-group.html`). The group's own
   transition, which 2.1.1 does not gate, follows the token to 0s (`natural-fix`). The four
   `@keyframes` stay defined; no record kind can show an at-rule.
+- `components-progress.json`: `firefox-indeterminate-progress-reduced-motion`, documentation only
+  (no run applies `reduce`; see Known limits). Firefox's bar on an indeterminate progress is
+  transparent whatever the motion preference, where 2.1.1 left a full bar with reduced motion.
 - `rig.json`: the checks Safari cannot run (`safari-no-media-dark`,
   `safari-no-focus-visible-date-input`).
 
-The other 26 modules need no entry. Two fixtures exist to make the registry's checks meaningful:
+The other 25 modules need no entry. Two fixtures exist to make the registry's checks meaningful:
 `colors.html` has a "Two classes" block in which each span carries two neighboring utility classes
 in file order, so a change of rule order in `femto.colors.css` shows as a difference, and
 `components-tooltip.html` has tooltips on an open accordion summary and on two dropdown summaries,
@@ -782,7 +785,8 @@ limits). `uv run tests/static_checks.py` and `npm run lint` pass.
 - `prefers-reduced-motion` is not an axis; both sides run with the OS setting (no preference). So no
   run applies `utilities/reduce-motion.css`: leaving it out passes every mode. It was checked as
   text (identical to 2.1.1's section) and with a standalone wrapper that emulates `reduce` in Chrome
-  and Firefox.
+  and Firefox. The one reduced-motion difference, the indeterminate progress bar in Firefox, was
+  probed the same way and is registered as documentation only.
 - Hover and active move the real (synthesized) pointer: in Safari, moving the physical mouse over the
   automation window during a run, or using the machine over Screen Sharing, disturbs them (every state in the cells that run meanwhile fails to match on one side or both;
   nothing is misreported as a difference). The harness retries such a cell once when

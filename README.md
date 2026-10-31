@@ -378,6 +378,7 @@ Pico 2.1.1 supported every browser in browserslist's `defaults`, with prefixes a
 ### Other changes
 
 - Firefox shows its keyboard focus ring again on elements that set no outline of their own, such as `video` and tooltips with `tabindex`: femto drops 2.1.1's `:-moz-focusring { outline: none }`. It also draws the focus and `aria-invalid` rings on a field the user has left invalid, as Chrome and Safari already did, because femto drops `:-moz-ui-invalid { box-shadow: none }`.
+- With reduced motion, Firefox shows an indeterminate `<progress>` as the empty track, as Chrome and Safari do. 2.1.1 showed a full bar there, which looked complete.
 - The focus ring of `role="group"` and `role="search"` inside a `data-theme` element follows that element's scheme.
 - With `no-transitions.css`, `--femto-transition` is `0s` (2.1.1 kept `0.2s ease-in-out`), so your own rules that read it stop animating too, and the group focus ring no longer fades.
 - Two new tokens: `--femto-primary-inverse-filter`, the filter for the loading spinner on primary buttons, which a theme of your own sets to `brightness(0) invert(0)` when its `--femto-primary-inverse` is dark, and `--femto-grid-template-columns`, which `.grid` reads.

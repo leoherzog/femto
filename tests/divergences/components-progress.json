@@ -1,0 +1,23 @@
+[
+  {
+    "id": "firefox-indeterminate-progress-reduced-motion",
+    "module": "components/progress",
+    "kind": "style",
+    "selector": "progress:indeterminate",
+    "pseudo": "::-moz-progress-bar",
+    "property": "background-color",
+    "reference": "*",
+    "femto": "rgba(0, 0, 0, 0)",
+    "where": {
+      "browsers": [
+        "firefox"
+      ],
+      "presets": [
+        "reduced-motion"
+      ]
+    },
+    "category": "natural-fix",
+    "reason": "2.1.1 makes Firefox's bar on an indeterminate progress transparent only inside @media (prefers-reduced-motion: no-preference), next to the sliding stripe. Firefox draws that bar at full width, so with reduced motion 2.1.1 showed a full bar in the progress color, which reads as complete, while Chrome and Safari showed the empty track. femto makes the bar transparent whatever the motion preference, so every browser shows the empty track with reduced motion. With motion the rule already applied, so nothing changes there.",
+    "notes": "Documentation only: prefers-reduced-motion is not a harness axis and no reduced-motion preset exists, so it never hits. Probed with a standalone Selenium page, ui.prefersReducedMotion 1 in Firefox 160 and Emulation.setEmulatedMedia in Chrome 158: at 10, 50 and 90% across an indeterminate progress, Firefox paints rgb(1, 114, 173) with the reference and rgb(32, 38, 50), the dark track, with femto; Chrome paints the track on both sides. Safari 27.2, which safaridriver cannot put in reduced motion, paints the track with femto when a page rule removes the animation and the stripe. With motion both Firefox and Chrome match the reference."
+  }
+]
