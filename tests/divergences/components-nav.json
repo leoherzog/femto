@@ -46,5 +46,53 @@
     "category": "natural-fix",
     "reason": "Consequence of rtl-breadcrumb-backslash: the item's own divider is absolutely positioned at the end of its narrower content, so its insets move and the divider sits centered in the gap, as in ltr, instead of beside 2.1.1's stray backslash.",
     "notes": "Probed in Chrome 158 and Firefox 160 beta: the divider moves from 2.5 to 3.5px off center to within 1px of center in every gap, at 390 and 1280, light and dark. Fixtures and where as for rtl-breadcrumb-backslash. Upstream issue picocss/pico#734."
+  },
+  {
+    "id": "nav-group-margin",
+    "module": "components/nav",
+    "kind": "style",
+    "selector": "nav li :is([role=group], [role=search]):last-child",
+    "pseudo": "",
+    "property": "/^margin-(bottom|block-end)$/",
+    "reference": "/^[1-9][0-9.]*px$/",
+    "femto": "0px",
+    "where": {
+      "pages": ["components-nav.html"]
+    },
+    "category": "natural-fix",
+    "reason": "2.1.1 gives [role=group] and [role=search] a bottom margin of --femto-spacing (1rem). In a nav item it zeroes margin-bottom for buttons, inputs, selects and dropdowns but not for groups, and the nav centers each item with its margin included, so a group or search form in a nav item sat about half a rem above the other items and made the nav a rem taller. femto zeroes the bottom margin of a group or search form that is the last element in its parent inside a nav item, so it centers with the other items and the nav keeps the height it has without a group. One followed by helper text (fieldset + small, whose small has a negative top margin) or by a second group keeps 2.1.1's 1rem, so the text is not pulled under the group. In an aside nav, or a dropdown menu in a nav, a group ending its item is now spaced from the next item like the other items, as an input there already was, and a nested ul[role=group] ending a nav item drops back to nav ul's own margin-bottom of 0. Groups outside a nav keep their 1rem margin.",
+    "notes": "Fixtures: the \"Groups\" nav at the end of components-nav.html (a text item, a div[role=group], a form[role=search] and a button); the margin of the group and the search form goes from 16px at 390 and 20px at 1280 to 0px. The \"Group helper\" nav above it, a div[role=group] followed by <small> in one item, shows no difference, which checks that the :last-child guard keeps the margin. Probed with standalone Selenium pages in Chrome Beta 158 and Firefox 160 beta at 1100 and 400px (roots of 19 and 16px), light and dark OS, ltr and rtl, data-theme light and dark, for a div[role=group], a form[role=search] and a fieldset[role=group] in a nav item: the group's center sat 9.25 to 9.5px and 8px above the text, link and button items, and the nav was 101.75 to 101.77px and 86px tall against 82.75 to 82.77px and 70px without a group; with the fix every offset is 0 and the nav is as tall as without a group. Focusing the group's input keeps its ring and moves nothing, and no x position or width changes. In an aside nav the gap below a group goes from 28.5 to 9.5px at 1100 (24 to 8px at 400), the item spacing; a group in a nav dropdown menu goes from 26.13 to 7.13px above the next item; a nested ul[role=group] ending a nav item loses its 1rem. A fieldset[role=group] or div[role=group] followed by <small> (in a nav, in an aside nav and with aria-invalid) and the first of two stacked groups compute as in the reference, and groups outside a nav, navs without a group and nav dropdowns are unchanged. Upstream issue picocss/pico#699."
+  },
+  {
+    "id": "nav-group-margin-geometry",
+    "module": "components/nav",
+    "kind": "style",
+    "selector": "nav:has(li :is([role=group], [role=search]):last-child), nav:has(li :is([role=group], [role=search]):last-child) > :is(ul, ol), nav li:has(:is([role=group], [role=search]):last-child)",
+    "pseudo": "",
+    "property": "/^(height|block-size|perspective-origin|transform-origin)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": ["components-nav.html"]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of nav-group-margin: without the group's 1rem bottom margin, the nav item holding it, the lists of its nav, which stretch to the nav's height, and the nav itself are 1rem shorter, the height they have without a group, and their transform and perspective origins follow.",
+    "notes": "Fixture: the \"Groups\" nav of components-nav.html. Its two items holding a group, both of its lists (the first, holding only \"Groups\", stretches to the nav's height) and the nav go from 86px to 70px at 390 and from 107px to 87px at 1280, in Chrome Beta 158 and Firefox 160 beta. Upstream issue picocss/pico#699."
+  },
+  {
+    "id": "nav-group-margin-page-shift",
+    "module": "components/nav",
+    "kind": "style",
+    "selector": ":is(html, body, [data-module]):has(nav li :is([role=group], [role=search]):last-child)",
+    "pseudo": "",
+    "property": "/^(height|block-size|perspective-origin|transform-origin)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": ["components-nav.html"]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of nav-group-margin-geometry: the nav holding the group is 1rem shorter, so the module wrapper, the body and the document that hold it are 1rem shorter too.",
+    "notes": "Fixture: the \"Groups\" nav at the end of components-nav.html. The wrapper, body and document go from 1368.38px to 1352.38px at 390 in Chrome Beta 158 (1368.4px to 1352.4px in Firefox 160 beta) and from 1627.5px to 1607.5px at 1280 in both. Nothing follows the nav, so the pixel difference stays inside it. Upstream issue picocss/pico#699."
   }
 ]

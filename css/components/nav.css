@@ -58,6 +58,10 @@ nav li select {
   margin-left: inherit;
   padding: calc(var(--femto-nav-link-spacing-vertical) - var(--femto-border-width) * 2) var(--femto-nav-link-spacing-horizontal);
 }
+nav li [role=search]:last-child,
+nav li [role=group]:last-child {
+  margin-bottom: 0;
+}
 nav[aria-label=breadcrumb] {
   align-items: center;
   justify-content: start;

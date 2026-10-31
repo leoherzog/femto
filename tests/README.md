@@ -449,6 +449,12 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   inside a breadcrumb item but the last a backslash; femto drops it, so an rtl breadcrumb shows only
   its mirrored divider, and its links, items and list are as narrow as in ltr. `where.dirs` is not
   set: the `<div dir="rtl">` breadcrumb in `components-nav.html` shows the change in its ltr cells.
+  `nav-group-margin`, with `-geometry` and `-page-shift`, limited to `components-nav.html`. 2.1.1
+  kept the 1rem bottom margin of a `[role=group]` or `[role=search]` in a nav item, so the group sat
+  half a rem above the other items and the nav was a rem taller; femto zeroes it when the group ends
+  its parent, so the item, its nav and lists, the module wrapper, the body and the document are a
+  rem shorter (fixture: the "Groups" nav; the "Group helper" nav above it, a group followed by
+  `<small>`, keeps the margin and shows no difference).
 - `rig.json`: the checks Safari cannot run (`safari-no-media-dark`,
   `safari-no-focus-visible-date-input`).
 
