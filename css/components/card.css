@@ -1,6 +1,7 @@
 /*
  * Card: article as a padded block with rounded corners, a background and a shadow. A direct
  * header or footer reaches the card's edges, with its own background and a border toward the body.
+ * Table cells inside a card fill with the card background.
  */
 article {
   margin-bottom: var(--femto-block-spacing-vertical);
@@ -29,4 +30,8 @@ article > footer {
   border-top: var(--femto-border-width) solid var(--femto-card-border-color);
   border-bottom-right-radius: var(--femto-border-radius);
   border-bottom-left-radius: var(--femto-border-radius);
+}
+:where(article) th,
+:where(article) td {
+  background-color: var(--femto-card-background-color);
 }

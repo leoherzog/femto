@@ -34,16 +34,24 @@
     <p>Paragraph</p>
     <h3>Heading after a paragraph in a card</h3>
   </article>
+  <article>
+    <table class="striped" id="card-table">
+      <thead><tr><th>Card table head</th><th>Column</th></tr></thead>
+      <tbody><tr><td>Odd row</td><td>Odd row</td></tr><tr><td>Even row</td><td>Even row</td></tr></tbody>
+    </table>
+  </article>
   <h2>Heading after a card</h2>
 
   <div data-theme="light">
     <h2>Light island</h2>
     <article><header>Light card header</header>Light body<footer>Light footer</footer></article>
+    <article><table id="card-table-light"><tbody><tr><th>Light card table</th><td>Cell</td></tr></tbody></table></article>
     <article data-theme="dark"><header>Card that is itself a dark island</header>Body<footer>Footer</footer></article>
   </div>
   <div data-theme="dark">
     <h2>Dark island</h2>
     <article><header>Dark card header</header>Dark body<footer>Dark footer</footer></article>
+    <article><table id="card-table-dark"><tbody><tr><th>Dark card table</th><td>Cell</td></tr></tbody></table></article>
     <article data-theme="light"><header>Card that is itself a light island</header>Body<footer>Footer</footer></article>
   </div>
 </div>

@@ -1,0 +1,18 @@
+[
+  {
+    "id": "table-cells-in-card-background",
+    "module": "components/card",
+    "kind": "style",
+    "selector": "article th, article td",
+    "pseudo": "",
+    "property": "background-color",
+    "reference": "rgb(19, 23, 31)",
+    "femto": "rgb(24, 28, 37)",
+    "where": {
+      "pages": ["components-card.html"]
+    },
+    "category": "natural-fix",
+    "reason": "2.1.1 fills every th and td with the page background, --femto-background-color. In the dark scheme a card (an article, including a modal's article) is lighter than the page, rgb(24, 28, 37) against rgb(19, 23, 31), so a table in a card showed as a darker block, and in a .striped table the translucent odd rows showed the card color while the head and even rows showed the page color. femto fills the cells of a table inside an article with --femto-card-background-color, so the table lies flush on the card and its stripes alternate against the card color. The rule is :where(article) th, :where(article) td in components/card.css, at the cell rule's specificity (0,0,1) and after it, so .striped still shades the odd rows and an author's own th or td background loaded after femto still wins. In the light scheme the card and page colors are equal, so nothing changes there, and tables outside an article keep the page background.",
+    "notes": "Fixtures: #card-table, a .striped table in a card on components-card.html, and #card-table-light and #card-table-dark, tables in the first card of the light and dark islands. In the dark legs #card-table's head and even cells change and its odd cells keep the stripe; #card-table-dark changes in every leg and #card-table-light in none. Probed with standalone Selenium pages in Chrome 158 and Firefox 160 beta, OS dark and light, with and without data-theme on html set to the other scheme, widths 1000 and 420 (500 in Firefox): in a dark card, in a modal's article, a nested article, .overflow-auto in an article, an rtl card, an article carrying data-theme=dark and a card in a data-theme=dark wrapper, the head and body cells sample #13171f with the reference and #181c25, the card, with femto; in a .striped table the odd rows keep #1b2029 (Chrome) or #1b1f28 (Firefox). Light-scheme tables, tables outside an article, a light island inside a dark card, cell rects and an author th, td { background-color } rule loaded after femto are unchanged. Safari 27.2 (standalone safaridriver page, light OS) gives the same values for a card in a data-theme=dark wrapper. Cells follow --femto-card-background-color, not the article's background: to flatten a card in the dark scheme, set that token to transparent on the article rather than its background, or the cells stay card-colored on the page. A table in an article's direct header or footer gets the card color, not the section color (dark: #181c25 on #1a1f28, where 2.1.1 had #13171f), and without components/card.css in a custom module set the rule is absent and cells keep the page background. Upstream issue picocss/pico#497, a regression of picocss/pico#78, which 1.x fixed by removing the cell background."
+  }
+]

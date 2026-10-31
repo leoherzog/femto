@@ -1518,6 +1518,10 @@ article > footer {
   border-bottom-right-radius: var(--femto-border-radius);
   border-bottom-left-radius: var(--femto-border-radius);
 }
+:where(article) th,
+:where(article) td {
+  background-color: var(--femto-card-background-color);
+}
 
 /* css/components/dropdown.css */
 details.dropdown {

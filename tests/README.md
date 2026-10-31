@@ -530,10 +530,18 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   `accordion-nav-dropdown-list-width` the closed list that the escaped chevron no longer narrows
   (fixtures: the nav dropdowns of `kitchen-sink.html` at 375 to 640, and of `classes-dropdown.html`
   and `classes-dropdown-open.html` at 390).
+- `components-card.json`: `table-cells-in-card-background`, limited to `components-card.html`.
+  2.1.1 filled every `th` and `td` with the page background, so in the dark scheme a table in a
+  card, which is lighter, showed as a darker block, and in a `.striped` table the translucent odd
+  rows showed the card while the head and even rows showed the page; femto fills cells inside an
+  `article` with `--femto-card-background-color`, at the cell rule's specificity, so the stripe and
+  an author's own cell background still win (fixtures: `#card-table`, a striped table in a card,
+  whose head and even cells change in the dark legs, and `#card-table-light` and `#card-table-dark`
+  in the islands' cards, of which only the dark one changes).
 - `rig.json`: the checks Safari cannot run (`safari-no-media-dark`,
   `safari-no-focus-visible-date-input`).
 
-The other 18 modules need no entry. Two fixtures exist to make the registry's checks meaningful:
+The other 17 modules need no entry. Two fixtures exist to make the registry's checks meaningful:
 `colors.html` has a "Two classes" block in which each span carries two neighboring utility classes
 in file order, so a change of rule order in `femto.colors.css` shows as a difference, and
 `components-tooltip.html` has tooltips on an open accordion summary and on two dropdown summaries,
