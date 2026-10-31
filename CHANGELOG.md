@@ -21,7 +21,6 @@ The first alpha of femto 3: Pico CSS 2.1.1's default build rewritten as plain CS
   - `getPropertyValue()` returns `light-dark(...)` text for color tokens whose light and dark values differ.
 - The minimum browsers are Chrome and Edge 125, Firefox 128, Safari 17.5 and Samsung Internet 27, where Pico 2.1.1 supported browserslist's `defaults`. Older browsers get broken colors and form fields, not a plainer page.
 - Firefox's keyboard focus ring is no longer hidden on elements that set no outline of their own, and Firefox now draws the focus and `aria-invalid` rings on a field the user has left invalid, as Chrome and Safari already did.
-- In Firefox, an indeterminate `<progress>` shows the empty track when the user prefers reduced motion, as in Chrome and Safari, instead of a full bar that looked complete.
 - `no-transitions.css` sets `--femto-transition: 0s`, so the group focus ring no longer fades and your own rules that read the token stop animating. Being an appended file, it resets the tooltip slide tokens to `initial` instead of removing them, and leaves the modal and tooltip `@keyframes` defined.
 - The root rule matches a shadow host with `:host` instead of `:where(:host)`, so it also applies in Safari 17.5 to 18.1, which never match `:host` inside `:where()`. A component's own `:host` rule now needs to come after femto to override it.
 
@@ -37,6 +36,12 @@ The first alpha of femto 3: Pico CSS 2.1.1's default build rewritten as plain CS
 - The prebuilt themed copies, such as `pico.jade.min.css`.
 - The Composer package. Install femto from npm, link it from a CDN or download it.
 - The `-ms-` rules, `::-webkit-input-placeholder`, `::-moz-list-bullet`, `:-moz-focusring { outline: none }` and `:-moz-ui-invalid { box-shadow: none }`.
+
+### Fixed
+
+Rendering bugs that Pico 2.1.1 has. Where Pico has an open issue for one, it is linked.
+
+- In Firefox, an indeterminate `<progress>` shows the empty track when the user prefers reduced motion, as in Chrome and Safari, instead of a full bar that looked complete.
 
 ### Known issues
 
