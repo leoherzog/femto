@@ -443,7 +443,13 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   needs the old details layout, so it was probed outside the harness. At 390 the labels of three
   fixtures wrap, and the chevron on the second line grows the nav item by one border width
   (`nav-dropdown-wrapped-label-item`, with `-page-shift` and `-breadcrumb-shift` for the rest of
-  `kitchen-sink.html`).
+  `kitchen-sink.html`). `nav-dropdown-block-details`, on the same six pages: 2.1.1's
+  `display: inline` split the details around its block summary, and Firefox 143 and later placed
+  the open list against an empty fragment of it; femto makes the details a block, so only its own
+  display, size and origins change in the harness, and in Firefox (and Safari, per
+  picocss/pico#671) `nav-dropdown-open-list-placement` records the open lists of
+  `classes-dropdown-open.html` lining up under their summaries (fixtures: its two `dir="rtl"` nav
+  lists and the left-aligned nav list below them).
 - `components-nav.json`: `rtl-breadcrumb-backslash`, with `-geometry` and `-divider-inset`, limited to
   `components-nav.html` and `kitchen-sink.html`. 2.1.1's rtl rule gave the `::after` of every element
   inside a breadcrumb item but the last a backslash; femto drops it, so an rtl breadcrumb shows only

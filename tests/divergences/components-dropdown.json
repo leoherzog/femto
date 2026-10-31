@@ -109,5 +109,50 @@
     "category": "natural-fix",
     "reason": "Consequence of nav-dropdown-wrapped-label-page-shift: the breadcrumb dividers are absolutely positioned at their static position, so when the header above them grows by one border width, their resolved vertical insets change by the same amount.",
     "notes": "Fixture: the breadcrumb of kitchen-sink.html at 390, below the header whose nav dropdown label wraps; the bottom inset goes from -5553.23px to -5554.23px in Chrome Beta 158 and from -5564.83px to -5565.83px in Firefox 160 beta. Upstream issue picocss/pico#498."
+  },
+  {
+    "id": "nav-dropdown-block-details",
+    "module": "components/dropdown",
+    "kind": "style",
+    "selector": "nav details.dropdown",
+    "pseudo": "",
+    "property": "/^(display|width|height|inline-size|block-size|transform-origin|perspective-origin)$/",
+    "reference": "/^(inline|auto|0px 0px)$/",
+    "femto": "/^(block|[0-9.]+px( [0-9.]+px)?)$/",
+    "where": {
+      "pages": [
+        "classes-dropdown.html",
+        "classes-dropdown-open.html",
+        "components-nav.html",
+        "components-tooltip.html",
+        "kitchen-sink.html",
+        "layout-elements.html"
+      ]
+    },
+    "category": "natural-fix",
+    "reason": "2.1.1 sets nav details.dropdown to display: inline, so the details is an inline box split around its block summary, and that split box is the containing block of the absolutely positioned list. Firefox 143 and later place the list against an empty fragment of it (nav-dropdown-open-list-placement). femto makes the details a block, which with its zero margin fills the nav item exactly as the summary did, so the details box is the list's containing block. Every browser now reports display: block and the details' used width, height, inline-size and block-size, with transform and perspective origins at its center, where the inline box reported auto and 0px 0px. A nav dropdown that is the only content of its nav item keeps its closed, hover, focus and open layout in Chrome and Firefox 143 and later.",
+    "notes": "Fixtures: the nav dropdowns of the six pages in where.pages, closed (kitchen-sink.html's header nav, classes-dropdown.html, components-nav.html, layout-elements.html, components-tooltip.html) and open (classes-dropdown-open.html). In the harness only these values of the details change; every other element keeps its computed style. A standalone Selenium page in Chrome Beta 158 and Firefox 160 beta at 1000 and 400px, ltr and rtl, closed, open and opened by a real click, measured the rects of the summary, nav item, nav and neighbouring links equal before and after for a plain summary, a role=button summary and a dropdown in an aside nav. What changes outside the harness fixtures, measured on the same page: (1) A dropdown wrapped in a <label> inside a nav now takes label > details.dropdown's top margin of a quarter of --femto-spacing, as outside a nav, in Chrome and Firefox 143 and later, where the inline details ignored it: the summary moves down 4.5px at 1000px and 4px at 400px, and the nav item and the nav grow by as much. (2) When text precedes the dropdown in its nav item ('Theme: <details>'), Chrome placed the open list against the first inline fragment, 60.63px right of the summary at 1000px in ltr and 12.11px short of its end in rtl; it now lines up under the summary in Chrome and Firefox. (3) data-tooltip on the nav dropdown's <details> (not its summary) now draws the tooltip's 1px dotted bottom border under the summary, as a dropdown outside a nav already does, and the nav item is 1px taller (90 to 91px at 1280) in Chrome 158 and Firefox 160; in Firefox 160 the tooltip bubble also moves from the corner of an empty fragment (left 0px, bottom -1px) to over the summary. (4) Firefox 128 to 142 lay details out as a block container even when it is inline, which behaves like an inline-block; probed in Firefox 160 beta with layout.details.force-block-layout=true at 1280 and 500px, the open lists were already placed correctly there, and with the fix a dropdown in an aside nav fills its item as in Chrome and newer Firefox (summary 189.88 to 1200px at 1280, 155.92 to 468px at 500), and text before a nav dropdown in the same item sits on its own line (nav 90 to 120px at 1280, 72 to 96px at 500); a dropdown that is the only content of its nav item does not move. Chromium before 131 and Safari before 18.4 may behave like old Firefox and were not tested. Safari was not probed for this change. Upstream issues picocss/pico#701 and picocss/pico#671."
+  },
+  {
+    "id": "nav-dropdown-open-list-placement",
+    "module": "components/dropdown",
+    "kind": "style",
+    "selector": "nav details.dropdown[open] > summary + ul, nav details.dropdown[open] > summary + ul li, nav details.dropdown[open] > summary + ul li a",
+    "pseudo": "",
+    "property": "/^(left|right|bottom|inset-(inline-start|inline-end|block-end)|width|inline-size|transform-origin|perspective-origin)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "browsers": [
+        "firefox",
+        "safari"
+      ],
+      "pages": [
+        "classes-dropdown-open.html"
+      ]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of nav-dropdown-block-details. With 2.1.1's inline nav details, Firefox 143 and later place the open list against an empty fragment beside the summary instead of the summary's box: a right-aligned list (ul dir=rtl) ends at the summary's left edge and hangs over the neighbouring link, a left-aligned list shrinks to its items, and in an rtl page a left-aligned list starts at the summary's right edge. With the details a block, the list lines up under the summary at its width, as in Chrome, so the list's resolved insets, its width and the widths and origins of its items and links change. picocss/pico#671 reports the same misplacement of a dir=rtl list in Safari 18.4.",
+    "notes": "Fixtures: the two open nav dropdowns of classes-dropdown-open.html, both with ul dir=rtl, and the open nav dropdown with a left aligned list below them. In Firefox 160 beta at 1280 the role=button summary's list goes from left -80.37px and 80.37px wide to left 0px and 287.82px wide, and the left-aligned list from right -80.37px and 80.37px wide to right 0px and 415.12px wide; at 390 the lists go from 65.77 and 88.97px to 184.32, 143.82 and 343.3px wide. A standalone Selenium page at 1000 and 400px, ltr and rtl, open by attribute and by a real click, measured list minus summary edges: in Firefox 160 beta before the fix, with the reference and with femto alike, a dir=rtl list at 1000px in an ltr page was -99.18 / -178.42px (99.18px wide under a 178.42px summary), a left-aligned list 0 / -121.85px (99.18px under 221.03px), a list in an aside nav 99.18px under 700px, and in an rtl page a left-aligned list started 221.04px right of the summary's left edge; after the fix every case is 0 / 0 at the summary's width, and the pixel 8px under the summary is the dropdown background instead of the page. Chrome Beta 158 is 0 / 0 before and after, so this entry leaves it out. Safari was not probed; it is listed because picocss/pico#671 reports the dir=rtl list aligned to the summary's left edge in Safari 18.4 (macOS 15.4, iOS 18.4). Upstream issues picocss/pico#701 and picocss/pico#671."
   }
 ]

@@ -62,7 +62,7 @@ details.dropdown > summary:not([role])[aria-invalid=true] {
 }
 
 nav details.dropdown {
-  display: inline;
+  display: block;
   margin: 0;
 }
 nav details.dropdown > summary::after {

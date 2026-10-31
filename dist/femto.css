@@ -1573,7 +1573,7 @@ details.dropdown > summary:not([role])[aria-invalid=true] {
   --femto-form-element-focus-color: var(--femto-form-element-invalid-focus-color);
 }
 nav details.dropdown {
-  display: inline;
+  display: block;
   margin: 0;
 }
 nav details.dropdown > summary::after {
