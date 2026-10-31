@@ -469,10 +469,16 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   quarter-spacing top margin and no bottom margin. Their containers up to the document get shorter,
   and the absolutely positioned breadcrumb dividers below them in `kitchen-sink.html` move up
   (fixtures: the nested `ul`, `ol` and `dl` of both pages' typography blocks).
+- `content-table.json`: `striped-row-data-theme`, with `-image`, limited to
+  `classes-table-striped.html`. 2.1.1 painted an odd body cell of a `.striped` table with the
+  translucent stripe alone, so under a `data-theme` on the table, its `tbody`, the row or the cell
+  the page showed through behind the other scheme's text; femto gives those cells the scheme's
+  background color and draws the stripe over it as a one-color gradient (fixtures: the tables under
+  "Rows and cells with their own data-theme").
 - `rig.json`: the checks Safari cannot run (`safari-no-media-dark`,
   `safari-no-focus-visible-date-input`).
 
-The other 21 modules need no entry. Two fixtures exist to make the registry's checks meaningful:
+The other 20 modules need no entry. Two fixtures exist to make the registry's checks meaningful:
 `colors.html` has a "Two classes" block in which each span carries two neighboring utility classes
 in file order, so a change of rule order in `femto.colors.css` shows as a difference, and
 `components-tooltip.html` has tooltips on an open accordion summary and on two dropdown summaries,

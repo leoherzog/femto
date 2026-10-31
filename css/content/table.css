@@ -31,3 +31,11 @@ table.striped tbody tr:nth-child(odd) th,
 table.striped tbody tr:nth-child(odd) td {
   background-color: var(--femto-table-row-stripped-background-color);
 }
+
+table.striped:where([data-theme]) tbody tr:nth-child(odd) :is(th, td),
+table.striped tbody:where([data-theme]) tr:nth-child(odd) :is(th, td),
+table.striped tbody tr:nth-child(odd):where([data-theme]) :is(th, td),
+table.striped tbody tr:nth-child(odd) :is(th, td):where([data-theme]) {
+  background-color: var(--femto-background-color);
+  background-image: linear-gradient(var(--femto-table-row-stripped-background-color), var(--femto-table-row-stripped-background-color));
+}

@@ -1,0 +1,34 @@
+[
+  {
+    "id": "striped-row-data-theme",
+    "module": "content/table",
+    "kind": "style",
+    "selector": "table.striped:where([data-theme]) tbody tr:nth-child(odd) :is(th, td), table.striped tbody:where([data-theme]) tr:nth-child(odd) :is(th, td), table.striped tbody tr:nth-child(odd):where([data-theme]) :is(th, td), table.striped tbody tr:nth-child(odd) :is(th, td):where([data-theme])",
+    "pseudo": "",
+    "property": "background-color",
+    "reference": "/^rgba\\(111, 120, 135, 0\\.0[0-9]*\\)$/",
+    "femto": "/^rgb\\((255, 255, 255|19, 23, 31)\\)$/",
+    "where": {
+      "pages": ["classes-table-striped.html"]
+    },
+    "category": "natural-fix",
+    "reason": "2.1.1 paints an odd body cell of a .striped table with the translucent --femto-table-row-stripped-background-color alone, so whatever lies behind the table shows through. When the table, its tbody, the row or the cell sets a data-theme other than the page's, the cell takes that scheme's text color but keeps the page's background behind the stripe: light-scheme text on a dark page (contrast 1.56) or dark-scheme text on a light page (1.62), while the even cells of the same rows turn to the scheme's own background. femto gives those odd cells their scheme's background-color, var(--femto-background-color), and draws the stripe over it as a one-color linear-gradient background-image (striped-row-data-theme-image), so they read like the scheme's own striped rows (contrast 10.2 to 10.6). Plain striped tables, and striped tables in a data-theme div, which femto gives no background, are unchanged.",
+    "notes": "Fixtures: \"Rows and cells with their own data-theme\" in classes-table-striped.html, a striped table with data-theme on odd and even rows, an odd th and an odd td, then a dark striped table and a striped table with a light tbody. Every leg has opposite-scheme odd cells; the same-scheme ones change only their computed values. The rule has the stripe rule's specificity, (0,2,4), with [data-theme] in :where(), and follows it, so an author stripe rule with the same selector loaded after femto still wins; an author background-color alone now gets the stripe tint over it, and an author background-image on a themed odd body cell is replaced by the gradient. Probed with standalone Selenium pages in Chrome 158 and Firefox 160 beta, OS light and dark, page scheme from the OS or from html data-theme, ltr and rtl, 1000 and 375px (500 in Firefox), data-theme on the table, tbody, tr, th and td: the opposite-scheme odd cells go from contrast 1.47 to 1.62 (Chrome dark page with a light row: #171b22 behind rgb(55, 60, 68); Firefox light page with a dark row: #f9fafa behind rgb(194, 199, 208)) to 10.15 to 10.64, matching the scheme's plain odd rows within one color level. Plain odd and even cells, even themed rows, themed thead and tfoot rows, a non-striped table with a themed row, a plain striped table in a card and striped tables inside a data-theme div keep their 2.1.1 pixels. Odd cells themed in the page's own scheme or with an unknown data-theme value render within one level, with two exceptions. In an article on a dark page, such a row shows the stripe over the page color instead of the card color, as the even cells already do (Chrome #1b2029 to #171b23, Firefox #1b1f28 to #161b23). The cells of a table nested in such a row show one stripe on the scheme background where 2.1.1 stacked the inner and outer stripes (light page: #f4f5f5 to #fafafb in Chrome, #f9fafa in Firefox, about 6 levels). With an author override such as light-dark(red .25, green .25) for the stripe token, light-dark() resolves per cell inside the gradient in both browsers. Upstream issue picocss/pico#624."
+  },
+  {
+    "id": "striped-row-data-theme-image",
+    "module": "content/table",
+    "kind": "style",
+    "selector": "table.striped:where([data-theme]) tbody tr:nth-child(odd) :is(th, td), table.striped tbody:where([data-theme]) tr:nth-child(odd) :is(th, td), table.striped tbody tr:nth-child(odd):where([data-theme]) :is(th, td), table.striped tbody tr:nth-child(odd) :is(th, td):where([data-theme])",
+    "pseudo": "",
+    "property": "background-image",
+    "reference": "none",
+    "femto": "/^linear-gradient\\(rgba\\(111, 120, 135, 0\\.0[0-9]*\\), rgba\\(111, 120, 135, 0\\.0[0-9]*\\)\\)$/",
+    "where": {
+      "pages": ["classes-table-striped.html"]
+    },
+    "category": "natural-fix",
+    "reason": "The stripe of striped-row-data-theme: an odd body cell of a .striped table under a data-theme on the table, its tbody, the row or the cell draws --femto-table-row-stripped-background-color as a one-color linear-gradient over its scheme's background-color, where 2.1.1 set no background-image and let the page show through the translucent stripe.",
+    "notes": "See striped-row-data-theme. Chrome 158 and Firefox 160 beta both serialize it as linear-gradient(rgba(111, 120, 135, 0.04), rgba(111, 120, 135, 0.04)); the pattern allows a longer alpha."
+  }
+]

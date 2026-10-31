@@ -42,6 +42,19 @@
     <h2>Dark island</h2>
     <table class="striped"><tbody><tr><td>Odd</td><td>Odd</td></tr><tr><td>Even</td><td>Even</td></tr><tr><td>Odd</td><td>Odd</td></tr></tbody></table>
   </div>
+
+  <h2>Rows and cells with their own data-theme</h2>
+  <table class="striped">
+    <tbody>
+      <tr data-theme="light"><td>Light odd row</td><td>Light odd row</td></tr>
+      <tr data-theme="light"><td>Light even row</td><td>Light even row</td></tr>
+      <tr data-theme="dark"><td>Dark odd row</td><td>Dark odd row</td></tr>
+      <tr><td data-theme="dark">Dark even cell</td><td>Even</td></tr>
+      <tr><th scope="row" data-theme="light">Light odd th</th><td data-theme="dark">Dark odd cell</td></tr>
+    </tbody>
+  </table>
+  <table class="striped" data-theme="dark"><tbody><tr><td>Dark table, odd</td></tr><tr><td>Dark table, even</td></tr></tbody></table>
+  <table class="striped"><tbody data-theme="light"><tr><td>Light tbody, odd</td></tr><tr><td>Light tbody, even</td></tr></tbody></table>
 </div>
 </body>
 </html>
