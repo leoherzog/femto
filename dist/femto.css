@@ -2076,18 +2076,18 @@ nav[aria-label=breadcrumb] a[aria-current]:not([aria-current=false]) {
   pointer-events: none;
 }
 aside nav,
-aside ol,
-aside ul,
-aside li {
+aside ol:where(nav *),
+aside ul:where(nav *),
+aside li:where(nav *) {
   display: block;
 }
-aside li {
+aside li:where(nav *) {
   padding: calc(var(--femto-nav-element-spacing-vertical) * 0.5) var(--femto-nav-element-spacing-horizontal);
 }
-aside li a {
+aside li:where(nav *) a {
   display: block;
 }
-aside li [role=button] {
+aside li:where(nav *) [role=button] {
   margin: inherit;
 }
 

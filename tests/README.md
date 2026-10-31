@@ -477,7 +477,13 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   the link lines up and its item is as tall as a button's (fixture: `#cta` in the first nav).
   At 390 its text wraps and its item is the tallest in the nav, so `-wrap-geometry`, `-page-shift`
   and `-breadcrumb-shift` record that nav, its lists, the module wrapper, the body and the document
-  growing by 8px and the breadcrumb dividers below moving down with them.
+  growing by 8px and the breadcrumb dividers below moving down with them. `aside-plain-list-item`,
+  with `-marker`, `-geometry`, `-page-shift` and `-breadcrumb-shift`, limited to
+  `components-nav.html`. 2.1.1 made every list and list item in an `<aside>` a block with nav item
+  padding, so a list outside any nav lost its markers and each item grew by a rem; femto limits
+  those rules to lists inside a nav, so such a list keeps its markers, and the item, its list, the
+  aside, the module wrapper, the body and the document get shorter while the breadcrumb dividers
+  below move up (fixture: the second aside, a `<ul>` without a nav).
 - `content-typography.json`: `nested-list-margins`, with `-container-size` and `-breadcrumb-shift`,
   limited to `content-typography.html` and `kitchen-sink.html`. 2.1.1's
   `:where(dl, ol, ul) :where(dl, ol, ul)` has zero specificity and loses to the earlier list rule, so

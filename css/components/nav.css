@@ -1,8 +1,9 @@
 /*
  * Nav: <nav> as a flex row of unstyled lists whose links, buttons and form fields line up, and the
- * breadcrumb variant (nav[aria-label=breadcrumb]) with its divider. Inside <aside>, every nav, list
- * and list item is a block, so any list there stacks as a vertical nav. The zero-width space before
- * each nav item, from sanitize.css v13.0.0, keeps VoiceOver reading the list semantics.
+ * breadcrumb variant (nav[aria-label=breadcrumb]) with its divider. Inside <aside>, a nav and the
+ * lists and list items in it are blocks, so it stacks vertically, while lists outside any nav keep
+ * their markers. The zero-width space before each nav item, from sanitize.css v13.0.0, keeps
+ * VoiceOver reading the list semantics.
  */
 :where(nav li)::before {
   float: left;
@@ -95,17 +96,17 @@ nav[aria-label=breadcrumb] a[aria-current]:not([aria-current=false]) {
 }
 
 aside nav,
-aside ol,
-aside ul,
-aside li {
+aside ol:where(nav *),
+aside ul:where(nav *),
+aside li:where(nav *) {
   display: block;
 }
-aside li {
+aside li:where(nav *) {
   padding: calc(var(--femto-nav-element-spacing-vertical) * 0.5) var(--femto-nav-element-spacing-horizontal);
 }
-aside li a {
+aside li:where(nav *) a {
   display: block;
 }
-aside li [role=button] {
+aside li:where(nav *) [role=button] {
   margin: inherit;
 }

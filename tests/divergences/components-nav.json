@@ -177,5 +177,85 @@
     "category": "natural-fix",
     "reason": "Consequence of nav-role-button-link-wrap-geometry: each breadcrumb divider is absolutely positioned with auto insets, so its computed top and bottom follow its static position, which moves 8px down at 390 below the taller first nav.",
     "notes": "Fixture: every breadcrumb of components-nav.html at 390, including those in its dir=\"rtl\", light and dark islands. Each divider's top grows and its bottom shrinks by 8px (386px to 394px and 390px to 382px for the first breadcrumb) in Chrome Beta 158 and Firefox 160 beta. Upstream issues picocss/pico#496 and picocss/pico#568."
+  },
+  {
+    "id": "aside-plain-list-item",
+    "module": "components/nav",
+    "kind": "style",
+    "selector": "aside li:not(nav *)",
+    "pseudo": "",
+    "property": "/^(display|padding-(top|right|bottom|left|block-start|block-end|inline-start|inline-end))$/",
+    "reference": "/^(block|[1-9][0-9.]*px)$/",
+    "femto": "/^(list-item|0px)$/",
+    "where": {
+      "pages": ["components-nav.html"]
+    },
+    "category": "natural-fix",
+    "reason": "2.1.1 sets display: block on every ol, ul and li inside an aside, and half the nav element spacing as vertical padding and the full spacing as side padding on every li there. The rules exist to stack a nav vertically, but they match any list, so a list in an aside outside any nav lost its square or decimal markers (display: block drops list-item) and each one-line item grew from 1.5rem to 2.5rem with indented text. femto applies those rules only to lists with a nav ancestor (aside li:where(nav *) and so on, at the same specificity), so such a list renders like a list anywhere else: list-item, no padding and its markers. A vertical nav in an aside is unchanged, and so is an aside inside a nav. A bare aside > ul used as a sidebar menu without a nav wrapper gets markers, inline links and no item padding; wrapping it in a nav keeps the vertical nav style.",
+    "notes": "Fixture: the second aside of components-nav.html, <aside><ul><li>List in an aside without nav</li></ul></aside>. Its li goes from display block to list-item and from 8px padding at 390 and 10px at 1280 on every side to 0px, in Chrome Beta 158 and Firefox 160 beta, ltr and rtl, every leg and state. The aside nav above it, the kitchen-sink aside nav, the top navs, breadcrumbs and dropdowns show no new difference. Probed with a standalone Selenium page in Chrome Beta 158 and Firefox 160 beta at 500, 1000 and 1300px, light and dark OS, ltr and rtl, data-theme none, light and dark: a plain aside ul li and ol li go from block, 9px padding, 45px tall and no marker ink at 1000px to list-item, 0 padding and 27px with square and decimal markers drawn (on the right in rtl); a link there turns inline and a role=button loses its inherited 4.5px bottom margin. An aside nav (ul, ol, nested list, aria-current, role=button and a dropdown), a top nav, a breadcrumb, a top nav dropdown and nav > aside > ul are identical to the previous build in rect, display, padding, margin, colors, list-style, marker ink and hover and focus styles. The items of a dropdown inside a plain aside go from block to list-item with list-style none, the same rect and no marker. Upstream picocss/pico#646."
+  },
+  {
+    "id": "aside-plain-list-marker",
+    "module": "components/nav",
+    "kind": "style",
+    "selector": "aside li:not(nav *)",
+    "pseudo": "::marker",
+    "property": "/^(width|height|inline-size|block-size|perspective-origin|transform-origin)$/",
+    "reference": "/^(auto|50% 50%)$/",
+    "femto": "*",
+    "where": {
+      "pages": ["components-nav.html"]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of aside-plain-list-item: a list item in an aside outside any nav is a list-item again, so its ::marker box is generated and reports a size and origins where 2.1.1's block item had none.",
+    "notes": "Fixture: the li of the second aside of components-nav.html. The ::marker width goes from auto to 7px at 390 and 8px at 1280 in Chrome Beta 158 (15.37px and 19.22px in Firefox 160 beta), and its height to the line height, 24px and 30px. Upstream picocss/pico#646."
+  },
+  {
+    "id": "aside-plain-list-geometry",
+    "module": "components/nav",
+    "kind": "style",
+    "selector": "aside li:not(nav *), aside :is(ol, ul):not(nav *), aside:has(> :is(ol, ul):not(nav *))",
+    "pseudo": "",
+    "property": "/^(height|block-size|perspective-origin|transform-origin)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": ["components-nav.html"]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of aside-plain-list-item: without the nav item padding, a list item in an aside outside any nav is one line tall, so the item, its list and the aside are shorter, and their transform and perspective origins follow.",
+    "notes": "Fixture: the second aside of components-nav.html, its ul and li. Each goes from 40px to 24px at 390 and from 50px to 30px at 1280 in Chrome Beta 158 and Firefox 160 beta. Width does not change. Upstream picocss/pico#646."
+  },
+  {
+    "id": "aside-plain-list-page-shift",
+    "module": "components/nav",
+    "kind": "style",
+    "selector": ":is(html, body, [data-module]):has(aside :is(ol, ul):not(nav *))",
+    "pseudo": "",
+    "property": "/^(height|block-size|perspective-origin|transform-origin)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": ["components-nav.html"]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of aside-plain-list-geometry: the aside holding a list outside any nav is shorter, so the module wrapper, the body and the document that hold it are shorter too.",
+    "notes": "Fixture: components-nav.html. nav-group-margin-page-shift and nav-role-button-link-page-shift match the same records; with all three, the wrapper, body and document go from 1368.38px in 2.1.1 to 1344.38px at 390 in Chrome Beta 158 (1368.4px to 1344.4px in Firefox 160 beta) and from 1627.5px to 1587.5px at 1280 in both, 16px and 20px shorter than without this change. Upstream picocss/pico#646."
+  },
+  {
+    "id": "aside-plain-list-breadcrumb-shift",
+    "module": "components/nav",
+    "kind": "style",
+    "selector": "aside:has(> :is(ol, ul):not(nav *)) ~ * nav[aria-label=breadcrumb] ul li:not(:last-child)",
+    "pseudo": "::after",
+    "property": "/^(top|bottom|inset-block-start|inset-block-end)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": ["components-nav.html"]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of aside-plain-list-geometry: each breadcrumb divider is absolutely positioned with auto insets, so its computed top and bottom follow its static position, which moves up with everything below the shorter aside.",
+    "notes": "Fixture: the breadcrumbs in the dir=\"rtl\", light and dark blocks after the second aside of components-nav.html. Each divider's top goes from 829px to 809px for the first of them at 1280 (20px up) in Chrome Beta 158 and Firefox 160 beta. At 390 they move 16px up, from 736px to 720px, and nav-role-button-link-breadcrumb-shift, which moves them 8px down there, matches the same records. Upstream picocss/pico#646."
   }
 ]
