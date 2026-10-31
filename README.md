@@ -105,12 +105,12 @@ Most of femto works from the elements alone. These are the classes and attribute
 | `aria-busy="true"` | A loading spinner |
 | `data-tooltip`, `data-placement` | A tooltip with that text, above the element or where `data-placement` (`top`, `bottom`, `left`, `right`) puts it |
 | `<dialog>` holding an `<article>` | A modal. The `.modal-is-open`, `.modal-is-opening` and `.modal-is-closing` classes, which your script sets on `<html>`, lock scrolling and run the opening and closing animations. To keep the page from shifting when `.modal-is-open` hides the scrollbar, your script can also set `--femto-scrollbar-width` on `<html>` to the scrollbar's width |
-| `.close`, or `rel="prev"` on a link or button, in a modal's `<article>` | A close button: an × icon at the top right, in the header if there is one |
+| `.close`, or `rel="prev"` on a link or button, in a modal's `<article>` | A close button: an × icon at the top right (top left in right-to-left text), in the header if there is one |
 | `aria-current` (any value but `"false"`) | Shows a link, button or dropdown item as current, with its hover colors; in breadcrumbs, the current page as plain text |
 | `role="link"` | An element that looks like a link |
 | `disabled`, `aria-disabled="true"` | A not-allowed cursor; `aria-disabled="true"` on a `<label>` also dims it like a disabled field |
 | `aria-controls` | A pointer cursor |
-| `dir="rtl"` | Right-to-left text, with the form field icons, chevrons, breadcrumb separators, group and search corners and progress animation mirrored |
+| `dir="rtl"` | Right-to-left text, with the form field icons, chevrons, breadcrumb separators, group and search corners, progress animation, modal close button and modal footer mirrored |
 
 ## Files
 

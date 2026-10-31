@@ -42,6 +42,44 @@
     "femto": "/^-?[0-9.]+px$/",
     "category": "natural-fix",
     "reason": "2.1.1 spaces the buttons of a modal footer with margin-left on each one after the first. In right-to-left text the buttons run from right to left, so the gap fell after each button instead of before it, and the first two buttons had none between them. femto uses margin-inline-start, so the gap falls between the buttons in either direction, and in left-to-right text it computes as before. A [role=group] in the footer needs it too: its overlap margin is now margin-inline-start (group-rtl-logical-corners), which replaces the footer gap, where the footer's margin-left would have opened a gap of half the spacing between its items in right-to-left text.",
-    "notes": "Documentation only: no fixture holds a right-to-left modal footer with two buttons, so it does not hit. Probed with a standalone Selenium page in Chrome 158 and Firefox 160 beta at 390 and 1280px: an open dialog whose footer holds a three-button [role=group], two buttons and a role=button link. In right-to-left text the gap between the two plain buttons moved to their seam (gaps from left to right went from [10, 0] to [0, 10] at 1280, the mirror of left-to-right's [10, 0]), and the footer group went from seams of 1.25 and 0px with a 1.25px overhang (2.1.1 and femto before) to 1.25 and 1.25px with none. With the group fix but the footer still on margin-left, each group item after the first had margins 10px / -1.25px and the seam between the second and third opened 8.75px (7px at 390). Left-to-right footers are unchanged."
+    "notes": "Fixture: the footers of components-modal.html, components-modal-show.html and classes-modal.html, whose buttons and role=button links run in the rtl legs of those pages. Probed with a standalone Selenium page in Chrome 158 and Firefox 160 beta at 390 and 1280px: an open dialog whose footer holds a three-button [role=group], two buttons and a role=button link. In right-to-left text the gap between the two plain buttons moved to their seam (gaps from left to right went from [10, 0] to [0, 10] at 1280, the mirror of left-to-right's [10, 0]), and the footer group went from seams of 1.25 and 0px with a 1.25px overhang (2.1.1 and femto before) to 1.25 and 1.25px with none. With the group fix but the footer still on margin-left, each group item after the first had margins 10px / -1.25px and the seam between the second and third opened 8.75px (7px at 390). Left-to-right footers are unchanged."
+  },
+  {
+    "id": "modal-close-float-inline-end",
+    "module": "components/modal",
+    "kind": "style",
+    "selector": "dialog > article > header :is(.close, a[rel=prev], button[rel=prev])",
+    "pseudo": "",
+    "property": "float",
+    "reference": "right",
+    "femto": "inline-end",
+    "category": "natural-fix",
+    "reason": "2.1.1 floats the close control of a modal header right, with its spacing on its left. In right-to-left text that is the start side, so the control sat against the first letter of the title and the other end of the header stayed empty. femto floats it to the inline end, with margin-inline-start (modal-close-inline-end-rtl), so in right-to-left text it sits at the top left, the mirror of left-to-right text. Left-to-right text looks the same, but getComputedStyle reports float as inline-end instead of right.",
+    "notes": "Fixture: the header close controls of components-modal.html, components-modal-show.html and classes-modal.html (button[rel=prev], a[rel=prev], a.close and button.close), in ltr and in the rtl legs those pages run, and of the closed dialogs in kitchen-sink.html. Probed with a standalone Selenium page in Chrome 158 and Firefox 160 beta at 390, 700 and 1280px, light and dark, with dir=rtl on <html> and on the dialog itself: in rtl, 2.1.1 leaves the close control flush right, 20px from the start of the title at 1280 and 16px at 390, where ltr leaves 319.47px in Chrome and 320.17px in Firefox at 1280; femto puts it flush left with the ltr gap to the title at every width. A dir=ltr dialog in an rtl page, and every ltr box, hover and focus state, measure as with 2.1.1. Upstream issue picocss/pico#661."
+  },
+  {
+    "id": "modal-close-inline-end-rtl",
+    "module": "components/modal",
+    "kind": "style",
+    "selector": "dialog > article :is(.close, a[rel=prev], button[rel=prev]):dir(rtl)",
+    "pseudo": "",
+    "property": "/^margin-(left|right|inline-start|inline-end)$/",
+    "reference": "/^(auto|-?[0-9.]+px)$/",
+    "femto": "/^(auto|-?[0-9.]+px)$/",
+    "category": "natural-fix",
+    "reason": "In right-to-left text 2.1.1 keeps a modal close control's spacing on its left: margin-left in the header, and margin-left: auto outside it, which pushes the control to the right, the start side. femto uses margin-inline-start for both, so in right-to-left text the spacing sits on the control's right, the header control keeps its gap from the title, and a close control outside the header moves to the left, mirroring left-to-right text, where the margins compute as before.",
+    "notes": "Fixture: the close controls of components-modal.html (with the closed one in a shadow root, whose auto margin computes as auto), components-modal-show.html and classes-modal.html (with the body button.close and span.close), and of the closed dialogs in kitchen-sink.html, in rtl legs. Probed with a standalone Selenium page in Chrome 158 and Firefox 160 beta at 390, 700 and 1280px: in rtl the header control's margins went from 20px left / 0 right to 0 / 20px at 1280 (16px at 390), and a close control outside the header from the right edge to the left edge, each the mirror of its ltr box. Upstream issue picocss/pico#661."
+  },
+  {
+    "id": "modal-footer-text-align-end",
+    "module": "components/modal",
+    "kind": "style",
+    "selector": "dialog > article > footer, dialog > article > footer *",
+    "property": "text-align",
+    "reference": "right",
+    "femto": "end",
+    "category": "natural-fix",
+    "reason": "2.1.1 aligns a modal footer right. In right-to-left text that is the start side, so the buttons stayed at the bottom right while the rest of the modal ran the other way. femto aligns the footer to the inline end, so in right-to-left text the buttons line up at the bottom left, mirroring left-to-right text, under the close control's new top-left place (modal-close-float-inline-end). It also keeps every wrapped line flush with the edge: the gap now sits at each button's inline start (modal-footer-button-gap-rtl), which with right alignment would leave a right-to-left line that begins with a later button half a spacing in from the right edge. Left-to-right text looks the same, but the footer and the descendants that inherit its alignment report end instead of right.",
+    "notes": "Fixture: the footers of components-modal.html, components-modal-show.html and classes-modal.html, in ltr and rtl; buttons and role=button links keep text-align: center. Probed with standalone Selenium pages in Chrome 158 and Firefox 160 beta at 390, 700 and 1280px: in rtl a three-button footer went from flush right to flush left, with offsets that mirror ltr (Chrome at 1280: 338px from the left and 0 from the right with 2.1.1, 0 and 328px with femto, against 328 and 0 in ltr). With right alignment and the inline-start gap, the wrapped 'Link button two' line of the components-modal.html footer sat 8.5px in from the right edge at 700px, and the second line of a five-button footer 8px at 390 and 8.5px at 700; with end alignment every line is flush. Every ltr line keeps its 2.1.1 position. Upstream issue picocss/pico#661."
   }
 ]

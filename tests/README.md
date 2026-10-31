@@ -317,8 +317,10 @@ with a build error if it would write one hybrid path with two contents.
 A JSON array with one object per page: `page` (file name), `modules` (module ids), `sections`
 (2.1.1 banner titles), `entries` (`default` or `colors`),
 `variants` (query variants besides theme and dir; `{}` is the plain load, e.g.
-`{"class": "modal-is-open"}`; a variant may not set `css`, `theme` or `dir`), `rtl` (the module has
-`[dir=rtl]` rules), `media` (its CSS has media queries), and optional `stateless_variants`
+`{"class": "modal-is-open"}`; a variant may not set `css`, `theme` or `dir`), `rtl` (the page also
+runs with `dir=rtl` on `<html>`: set where the module has `[dir=rtl]` rules, and on the three modal
+pages, whose close controls and footers use logical properties that move them in right-to-left
+text), `media` (its CSS has media queries), and optional `stateless_variants`
 (variant labels whose cells never run states, because the variant puts the state targets where no
 input reaches them: `classes-modal.html` in `class=modal-is-open,modal-is-closing` ends the closing
 animation with the article at `translateY(-100%)`, above the viewport). Variant labels in results
@@ -489,10 +491,18 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   `components-modal-show.html`). `non-modal-dialog-backdrop-computed`, on `dialog:not(:modal)` in
   Firefox and Safari: they report the default on every dialog's `::backdrop` but draw it only for a
   modal one, so closed and open-attribute dialogs change in computed style only.
-  `modal-footer-button-gap-rtl`, documentation only (no fixture has a right-to-left footer with two
-  buttons): the gap before each footer button after the first is `margin-inline-start`, so in
-  right-to-left text it falls between the buttons instead of after each one, and a `[role=group]`
-  in the footer keeps its own overlap margin.
+  `modal-footer-button-gap-rtl`: the gap before each footer button after the first is
+  `margin-inline-start`, so in right-to-left text it falls between the buttons instead of after each
+  one, and a `[role=group]` in the footer keeps its own overlap margin (fixtures: the footers of the
+  three modal pages, in their rtl legs). `modal-close-float-inline-end`, with
+  `modal-close-inline-end-rtl` and `modal-footer-text-align-end`: 2.1.1 floated the close control
+  right with its spacing on its left (`margin-left: auto` outside a header) and aligned the footer
+  right, so in right-to-left text the control sat against the start of the title and the footer
+  buttons stayed on the start side; femto uses `float: inline-end`, `margin-inline-start` and
+  `text-align: end`, so a right-to-left modal mirrors a left-to-right one, and in left-to-right text
+  only the computed `float` and `text-align` values change (fixtures: the close controls and footers
+  of `components-modal.html`, `components-modal-show.html` and `classes-modal.html` in ltr and rtl,
+  and the kitchen sink's closed dialogs).
 - `rig.json`: the checks Safari cannot run (`safari-no-media-dark`,
   `safari-no-focus-visible-date-input`).
 

@@ -569,7 +569,7 @@
   "variants": [
    {}
   ],
-  "rtl": false,
+  "rtl": true,
   "media": true
  },
  {
@@ -589,7 +589,7 @@
     "class": "modal-is-open"
    }
   ],
-  "rtl": false,
+  "rtl": true,
   "media": true
  },
  {
@@ -808,7 +808,7 @@
     "class": "modal-is-open,modal-is-closing"
    }
   ],
-  "rtl": false,
+  "rtl": true,
   "media": true,
   "stateless_variants": [
    "class=modal-is-open,modal-is-closing"
