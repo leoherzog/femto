@@ -81,5 +81,23 @@
     "category": "natural-fix",
     "reason": "2.1.1 aligns a modal footer right. In right-to-left text that is the start side, so the buttons stayed at the bottom right while the rest of the modal ran the other way. femto aligns the footer to the inline end, so in right-to-left text the buttons line up at the bottom left, mirroring left-to-right text, under the close control's new top-left place (modal-close-float-inline-end). It also keeps every wrapped line flush with the edge: the gap now sits at each button's inline start (modal-footer-button-gap-rtl), which with right alignment would leave a right-to-left line that begins with a later button half a spacing in from the right edge. Left-to-right text looks the same, but the footer and the descendants that inherit its alignment report end instead of right.",
     "notes": "Fixture: the footers of components-modal.html, components-modal-show.html and classes-modal.html, in ltr and rtl; buttons and role=button links keep text-align: center. Probed with standalone Selenium pages in Chrome 158 and Firefox 160 beta at 390, 700 and 1280px: in rtl a three-button footer went from flush right to flush left, with offsets that mirror ltr (Chrome at 1280: 338px from the left and 0 from the right with 2.1.1, 0 and 328px with femto, against 328 and 0 in ltr). With right alignment and the inline-start gap, the wrapped 'Link button two' line of the components-modal.html footer sat 8.5px in from the right edge at 700px, and the second line of a five-button footer 8px at 390 and 8.5px at 700; with end alignment every line is flush. Every ltr line keeps its 2.1.1 position. Upstream issue picocss/pico#661."
+  },
+  {
+    "id": "modal-mobile-viewport-height",
+    "module": "components/modal",
+    "kind": "style",
+    "selector": "dialog > article",
+    "pseudo": "",
+    "property": "max-height",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "presets": [
+        "mobile-dynamic-toolbar"
+      ]
+    },
+    "category": "natural-fix",
+    "reason": "2.1.1 caps the modal card at calc(100vh - spacing * 2). Mobile browsers with a retractable toolbar (Safari on iOS, Chrome on Android, Samsung Internet) size 100vh as if the toolbar were hidden, while the fixed, flex-centered dialog fills only the visible viewport. So while the toolbar showed, a tall card was taller than the dialog and centering pushed it past both edges: its header and close button were cut off at the top, and with the open attribute its footer buttons went under the toolbar, beyond the reach of the card's own scrolling (a dialog opened with showModal() scrolls down to the footer, but not up to the header). femto uses 100svh, the viewport height with the toolbar shown, so the card fits while the toolbar shows. While the toolbar is hidden, a tall card is up to the toolbar's height shorter than in 2.1.1, which fit it exactly, and stays centered with the extra space above and below; short modals are unaffected. Desktop browsers and iframes have no dynamic toolbar and 100svh equals 100vh there, so nothing changes.",
+    "notes": "Documentation only, scoped to a mobile-dynamic-toolbar preset that does not exist: the harness iframes have no dynamic toolbar, so 100svh equals 100vh, the card's computed max-height is the same on both sides, and the \"*\" values never waive a real max-height difference on the modal fixtures (the open dialogs of components-modal.html, components-modal-show.html, classes-modal.html and tokens-breakpoints.html, and the closed ones of kitchen-sink.html, tokens-base.html, tokens-schemes.html and utilities-reduce-motion.html). Probed with a standalone Selenium page, a tall dialog whose card holds a header with a close button, 30 paragraphs and a footer with two buttons, at a 664px visible viewport with an 80px toolbar emulated: CDP Emulation.setSmallViewportHeightDifferenceOverride in Chrome 158, and windowUtils.setDynamicToolbarMaxHeight with dom.meta-viewport.enabled in Firefox 160 beta. In both browsers the 2.1.1 card spans -24 to 688px at 500px wide, with the close button's top at -13.5, and -22 to 686px at 1000px, with it at -10.1; femto's spans 16 to 648 and 18 to 646, with the close and footer buttons in view, for open-attribute and showModal() dialogs, ltr and rtl, light and dark. Without the toolbar, the 100svh build matches the 100vh build in every measurement and screenshot pixel in Chrome, Firefox and Safari 27.2. Upstream issue picocss/pico#514."
   }
 ]

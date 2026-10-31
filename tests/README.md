@@ -504,7 +504,11 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   `text-align: end`, so a right-to-left modal mirrors a left-to-right one, and in left-to-right text
   only the computed `float` and `text-align` values change (fixtures: the close controls and footers
   of `components-modal.html`, `components-modal-show.html` and `classes-modal.html` in ltr and rtl,
-  and the kitchen sink's closed dialogs).
+  and the kitchen sink's closed dialogs). `modal-mobile-viewport-height`, documentation only (scoped
+  to a `mobile-dynamic-toolbar` preset that does not exist; the harness iframes have no dynamic
+  toolbar, see Known limits): the card's `max-height` uses `100svh` where 2.1.1 used `100vh`, so on a
+  phone whose browser toolbar shows, a tall card fits the visible viewport instead of running past
+  both edges.
 - `components-accordion.json`: `accordion-summary-flow-root`, on every summary. 2.1.1 floats the
   chevron at the end of the summary's last line but leaves the summary a list item, which does not
   contain floats, so a chevron that wraps below a full last line hung out of the summary, half
@@ -888,6 +892,9 @@ limits). `uv run tests/static_checks.py` and `npm run lint` pass.
   text (identical to 2.1.1's section) and with a standalone wrapper that emulates `reduce` in Chrome
   and Firefox. The one reduced-motion difference, the indeterminate progress bar in Firefox, was
   probed the same way and is registered as documentation only.
+- No run has a dynamic mobile toolbar, so `100svh` equals `100vh` in every cell and the modal card's
+  `max-height` computes the same on both sides. The modal fix was probed with a standalone page that
+  emulates the toolbar in Chrome and Firefox, and is registered as documentation only.
 - Hover and active move the real (synthesized) pointer: in Safari, moving the physical mouse over the
   automation window during a run, or using the machine over Screen Sharing, disturbs them (every state in the cells that run meanwhile fails to match on one side or both;
   nothing is misreported as a difference). The harness retries such a cell once when
