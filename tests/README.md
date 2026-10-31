@@ -404,7 +404,13 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   invalid" form of `forms-basics.html` (`form[data-user-invalid]`), whose fields `page.js` puts in
   `:user-invalid`.
 - `components-group.json`: the island focus ring, split by the island's scheme
-  (`group-island-focus-ring-style` and `-light-island`).
+  (`group-island-focus-ring-style` and `-light-island`), and `group-hidden-child-corners`, with
+  `-margin`, `-geometry` and `-hidden-input`, limited to `components-group.html`. 2.1.1 found a
+  group's outer controls with `:first-child` and `:last-child`, which count a `[hidden]` element or
+  an `<input type=hidden>`; femto skips them, so the first and last visible controls keep their
+  rounded corners and the first one loses the negative overlap margin (fixtures: the last group of
+  "Role group", with a `<span hidden>` first and a hidden input last, and the last search of "Role
+  search", with a hidden input first).
 - `options-no-transitions.json`: six entries limited to the `option-no-transitions` preset. 2.1.1
   builds that option by compiling the gated `transition` declarations, the modal animations and the
   tooltip slides out; an appended file can only reset them, so `options/no-transitions.css` sets

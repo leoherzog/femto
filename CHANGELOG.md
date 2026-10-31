@@ -43,6 +43,7 @@ Rendering bugs that Pico 2.1.1 has. Where Pico has an open issue for one, it is 
 
 - In Firefox, an indeterminate `<progress>` shows the empty track when the user prefers reduced motion, as in Chrome and Safari, instead of a full bar that looked complete.
 - A right-to-left breadcrumb shows only its divider between items, as a left-to-right one does, instead of also a stray backslash after the link in every item but the last ([picocss/pico#734](https://github.com/picocss/pico/issues/734)).
+- `[role=search]` and `[role=group]` skip a `hidden` element or `<input type="hidden">` placed first or last, so the search pill and the group keep their rounded ends and the first visible control stays inside the group, instead of a flat end and a 1px overhang ([picocss/pico#736](https://github.com/picocss/pico/issues/736), [picocss/pico#748](https://github.com/picocss/pico/pull/748)).
 
 ### Known issues
 

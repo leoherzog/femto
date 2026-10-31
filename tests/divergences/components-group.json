@@ -34,5 +34,69 @@
     "category": "natural-fix",
     "reason": "Consequence of tokens-group-island-focus-ring (tokens.json): the [role=group] and [role=search] focus ring inside a nested data-theme island whose scheme differs from the page uses the island's scheme color instead of the page's. 2.1.1 fixed the ring color in the root's scheme; light-dark() resolves it per element. This entry covers a light island on a dark page.",
     "notes": "The mirror of group-island-focus-ring-style; see its notes. This one: the group's nearest island is light, on the dark and theme-dark legs. Values, spread limit and where.pages as there. The :not() drops a group whose nearer island is dark inside a light one (tokens-schemes.html light-dark), a same-scheme island on these legs. A group three islands deep (light, dark, light) is not matched; no fixture focuses one."
+  },
+  {
+    "id": "group-hidden-child-corners",
+    "module": "components/group",
+    "kind": "style",
+    "selector": ":is([role=group], [role=search]) > :not([hidden], input[type=hidden]):nth-child(1 of :not([hidden], input[type=hidden])):not(:first-child), :is([role=group], [role=search]) > :not([hidden], input[type=hidden]):nth-last-child(1 of :not([hidden], input[type=hidden])):not(:last-child)",
+    "pseudo": "",
+    "property": "/^border-((top|bottom)-(left|right)|(start|end)-(start|end))-radius$/",
+    "reference": "0px",
+    "femto": "/^[1-9][0-9]*(\\.[0-9]+)?px$/",
+    "where": {
+      "pages": ["components-group.html"]
+    },
+    "category": "natural-fix",
+    "reason": "2.1.1 picks the outer controls of [role=group] and [role=search] with :first-child and :last-child, which also count children that draw nothing: an <input type=hidden> such as a CSRF token or a search filter, or a [hidden] element. With such a child first, the first visible control lost its rounded start corners, so a search pill had a flat end; with one last, the last control lost its rounded end corners. femto matches :nth-child(1 of :where(:not([hidden], input[type=hidden]))) and :nth-last-child(1 of ...) instead, so the visible controls round their outer corners as if the hidden children were absent. Specificity is unchanged, and groups without hidden children compute as in 2.1.1.",
+    "notes": "Fixtures in components-group.html: the last [role=group] of \"Role group\" (a <span hidden> first, an email input, a button, an <input type=hidden> last) and the last [role=search] of \"Role search\" (an <input type=hidden> first, a search input, a submit), the markup of picocss/pico#736. The selector matches the first visible child when it is not the first child and the last visible child when it is not the last; the values go from 0px to the group radius (4px at 390, 5px at 1280) or the search pill's 5rem (80px, 100px). Probed with standalone Selenium pages in Chrome 158 and Firefox 160 beta, at 1000 and 420px, light and dark, ltr and rtl, against the reference, femto before the fix and the built dist (plain and minified): before, a search input after a leading hidden input sits 1.13px outside the group with margin-left -1.125px and flat left corners (0px instead of 90px), a trailing hidden input leaves the last control's right corners at 0px (90px in a search, 4.5px in a group), the same in 2.1.1; after, each of 15 hidden-child fixtures (hidden input or [hidden] element first, last or both, uppercase type=HIDDEN, a wrapped input, a single control) equals its twin without the hidden children in geometry, radii, margins and corner pixels, and a <button type=hidden>, which renders, keeps its corners. Full computed-style dumps of seven harness pages show no difference before and after, and live mutations (toggling hidden, switching type to and from hidden, inserting and removing hidden children) match freshly parsed twins in both browsers. Upstream issue picocss/pico#736; PR picocss/pico#748 was not used (it keeps the -1px margin on :first-child and adds an @supports :has() fork)."
+  },
+  {
+    "id": "group-hidden-child-corners-margin",
+    "module": "components/group",
+    "kind": "style",
+    "selector": ":is([role=group], [role=search]) > :not([hidden], input[type=hidden]):nth-child(1 of :not([hidden], input[type=hidden])):not(:first-child)",
+    "pseudo": "",
+    "property": "/^margin-(left|inline-start|inline-end)$/",
+    "reference": "/^-[0-9.]+px$/",
+    "femto": "0px",
+    "where": {
+      "pages": ["components-group.html"]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of group-hidden-child-corners: 2.1.1 gave the first visible control after a hidden first child the negative border-width margin meant for a control that follows another one, so it sat one border width outside the group's start edge. femto treats it as the first control, so its margin is 0 and it starts at the group's edge.",
+    "notes": "Fixtures in components-group.html: the last [role=group] of \"Role group\" (a <span hidden> first, an email input, a button, an <input type=hidden> last) and the last [role=search] of \"Role search\" (an <input type=hidden> first, a search input, a submit), the markup of picocss/pico#736. Applies to the email input and the search input of those fixtures (-1px at 390 and -1.25px at 1280 in the reference). Probed in Chrome 158 and Firefox 160 beta: the search input's start offset goes from -1.13px to 0 at 1000px. Upstream issue picocss/pico#736."
+  },
+  {
+    "id": "group-hidden-child-corners-geometry",
+    "module": "components/group",
+    "kind": "style",
+    "selector": ":is([role=group], [role=search]) > :not([hidden], input[type=hidden]):nth-child(1 of :not([hidden], input[type=hidden])):not(:first-child)",
+    "pseudo": "/^(|::placeholder)$/",
+    "property": "/^(width|inline-size|transform-origin|perspective-origin)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": ["components-group.html"]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of group-hidden-child-corners-margin: without the negative margin, the flex row no longer stretches the first visible control over the group's start edge, so it is one border width narrower, and its transform and perspective origins follow, as do its ::placeholder's in Chrome.",
+    "notes": "Fixtures in components-group.html: the last [role=group] of \"Role group\" (a <span hidden> first, an email input, a button, an <input type=hidden> last) and the last [role=search] of \"Role search\" (an <input type=hidden> first, a search input, a submit), the markup of picocss/pico#736. Recorded: 253.11px to 252.11px at 390 and 1112.31px to 1111.06px at 1280 for the email input, and the same one border width for the search input, in Chrome and Firefox. Upstream issue picocss/pico#736."
+  },
+  {
+    "id": "group-hidden-child-corners-hidden-input",
+    "module": "components/group",
+    "kind": "style",
+    "selector": ":is([role=group], [role=search]) > input[type=hidden]:is(:first-child, :last-child)",
+    "pseudo": "",
+    "property": "/^(border-((top|bottom)-(left|right)|(start|end)-(start|end))-radius|margin-(left|inline-start|inline-end))$/",
+    "reference": "*",
+    "femto": "/^(0|-[0-9.]+)px$/",
+    "where": {
+      "pages": ["components-group.html"]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of group-hidden-child-corners: a hidden input at the edge of a group no longer counts as its first or last control, so a leading one takes the flat start corners and negative margin of a control that follows another, and a trailing one the flat end corners. It is display:none and draws nothing.",
+    "notes": "Fixtures in components-group.html: the last [role=group] of \"Role group\" (a <span hidden> first, an email input, a button, an <input type=hidden> last) and the last [role=search] of \"Role search\" (an <input type=hidden> first, a search input, a submit), the markup of picocss/pico#736. The leading hidden input of the search goes from 80px or 100px start radii and margin 0 to 0px and -1px or -1.25px; the trailing hidden input of the group goes from 4px or 5px end radii to 0px. The <span hidden> computes the same on both sides. Upstream issue picocss/pico#736."
   }
 ]

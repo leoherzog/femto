@@ -51,6 +51,12 @@
     <button>Go</button>
   </fieldset>
   <p><input type="submit" value="Submit button that is itself a group" role="group"></p>
+  <div role="group">
+    <span hidden>Hidden first</span>
+    <input type="email" name="g-between-hidden" placeholder="Email between hidden children">
+    <button>Subscribe</button>
+    <input type="hidden" name="g-hidden" value="token">
+  </div>
 
   <h2>Role search</h2>
   <div role="search">
@@ -82,6 +88,11 @@
     <select name="s-select-2"><option>Select, not first</option></select>
     <input type="button" value="Input button, not first" data-states="focus">
   </div>
+  <form role="search">
+    <input type="hidden" name="s-hidden" value="femto">
+    <input type="search" name="s-after-hidden" placeholder="Search after a hidden input">
+    <input type="submit" value="Search">
+  </form>
 
   <div data-theme="light">
     <h2>Light island</h2>
