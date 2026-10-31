@@ -1,7 +1,7 @@
 /*
  * Table: full-width tables with collapsed borders, padded cells with a bottom border, a top border
- * on the footer, and the .striped class, which shades the odd body rows. The reboot rules follow
- * normalize.css v8.0.1 and sanitize.css v13.0.0.
+ * on the footer, and the .striped class, which shades the odd body rows, not counting rows with the
+ * hidden attribute. The reboot rules follow normalize.css v8.0.1 and sanitize.css v13.0.0.
  */
 :where(table) {
   width: 100%;
@@ -27,15 +27,15 @@ tfoot td {
   border-bottom: 0;
 }
 
-table.striped tbody tr:nth-child(odd) th,
-table.striped tbody tr:nth-child(odd) td {
+table.striped tbody tr:nth-child(odd of :where(:not([hidden]))) th,
+table.striped tbody tr:nth-child(odd of :where(:not([hidden]))) td {
   background-color: var(--femto-table-row-stripped-background-color);
 }
 
-table.striped:where([data-theme]) tbody tr:nth-child(odd) :is(th, td),
-table.striped tbody:where([data-theme]) tr:nth-child(odd) :is(th, td),
-table.striped tbody tr:nth-child(odd):where([data-theme]) :is(th, td),
-table.striped tbody tr:nth-child(odd) :is(th, td):where([data-theme]) {
+table.striped:where([data-theme]) tbody tr:nth-child(odd of :where(:not([hidden]))) :is(th, td),
+table.striped tbody:where([data-theme]) tr:nth-child(odd of :where(:not([hidden]))) :is(th, td),
+table.striped tbody tr:nth-child(odd of :where(:not([hidden]))):where([data-theme]) :is(th, td),
+table.striped tbody tr:nth-child(odd of :where(:not([hidden]))) :is(th, td):where([data-theme]) {
   background-color: var(--femto-background-color);
   background-image: linear-gradient(var(--femto-table-row-stripped-background-color), var(--femto-table-row-stripped-background-color));
 }

@@ -491,7 +491,11 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   translucent stripe alone, so under a `data-theme` on the table, its `tbody`, the row or the cell
   the page showed through behind the other scheme's text; femto gives those cells the scheme's
   background color and draws the stripe over it as a one-color gradient (fixtures: the tables under
-  "Rows and cells with their own data-theme").
+  "Rows and cells with their own data-theme"). `striped-table-skips-hidden-rows`, on the same page:
+  2.1.1 counted rows with the `hidden` attribute toward the odd rows, so two visible rows could
+  share a shade; femto counts only the rows without it, so the rows after a hidden row can change
+  shade (fixtures: the hidden fifth row, whose cells lose the stripe value, and the sixth row of
+  the first table, which gains it).
 - `components-modal.json`: `modal-dialog-backdrop-tint`, on `dialog:modal`. 2.1.1 left a modal
   dialog's `::backdrop` to the browser, whose `rgba(0, 0, 0, 0.1)` tint lay under the overlay, so a
   dialog opened with `showModal()` looked darker than one with the `open` attribute and stayed grey

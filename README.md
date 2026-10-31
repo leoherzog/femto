@@ -96,7 +96,7 @@ Most of femto works from the elements alone. These are the classes and attribute
 | `.overflow-auto` | Scrolls content that overflows it, such as a wide table |
 | `.secondary`, `.contrast`, `.outline` | Button styles; `.secondary` and `.contrast` also color links |
 | `role="button"` | An element that looks like a button, such as a link or a `<summary>` |
-| `<table class="striped">` | Shades the odd body rows |
+| `<table class="striped">` | Shades the odd body rows, not counting rows with the `hidden` attribute |
 | `<input type="checkbox" role="switch">` | A switch |
 | `aria-invalid="true"` or `"false"` on a form field | Invalid or valid border colors, an icon in most text fields, and a matching color on a `<small>` right after the field |
 | `role="group"`, `role="search"` | Joins buttons, inputs and selects in one row; `search` rounds the ends |

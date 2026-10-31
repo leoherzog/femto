@@ -1,5 +1,21 @@
 [
   {
+    "id": "striped-table-skips-hidden-rows",
+    "module": "content/table",
+    "kind": "style",
+    "selector": "table.striped tbody tr:is(:nth-child(odd):not(:nth-child(odd of :not([hidden]))), :nth-child(even):nth-child(odd of :not([hidden]))) > :is(th, td)",
+    "pseudo": "",
+    "property": "background-color",
+    "reference": "/^(rgba\\(111, 120, 135, 0\\.0[0-9]*\\)|rgb\\((255, 255, 255|19, 23, 31)\\))$/",
+    "femto": "/^(rgba\\(111, 120, 135, 0\\.0[0-9]*\\)|rgb\\((255, 255, 255|19, 23, 31)\\))$/",
+    "where": {
+      "pages": ["classes-table-striped.html"]
+    },
+    "category": "natural-fix",
+    "reason": "2.1.1 shades 'table.striped tbody tr:nth-child(odd)', which counts rows that have the hidden attribute, so the visible rows on either side of a hidden row could share a shade (rows 1, hidden 2, 3, 4: rows 1 and 3 striped, row 4 plain). 2.1.0 counted only rows without the attribute, but 2.1.1 reverted that because its minifier wrote 'nth-child(oddof:not([hidden]))', which is invalid. femto shades 'tr:nth-child(odd of :where(:not([hidden])))', and so does its rule for striped rows under a data-theme, so the stripes alternate over the rows that are shown; :where() keeps 2.1.1's specificity, (0,2,4), so author rules that tie with it and load after femto still win. A table with no hidden rows is unchanged. In the fixture, the cells of the hidden fifth row lose the stripe value (they are never painted) and the cells of the sixth row gain it.",
+    "notes": "Fixture: the first table of classes-table-striped.html, rows 1 to 4, a hidden row 5 and row 6; the selector picks the rows whose parity counting all rows differs from their parity counting the rows without the hidden attribute, which in the fixture are exactly the td of rows 5 and 6. Probed with standalone Selenium pages in Chrome 158 and Firefox 160 beta, light and dark, widths 390 and 1000, ltr and rtl, with dist/femto.css and dist/femto.min.css ('odd of:where(:not([hidden]))'): for the visible rows of 1, hidden 2, 3, 4, the reference gives stripe, stripe, plain (light #f9fafa/#f9fafa/#ffffff) and femto gives stripe, plain, stripe (#f9fafa/#ffffff/#f9fafa). The same holds with the first row hidden, two hidden rows, two tbodies, hidden=until-found, a data-theme island, and data-theme on the table, the tbody or the rows, where the themed stripe follows the same rows. Setting or removing hidden from script restripes the following rows. Tables without hidden rows, thead and tfoot cells, a row hidden with display: none (still counted, as in 2.1.1) and an author 'table.striped tbody tr.selected td' rule loaded after femto keep their 2.1.1 result. Safari 27.2 (safaridriver) keeps the minified rule and stripes visible rows 1 and 4. Upstream: picocss/pico#663, which re-lands 2.1.0's fix from picocss/pico#585."
+  },
+  {
     "id": "striped-row-data-theme",
     "module": "content/table",
     "kind": "style",
