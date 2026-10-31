@@ -47,7 +47,9 @@ pre {
 pre > code,
 pre > samp {
   display: block;
+  min-width: min-content;
   padding: var(--femto-spacing);
+  overflow-wrap: anywhere;
   background: none;
   line-height: var(--femto-line-height);
 }

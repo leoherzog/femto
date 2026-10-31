@@ -563,10 +563,18 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   finishes transitions, so it shows only the computed property, and the flash was probed outside it
   (fixtures: every unchecked radio, such as `#r-2` and `#r-3` in `forms-checkbox-radio-switch.html`
   and `#ks-r2` in `kitchen-sink.html`).
+- `content-code.json`: `pre-code-scroll-end-padding`, with `-overflow-wrap`, limited to the four
+  pages that have a `pre > code` or `pre > samp`, and `-geometry`, limited to `content-code.html`.
+  2.1.1 padded the code or samp inside a pre but kept it as wide as the pre, so a longer line
+  overflowed it and, scrolled to the end, touched the pre's edge; femto gives it
+  `min-width: min-content`, so it grows to its longest line plus its padding and the pre scrolls on
+  to the end of the padding, and `overflow-wrap: anywhere`, so code an author makes wrap keeps the
+  pre's width (fixture: the long block of `content-code.html`, the only one that overflows and
+  changes its box; the other blocks change only those computed values).
 - `rig.json`: the checks Safari cannot run (`safari-no-media-dark`,
   `safari-no-focus-visible-date-input`).
 
-The other 16 modules need no entry. Two fixtures exist to make the registry's checks meaningful:
+The other 15 modules need no entry. Two fixtures exist to make the registry's checks meaningful:
 `colors.html` has a "Two classes" block in which each span carries two neighboring utility classes
 in file order, so a change of rule order in `femto.colors.css` shows as a difference, and
 `components-tooltip.html` has tooltips on an open accordion summary and on two dropdown summaries,

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "pre-code-scroll-end-padding",
+    "module": "content/code",
+    "kind": "style",
+    "selector": "pre > code, pre > samp",
+    "pseudo": "",
+    "property": "/^min-(width|inline-size)$/",
+    "reference": "0px",
+    "femto": "min-content",
+    "where": {
+      "pages": ["content-code.html", "content-figure.html", "kitchen-sink.html", "tokens-schemes.html"]
+    },
+    "category": "natural-fix",
+    "reason": "2.1.1 pads the code or samp inside a pre, but that child is only as wide as the pre, and only the pre scrolls. A line longer than the pre overflows the child's content box, so the pre's scrollable area ends at the text: scrolled to the end, the last characters touch the edge (0 to 0.5px) while the other sides keep the 1rem padding. femto gives the child min-width: min-content, so it grows to its longest line with its padding included, and the pre scrolls on to the end of the padding. The pre stays the scroll container, so keyboard focus, the focus ring and an author max-height on the pre behave as in 2.1.1. Blocks whose longest line fits in the code's content box keep their width. A line that ends inside the end padding, which 2.1.1 showed without scrolling, now scrolls by the rest of the padding (up to 1rem), so that pre becomes a tab stop and shows a scrollbar where scrollbars are always visible.",
+    "notes": "Fixture: the long block of content-code.html (\"A long line that overflows horizontally\"), which overflows at every harness width. Loaded from the repo pages in an iframe, its end gap goes from 0.25 to 16.25px at 390 and from -0.19 to 19.81px at 1280 in Chrome (rtl at 390: -0.75 to 15.25px), and from 0 to 16px and 20px in Firefox. The other pre > code and pre > samp blocks of the four pages fit and change only these computed values (pre-code-scroll-end-padding-geometry records the long block's box). Probed with standalone Selenium pages in Chrome Beta 158 and Firefox 160 beta, light and dark, 1000 and 500px wide, against 2.1.1, femto before the fix and the built dist. Scrolled to the end, the gap between the text and the pre's edge goes from 0.5 to 18.5px at 1000 and from 0.11 to 16.11px at 500 in Chrome (rtl -0.5 to 17.5px, Hebrew -0.7 to 17.3px), and from 0 to 18px and 16px in Firefox, rtl and Hebrew included, for code, samp, multi-line blocks and data-theme islands, against a start gap of 18 and 16px; the pre's scroll range grows by exactly the padding (1196 to 1214px). Safari 27.2 (safaridriver, dark scheme): 0.26 to 18.26px at 1000 and 0.45 to 16.45px at 500 (Hebrew -0.25 to 15.75px), 2 to 20 and 18px read from screenshot pixels, with the pre still the only scroller. A bare pre, short blocks, inline code in a pre, figure > pre, a pre in .grid, a flex row and a table cell keep their boxes; Tab focuses the pre with the same ring pixels as before in both browsers, and a pre with max-height still scrolls both axes itself. In a 600px pre, lines of 60 and 61 x characters, which end inside the padding, now scroll by 5 and 14px and become tab stops. An author rule that makes pre > code its own scroller, such as highlight.js's pre code.hljs { overflow-x: auto }, now finds the code as wide as its longest line, so the pre scrolls instead. With a max-height on the code, the code's vertical scrollbar sits at the end of the longest line (1354px into a 600px pre) and Firefox stops Tab on both the pre and the code; and with pre { overflow: visible } the code spills out of the page (610px of page overflow). Setting min-width: 0 on the code restores 2.1.1's sizing in both cases. Moving overflow-x: auto onto the code, as upstream pull request picocss/pico#651 does, was rejected: the code then takes keyboard focus and the pre clips its ring, so Firefox shows none. Upstream pull request picocss/pico#651."
+  },
+  {
+    "id": "pre-code-scroll-end-padding-overflow-wrap",
+    "module": "content/code",
+    "kind": "style",
+    "selector": "pre > code, pre > samp",
+    "pseudo": "",
+    "property": "overflow-wrap",
+    "reference": "break-word",
+    "femto": "anywhere",
+    "where": {
+      "pages": ["content-code.html", "content-figure.html", "kitchen-sink.html", "tokens-schemes.html"]
+    },
+    "category": "natural-fix",
+    "reason": "The companion of pre-code-scroll-end-padding. The breaks that break-word, which 2.1.1 lets pre > code and pre > samp inherit, adds do not count toward min-content, so with min-width: min-content code that wraps (an author white-space: pre-wrap) would widen to its longest word, and every line would wrap past the pre's edge. femto sets overflow-wrap: anywhere, which breaks lines at the same places but counts those breaks, so code that wraps keeps the pre's width. It replaces any inherited value, not only break-word: an overflow-wrap set on the pre or an ancestor no longer reaches pre > code or pre > samp. That matters only when the code wraps, and setting overflow-wrap on the code itself restores it. With white-space: pre-wrap, a word wider than the block inside a shrink-to-fit box such as a table cell now breaks inside it instead of widening the box, as it already did in normal flow.",
+    "notes": "Fixtures as for pre-code-scroll-end-padding; no fixture sets white-space, so only the computed value changes. Probed in Chrome Beta 158 and Firefox 160 beta: a pre-wrap block holding a 133-character token keeps 700px and 4 lines at 1000 (5 lines at 500), where min-width: min-content alone widened it to 1297px and 3 lines. In a table cell the same block goes from a 1333px cell and 3 lines to 700px and 4 lines. A pre-wrap pre with overflow-wrap: normal, whose 120-character token overflowed and scrolled by 556px, now breaks it (3 to 4 lines, no scroll). Safari 27.2 keeps the pre-wrap block at 700px and 4 lines. Upstream pull request picocss/pico#651."
+  },
+  {
+    "id": "pre-code-scroll-end-padding-geometry",
+    "module": "content/code",
+    "kind": "style",
+    "selector": "pre > code, pre > samp",
+    "pseudo": "",
+    "property": "/^(width|inline-size|transform-origin|perspective-origin)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": ["content-code.html"]
+    },
+    "category": "natural-fix",
+    "reason": "The box change of pre-code-scroll-end-padding: a pre > code or pre > samp whose longest line is wider than its pre is now as wide as that line plus its padding, so its width, inline-size and the origins at its center change. Its pre keeps its size, so nothing else moves.",
+    "notes": "Fixture: the long block of content-code.html, the only one in the fixtures that overflows. Its code goes from 390px to 1481.75px (Firefox 160 beta: 1482.53px) at 390 and from 1280px to 1852.19px (Firefox: 1851.73px) at 1280 in Chrome Beta 158, in every leg. Upstream pull request picocss/pico#651."
+  }
+]
