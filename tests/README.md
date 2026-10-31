@@ -731,7 +731,8 @@ On 2026-10-30 the root rule's `:host` moved out of `:where()`, where Safari 17.5
 it. `compare --presets default --all-legs` over the six default-entry pages with shadow hosts
 (`components-modal.html`, `kitchen-sink.html`, `layout-document.html`, `tokens-base.html`,
 `tokens-breakpoints.html`, `tokens-schemes.html`) then found 0 unregistered differences in Chrome
-and Firefox; Safari has not run it.
+and Firefox. Safari 27.2 on a dark OS ran every leg except light media, which needs a light OS and
+has not run: 0 unregistered differences, 0 harness errors, and no pixel off by more than 8/255.
 
 `coverage --css /css/femto.css --entry default` reports 691 selectors over 43 pages (57 loads), 0
 dynamic rules without `data-states`, and one selector that matches nothing and never can (see Known
