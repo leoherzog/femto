@@ -44,6 +44,14 @@
   border-start-end-radius: 0;
   border-end-end-radius: 0;
 }
+[role=search] > *:is([aria-invalid=true], [aria-invalid=false]),
+[role=search] input:not([type=checkbox], [type=radio]):is([aria-invalid=true], [aria-invalid=false]),
+[role=search] select:is([aria-invalid=true], [aria-invalid=false]),
+[role=group] > *:is([aria-invalid=true], [aria-invalid=false]),
+[role=group] input:not([type=checkbox], [type=radio]):is([aria-invalid=true], [aria-invalid=false]),
+[role=group] select:is([aria-invalid=true], [aria-invalid=false]) {
+  z-index: 1;
+}
 [role=search] > *:focus,
 [role=search] input:not([type=checkbox], [type=radio]):focus,
 [role=search] select:focus,

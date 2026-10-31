@@ -42,6 +42,10 @@
     <input type="text" name="g-b" placeholder="inputs" data-states="focus">
   </div>
   <div role="group">
+    <input type="text" name="g-invalid" value="Invalid" aria-invalid="true" data-states="focus">
+    <button>Go</button>
+  </div>
+  <div role="group">
     <label><input type="checkbox" name="g-check"> Checkbox</label>
     <label><input type="radio" name="g-radio"> Radio</label>
     <span>Text span</span>
@@ -87,6 +91,11 @@
     <input type="search" name="s-before-select" placeholder="Search">
     <select name="s-select-2"><option>Select, not first</option></select>
     <input type="button" value="Input button, not first" data-states="focus">
+  </div>
+  <div role="search">
+    <select name="s-valid" aria-invalid="false"><option>Valid select</option></select>
+    <input type="search" name="s-search-5" placeholder="Search">
+    <input type="submit" value="Search">
   </div>
   <form role="search">
     <input type="hidden" name="s-hidden" value="femto">

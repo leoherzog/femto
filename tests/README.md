@@ -428,7 +428,12 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   double border at one seam and pushed its end item one border width out; femto uses logical
   properties, which follow each item's own direction, so a right-to-left group mirrors a
   left-to-right one (fixtures: the "Right to left" block of `components-group.html`, and the kitchen
-  sink's groups in its rtl legs).
+  sink's groups in its rtl legs). `group-invalid-field-above-next-item`, limited to
+  `components-group.html`: 2.1.1 left every item at `z-index: auto`, so the next item painted over
+  the border an `aria-invalid="true"` or `"false"` field shares with it; femto gives that field
+  `z-index: 1`, so its whole red or green border shows, and a focused item stays above it at 2
+  (fixtures: the invalid text input and button after "Two inputs" in "Role group", and the valid
+  select, search input and submit in "Role search").
 - `options-no-transitions.json`: six entries limited to the `option-no-transitions` preset. 2.1.1
   builds that option by compiling the gated `transition` declarations, the modal animations and the
   tooltip slides out; an appended file can only reset them, so `options/no-transitions.css` sets
