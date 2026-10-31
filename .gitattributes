@@ -1,7 +1,7 @@
 # Built from css/ by npm run build; GitHub collapses these files in diffs.
 dist/** linguist-generated
 
-# Left out of GitHub's source archives, which the Download link and Composer install.
+# Left out of GitHub's source archives, such as the README's Download link.
 /.github export-ignore
 /tests export-ignore
 /.gitattributes export-ignore

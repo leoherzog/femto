@@ -28,8 +28,6 @@ or install it from npm, pinned to that version so that a later alpha, which may 
 npm install --save-exact @leoherzog/femto@alpha
 ```
 
-The alpha has no Composer package or download link; use the files in this repository instead.
-
 ### From a CDN
 
 Link femto from [jsDelivr](https://www.jsdelivr.com/package/npm/@leoherzog/femto) in the `<head>` of your page:
@@ -63,12 +61,6 @@ A bundler that rewrites CSS for older browsers can break femto's color schemes. 
 
 ```js
 export default { build: { cssTarget: ["chrome125", "edge125", "firefox128", "safari17.5"] } };
-```
-
-### Composer
-
-```sh
-composer require leoherzog/femto
 ```
 
 ### Starter template
@@ -301,7 +293,7 @@ femto 3.0 is derived from Pico CSS 2.1.1, copyright 2019-2024 Pico, under the MI
 | Pico 2.1.1 | femto 3.0 |
 |---|---|
 | npm `@picocss/pico` | npm `@leoherzog/femto` |
-| Composer `picocss/pico` | Composer `leoherzog/femto`, from 3.0.0 |
+| Composer `picocss/pico` | None; use npm, a CDN or the [download](#download) |
 | `css/pico.min.css`, `css/pico.css` | `dist/femto.min.css`, `dist/femto.css` |
 | `css/pico.colors.min.css`, `css/pico.colors.css` | `dist/femto.colors.min.css`, `dist/femto.colors.css` |
 | `css/pico.<color>.min.css` | `dist/femto.min.css`, then `css/themes/<color>.css` |

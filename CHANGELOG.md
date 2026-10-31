@@ -34,6 +34,7 @@ The first alpha of femto 3: Pico CSS 2.1.1's default build rewritten as plain CS
 - Sass and every Sass setting. The README's Sass settings table lists what replaces each one.
 - The classless, fluid classless and conditional builds, with their `$enable-semantic-container`, `$enable-viewport` and `$parent-selector` settings.
 - The prebuilt themed copies, such as `pico.jade.min.css`.
+- The Composer package. Install femto from npm, link it from a CDN or download it.
 - The `-ms-` rules, `::-webkit-input-placeholder`, `::-moz-list-bullet`, `:-moz-focusring { outline: none }` and `:-moz-ui-invalid { box-shadow: none }`.
 
 ### Known issues
