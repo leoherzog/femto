@@ -1855,6 +1855,9 @@ dialog {
   background-color: var(--femto-modal-overlay-background-color);
   color: var(--femto-color);
 }
+:where(dialog)::backdrop {
+  background: none;
+}
 dialog > article {
   width: 100%;
   max-height: calc(100vh - var(--femto-spacing) * 2);

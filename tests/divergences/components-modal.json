@@ -1,0 +1,34 @@
+[
+  {
+    "id": "modal-dialog-backdrop-tint",
+    "module": "components/modal",
+    "kind": "style",
+    "selector": "dialog:modal",
+    "pseudo": "::backdrop",
+    "property": "background-color",
+    "reference": "rgba(0, 0, 0, 0.1)",
+    "femto": "rgba(0, 0, 0, 0)",
+    "category": "natural-fix",
+    "reason": "2.1.1 draws the modal overlay on the full-viewport dialog itself and leaves ::backdrop to the browser, whose default dialog::backdrop background is rgba(0, 0, 0, 0.1). A dialog opened with showModal() therefore had that 10% black layer under the overlay: it looked darker than the same dialog with the open attribute (light #e7e8eb in Chrome and #e8e9ec in Firefox, against #eeeff2), it left a grey #e5e5e5 page when --femto-modal-overlay-background-color was transparent, and it appeared before the overlay faded in and stayed until it had faded out, since the opening and closing animations run only on the dialog. femto sets :where(dialog)::backdrop to background: none, so a modal dialog renders like an open one and the overlay token alone sets the color. :where() keeps the rule at (0,0,1), so an author's own ::backdrop rule loaded after femto still overrides it, as it overrode the browser default in 2.1.1.",
+    "notes": "Fixture: the three dialogs of components-modal-show.html (light island, dark island, plain), which page.js opens with showModal(). Probed with standalone Selenium pages in Chrome 158 and Firefox 160 beta, light and dark, ltr and rtl, at 500 and 1280px, with motion and reduced motion, with the token transparent, and with the opening animation frozen at 0s and 0.4s: every corner pixel of a showModal() dialog now matches the open-attribute dialog (light #eeeff2, dark #0b0c0f in Chrome and #0a0c0e in Firefox, token transparent #ffffff and #13171f, t=0 #ffffff), and open-attribute dialogs keep their 2.1.1 pixels. With focus inside the dialog, whole screenshots of the two are identical; on a dialog with nothing focusable Chrome also draws its focus ring at the viewport edge, with 2.1.1 as with femto. Author rules after femto still win: ::backdrop { background: rgba(255, 0, 0, 0.5) } and dialog::backdrop { ... } keep their 2.1.1 pixels, an author ::backdrop background-image now shows without the browser tint under it, and a [popover]::backdrop rule is unaffected. Safari was not probed (safaridriver could not start a session); WebKit's UA stylesheet has the same dialog::backdrop { background: rgba(0, 0, 0, 0.1) } rule. Upstream issue picocss/pico#565."
+  },
+  {
+    "id": "non-modal-dialog-backdrop-computed",
+    "module": "components/modal",
+    "kind": "style",
+    "selector": "dialog:not(:modal)",
+    "pseudo": "::backdrop",
+    "property": "background-color",
+    "reference": "rgba(0, 0, 0, 0.1)",
+    "femto": "rgba(0, 0, 0, 0)",
+    "where": {
+      "browsers": [
+        "firefox",
+        "safari"
+      ]
+    },
+    "category": "natural-fix",
+    "reason": "Computed style only, from modal-dialog-backdrop-tint. Firefox and Safari apply their default dialog::backdrop background, rgba(0, 0, 0, 0.1), to every dialog and report it for closed and open-attribute dialogs too, but only a modal dialog draws a backdrop. femto's :where(dialog)::backdrop { background: none } clears it on every dialog, so these dialogs compute rgba(0, 0, 0, 0) and render exactly as in 2.1.1.",
+    "notes": "Seen in Firefox 160 beta on the closed, open and shadow-root dialogs of components-modal.html, classes-modal.html, kitchen-sink.html, tokens-base.html, tokens-schemes.html, tokens-breakpoints.html and utilities-reduce-motion.html; Chrome 158 reports rgba(0, 0, 0, 0) for those dialogs with 2.1.1 and femto alike. Safari is listed because WebKit's UA stylesheet uses the same unconditional dialog::backdrop rule as Firefox and the harness reads ::backdrop on a closed dialog in all three browsers; it was not run. Open-attribute screenshots are unchanged in Chrome and Firefox. Upstream issue picocss/pico#565."
+  }
+]

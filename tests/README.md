@@ -475,10 +475,18 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   the page showed through behind the other scheme's text; femto gives those cells the scheme's
   background color and draws the stripe over it as a one-color gradient (fixtures: the tables under
   "Rows and cells with their own data-theme").
+- `components-modal.json`: `modal-dialog-backdrop-tint`, on `dialog:modal`. 2.1.1 left a modal
+  dialog's `::backdrop` to the browser, whose `rgba(0, 0, 0, 0.1)` tint lay under the overlay, so a
+  dialog opened with `showModal()` looked darker than one with the `open` attribute and stayed grey
+  with a transparent overlay token; femto clears it with `:where(dialog)::backdrop`, which an
+  author's own `::backdrop` rule still overrides (fixtures: the three dialogs of
+  `components-modal-show.html`). `non-modal-dialog-backdrop-computed`, on `dialog:not(:modal)` in
+  Firefox and Safari: they report the default on every dialog's `::backdrop` but draw it only for a
+  modal one, so closed and open-attribute dialogs change in computed style only.
 - `rig.json`: the checks Safari cannot run (`safari-no-media-dark`,
   `safari-no-focus-visible-date-input`).
 
-The other 20 modules need no entry. Two fixtures exist to make the registry's checks meaningful:
+The other 19 modules need no entry. Two fixtures exist to make the registry's checks meaningful:
 `colors.html` has a "Two classes" block in which each span carries two neighboring utility classes
 in file order, so a change of rule order in `femto.colors.css` shows as a difference, and
 `components-tooltip.html` has tooltips on an open accordion summary and on two dropdown summaries,
