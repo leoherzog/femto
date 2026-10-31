@@ -5,7 +5,9 @@
   </picture>
 </h1>
 
-femto styles semantic HTML with plain CSS. Link one stylesheet and plain HTML looks clean and readable: headings, text, links, buttons, forms, tables, cards (`<article>`), accordions (`<details>`) and modals (`<dialog>`) are styled from their elements alone, with no classes needed. A few classes cover what HTML has no element for, such as `.container` and `.grid` for layout and `.secondary`, `.contrast` and `.outline` for button styles.
+Semantic HTML made beautiful
+
+Link one stylesheet and plain HTML looks clean and readable: headings, text, links, buttons, forms, tables, cards (`<article>`), accordions (`<details>`) and modals (`<dialog>`) are styled from their elements alone, with no classes needed. A few classes cover what HTML has no element for, such as `.container` and `.grid` for layout and `.secondary`, `.contrast` and `.outline` for button styles.
 
 - Plain CSS: no Sass, and no build step to use or customize it.
 - Light and dark color schemes that follow the visitor's system setting, or that you set with `data-theme`.

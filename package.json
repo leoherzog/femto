@@ -1,7 +1,7 @@
 {
   "name": "@leoherzog/femto",
   "version": "3.0.0-alpha.1",
-  "description": "Semantic HTML, styled with plain CSS: light and dark schemes, 20 theme colors, no build step",
+  "description": "Semantic HTML made beautiful",
   "license": "MIT",
   "author": {
     "name": "Leo Herzog",
