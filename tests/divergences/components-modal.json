@@ -30,5 +30,18 @@
     "category": "natural-fix",
     "reason": "Computed style only, from modal-dialog-backdrop-tint. Firefox and Safari apply their default dialog::backdrop background, rgba(0, 0, 0, 0.1), to every dialog and report it for closed and open-attribute dialogs too, but only a modal dialog draws a backdrop. femto's :where(dialog)::backdrop { background: none } clears it on every dialog, so these dialogs compute rgba(0, 0, 0, 0) and render exactly as in 2.1.1.",
     "notes": "Seen in Firefox 160 beta on the closed, open and shadow-root dialogs of components-modal.html, classes-modal.html, kitchen-sink.html, tokens-base.html, tokens-schemes.html, tokens-breakpoints.html and utilities-reduce-motion.html; Chrome 158 reports rgba(0, 0, 0, 0) for those dialogs with 2.1.1 and femto alike. Safari is listed because WebKit's UA stylesheet uses the same unconditional dialog::backdrop rule as Firefox and the harness reads ::backdrop on a closed dialog in all three browsers; it was not run. Open-attribute screenshots are unchanged in Chrome and Firefox. Upstream issue picocss/pico#565."
+  },
+  {
+    "id": "modal-footer-button-gap-rtl",
+    "module": "components/modal",
+    "kind": "style",
+    "selector": "dialog > article > footer :is(button, [role=button]):not(:first-of-type):dir(rtl)",
+    "pseudo": "",
+    "property": "/^margin-(left|right|inline-start|inline-end)$/",
+    "reference": "/^-?[0-9.]+px$/",
+    "femto": "/^-?[0-9.]+px$/",
+    "category": "natural-fix",
+    "reason": "2.1.1 spaces the buttons of a modal footer with margin-left on each one after the first. In right-to-left text the buttons run from right to left, so the gap fell after each button instead of before it, and the first two buttons had none between them. femto uses margin-inline-start, so the gap falls between the buttons in either direction, and in left-to-right text it computes as before. A [role=group] in the footer needs it too: its overlap margin is now margin-inline-start (group-rtl-logical-corners), which replaces the footer gap, where the footer's margin-left would have opened a gap of half the spacing between its items in right-to-left text.",
+    "notes": "Documentation only: no fixture holds a right-to-left modal footer with two buttons, so it does not hit. Probed with a standalone Selenium page in Chrome 158 and Firefox 160 beta at 390 and 1280px: an open dialog whose footer holds a three-button [role=group], two buttons and a role=button link. In right-to-left text the gap between the two plain buttons moved to their seam (gaps from left to right went from [10, 0] to [0, 10] at 1280, the mirror of left-to-right's [10, 0]), and the footer group went from seams of 1.25 and 0px with a 1.25px overhang (2.1.1 and femto before) to 1.25 and 1.25px with none. With the group fix but the footer still on margin-left, each group item after the first had margins 10px / -1.25px and the seam between the second and third opened 8.75px (7px at 390). Left-to-right footers are unchanged."
   }
 ]

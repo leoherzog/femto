@@ -420,7 +420,13 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   an `<input type=hidden>`; femto skips them, so the first and last visible controls keep their
   rounded corners and the first one loses the negative overlap margin (fixtures: the last group of
   "Role group", with a `<span hidden>` first and a hidden input last, and the last search of "Role
-  search", with a hidden input first).
+  search", with a hidden input first). `group-rtl-logical-corners`, limited to
+  `components-group.html` and `kitchen-sink.html`: 2.1.1 rounded the ends and placed the overlap
+  margin with left and right properties, so a right-to-left group rounded its inner corners, drew a
+  double border at one seam and pushed its end item one border width out; femto uses logical
+  properties, which follow each item's own direction, so a right-to-left group mirrors a
+  left-to-right one (fixtures: the "Right to left" block of `components-group.html`, and the kitchen
+  sink's groups in its rtl legs).
 - `options-no-transitions.json`: six entries limited to the `option-no-transitions` preset. 2.1.1
   builds that option by compiling the gated `transition` declarations, the modal animations and the
   tooltip slides out; an appended file can only reset them, so `options/no-transitions.css` sets
@@ -483,6 +489,10 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   `components-modal-show.html`). `non-modal-dialog-backdrop-computed`, on `dialog:not(:modal)` in
   Firefox and Safari: they report the default on every dialog's `::backdrop` but draw it only for a
   modal one, so closed and open-attribute dialogs change in computed style only.
+  `modal-footer-button-gap-rtl`, documentation only (no fixture has a right-to-left footer with two
+  buttons): the gap before each footer button after the first is `margin-inline-start`, so in
+  right-to-left text it falls between the buttons instead of after each one, and a `[role=group]`
+  in the footer keeps its own overlap margin.
 - `rig.json`: the checks Safari cannot run (`safari-no-media-dark`,
   `safari-no-focus-visible-date-input`).
 

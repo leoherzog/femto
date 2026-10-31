@@ -1703,9 +1703,9 @@ label > details.dropdown {
 [role=group] > :where([role=group] > *):not(:nth-child(1 of :where(:not([hidden], input[type=hidden])))),
 [role=group] input:not([type=checkbox], [type=radio]):where([role=group] *):not(:nth-child(1 of :where(:not([hidden], input[type=hidden])))),
 [role=group] select:where([role=group] *):not(:nth-child(1 of :where(:not([hidden], input[type=hidden])))) {
-  margin-left: 0;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
+  margin-inline-start: 0;
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
 }
 [role=search] > :where([role=search] > *):not(:nth-last-child(1 of :where(:not([hidden], input[type=hidden])))),
 [role=search] input:not([type=checkbox], [type=radio]):where([role=search] *):not(:nth-last-child(1 of :where(:not([hidden], input[type=hidden])))),
@@ -1713,8 +1713,8 @@ label > details.dropdown {
 [role=group] > :where([role=group] > *):not(:nth-last-child(1 of :where(:not([hidden], input[type=hidden])))),
 [role=group] input:not([type=checkbox], [type=radio]):where([role=group] *):not(:nth-last-child(1 of :where(:not([hidden], input[type=hidden])))),
 [role=group] select:where([role=group] *):not(:nth-last-child(1 of :where(:not([hidden], input[type=hidden])))) {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
 }
 [role=search] > *:focus,
 [role=search] input:not([type=checkbox], [type=radio]):focus,
@@ -1738,7 +1738,7 @@ label > details.dropdown {
 [role=group] [role=button]:where([role=group] *):not(:nth-child(1 of :where(:not([hidden], input[type=hidden])))),
 [role=group] input:not([type=checkbox], [type=radio]):where([role=group] *):not(:nth-child(1 of :where(:not([hidden], input[type=hidden])))),
 [role=group] select:where([role=group] *):not(:nth-child(1 of :where(:not([hidden], input[type=hidden])))) {
-  margin-left: calc(var(--femto-border-width) * -1);
+  margin-inline-start: calc(var(--femto-border-width) * -1);
 }
 [role=search] button,
 [role=search] [type=submit],
@@ -1792,12 +1792,12 @@ label > details.dropdown {
   }
 }
 [role=search] > :where([role=search] > *):nth-child(1 of :where(:not([hidden], input[type=hidden]))) {
-  border-top-left-radius: 5rem;
-  border-bottom-left-radius: 5rem;
+  border-start-start-radius: 5rem;
+  border-end-start-radius: 5rem;
 }
 [role=search] > :where([role=search] > *):nth-last-child(1 of :where(:not([hidden], input[type=hidden]))) {
-  border-top-right-radius: 5rem;
-  border-bottom-right-radius: 5rem;
+  border-start-end-radius: 5rem;
+  border-end-end-radius: 5rem;
 }
 
 /* css/components/loading.css */
@@ -1893,7 +1893,7 @@ dialog > article > footer [role=button] {
 }
 dialog > article > footer button:not(:first-of-type),
 dialog > article > footer [role=button]:not(:first-of-type) {
-  margin-left: calc(var(--femto-spacing) * 0.5);
+  margin-inline-start: calc(var(--femto-spacing) * 0.5);
 }
 dialog > article .close,
 dialog > article :is(a, button)[rel=prev] {

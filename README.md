@@ -110,7 +110,7 @@ Most of femto works from the elements alone. These are the classes and attribute
 | `role="link"` | An element that looks like a link |
 | `disabled`, `aria-disabled="true"` | A not-allowed cursor; `aria-disabled="true"` on a `<label>` also dims it like a disabled field |
 | `aria-controls` | A pointer cursor |
-| `dir="rtl"` | Right-to-left text, with the form field icons, chevrons, breadcrumb separators and progress animation mirrored |
+| `dir="rtl"` | Right-to-left text, with the form field icons, chevrons, breadcrumb separators, group and search corners and progress animation mirrored |
 
 ## Files
 
