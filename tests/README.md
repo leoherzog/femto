@@ -459,7 +459,13 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   details a block, so only its own display, size and origins change in the harness, and in Firefox
   (and Safari, per picocss/pico#671) `nav-dropdown-open-list-placement` records the open lists of
   `classes-dropdown-open.html` lining up under their summaries (fixtures: its two `dir="rtl"` nav
-  lists and the left-aligned nav list below them).
+  lists and the left-aligned nav list below them). `dropdown-lone-label-fills-row`, limited to
+  `classes-dropdown-open.html` and `classes-dropdown.html`: 2.1.1 left a dropdown row's padding and
+  the label's bottom margin outside a checkbox or radio label, so clicks on most of the highlighted
+  row missed the input; femto keeps the li's padding and lets a label that is the li's only element
+  reach over it with negative margins and matching padding, as link rows do, so only the label's
+  size, margins, paddings and origins change (fixtures: the label rows of "Open dropdown with
+  checkboxes and radios" and of the dropdown inside a label).
 - `components-nav.json`: `rtl-breadcrumb-backslash`, with `-geometry` and `-divider-inset`, limited to
   `components-nav.html` and `kitchen-sink.html`. 2.1.1's rtl rule gave the `::after` of every element
   inside a breadcrumb item but the last a backslash; femto drops it, so an rtl breadcrumb shows only

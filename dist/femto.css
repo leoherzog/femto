@@ -1684,6 +1684,11 @@ details.dropdown > summary + ul li a[aria-current]:not([aria-current=false]) {
 details.dropdown > summary + ul li label {
   width: 100%;
 }
+details.dropdown > summary + ul li > label:only-child {
+  width: auto;
+  margin: calc(var(--femto-form-element-spacing-vertical) * -0.5) calc(var(--femto-form-element-spacing-horizontal) * -1);
+  padding: calc(var(--femto-form-element-spacing-vertical) * 0.5) var(--femto-form-element-spacing-horizontal) calc(var(--femto-form-element-spacing-vertical) * 0.5 + var(--femto-spacing) * 0.375);
+}
 details.dropdown > summary + ul li:has(label):hover {
   background-color: var(--femto-dropdown-hover-background-color);
 }
