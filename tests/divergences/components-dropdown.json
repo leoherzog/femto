@@ -69,6 +69,32 @@
     "notes": "Fixtures: the nav dropdowns of the six pages in where.pages, closed (kitchen-sink.html's header nav, classes-dropdown.html, components-nav.html, layout-elements.html, components-tooltip.html) and open (classes-dropdown-open.html). In the harness only these values of the details change; every other element keeps its computed style. A standalone Selenium page in Chrome Beta 158 and Firefox 160 beta at 1000 and 400px, ltr and rtl, closed, open and opened by a real click, measured the rects of the summary, nav item, nav and neighbouring links equal before and after for a plain summary, a role=button summary and a dropdown in an aside nav. What changes outside the harness fixtures, measured on the same page: (1) A dropdown wrapped in a <label> inside a nav now takes label > details.dropdown's top margin of a quarter of --femto-spacing, as outside a nav, in Chrome and Firefox 143 and later, where the inline details ignored it: the summary moves down 4.5px at 1000px and 4px at 400px, and the nav item and the nav grow by as much. (2) When text precedes the dropdown in its nav item ('Theme: <details>'), Chrome placed the open list against the first inline fragment, 60.63px right of the summary at 1000px in ltr and 12.11px short of its end in rtl; it now lines up under the summary in Chrome and Firefox. (3) data-tooltip on the nav dropdown's <details> (not its summary) now draws the tooltip's 1px dotted bottom border under the summary, as a dropdown outside a nav already does, and the nav item is 1px taller (90 to 91px at 1280) in Chrome 158 and Firefox 160; in Firefox 160 the tooltip bubble also moves from the corner of an empty fragment (left 0px, bottom -1px) to over the summary. (4) Firefox 128 to 142 lay details out as a block container even when it is inline, which behaves like an inline-block; probed in Firefox 160 beta with layout.details.force-block-layout=true at 1280 and 500px, the open lists were already placed correctly there, and with the fix a dropdown in an aside nav fills its item as in Chrome and newer Firefox (summary 189.88 to 1200px at 1280, 155.92 to 468px at 500), and text before a nav dropdown in the same item sits on its own line (nav 90 to 120px at 1280, 72 to 96px at 500); a dropdown that is the only content of its nav item does not move. Chromium before 131 and Safari before 18.4 may behave like old Firefox and were not tested. Safari was not probed for this change. Upstream issues picocss/pico#701 and picocss/pico#671."
   },
   {
+    "id": "nav-dropdown-block-details-safari-insets",
+    "module": "components/dropdown",
+    "kind": "style",
+    "selector": "nav details.dropdown",
+    "pseudo": "",
+    "property": "/^(top|right|bottom|left|inset-(block|inline)-(start|end))$/",
+    "reference": "auto",
+    "femto": "0px",
+    "where": {
+      "browsers": [
+        "safari"
+      ],
+      "pages": [
+        "classes-dropdown.html",
+        "classes-dropdown-open.html",
+        "components-nav.html",
+        "components-tooltip.html",
+        "kitchen-sink.html",
+        "layout-elements.html"
+      ]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of nav-dropdown-block-details in Safari's computed style only. The dropdown is position: relative with every inset auto, so it does not move. Safari's getComputedStyle reports the insets of a relatively positioned inline box as auto but those of a block as their used value, 0px, so the details changing from inline to block changes what Safari reports. Chrome and Firefox report the same value for both, so they show no difference.",
+    "notes": "Seen in Safari 27.2 on a dark OS in every leg it runs, ltr and rtl, at 390 and 1280, at rest and in every state, on the nav details.dropdown elements of the six pages (three on classes-dropdown-open.html, two on classes-dropdown.html, one on each of the others), with auto in the reference and 0px in femto for all eight properties. Pixel differences on those pages match Chrome's and Firefox's within a few pixels, so the dropdowns render in the same place."
+  },
+  {
     "id": "nav-dropdown-open-list-placement",
     "module": "components/dropdown",
     "kind": "style",

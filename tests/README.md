@@ -408,7 +408,9 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   `fieldset-narrow-column-geometry`, limited to `forms-input-date.html` from 768px: 2.1.1 kept the
   browsers' `min-width: min-content` on `fieldset`, so a fieldset grew past a narrow column to fit a
   date field, a long word or a table; femto's `min-width: auto` sizes it like a div (fixture: the
-  fieldset in `#date-narrow-grid`).
+  fieldset in `#date-narrow-grid`). Safari reports used margins, so in its rtl legs
+  `fieldset-narrow-column-safari-rtl-margins` records that fieldset's negative left margin going
+  to 0px and its legend's left margin shrinking by the same amount.
 - `forms-input-date.json`: `group-date-input-min-width`, with `-narrow-column-geometry` from 768px,
   limited to `forms-input-date.html`. 2.1.1 left a date-family input in `[role=group]` or
   `[role=search]` at a flex item's `min-width: auto`, so it kept the native field's width and pushed
@@ -461,7 +463,10 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   details a block, so only its own display, size and origins change in the harness, and in Firefox
   (and Safari, per picocss/pico#671) `nav-dropdown-open-list-placement` records the open lists of
   `classes-dropdown-open.html` lining up under their summaries (fixtures: its two `dir="rtl"` nav
-  lists and the left-aligned nav list below them). `dropdown-lone-label-fills-row`, limited to
+  lists and the left-aligned nav list below them). Safari reports the insets of a relatively
+  positioned inline box as `auto` and those of a block as `0px`, so in Safari
+  `nav-dropdown-block-details-safari-insets` records the nav dropdowns' insets changing, though
+  nothing moves. `dropdown-lone-label-fills-row`, limited to
   `classes-dropdown-open.html` and `classes-dropdown.html`: 2.1.1 left a dropdown row's padding and
   the label's bottom margin outside a checkbox or radio label, so clicks on most of the highlighted
   row missed the input; femto keeps the li's padding and lets a label that is the li's only element
@@ -491,7 +496,9 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   padding, so a list outside any nav lost its markers and each item grew by a rem; femto limits
   those rules to lists inside a nav, so such a list keeps its markers, and the item, its list, the
   aside, the module wrapper, the body and the document get shorter while the breadcrumb dividers
-  below move up (fixture: the second aside, a `<ul>` without a nav).
+  below move up (fixture: the second aside, a `<ul>` without a nav). Safari reports the used
+  margins that place an outside marker, so in Safari `aside-plain-list-marker-safari-margin`
+  records that item's new marker's margins.
 - `content-typography.json`: `nested-list-margins`, with `-container-size` and `-breadcrumb-shift`,
   limited to `content-typography.html` and `kitchen-sink.html`. 2.1.1's
   `:where(dl, ol, ul) :where(dl, ol, ul)` has zero specificity and loses to the earlier list rule, so
