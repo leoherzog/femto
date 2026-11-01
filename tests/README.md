@@ -423,12 +423,14 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   rounded corners and the first one loses the negative overlap margin (fixtures: the last group of
   "Role group", with a `<span hidden>` first and a hidden input last, and the last search of "Role
   search", with a hidden input first). `group-rtl-logical-corners`, limited to
-  `components-group.html`, `components-nav.html` and `kitchen-sink.html`: 2.1.1 rounded the ends and
-  placed the overlap margin with left and right properties, so a right-to-left group rounded its
-  inner corners, drew a double border at one seam and pushed its end item one border width out;
-  femto uses logical properties, which follow each item's own direction, so a right-to-left group
-  mirrors a left-to-right one (fixtures: the "Right to left" block of `components-group.html`, and
-  the kitchen sink's groups and the nav groups of `components-nav.html` in their rtl legs).
+  `components-group.html`, `components-nav.html`, `forms-input-date.html` and `kitchen-sink.html`:
+  2.1.1 rounded the ends and placed the overlap margin with left and right properties, so a
+  right-to-left group rounded its inner corners, drew a double border at one seam and pushed its
+  end item one border width out; femto uses logical properties, which follow each item's own
+  direction, so a right-to-left group mirrors a left-to-right one (fixtures: the "Right to left"
+  block of `components-group.html`, and the kitchen sink's groups, the nav groups of
+  `components-nav.html` and the date groups of `#date-narrow-grid` in `forms-input-date.html` in
+  their rtl legs).
   `group-invalid-field-above-next-item`, limited to `components-group.html`: 2.1.1 left every item
   at `z-index: auto`, so the next item painted over the border an `aria-invalid="true"` or `"false"`
   field shares with it; femto gives that field `z-index: 1`, so its whole red or green border shows,
