@@ -19,7 +19,7 @@ The first alpha of femto 3: Pico CSS 2.1.1's default build rewritten as plain CS
   - A `color-scheme` set on an element switches femto's colors in that subtree.
   - The focus ring of `role="group"` and `role="search"` inside a `data-theme` element follows that element's scheme.
   - `getPropertyValue()` returns `light-dark(...)` text for color tokens whose light and dark values differ.
-- The minimum browsers are Chrome and Edge 125, Firefox 128, Safari 17.5 and Samsung Internet 27, where Pico 2.1.1 supported browserslist's `defaults`. Older browsers get broken colors and form fields, not a plainer page.
+- The minimum browsers are Chrome and Edge 125, Firefox 128, Safari 17.5 and Samsung Internet 27, where Pico 2.1.1 supported browserslist's `defaults`. Browsers without `light-dark()` get broken colors and form fields, not a plainer page.
 - Firefox's keyboard focus ring is no longer hidden on elements that set no outline of their own, and Firefox now draws the focus and `aria-invalid` rings on a field the user has left invalid, as Chrome and Safari already did.
 - `no-transitions.css` sets `--femto-transition: 0s`, so the group focus ring no longer fades and your own rules that read the token stop animating. Being an appended file, it resets the tooltip slide tokens to `initial` instead of removing them, and leaves the modal and tooltip `@keyframes` defined.
 - The root rule matches a shadow host with `:host` instead of `:where(:host)`, so it also applies in Safari 17.5 to 18.1, which never match `:host` inside `:where()`. A component's own `:host` rule now needs to come after femto to override it.

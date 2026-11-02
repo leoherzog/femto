@@ -14,7 +14,7 @@ Link one stylesheet and plain HTML looks clean and readable: headings, text, lin
 - Azure plus 19 other theme colors, and 3 options, each one extra file.
 - Customizable through `--femto-*` custom properties.
 - A color palette with utility classes, in a file of its own.
-- Only CSS that is Baseline Widely Available, apart from a few documented exceptions.
+- Only CSS that is Baseline Widely Available, apart from some vendor-only rules and a few documented exceptions.
 
 ## Quick start
 
@@ -62,8 +62,10 @@ The [package](https://www.npmjs.com/package/@leoherzog/femto)'s main file is `di
 A bundler that rewrites CSS for older browsers can break femto's color schemes. Vite 8's production build, for example, minifies CSS with Lightning CSS for browsers older than femto supports, and rewrites every `light-dark()` into variables that resolve once on `:root`, so `data-theme` on an element no longer changes its colors. Set the bundler's CSS targets to femto's [minimum versions](#browser-support), for example in `vite.config.js`:
 
 ```js
-export default { build: { cssTarget: ["chrome125", "edge125", "firefox128", "safari17.5"] } };
+export default { build: { cssTarget: ["chrome125", "edge125", "firefox128", "safari17.5", "ios17.5"] } };
 ```
+
+List `ios17.5` as well as `safari17.5`: without it, Lightning CSS drops `-webkit-text-size-adjust`, the only form iOS Safari reads. Vite does not accept a Samsung Internet target, and `chrome125` covers Samsung Internet 27, which is built on Chromium 125.
 
 ### Starter template
 
@@ -268,9 +270,11 @@ femto targets Baseline Widely Available on its release date, which is no earlier
 | Safari, macOS and iOS | 17.5 |
 | Samsung Internet | 27 |
 
-`npm run lint` checks every file in `css/` against that target. Its exceptions, each explained in `eslint.config.mjs`, are `light-dark()`, the standard properties and pseudo-elements written beside the vendor-prefixed ones the target browsers still need (such as `backdrop-filter` and `::marker`), and a few features, such as `accent-color`, that browsers without them ignore. Each minimum version supports every feature femto uses, Safari 17.5 being the first Safari with `light-dark()`, and each is at or above what Baseline Widely Available maps to on 2026-11-13. The parity tests run in recent Chrome, Firefox and Safari, not in these versions.
+Each minimum version is at or above what Baseline Widely Available maps to on 2026-11-13, Safari 17.5 being the first Safari with `light-dark()`. A few features femto uses are missing or partial in some of them, and each is either covered by a vendor-prefixed form or ignored harmlessly. Safari 17.5 reads `backdrop-filter` and `user-select` only with their `-webkit-` prefix, and iOS Safari reads `text-size-adjust` only that way. Browsers that lack `resize`, `::selection`, the `ui-monospace` font or some `cursor` keywords ignore them, and `accent-color`, partial in some, has no visible effect on femto's own controls. femto also has vendor-only rules, such as `-webkit-tap-highlight-color`, `@-moz-document` and the `::-webkit-` and `::-moz-` form control pseudo-elements, which other browsers ignore. The parity tests run in recent Chrome, Firefox and Safari, not in these versions.
 
-Older browsers do not get a plainer femto: they get a broken one. Without `light-dark()`, every color token is invalid, so form fields lose their borders and backgrounds and some button labels disappear. Tools that rewrite CSS for older browsers cause a similar break in supported ones; see [npm](#npm).
+`npm run lint` runs the `use-baseline` rule of @eslint/css over every file in `css/`, with the Baseline data of web-features 3.42.0 from October 2026. It checks property names, at-rule names, `@media` features, pseudo-classes and pseudo-elements, and the keywords, functions and units of ordinary declarations. It does not check custom property values, which is where `light-dark()` and the font stacks live, values nested inside other functions, vendor-prefixed names or browser versions. Its exceptions are listed and explained in `eslint.config.mjs`.
+
+Browsers without `light-dark()`, which means Chrome and Edge before 123, Firefox before 120, Safari before 17.5 and Samsung Internet before 27, do not get a plainer femto: they get a broken one. Every color token whose light and dark values differ fails where it is used, so form fields lose their borders and backgrounds and some button labels disappear. Tools that rewrite `light-dark()` for those browsers cause a narrower break in supported ones: `data-theme` on an element stops changing its colors; see [npm](#npm).
 
 ## Contributing
 
@@ -373,7 +377,7 @@ Color tokens are now declared once, and `data-theme` sets the scheme instead of 
 
 ### Supported browsers
 
-Pico 2.1.1 supported every browser in browserslist's `defaults`, with prefixes added by autoprefixer. femto 3.0 needs Chrome and Edge 125, Firefox 128, Safari 17.5 and Samsung Internet 27 (see [Browser support](#browser-support)), and drops the `-ms-` rules, `::-webkit-input-placeholder` and `::-moz-list-bullet`. In older browsers, femto's colors and form fields break rather than degrade, so stay on Pico 2.1.1 if you need them.
+Pico 2.1.1 supported every browser in browserslist's `defaults`, with prefixes added by autoprefixer. femto 3.0 supports Chrome and Edge 125, Firefox 128, Safari 17.5 and Samsung Internet 27 (see [Browser support](#browser-support)), and drops the `-ms-` rules, `::-webkit-input-placeholder` and `::-moz-list-bullet`. In browsers without `light-dark()`, femto's colors and form fields break rather than degrade, so stay on Pico 2.1.1 if you need them.
 
 ### Other changes
 

@@ -1,9 +1,9 @@
 /*
  * Input type datetime: date, datetime-local, month, time and week inputs draw a calendar or clock
  * icon at the right, under the native picker indicator, which is made transparent but stays
- * clickable. Firefox, which draws its own icon on date, datetime-local and time inputs and
- * shows month and week as text fields, gets neither the icon nor its padding, and right-to-left
- * text is right-aligned.
+ * clickable. Firefox gets neither the icon nor its padding: it draws its own calendar on date and
+ * datetime-local inputs and shows month and week as text fields, and before about version 154 it
+ * draws no clock on time inputs. Right-to-left text is right-aligned.
  */
 input:not([type=checkbox], [type=radio], [type=range], [type=file]):is([type=date], [type=datetime-local], [type=month], [type=time], [type=week]) {
   --femto-icon-position: 0.75rem;

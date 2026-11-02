@@ -1,5 +1,7 @@
 // Lint for the hand-written CSS in css/. It only checks, never transforms.
-// Target: Baseline Widely Available on the release date, no earlier than 2026-11-13.
+// Target: Baseline Widely Available on the release date, no earlier than 2026-11-13. use-baseline
+// approximates it with the Widely status in its bundled web-features 3.42.0 data (2026-10-09),
+// and does not check custom property values or values nested inside functions.
 // Run: npx eslint css
 import { defineConfig } from "eslint/config";
 import css from "@eslint/css";
@@ -50,8 +52,9 @@ export default defineConfig([
         {
           available: "widely",
 
-          // (b) Widely Available before the release date. The bundled data is year-granular and
-          // dated before 2026-11-13, so it still reports these as Newly Available.
+          // (b) Widely Available by the release date, but Newly Available in the bundled data,
+          // whose stored status the rule compares. femto writes light-dark() only inside custom
+          // properties, which the rule skips, so this entry only covers a future direct use.
           allowFunctions: [
             // light-dark(): Baseline low 2024-05-13, Widely 2026-11-13 (web-features 3.44.0).
             "light-dark",
@@ -64,7 +67,7 @@ export default defineConfig([
             // -webkit-backdrop-filter is kept for Safari 17.5 to 17.x; backdrop-filter is
             // Baseline 2024 (Safari 18).
             "backdrop-filter",
-            // -webkit-text-size-adjust is kept for Safari; unprefixed text-size-adjust is
+            // -webkit-text-size-adjust is kept for iOS Safari; unprefixed text-size-adjust is
             // Chromium only and is Limited Availability.
             "text-size-adjust",
             // -webkit-user-select is kept for Safari; unprefixed user-select is Limited
@@ -73,7 +76,9 @@ export default defineConfig([
 
             // (c) 2.1.1 features that are not Baseline but that browsers without them ignore
             // harmlessly, kept for parity.
-            // accent-color (Color schemes): Limited because iOS Safari lacks it.
+            // accent-color (Color schemes): Limited because Chrome for Android, and Safari before
+            // 26.2, apply it without the minimum contrast. femto's controls use appearance: none,
+            // so it has no visible effect unless a page restores the native control.
             "accent-color",
             // resize (Basics form elements: textarea): Limited on iOS.
             "resize",
@@ -81,8 +86,10 @@ export default defineConfig([
             "clip",
           ],
           allowSelectors: [
-            // (a) summary::marker pairs with the kept ::-webkit-details-marker, which Safari uses
-            // to hide the disclosure triangle.
+            // (c) summary::marker { display: none } is kept from 2.1.1 beside
+            // ::-webkit-details-marker, but display does not apply to ::marker, so it hides
+            // nothing. Outside Safari the summary has no marker because it is display: flow-root
+            // with list-style-type: none; in Safari, ::-webkit-details-marker hides the triangle.
             "marker",
             // (c) ::selection (Typography): Limited.
             "selection",
