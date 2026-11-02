@@ -241,8 +241,8 @@ Widths: one inside each band, 375, 640, 900, 1150, 1400 and 1700, plus 575/576/5
   theme reference and `femto.css` has a selector that matches on the kitchen sink (checked
   2026-10-27).
 
-That is 2,093 cells per browser, 610 of them with states (2,085 and 602 in `--control`, which has
-no `colors` or `user-root-override` cells): `default` 1,648, `colors` 4, each option 119, each theme
+That is 2,145 cells per browser, 616 of them with states (2,137 and 608 in `--control`, which has
+no `colors` or `user-root-override` cells): `default` 1,700, `colors` 4, each option 119, each theme
 4 and `user-root-override` 4, as counted by the harness's own planner (`harness.cli.plan`, which
 starts no browser).
 
@@ -900,40 +900,34 @@ the shipped references (see `reference/README.md`) found 0 differences in all th
 every selftest control passed in all three.
 
 femto against 2.1.1 over the whole matrix, with the registry in `tests/divergences/`, last ran on
-2026-10-29 with Chrome Beta 158.0.8127.2, Firefox 160.0, Safari 27.2 (safaridriver
-22625.2.8.11.9) on macOS 27.2. Each Safari pass ran under `caffeinate -d -i` with Safari quit and
-nobody using the machine (see Rig notes).
+2026-11-01 and 2026-11-02 with Selenium 4.52.0, Chrome Beta 158.0.8127.2, Firefox 160.0 and Safari
+27.2 (safaridriver 22625.2.8.11.9) on macOS 27.2. Each Safari pass ran under `caffeinate -d -i`
+with Safari quit and nobody using the machine (see Rig notes). Each pass skips the other scheme's
+media leg and the focus-visible state on date inputs, both registered in `rig.json`, so the two
+passes together cover both media legs.
 
 | Run | Cells | Result |
 |---|---|---|
-| `full --browsers chrome,firefox` (Selenium 4.52.0) | 4,178 (17,294 states) | 0 unregistered, 0 harness errors, 539 s |
-| `full --browsers safari`, light OS (Selenium 4.51.0) | 2,089 (6,941 states) | 0 unregistered, 0 harness errors |
-| `full --browsers safari`, dark OS (Selenium 4.51.0) | 2,089 (5,230 states) | 0 unregistered, 0 harness errors |
-| `selftest --browsers chrome,firefox` (Selenium 4.52.0) | 24 controls | all pass |
-| `compare` of `css/femto.css` against `dist/femto.css` and `dist/femto.min.css`, empty registry | 456 each | only `token-raw` records on `--femto-box-shadow`, `--femto-card-box-shadow` and `--femto-dropdown-box-shadow`, equal once whitespace is collapsed: `dist/` writes every custom property value on one line, and the source writes `--femto-box-shadow` across seven |
+| `full --browsers chrome,firefox` | 4,290 (17,914 states) | 0 unregistered, 0 harness errors, 571 s |
+| `full --browsers safari`, light OS | 2,145 (7,195 states) | 0 unregistered, 0 harness errors, 1,007 s |
+| `full --browsers safari`, dark OS | 2,145 (5,423 states) | 0 unregistered, 0 harness errors, 764 s |
+| `selftest --browsers chrome,firefox` | 24 controls | all pass |
+| `selftest --browsers safari`, light OS | 24 controls | all pass |
+| `compare` of `css/femto.css` against `dist/femto.css` and `dist/femto.min.css`, empty registry | 512 each | only `token-raw` records on `--femto-box-shadow`, `--femto-card-box-shadow` and `--femto-dropdown-box-shadow`, equal once whitespace is collapsed: `dist/` writes every custom property value on one line, and the source writes `--femto-box-shadow` across seven |
 | `compare` of `css/femto.colors.css` against both `dist/femto.colors*.css`, empty registry | 8 each | 0 differences |
 
-The `user-root-override` preset and the "Left invalid" form of `forms-basics.html` came after those
-runs, which is why the matrix now has 2,093 cells per browser. In Chrome and Firefox both pass
-against themselves with 0 differences, and against femto every record they produce is registered
-(the preset on the kitchen sink at 1280 in every leg, ltr and rtl; the form in `default` and the
-three option presets at 390 and 1280 in every leg). Safari has not run either yet.
-
-On 2026-10-30 the root rule's `:host` moved out of `:where()`, where Safari 17.5 to 18.1 never match
-it. `compare --presets default --all-legs` over the six default-entry pages with shadow hosts
-(`components-modal.html`, `kitchen-sink.html`, `layout-document.html`, `tokens-base.html`,
-`tokens-breakpoints.html`, `tokens-schemes.html`) then found 0 unregistered differences in Chrome
-and Firefox. Safari 27.2 on a dark OS ran every leg except light media, which needs a light OS and
-has not run: 0 unregistered differences, 0 harness errors, and no pixel off by more than 8/255.
-
-`coverage --css /css/femto.css --entry default` reports 691 selectors over 43 pages (57 loads), 0
-dynamic rules without `data-states`, and one selector that matches nothing and never can (see Known
-limits). `uv run tests/static_checks.py` and `npm run lint` pass.
+`coverage --css /css/femto.css --entry default` reports 715 selectors over 43 pages (64 loads), 0
+dynamic rules without `data-states`, and three selectors that match nothing. One never can (see
+Known limits). The other two are forms of the `z-index` rule for validated fields in
+`components/group.css`, because no page has a `select` with `aria-invalid` in a group or an `input`
+with it in a search group. `uv run tests/static_checks.py` and `npm run lint` pass.
 
 ## Known limits
 
 - One Safari pass compares only the OS scheme's media leg (registered `media:*` skip), so a complete
-  Safari run needs a second pass with macOS switched to dark by hand. Safari never gives a
+  Safari run needs a second pass with macOS switched to dark by hand. Set Appearance to Light or
+  Dark, not Auto, which switches at sunrise and sunset and can change a pass's scheme without
+  notice; check `OS scheme` in each pass's `log.txt`. Safari never gives a
   date-family input `:focus-visible` (registered `state:focus-visible:input[type=...]` skip), and
   Safari interactive states need an unlocked screen.
 - 19 of the 24 selftest controls run only the `light` leg, so on a dark OS Safari skips them and
