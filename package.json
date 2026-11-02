@@ -40,8 +40,10 @@
   },
   "browserslist": [
     "Chrome >= 125",
+    "ChromeAndroid >= 125",
     "Edge >= 125",
     "Firefox >= 128",
+    "FirefoxAndroid >= 128",
     "Safari >= 17.5",
     "iOS >= 17.5",
     "Samsung >= 27"
