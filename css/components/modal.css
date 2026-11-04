@@ -61,7 +61,10 @@ dialog > article > footer {
   text-align: end;
 }
 dialog > article > footer button,
-dialog > article > footer [role=button] {
+dialog > article > footer [role=button],
+dialog > article > footer [type=submit],
+dialog > article > footer [type=reset],
+dialog > article > footer [type=button] {
   margin-bottom: 0;
 }
 dialog > article > footer button:not(:first-of-type),
