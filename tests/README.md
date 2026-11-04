@@ -15,6 +15,7 @@ uv run tests/run.py selftest                             # prove detection with 
 uv run tests/run.py self --pages kitchen-sink.html       # 2.1.1 against itself
 uv run tests/run.py fast --modules forms/basics          # one module's check (hybrid build)
 uv run tests/run.py full                                 # the whole matrix, three browsers
+uv run tests/safari.py                                   # both Safari passes, macOS light then dark
 uv run tests/run.py coverage --css /tests/reference/femto.css --entry default
 uv run tests/run.py registry                             # validate tests/divergences/
 ```
@@ -32,6 +33,7 @@ Python runs only through `uv`: `tests/run.py` carries PEP 723 metadata pinning
 |---|---|
 | `README.md` | this file |
 | `run.py` | CLI: `uv run tests/run.py <mode> [options]` |
+| `safari.py` | both Safari passes of the full matrix, switching macOS to light, then dark, then back (see Safari passes) |
 | `harness/` | Python modules, `page.js` (fixture loader), `differ.js` (in-page collector and differ), `host.html` (top-level host page), `probe.html` (rig probe) |
 | `variants.json` | comparison presets |
 | `divergences/` | divergence registry, `schema.json` |
@@ -193,29 +195,30 @@ Nested `[data-theme]` islands in every fixture are checked in every leg. Safari 
 media query (see Rig notes): it runs the OS scheme in every leg, skips the leg whose media differs
 from the OS when no `data-theme` is set, and records `media:<scheme>` as a skipped check, registered
 in `divergences/rig.json`. A complete Safari run therefore takes two passes, one with macOS light and
-one with macOS dark (see Safari dark pass); together the two passes run every leg.
+one with macOS dark (see Safari passes); together the two passes run every leg.
 
-### Safari dark pass
+### Safari passes
 
-The harness never changes the macOS appearance, so switch it by hand:
-
-```sh
-osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to true'
-```
-
-Then run the Safari commands again, for example:
+`run.py` never changes the macOS appearance; `tests/safari.py` does, and runs both passes:
 
 ```sh
-uv run tests/run.py full --browsers safari --stateless-only
-caffeinate -d -i uv run tests/run.py full --browsers safari --states-only
+uv run tests/safari.py                                   # full light, selftest light, full dark
+uv run tests/safari.py -- --pages kitchen-sink.html      # options after -- go to both full runs
 ```
 
-Check that every session's `log.txt` line says `OS scheme dark` and that the skipped checks show
-`media:light`, not `media:dark`; a session that read a light OS skips the dark cells instead of
-passing them. Then switch back with `set dark mode to false`. The light-leg selftest
-controls (`color-2-of-255` and the others pinned to `--schemes light`) skip on a dark OS, so run
-`selftest --browsers safari` in the light pass; in the dark pass only `self`, `chunk-control`,
-`dark-only-token` and `theme-dark-only` compare anything.
+It switches macOS to light, runs `full --browsers safari` and `selftest --browsers safari`, switches
+to dark, runs `full --browsers safari` again, and restores the appearance it started with, also when
+a run fails or is interrupted. The display stays awake throughout, as with `caffeinate -d -i`. The
+results go to `tests/results/<prefix>-light/`, `-selftest/` and `-dark/` (`--run-id` sets the
+prefix, default `safari-<timestamp>`), and it exits 0 only when every run passes. The selftest runs
+in the light pass because its light-leg controls (`color-2-of-255` and the others pinned to
+`--schemes light`) skip on a dark OS; `--no-selftest` leaves it out.
+
+It refuses to start while your own Safari is open. It fails a pass whose Safari sessions did not
+read that pass's OS scheme (`os_scheme` in `result.json`), since a session that read a light OS
+skips the dark cells instead of passing them, and a run after which the appearance is no longer
+the one it set, as Auto does at sunrise and sunset. The first run asks for permission to control
+System Events (System Settings > Privacy & Security > Automation).
 
 ### The full matrix and its reductions
 
@@ -867,9 +870,10 @@ version in each run's rig line but does not flag a change. Counts measured on Ch
   new-session request to safaridriver behaves the same. With Safari quit (⌘Q), safaridriver launches
   its own `--automation` instance in about 1 s. Quit Safari before every Safari run.
 - The screen locks once the display sleeps (about 5 minutes after the last input on the test
-  machine), and from then on every states cell reports "interactive states not run". Run the states
-  leg as `caffeinate -d -i uv run tests/run.py full --browsers safari --states-only ...`, which
-  holds a display-awake assertion only while the harness runs and changes no setting.
+  machine), and from then on every states cell reports "interactive states not run". `safari.py`
+  holds a display-awake assertion while it runs; run a single Safari pass as
+  `caffeinate -d -i uv run tests/run.py full --browsers safari ...`, which does the same and
+  changes no setting.
 
 **All three.**
 - The iframe gives `innerWidth` equal to the width and `(width: Wpx)` matching in both `matchMedia`
@@ -925,11 +929,10 @@ with it in a search group. `uv run tests/static_checks.py` and `npm run lint` pa
 ## Known limits
 
 - One Safari pass compares only the OS scheme's media leg (registered `media:*` skip), so a complete
-  Safari run needs a second pass with macOS switched to dark by hand. Set Appearance to Light or
-  Dark, not Auto, which switches at sunrise and sunset and can change a pass's scheme without
-  notice; check `OS scheme` in each pass's `log.txt`. Safari never gives a
-  date-family input `:focus-visible` (registered `state:focus-visible:input[type=...]` skip), and
-  Safari interactive states need an unlocked screen.
+  Safari run takes a light and a dark pass, which `safari.py` runs. With Appearance set to Auto, a
+  switch at sunrise or sunset during a pass fails it, and the pass has to run again. Safari never
+  gives a date-family input `:focus-visible` (registered `state:focus-visible:input[type=...]`
+  skip), and Safari interactive states need an unlocked screen.
 - 19 of the 24 selftest controls run only the `light` leg, so on a dark OS Safari skips them and
   they report FAIL without comparing anything. Run Safari's selftest in the light pass.
 - No fixture loads femto only inside a shadow root: every page loads the stylesheet in the outer
