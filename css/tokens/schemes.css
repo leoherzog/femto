@@ -16,7 +16,7 @@
   --femto-primary-border: var(--femto-primary-background);
   --femto-primary-underline: light-dark(rgba(1, 114, 173, 0.5), rgba(1, 170, 255, 0.5));
   --femto-primary-hover: light-dark(#015887, #79c0ff);
-  --femto-primary-hover-background: light-dark(#02659a, #017fc0);
+  --femto-primary-hover-background: #02659a;
   --femto-primary-hover-border: var(--femto-primary-hover-background);
   --femto-primary-hover-underline: var(--femto-primary-hover);
   --femto-primary-focus: light-dark(rgba(2, 154, 232, 0.5), rgba(1, 170, 255, 0.375));

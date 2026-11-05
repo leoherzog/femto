@@ -10,7 +10,7 @@
   --femto-primary-background: #398712;
   --femto-primary-underline: light-dark(rgba(51, 121, 15, 0.5), rgba(78, 179, 27, 0.5));
   --femto-primary-hover: light-dark(#265e09, #5dd121);
-  --femto-primary-hover-background: light-dark(#33790f, #409614);
+  --femto-primary-hover-background: #33790f;
   --femto-primary-focus: light-dark(rgba(71, 164, 23, 0.5), rgba(78, 179, 27, 0.375));
   --femto-primary-inverse: #fff;
   --femto-primary-inverse-filter: brightness(0) invert(1);

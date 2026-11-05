@@ -364,7 +364,8 @@ Each entry's `reason` says what changed for a user of 2.1.1 and why; `category` 
 into natural fixes, dropped hacks, new tokens, option mechanisms and browser limits.
 
 - `tokens.json`: what follows from declaring every color token once, on `:root, :host`, with
-  `light-dark()`, while `data-theme` sets only `color-scheme`.
+  `light-dark()`, while `data-theme` sets only `color-scheme`, and the dark hover background
+  contrast fix.
   - `tokens-light-dark-raw-text`: the raw text of tokens whose femto value is a `light-dark()` pair.
     It accepts any `light-dark()` text, so `static_checks.py --only themes` compares each theme
     file's ten tokens with its reference as text.
@@ -398,6 +399,17 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
     ring color.
   - `tokens-new-names`: `--femto-primary-inverse-filter`, the spinner filter that 2.1.1 picked at
     compile time.
+  - `tokens-dark-hover-background-contrast-style`, `-token` and `-raw`: in azure, blue, cyan,
+    fuchsia, green, jade, orange, pink and zinc, white text on 2.1.1's dark-scheme
+    `--femto-primary-hover-background` has 3.76:1 to 4.46:1 contrast, below WCAG AA's 4.5:1, so
+    femto uses the theme's light value in both schemes (5.41:1 to 6.54:1). That changes the
+    background and border of hovered, focused, active and `aria-current` buttons in the dark scheme,
+    and the two hover tokens at every dark anchor. They are limited to those themes' presets
+    (`default`, the three options and `theme-azure` for azure, and `user-root-override`, whose
+    `:root` override does not reach the kitchen sink's shadow root), with the 2.1.1 side pinned to
+    the nine dark values and the femto side to the nine light values, which keeps them to the dark
+    scheme, on the page or in an island. `static_checks.py --only themes` expects only the light
+    value in those nine theme files.
 - `tokens-breakpoints.json` (`breakpoints-new-tokens`): `--femto-grid-template-columns`, which
   `tokens/breakpoints.css` sets from 768px for `.grid`. `.container` and the modal keep 2.1.1's
   literal media queries: a token-read `max-width` would be declared at every width and override

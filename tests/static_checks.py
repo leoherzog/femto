@@ -31,7 +31,9 @@ or @supports nested in a rule (use-baseline only inspects declarations whose par
 nesting traps (rules where native nesting differs from Sass nesting), and duplicate rules.
 
 "themes" covers what the harness cannot see in a theme file: tokens-light-dark-raw-text accepts
-any light-dark() text, so it compares each file's ten tokens with its 2.1.1 reference as text.
+any light-dark() text, so it compares each file's ten tokens with its 2.1.1 reference as text. The
+themes in HOVER_BACKGROUND_LIGHT_ONLY must have their light --femto-primary-hover-background in
+both schemes.
 
 "coverage" checks the coverage table in tests/README.md ("Coverage: 2.1.1 modules and settings")
 against tag v2.1.1's $modules keys and settings, tests/sections.json, tests/pages/pages.json and the
@@ -551,6 +553,7 @@ THEME_TOKENS = (
     "primary-inverse-filter",
     "switch-thumb-box-shadow",
 )
+HOVER_BACKGROUND_LIGHT_ONLY = {"azure", "blue", "cyan", "fuchsia", "green", "jade", "orange", "pink", "zinc"}
 THEME_BLOCKS = {
     "light": "[data-theme=light], :root:not([data-theme=dark]), :host(:not([data-theme=dark]))",
     "dark-media": "@media only screen and (prefers-color-scheme: dark) >> :root:not([data-theme]), :host(:not([data-theme]))",
@@ -608,6 +611,8 @@ def themes(root: Path) -> Result:
                 value = None
                 if name in light and name in dark:
                     value = light[name] if light[name] == dark[name] else f"light-dark({light[name]}, {dark[name]})"
+                    if t == "primary-hover-background" and color in HOVER_BACKGROUND_LIGHT_ONLY:
+                        value = light[name]
             if value is None:
                 r.fail(f"{rel}: reference has no value for --femto-{t}")
             expected.append((f"--femto-{t}", value))
