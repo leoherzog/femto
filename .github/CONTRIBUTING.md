@@ -4,7 +4,7 @@ Thanks for your interest in contributing to femto! Please take a moment to revie
 
 ## Issues
 
-The [issue tracker](https://github.com/leoherzog/femto/issues) is the place for bug reports, questions and feature ideas. Please search open and closed issues first. For a bug, use the bug report template and include a reduced test case.
+The [issue tracker](https://github.com/leoherzog/femto/issues) is the place for bug reports, questions and feature ideas. Please search open and closed issues first. For a bug, use the bug report template and include a reduced test case. For a feature idea, use the feature request template.
 
 ## Pull requests
 
