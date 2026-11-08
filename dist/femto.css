@@ -191,83 +191,179 @@ details summary[role=button]:not(.outline)::after {
 /* css/tokens/schemes.css */
 :root,
 :host {
-  --femto-background-color: light-dark(#fff, rgb(19, 22.5, 30.5));
-  --femto-color: light-dark(#373c44, #c2c7d0);
-  --femto-text-selection-color: light-dark(rgba(2, 154, 232, 0.25), rgba(1, 170, 255, 0.1875));
-  --femto-muted-color: light-dark(#646b79, #7b8495);
-  --femto-muted-border-color: light-dark(rgb(231, 234, 239.5), #202632);
-  --femto-primary: light-dark(#0172ad, #01aaff);
+  --femto-light-background-color: #fff;
+  --femto-dark-background-color: rgb(19, 22.5, 30.5);
+  --femto-background-color: light-dark(var(--femto-light-background-color), var(--femto-dark-background-color));
+  --femto-light-color: #373c44;
+  --femto-dark-color: #c2c7d0;
+  --femto-color: light-dark(var(--femto-light-color), var(--femto-dark-color));
+  --femto-light-text-selection-color: rgba(2, 154, 232, 0.25);
+  --femto-dark-text-selection-color: rgba(1, 170, 255, 0.1875);
+  --femto-text-selection-color: light-dark(var(--femto-light-text-selection-color), var(--femto-dark-text-selection-color));
+  --femto-light-muted-color: #646b79;
+  --femto-dark-muted-color: #7b8495;
+  --femto-muted-color: light-dark(var(--femto-light-muted-color), var(--femto-dark-muted-color));
+  --femto-light-muted-border-color: rgb(231, 234, 239.5);
+  --femto-dark-muted-border-color: #202632;
+  --femto-muted-border-color: light-dark(var(--femto-light-muted-border-color), var(--femto-dark-muted-border-color));
+  --femto-light-primary: #0172ad;
+  --femto-dark-primary: #01aaff;
+  --femto-primary: light-dark(var(--femto-light-primary), var(--femto-dark-primary));
   --femto-primary-background: #0172ad;
   --femto-primary-border: var(--femto-primary-background);
-  --femto-primary-underline: light-dark(rgba(1, 114, 173, 0.5), rgba(1, 170, 255, 0.5));
-  --femto-primary-hover: light-dark(#015887, #79c0ff);
-  --femto-primary-hover-background: #02659a;
+  --femto-light-primary-underline: rgba(1, 114, 173, 0.5);
+  --femto-dark-primary-underline: rgba(1, 170, 255, 0.5);
+  --femto-primary-underline: light-dark(var(--femto-light-primary-underline), var(--femto-dark-primary-underline));
+  --femto-light-primary-hover: #015887;
+  --femto-dark-primary-hover: #79c0ff;
+  --femto-primary-hover: light-dark(var(--femto-light-primary-hover), var(--femto-dark-primary-hover));
+  --femto-light-primary-hover-background: #02659a;
+  --femto-dark-primary-hover-background: #02659a;
+  --femto-primary-hover-background: light-dark(var(--femto-light-primary-hover-background), var(--femto-dark-primary-hover-background));
   --femto-primary-hover-border: var(--femto-primary-hover-background);
   --femto-primary-hover-underline: var(--femto-primary-hover);
-  --femto-primary-focus: light-dark(rgba(2, 154, 232, 0.5), rgba(1, 170, 255, 0.375));
+  --femto-light-primary-focus: rgba(2, 154, 232, 0.5);
+  --femto-dark-primary-focus: rgba(1, 170, 255, 0.375);
+  --femto-primary-focus: light-dark(var(--femto-light-primary-focus), var(--femto-dark-primary-focus));
   --femto-primary-inverse: #fff;
-  --femto-secondary: light-dark(#5d6b89, #969eaf);
+  --femto-light-secondary: #5d6b89;
+  --femto-dark-secondary: #969eaf;
+  --femto-secondary: light-dark(var(--femto-light-secondary), var(--femto-dark-secondary));
   --femto-secondary-background: #525f7a;
   --femto-secondary-border: var(--femto-secondary-background);
-  --femto-secondary-underline: light-dark(rgba(93, 107, 137, 0.5), rgba(150, 158, 175, 0.5));
-  --femto-secondary-hover: light-dark(#48536b, #b3b9c5);
-  --femto-secondary-hover-background: light-dark(#48536b, #5d6b89);
+  --femto-light-secondary-underline: rgba(93, 107, 137, 0.5);
+  --femto-dark-secondary-underline: rgba(150, 158, 175, 0.5);
+  --femto-secondary-underline: light-dark(var(--femto-light-secondary-underline), var(--femto-dark-secondary-underline));
+  --femto-light-secondary-hover: #48536b;
+  --femto-dark-secondary-hover: #b3b9c5;
+  --femto-secondary-hover: light-dark(var(--femto-light-secondary-hover), var(--femto-dark-secondary-hover));
+  --femto-light-secondary-hover-background: #48536b;
+  --femto-dark-secondary-hover-background: #5d6b89;
+  --femto-secondary-hover-background: light-dark(var(--femto-light-secondary-hover-background), var(--femto-dark-secondary-hover-background));
   --femto-secondary-hover-border: var(--femto-secondary-hover-background);
   --femto-secondary-hover-underline: var(--femto-secondary-hover);
-  --femto-secondary-focus: light-dark(rgba(93, 107, 137, 0.25), rgba(144, 158, 190, 0.25));
+  --femto-light-secondary-focus: rgba(93, 107, 137, 0.25);
+  --femto-dark-secondary-focus: rgba(144, 158, 190, 0.25);
+  --femto-secondary-focus: light-dark(var(--femto-light-secondary-focus), var(--femto-dark-secondary-focus));
   --femto-secondary-inverse: #fff;
-  --femto-contrast: light-dark(#181c25, #dfe3eb);
-  --femto-contrast-background: light-dark(#181c25, #eff1f4);
+  --femto-light-contrast: #181c25;
+  --femto-dark-contrast: #dfe3eb;
+  --femto-contrast: light-dark(var(--femto-light-contrast), var(--femto-dark-contrast));
+  --femto-light-contrast-background: #181c25;
+  --femto-dark-contrast-background: #eff1f4;
+  --femto-contrast-background: light-dark(var(--femto-light-contrast-background), var(--femto-dark-contrast-background));
   --femto-contrast-border: var(--femto-contrast-background);
-  --femto-contrast-underline: light-dark(rgba(24, 28, 37, 0.5), rgba(223, 227, 235, 0.5));
-  --femto-contrast-hover: light-dark(#000, #fff);
-  --femto-contrast-hover-background: light-dark(#000, #fff);
+  --femto-light-contrast-underline: rgba(24, 28, 37, 0.5);
+  --femto-dark-contrast-underline: rgba(223, 227, 235, 0.5);
+  --femto-contrast-underline: light-dark(var(--femto-light-contrast-underline), var(--femto-dark-contrast-underline));
+  --femto-light-contrast-hover: #000;
+  --femto-dark-contrast-hover: #fff;
+  --femto-contrast-hover: light-dark(var(--femto-light-contrast-hover), var(--femto-dark-contrast-hover));
+  --femto-light-contrast-hover-background: #000;
+  --femto-dark-contrast-hover-background: #fff;
+  --femto-contrast-hover-background: light-dark(var(--femto-light-contrast-hover-background), var(--femto-dark-contrast-hover-background));
   --femto-contrast-hover-border: var(--femto-contrast-hover-background);
-  --femto-contrast-hover-underline: light-dark(var(--femto-secondary-hover), var(--femto-contrast-hover));
-  --femto-contrast-focus: light-dark(rgba(93, 107, 137, 0.25), rgba(207, 213, 226, 0.25));
-  --femto-contrast-inverse: light-dark(#fff, #000);
+  --femto-light-contrast-hover-underline: var(--femto-secondary-hover);
+  --femto-dark-contrast-hover-underline: var(--femto-contrast-hover);
+  --femto-contrast-hover-underline: light-dark(var(--femto-light-contrast-hover-underline), var(--femto-dark-contrast-hover-underline));
+  --femto-light-contrast-focus: rgba(93, 107, 137, 0.25);
+  --femto-dark-contrast-focus: rgba(207, 213, 226, 0.25);
+  --femto-contrast-focus: light-dark(var(--femto-light-contrast-focus), var(--femto-dark-contrast-focus));
+  --femto-light-contrast-inverse: #fff;
+  --femto-dark-contrast-inverse: #000;
+  --femto-contrast-inverse: light-dark(var(--femto-light-contrast-inverse), var(--femto-dark-contrast-inverse));
   --femto-box-shadow: 0.0145rem 0.029rem 0.174rem light-dark(rgba(129, 145, 181, 0.01698), rgba(7, 8.5, 12, 0.01698)), 0.0335rem 0.067rem 0.402rem light-dark(rgba(129, 145, 181, 0.024), rgba(7, 8.5, 12, 0.024)), 0.0625rem 0.125rem 0.75rem light-dark(rgba(129, 145, 181, 0.03), rgba(7, 8.5, 12, 0.03)), 0.1125rem 0.225rem 1.35rem light-dark(rgba(129, 145, 181, 0.036), rgba(7, 8.5, 12, 0.036)), 0.2085rem 0.417rem 2.502rem light-dark(rgba(129, 145, 181, 0.04302), rgba(7, 8.5, 12, 0.04302)), 0.5rem 1rem 6rem light-dark(rgba(129, 145, 181, 0.06), rgba(7, 8.5, 12, 0.06)), 0 0 0 0.0625rem light-dark(rgba(129, 145, 181, 0.015), rgba(7, 8.5, 12, 0.015));
-  --femto-h1-color: light-dark(#2d3138, #f0f1f3);
-  --femto-h2-color: light-dark(#373c44, #e0e3e7);
-  --femto-h3-color: light-dark(#424751, #c2c7d0);
-  --femto-h4-color: light-dark(#4d535e, #b3b9c5);
-  --femto-h5-color: light-dark(#5c6370, #a4acba);
-  --femto-h6-color: light-dark(#646b79, #8891a4);
-  --femto-mark-background-color: light-dark(rgb(252.5, 230.5, 191.5), #014063);
-  --femto-mark-color: light-dark(#0f1114, #fff);
-  --femto-ins-color: light-dark(rgb(28.5, 105.5, 84), #62af9a);
-  --femto-del-color: light-dark(rgb(136, 56.5, 53), rgb(205.5, 126, 123));
+  --femto-light-h1-color: #2d3138;
+  --femto-dark-h1-color: #f0f1f3;
+  --femto-h1-color: light-dark(var(--femto-light-h1-color), var(--femto-dark-h1-color));
+  --femto-light-h2-color: #373c44;
+  --femto-dark-h2-color: #e0e3e7;
+  --femto-h2-color: light-dark(var(--femto-light-h2-color), var(--femto-dark-h2-color));
+  --femto-light-h3-color: #424751;
+  --femto-dark-h3-color: #c2c7d0;
+  --femto-h3-color: light-dark(var(--femto-light-h3-color), var(--femto-dark-h3-color));
+  --femto-light-h4-color: #4d535e;
+  --femto-dark-h4-color: #b3b9c5;
+  --femto-h4-color: light-dark(var(--femto-light-h4-color), var(--femto-dark-h4-color));
+  --femto-light-h5-color: #5c6370;
+  --femto-dark-h5-color: #a4acba;
+  --femto-h5-color: light-dark(var(--femto-light-h5-color), var(--femto-dark-h5-color));
+  --femto-light-h6-color: #646b79;
+  --femto-dark-h6-color: #8891a4;
+  --femto-h6-color: light-dark(var(--femto-light-h6-color), var(--femto-dark-h6-color));
+  --femto-light-mark-background-color: rgb(252.5, 230.5, 191.5);
+  --femto-dark-mark-background-color: #014063;
+  --femto-mark-background-color: light-dark(var(--femto-light-mark-background-color), var(--femto-dark-mark-background-color));
+  --femto-light-mark-color: #0f1114;
+  --femto-dark-mark-color: #fff;
+  --femto-mark-color: light-dark(var(--femto-light-mark-color), var(--femto-dark-mark-color));
+  --femto-light-ins-color: rgb(28.5, 105.5, 84);
+  --femto-dark-ins-color: #62af9a;
+  --femto-ins-color: light-dark(var(--femto-light-ins-color), var(--femto-dark-ins-color));
+  --femto-light-del-color: rgb(136, 56.5, 53);
+  --femto-dark-del-color: rgb(205.5, 126, 123);
+  --femto-del-color: light-dark(var(--femto-light-del-color), var(--femto-dark-del-color));
   --femto-blockquote-border-color: var(--femto-muted-border-color);
   --femto-blockquote-footer-color: var(--femto-muted-color);
   --femto-button-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
   --femto-button-hover-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
   --femto-table-border-color: var(--femto-muted-border-color);
   --femto-table-row-stripped-background-color: rgba(111, 120, 135, 0.0375);
-  --femto-code-background-color: light-dark(rgb(243, 244.5, 246.75), rgb(26, 30.5, 40.25));
-  --femto-code-color: light-dark(#646b79, #8891a4);
+  --femto-light-code-background-color: rgb(243, 244.5, 246.75);
+  --femto-dark-code-background-color: rgb(26, 30.5, 40.25);
+  --femto-code-background-color: light-dark(var(--femto-light-code-background-color), var(--femto-dark-code-background-color));
+  --femto-light-code-color: #646b79;
+  --femto-dark-code-color: #8891a4;
+  --femto-code-color: light-dark(var(--femto-light-code-color), var(--femto-dark-code-color));
   --femto-code-kbd-background-color: var(--femto-color);
   --femto-code-kbd-color: var(--femto-background-color);
-  --femto-form-element-background-color: light-dark(rgb(251, 251.5, 252.25), rgb(28, 33, 43.5));
-  --femto-form-element-selected-background-color: light-dark(#dfe3eb, #2a3140);
-  --femto-form-element-border-color: light-dark(#cfd5e2, #2a3140);
-  --femto-form-element-color: light-dark(#23262c, #e0e3e7);
-  --femto-form-element-placeholder-color: light-dark(var(--femto-muted-color), #8891a4);
-  --femto-form-element-active-background-color: light-dark(#fff, rgb(26, 30.5, 40.25));
+  --femto-light-form-element-background-color: rgb(251, 251.5, 252.25);
+  --femto-dark-form-element-background-color: rgb(28, 33, 43.5);
+  --femto-form-element-background-color: light-dark(var(--femto-light-form-element-background-color), var(--femto-dark-form-element-background-color));
+  --femto-light-form-element-selected-background-color: #dfe3eb;
+  --femto-dark-form-element-selected-background-color: #2a3140;
+  --femto-form-element-selected-background-color: light-dark(var(--femto-light-form-element-selected-background-color), var(--femto-dark-form-element-selected-background-color));
+  --femto-light-form-element-border-color: #cfd5e2;
+  --femto-dark-form-element-border-color: #2a3140;
+  --femto-form-element-border-color: light-dark(var(--femto-light-form-element-border-color), var(--femto-dark-form-element-border-color));
+  --femto-light-form-element-color: #23262c;
+  --femto-dark-form-element-color: #e0e3e7;
+  --femto-form-element-color: light-dark(var(--femto-light-form-element-color), var(--femto-dark-form-element-color));
+  --femto-light-form-element-placeholder-color: var(--femto-muted-color);
+  --femto-dark-form-element-placeholder-color: #8891a4;
+  --femto-form-element-placeholder-color: light-dark(var(--femto-light-form-element-placeholder-color), var(--femto-dark-form-element-placeholder-color));
+  --femto-light-form-element-active-background-color: #fff;
+  --femto-dark-form-element-active-background-color: rgb(26, 30.5, 40.25);
+  --femto-form-element-active-background-color: light-dark(var(--femto-light-form-element-active-background-color), var(--femto-dark-form-element-active-background-color));
   --femto-form-element-active-border-color: var(--femto-primary-border);
   --femto-form-element-focus-color: var(--femto-primary-border);
   --femto-form-element-disabled-opacity: 0.5;
-  --femto-form-element-invalid-border-color: light-dark(rgb(183.5, 105.5, 106.5), rgb(149.5, 74, 80));
-  --femto-form-element-invalid-active-border-color: light-dark(rgb(200.25, 79.25, 72.25), rgb(183.25, 63.5, 59));
+  --femto-light-form-element-invalid-border-color: rgb(183.5, 105.5, 106.5);
+  --femto-dark-form-element-invalid-border-color: rgb(149.5, 74, 80);
+  --femto-form-element-invalid-border-color: light-dark(var(--femto-light-form-element-invalid-border-color), var(--femto-dark-form-element-invalid-border-color));
+  --femto-light-form-element-invalid-active-border-color: rgb(200.25, 79.25, 72.25);
+  --femto-dark-form-element-invalid-active-border-color: rgb(183.25, 63.5, 59);
+  --femto-form-element-invalid-active-border-color: light-dark(var(--femto-light-form-element-invalid-active-border-color), var(--femto-dark-form-element-invalid-active-border-color));
   --femto-form-element-invalid-focus-color: var(--femto-form-element-invalid-active-border-color);
-  --femto-form-element-valid-border-color: light-dark(rgb(76, 154.5, 137.5), #2a7b6f);
-  --femto-form-element-valid-active-border-color: light-dark(rgb(39, 152.75, 118.75), rgb(22, 137, 105.5));
+  --femto-light-form-element-valid-border-color: rgb(76, 154.5, 137.5);
+  --femto-dark-form-element-valid-border-color: #2a7b6f;
+  --femto-form-element-valid-border-color: light-dark(var(--femto-light-form-element-valid-border-color), var(--femto-dark-form-element-valid-border-color));
+  --femto-light-form-element-valid-active-border-color: rgb(39, 152.75, 118.75);
+  --femto-dark-form-element-valid-active-border-color: rgb(22, 137, 105.5);
+  --femto-form-element-valid-active-border-color: light-dark(var(--femto-light-form-element-valid-active-border-color), var(--femto-dark-form-element-valid-active-border-color));
   --femto-form-element-valid-focus-color: var(--femto-form-element-valid-active-border-color);
-  --femto-switch-background-color: light-dark(#bfc7d9, #333c4e);
+  --femto-light-switch-background-color: #bfc7d9;
+  --femto-dark-switch-background-color: #333c4e;
+  --femto-switch-background-color: light-dark(var(--femto-light-switch-background-color), var(--femto-dark-switch-background-color));
   --femto-switch-checked-background-color: var(--femto-primary-background);
   --femto-switch-color: #fff;
   --femto-switch-thumb-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-  --femto-range-border-color: light-dark(#dfe3eb, #202632);
-  --femto-range-active-border-color: light-dark(#bfc7d9, #2a3140);
+  --femto-light-range-border-color: #dfe3eb;
+  --femto-dark-range-border-color: #202632;
+  --femto-range-border-color: light-dark(var(--femto-light-range-border-color), var(--femto-dark-range-border-color));
+  --femto-light-range-active-border-color: #bfc7d9;
+  --femto-dark-range-active-border-color: #2a3140;
+  --femto-range-active-border-color: light-dark(var(--femto-light-range-active-border-color), var(--femto-dark-range-active-border-color));
   --femto-range-thumb-border-color: var(--femto-background-color);
   --femto-range-thumb-color: var(--femto-secondary-background);
   --femto-range-thumb-active-color: var(--femto-primary-background);
@@ -275,21 +371,106 @@ details summary[role=button]:not(.outline)::after {
   --femto-accordion-active-summary-color: var(--femto-primary-hover);
   --femto-accordion-close-summary-color: var(--femto-color);
   --femto-accordion-open-summary-color: var(--femto-muted-color);
-  --femto-card-background-color: light-dark(var(--femto-background-color), #181c25);
-  --femto-card-border-color: light-dark(var(--femto-muted-border-color), var(--femto-card-background-color));
+  --femto-light-card-background-color: var(--femto-background-color);
+  --femto-dark-card-background-color: #181c25;
+  --femto-card-background-color: light-dark(var(--femto-light-card-background-color), var(--femto-dark-card-background-color));
+  --femto-light-card-border-color: var(--femto-muted-border-color);
+  --femto-dark-card-border-color: var(--femto-card-background-color);
+  --femto-card-border-color: light-dark(var(--femto-light-card-border-color), var(--femto-dark-card-border-color));
   --femto-card-box-shadow: var(--femto-box-shadow);
-  --femto-card-sectioning-background-color: light-dark(rgb(251, 251.5, 252.25), rgb(26, 30.5, 40.25));
-  --femto-dropdown-background-color: light-dark(#fff, #181c25);
-  --femto-dropdown-border-color: light-dark(#eff1f4, #202632);
+  --femto-light-card-sectioning-background-color: rgb(251, 251.5, 252.25);
+  --femto-dark-card-sectioning-background-color: rgb(26, 30.5, 40.25);
+  --femto-card-sectioning-background-color: light-dark(var(--femto-light-card-sectioning-background-color), var(--femto-dark-card-sectioning-background-color));
+  --femto-light-dropdown-background-color: #fff;
+  --femto-dark-dropdown-background-color: #181c25;
+  --femto-dropdown-background-color: light-dark(var(--femto-light-dropdown-background-color), var(--femto-dark-dropdown-background-color));
+  --femto-light-dropdown-border-color: #eff1f4;
+  --femto-dark-dropdown-border-color: #202632;
+  --femto-dropdown-border-color: light-dark(var(--femto-light-dropdown-border-color), var(--femto-dark-dropdown-border-color));
   --femto-dropdown-box-shadow: var(--femto-box-shadow);
   --femto-dropdown-color: var(--femto-color);
-  --femto-dropdown-hover-background-color: light-dark(#eff1f4, #202632);
+  --femto-light-dropdown-hover-background-color: #eff1f4;
+  --femto-dark-dropdown-hover-background-color: #202632;
+  --femto-dropdown-hover-background-color: light-dark(var(--femto-light-dropdown-hover-background-color), var(--femto-dark-dropdown-hover-background-color));
   --femto-loading-spinner-opacity: 0.5;
-  --femto-modal-overlay-background-color: light-dark(rgba(232, 234, 237, 0.75), rgba(7.5, 8.5, 10, 0.75));
-  --femto-progress-background-color: light-dark(#dfe3eb, #202632);
+  --femto-light-modal-overlay-background-color: rgba(232, 234, 237, 0.75);
+  --femto-dark-modal-overlay-background-color: rgba(7.5, 8.5, 10, 0.75);
+  --femto-modal-overlay-background-color: light-dark(var(--femto-light-modal-overlay-background-color), var(--femto-dark-modal-overlay-background-color));
+  --femto-light-progress-background-color: #dfe3eb;
+  --femto-dark-progress-background-color: #202632;
+  --femto-progress-background-color: light-dark(var(--femto-light-progress-background-color), var(--femto-dark-progress-background-color));
   --femto-progress-color: var(--femto-primary-background);
   --femto-tooltip-background-color: var(--femto-contrast-background);
   --femto-tooltip-color: var(--femto-contrast-inverse);
+  --femto-light-icon-valid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(76, 154.5, 137.5)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+  --femto-dark-icon-valid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(42, 123, 111)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+  --femto-light-icon-invalid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(200.25, 79.25, 72.25)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='12' y1='8' x2='12' y2='12'%3E%3C/line%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'%3E%3C/line%3E%3C/svg%3E");
+  --femto-dark-icon-invalid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(149.5, 74, 80)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='12' y1='8' x2='12' y2='12'%3E%3C/line%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'%3E%3C/line%3E%3C/svg%3E");
+}
+@supports not (color: light-dark(#000, #fff)) {
+  :root,
+  :host {
+    color-scheme: light;
+    --femto-icon-valid: var(--femto-light-icon-valid);
+    --femto-icon-invalid: var(--femto-light-icon-invalid);
+    --femto-background-color: var(--femto-light-background-color);
+    --femto-color: var(--femto-light-color);
+    --femto-text-selection-color: var(--femto-light-text-selection-color);
+    --femto-muted-color: var(--femto-light-muted-color);
+    --femto-muted-border-color: var(--femto-light-muted-border-color);
+    --femto-primary: var(--femto-light-primary);
+    --femto-primary-underline: var(--femto-light-primary-underline);
+    --femto-primary-hover: var(--femto-light-primary-hover);
+    --femto-primary-hover-background: var(--femto-light-primary-hover-background);
+    --femto-primary-focus: var(--femto-light-primary-focus);
+    --femto-secondary: var(--femto-light-secondary);
+    --femto-secondary-underline: var(--femto-light-secondary-underline);
+    --femto-secondary-hover: var(--femto-light-secondary-hover);
+    --femto-secondary-hover-background: var(--femto-light-secondary-hover-background);
+    --femto-secondary-focus: var(--femto-light-secondary-focus);
+    --femto-contrast: var(--femto-light-contrast);
+    --femto-contrast-background: var(--femto-light-contrast-background);
+    --femto-contrast-underline: var(--femto-light-contrast-underline);
+    --femto-contrast-hover: var(--femto-light-contrast-hover);
+    --femto-contrast-hover-background: var(--femto-light-contrast-hover-background);
+    --femto-contrast-hover-underline: var(--femto-light-contrast-hover-underline);
+    --femto-contrast-focus: var(--femto-light-contrast-focus);
+    --femto-contrast-inverse: var(--femto-light-contrast-inverse);
+    --femto-box-shadow: 0.0145rem 0.029rem 0.174rem rgba(129, 145, 181, 0.01698), 0.0335rem 0.067rem 0.402rem rgba(129, 145, 181, 0.024), 0.0625rem 0.125rem 0.75rem rgba(129, 145, 181, 0.03), 0.1125rem 0.225rem 1.35rem rgba(129, 145, 181, 0.036), 0.2085rem 0.417rem 2.502rem rgba(129, 145, 181, 0.04302), 0.5rem 1rem 6rem rgba(129, 145, 181, 0.06), 0 0 0 0.0625rem rgba(129, 145, 181, 0.015);
+    --femto-h1-color: var(--femto-light-h1-color);
+    --femto-h2-color: var(--femto-light-h2-color);
+    --femto-h3-color: var(--femto-light-h3-color);
+    --femto-h4-color: var(--femto-light-h4-color);
+    --femto-h5-color: var(--femto-light-h5-color);
+    --femto-h6-color: var(--femto-light-h6-color);
+    --femto-mark-background-color: var(--femto-light-mark-background-color);
+    --femto-mark-color: var(--femto-light-mark-color);
+    --femto-ins-color: var(--femto-light-ins-color);
+    --femto-del-color: var(--femto-light-del-color);
+    --femto-code-background-color: var(--femto-light-code-background-color);
+    --femto-code-color: var(--femto-light-code-color);
+    --femto-form-element-background-color: var(--femto-light-form-element-background-color);
+    --femto-form-element-selected-background-color: var(--femto-light-form-element-selected-background-color);
+    --femto-form-element-border-color: var(--femto-light-form-element-border-color);
+    --femto-form-element-color: var(--femto-light-form-element-color);
+    --femto-form-element-placeholder-color: var(--femto-light-form-element-placeholder-color);
+    --femto-form-element-active-background-color: var(--femto-light-form-element-active-background-color);
+    --femto-form-element-invalid-border-color: var(--femto-light-form-element-invalid-border-color);
+    --femto-form-element-invalid-active-border-color: var(--femto-light-form-element-invalid-active-border-color);
+    --femto-form-element-valid-border-color: var(--femto-light-form-element-valid-border-color);
+    --femto-form-element-valid-active-border-color: var(--femto-light-form-element-valid-active-border-color);
+    --femto-switch-background-color: var(--femto-light-switch-background-color);
+    --femto-range-border-color: var(--femto-light-range-border-color);
+    --femto-range-active-border-color: var(--femto-light-range-active-border-color);
+    --femto-card-background-color: var(--femto-light-card-background-color);
+    --femto-card-border-color: var(--femto-light-card-border-color);
+    --femto-card-sectioning-background-color: var(--femto-light-card-sectioning-background-color);
+    --femto-dropdown-background-color: var(--femto-light-dropdown-background-color);
+    --femto-dropdown-border-color: var(--femto-light-dropdown-border-color);
+    --femto-dropdown-hover-background-color: var(--femto-light-dropdown-hover-background-color);
+    --femto-modal-overlay-background-color: var(--femto-light-modal-overlay-background-color);
+    --femto-progress-background-color: var(--femto-light-progress-background-color);
+  }
 }
 input:is([type=submit], [type=button], [type=reset], [type=checkbox], [type=radio], [type=file]) {
   --femto-form-element-focus-color: var(--femto-primary-focus);
@@ -298,38 +479,60 @@ input:is([type=submit], [type=button], [type=reset], [type=checkbox], [type=radi
 :root:not([data-theme=dark]),
 :host(:not([data-theme=dark])) {
   color-scheme: light;
-  --femto-icon-valid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(76, 154.5, 137.5)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
-  --femto-icon-invalid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(200.25, 79.25, 72.25)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='12' y1='8' x2='12' y2='12'%3E%3C/line%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'%3E%3C/line%3E%3C/svg%3E");
+  --femto-icon-valid: var(--femto-light-icon-valid);
+  --femto-icon-invalid: var(--femto-light-icon-invalid);
 }
 @media only screen and (prefers-color-scheme: dark) {
   :root:not([data-theme]),
   :host(:not([data-theme])) {
     color-scheme: dark;
-    --femto-icon-valid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(42, 123, 111)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
-    --femto-icon-invalid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(149.5, 74, 80)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='12' y1='8' x2='12' y2='12'%3E%3C/line%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'%3E%3C/line%3E%3C/svg%3E");
-  }
-  :root:not([data-theme]) details summary[role=button].contrast:not(.outline)::after,
-  :host(:not([data-theme])) details summary[role=button].contrast:not(.outline)::after {
-    filter: brightness(0);
-  }
-  :root:not([data-theme]) [aria-busy=true]:not(input, select, textarea).contrast:is(button, [type=submit], [type=button], [type=reset], [role=button]):not(.outline)::before,
-  :host(:not([data-theme])) [aria-busy=true]:not(input, select, textarea).contrast:is(button, [type=submit], [type=button], [type=reset], [role=button]):not(.outline)::before {
-    filter: brightness(0);
   }
 }
 [data-theme=dark],
 :host([data-theme=dark]) {
   color-scheme: dark;
-  --femto-icon-valid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(42, 123, 111)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
-  --femto-icon-invalid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(149.5, 74, 80)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='12' y1='8' x2='12' y2='12'%3E%3C/line%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'%3E%3C/line%3E%3C/svg%3E");
 }
-[data-theme=dark] details summary[role=button].contrast:not(.outline)::after,
-:host([data-theme=dark]) details summary[role=button].contrast:not(.outline)::after {
-  filter: brightness(0);
+@supports (color: light-dark(#000, #fff)) {
+  @media only screen and (prefers-color-scheme: dark) {
+    :root:not([data-theme]),
+    :host(:not([data-theme])) {
+      --femto-icon-valid: var(--femto-dark-icon-valid);
+      --femto-icon-invalid: var(--femto-dark-icon-invalid);
+    }
+    :root:not([data-theme]) details summary[role=button].contrast:not(.outline)::after,
+    :host(:not([data-theme])) details summary[role=button].contrast:not(.outline)::after {
+      filter: brightness(0);
+    }
+    :root:not([data-theme]) [aria-busy=true]:not(input, select, textarea).contrast:is(button, [type=submit], [type=button], [type=reset], [role=button]):not(.outline)::before,
+    :host(:not([data-theme])) [aria-busy=true]:not(input, select, textarea).contrast:is(button, [type=submit], [type=button], [type=reset], [role=button]):not(.outline)::before {
+      filter: brightness(0);
+    }
+  }
+  [data-theme=dark],
+  :host([data-theme=dark]) {
+    --femto-icon-valid: var(--femto-dark-icon-valid);
+    --femto-icon-invalid: var(--femto-dark-icon-invalid);
+  }
+  [data-theme=dark] details summary[role=button].contrast:not(.outline)::after,
+  :host([data-theme=dark]) details summary[role=button].contrast:not(.outline)::after {
+    filter: brightness(0);
+  }
+  [data-theme=dark] [aria-busy=true]:not(input, select, textarea).contrast:is(button, [type=submit], [type=button], [type=reset], [role=button]):not(.outline)::before,
+  :host([data-theme=dark]) [aria-busy=true]:not(input, select, textarea).contrast:is(button, [type=submit], [type=button], [type=reset], [role=button]):not(.outline)::before {
+    filter: brightness(0);
+  }
 }
-[data-theme=dark] [aria-busy=true]:not(input, select, textarea).contrast:is(button, [type=submit], [type=button], [type=reset], [role=button]):not(.outline)::before,
-:host([data-theme=dark]) [aria-busy=true]:not(input, select, textarea).contrast:is(button, [type=submit], [type=button], [type=reset], [role=button]):not(.outline)::before {
-  filter: brightness(0);
+@supports not (color: light-dark(#000, #fff)) {
+  @media only screen and (prefers-color-scheme: dark) {
+    :root:not([data-theme]),
+    :host(:not([data-theme])) {
+      color-scheme: light;
+    }
+  }
+  [data-theme=dark],
+  :host([data-theme=dark]) {
+    color-scheme: light;
+  }
 }
 progress,
 [type=checkbox],

@@ -1,19 +1,25 @@
 /*
  * Theme color: lime, loaded after femto.css and before any stylesheet of yours that overrides the
  * theme tokens. Like every theme file, it is one rule on :root, :host that sets the ten theme
- * tokens, with light-dark() where the light and dark values differ. Lime is a light color, so
- * primary buttons have black text, filled buttons show black loading spinners, checked radios have
- * a black dot, and the switch thumb casts a shadow.
+ * tokens, six of them as --femto-light-<token> and --femto-dark-<token> pairs.
+ * Lime is a light color, so primary buttons have black text, filled buttons show black loading
+ * spinners, checked radios have a black dot, and the switch thumb casts a shadow.
  */
 :root,
 :host {
-  --femto-text-selection-color: light-dark(rgba(119, 156, 0, 0.25), rgba(130, 171, 0, 0.1875));
-  --femto-primary: light-dark(#577400, #82ab00);
+  --femto-light-text-selection-color: rgba(119, 156, 0, 0.25);
+  --femto-dark-text-selection-color: rgba(130, 171, 0, 0.1875);
+  --femto-light-primary: #577400;
+  --femto-dark-primary: #82ab00;
   --femto-primary-background: #a5d601;
-  --femto-primary-underline: light-dark(rgba(87, 116, 0, 0.5), rgba(130, 171, 0, 0.5));
-  --femto-primary-hover: light-dark(#435a00, #99c801);
-  --femto-primary-hover-background: light-dark(#99c801, #b2e51a);
-  --femto-primary-focus: light-dark(rgba(119, 156, 0, 0.5), rgba(130, 171, 0, 0.375));
+  --femto-light-primary-underline: rgba(87, 116, 0, 0.5);
+  --femto-dark-primary-underline: rgba(130, 171, 0, 0.5);
+  --femto-light-primary-hover: #435a00;
+  --femto-dark-primary-hover: #99c801;
+  --femto-light-primary-hover-background: #99c801;
+  --femto-dark-primary-hover-background: #b2e51a;
+  --femto-light-primary-focus: rgba(119, 156, 0, 0.5);
+  --femto-dark-primary-focus: rgba(130, 171, 0, 0.375);
   --femto-primary-inverse: #000;
   --femto-primary-inverse-filter: brightness(0) invert(0);
   --femto-switch-thumb-box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.25);

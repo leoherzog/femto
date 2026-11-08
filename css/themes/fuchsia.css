@@ -1,17 +1,23 @@
 /*
  * Theme color: fuchsia, loaded after femto.css and before any stylesheet of yours that overrides
  * the theme tokens. Like every theme file, it is one rule on :root, :host that sets the ten theme
- * tokens, with light-dark() where the light and dark values differ.
+ * tokens, six of them as --femto-light-<token> and --femto-dark-<token> pairs.
  */
 :root,
 :host {
-  --femto-text-selection-color: light-dark(rgba(247, 72, 183, 0.25), rgba(248, 105, 191, 0.1875));
-  --femto-primary: light-dark(#c1208b, #f869bf);
+  --femto-light-text-selection-color: rgba(247, 72, 183, 0.25);
+  --femto-dark-text-selection-color: rgba(248, 105, 191, 0.1875);
+  --femto-light-primary: #c1208b;
+  --femto-dark-primary: #f869bf;
   --femto-primary-background: #c1208b;
-  --femto-primary-underline: light-dark(rgba(193, 32, 139, 0.5), rgba(248, 105, 191, 0.5));
-  --femto-primary-hover: light-dark(#98176d, #fa9acf);
-  --femto-primary-hover-background: #ac1c7c;
-  --femto-primary-focus: light-dark(rgba(247, 72, 183, 0.5), rgba(248, 105, 191, 0.375));
+  --femto-light-primary-underline: rgba(193, 32, 139, 0.5);
+  --femto-dark-primary-underline: rgba(248, 105, 191, 0.5);
+  --femto-light-primary-hover: #98176d;
+  --femto-dark-primary-hover: #fa9acf;
+  --femto-light-primary-hover-background: #ac1c7c;
+  --femto-dark-primary-hover-background: #ac1c7c;
+  --femto-light-primary-focus: rgba(247, 72, 183, 0.5);
+  --femto-dark-primary-focus: rgba(248, 105, 191, 0.375);
   --femto-primary-inverse: #fff;
   --femto-primary-inverse-filter: brightness(0) invert(1);
   --femto-switch-thumb-box-shadow: 0 0 0 rgba(0, 0, 0, 0);

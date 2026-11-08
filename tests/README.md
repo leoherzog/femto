@@ -40,7 +40,7 @@ Python runs only through `uv`: `tests/run.py` carries PEP 723 metadata pinning
 | `pages/` | fixture pages, `pages.json` manifest, `assets/` |
 | `reference/` | renamed 2.1.1 CSS (gitignored, rebuilt from tag `v2.1.1` by `run.py` when missing) and committed option references, provenance in `reference/README.md` |
 | `sections.json` | 2.1.1 banner sections of the default entry mapped to femto files |
-| `static_checks.py` | mechanical checks on the repository, the shipped files and `dist/` (`coverage` reads the tables in Coverage below; `dist` compares `dist/` with a fresh `npm run build`) |
+| `static_checks.py` | mechanical checks on the repository, the shipped files and `dist/` (`coverage` reads the tables in Coverage below; `fallback` checks the `light-dark()` pairs and their `@supports` fallback in `tokens/schemes.css`; `dist` compares `dist/` with a fresh `npm run build`) |
 | `build/`, `results/` | generated, gitignored |
 
 Python modules in `harness/`: `cli.py` (modes and planning), `matrix.py` (presets, pages, full-matrix
@@ -363,12 +363,17 @@ unregistered skipped checks, fail the run.
 Each entry's `reason` says what changed for a user of 2.1.1 and why; `category` sorts the entries
 into natural fixes, dropped hacks, new tokens, option mechanisms and browser limits.
 
-- `tokens.json`: what follows from declaring every color token once, on `:root, :host`, with
-  `light-dark()`, while `data-theme` sets only `color-scheme`, and the dark hover background
-  contrast fix.
-  - `tokens-light-dark-raw-text`: the raw text of tokens whose femto value is a `light-dark()` pair.
-    It accepts any `light-dark()` text, so `static_checks.py --only themes` compares each theme
-    file's ten tokens with its reference as text.
+- `tokens.json`: what follows from declaring every color token once, on `:root, :host`, one with a
+  value per scheme as `light-dark()` of a `--femto-light-<token>` and a `--femto-dark-<token>`,
+  while `data-theme` sets only `color-scheme`, and the dark hover background contrast fix.
+  - `tokens-light-dark-raw-text`: the raw text of tokens whose femto value is a `light-dark()` pair,
+    `--femto-primary-hover-background`'s pair of one value, such as `light-dark(#02659a, #02659a)`,
+    among them without a theme file and in the nine themes of the hover contrast fix. It accepts any
+    `light-dark()` text, so `static_checks.py --only themes` compares each theme file's ten tokens
+    with its reference as text.
+  - `tokens-light-dark-names`: the 116 `--femto-light-<token>` and `--femto-dark-<token>` names, for
+    the 56 pairs and the two validation icons; the `--femto-light-` names also feed the
+    `@supports not` fallback (see Known limits).
   - `tokens-group-island-focus-ring`: the group focus-ring tokens inside `data-theme` islands.
   - `tokens-author-color-scheme-dark` and `-light`: an author's inline `color-scheme` on an element
     without `data-theme` now switches femto's colors in that subtree, where 2.1.1's literals kept the
@@ -399,7 +404,7 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
     ring color.
   - `tokens-new-names`: `--femto-primary-inverse-filter`, the spinner filter that 2.1.1 picked at
     compile time.
-  - `tokens-dark-hover-background-contrast-style`, `-token` and `-raw`: in azure, blue, cyan,
+  - `tokens-dark-hover-background-contrast-style` and `-token`: in azure, blue, cyan,
     fuchsia, green, jade, orange, pink and zinc, white text on 2.1.1's dark-scheme
     `--femto-primary-hover-background` has 3.76:1 to 4.46:1 contrast, below WCAG AA's 4.5:1, so
     femto uses the theme's light value in both schemes (5.41:1 to 6.54:1). That changes the
@@ -408,8 +413,9 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
     (`default`, the three options and `theme-azure` for azure, and `user-root-override`, whose
     `:root` override does not reach the kitchen sink's shadow root), with the 2.1.1 side pinned to
     the nine dark values and the femto side to the nine light values, which keeps them to the dark
-    scheme, on the page or in an island. `static_checks.py --only themes` expects only the light
-    value in those nine theme files.
+    scheme, on the page or in an island. The two tokens' raw text is `light-dark()` of the light
+    value twice, which `tokens-light-dark-raw-text` covers, and `static_checks.py --only themes`
+    expects that value in both halves of the pair in those nine theme files.
 - `tokens-breakpoints.json` (`breakpoints-new-tokens`): `--femto-grid-template-columns`, which
   `tokens/breakpoints.css` sets from 768px for `.grid`. `.container` and the modal keep 2.1.1's
   literal media queries: a token-read `max-width` would be declared at every width and override
@@ -716,7 +722,7 @@ against `css/` in the browsers (see Last verified).
 
 | 2.1.1 setting | 2.1.1 default | femto file or mechanism | Checked by |
 |---|---|---|---|
-| `$theme-color` | `"azure"` | Azure is built into `tokens/schemes.css` and `tokens/base.css` (`--femto-primary-inverse-filter`). Each of the 20 colors, azure included, is `css/themes/<color>.css`: one `:root, :host` rule with ten tokens, loaded after femto | presets `theme-<color>` against `tests/reference/femto.<color>.css` (`femto.css` for azure); `static_checks.py --only themes` |
+| `$theme-color` | `"azure"` | Azure is built into `tokens/schemes.css` and `tokens/base.css` (`--femto-primary-inverse-filter`). Each of the 20 colors, azure included, is `css/themes/<color>.css`: one `:root, :host` rule with ten tokens, those whose schemes differ as `--femto-light-<token>` and `--femto-dark-<token>`, loaded after femto | presets `theme-<color>` against `tests/reference/femto.<color>.css` (`femto.css` for azure); `static_checks.py --only themes` |
 | `$css-var-prefix` | `"--pico-"` | Dropped: always `--femto-` | `static_checks.py` shipped-file hygiene (no `--pico-` names) |
 | `$semantic-root-element` | `"body"` | Hardcoded `body` (`body > header`, `body > main`, `body > footer` in `layout/landmarks.css` and `options/responsive-spacings.css`) | `default` and `option-responsive-spacings` presets, `layout-landmarks.html` |
 | `$enable-semantic-container` | `false` | Dropped with the classless builds. `.container` gives centered widths | `default` preset (the default build's output) |
@@ -993,6 +999,11 @@ with it in a search group. `uv run tests/static_checks.py` and `npm run lint` pa
   nothing is misreported as a difference). The harness retries such a cell once when
   `HIDIdleTime` shows real input during it; otherwise rerun the affected cells with `--presets`,
   `--pages`, `--schemes` and `--widths` filters.
+- Every harness browser supports `light-dark()`, so no cell runs the `@supports not` fallback in
+  `tokens/schemes.css`, which gives femto's light scheme where `light-dark()` is unsupported.
+  `static_checks.py --only fallback` checks it as text. It was also loaded in headless Chrome from a
+  copy of the build with `light-dark()` and both `@supports` conditions disabled, which gave the
+  light leg's computed styles for light and dark roots and in both islands.
 - Theme presets run only on the kitchen sink. That covers every rule a 2.1.1 theme changes, but a
   femto theme file that wrongly styled an element only other pages hold would go unseen there.
 - The `progress:indeterminate[value]::-webkit-progress-value` selector can never match, so no

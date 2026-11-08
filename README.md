@@ -153,7 +153,7 @@ femto's built-in color is azure. Each of the 19 others is one file in `css/theme
 <link rel="stylesheet" href="styles.css">
 ```
 
-A theme file is one `:root, :host` rule that sets ten theme tokens. That is the same specificity as your own overrides on `:root`, so a theme loaded after your stylesheet would replace them. For a color of your own, copy a theme file and change its values.
+A theme file is one `:root, :host` rule that sets ten theme tokens. That is the same specificity as your own overrides on `:root`, so a theme loaded after your stylesheet replaces your values of the tokens it sets. Six of them it sets as a `--femto-light-*` and `--femto-dark-*` pair instead of the token, such as `--femto-light-primary` and `--femto-dark-primary` for `--femto-primary` (see [Color schemes](#color-schemes)), even where both values are the same, and it has no `light-dark()`. It does not replace your plain value of a token it sets as a pair, such as `--femto-primary: #c00`. For a color of your own, copy a theme file and change its values.
 
 femto ships no prebuilt themed copies: there is no `dist/femto.jade.min.css`. To fetch femto and a theme in one request, join them in a jsDelivr combine URL:
 
@@ -207,11 +207,13 @@ femto has a light and a dark scheme. By default it follows the visitor's system 
 
 On an element, `data-theme` switches the colors femto sets on it and inside it, such as a card's background and the colors of headings, paragraphs, links, buttons and form fields. It does not change the text color the element inherits, which text directly inside it keeps, and it adds no background to an element femto gives none, such as a `<section>` or a `<div>`. Where you need them, set `color: var(--femto-color)` on the element, and `background-color: var(--femto-background-color)` if femto gives it no background.
 
-Every color token is declared once, on `:root` and `:host`, with `light-dark()` where the light and dark values differ, and `data-theme` sets `color-scheme`, which picks between them, plus the few values `light-dark()` cannot carry (see below). So:
+Every color token is declared once, on `:root` and `:host`. A token that femto or a theme gives a light and a dark value takes them from a pair of tokens of its own, as in `--femto-primary: light-dark(var(--femto-light-primary), var(--femto-dark-primary))`. Other color tokens have no pair: those with one value, such as `--femto-primary-background`, and those set from another token, such as `--femto-primary-hover-underline: var(--femto-primary-hover)`, which follow that token in each scheme. `--femto-box-shadow` uses `light-dark()` in each of its layers. `data-theme` sets `color-scheme`, which picks between the two values, plus the few values `light-dark()` cannot carry (see below). So:
 
 - An element that carries `data-theme` itself, such as a button, heading or form field, keeps its own colors in that scheme.
-- Your own color overrides on `:root`, loaded after femto, apply in both schemes and inside every `data-theme` element. Write them with `light-dark()` to give each scheme its own value.
+- Your own color overrides on `:root`, loaded after femto, apply inside every `data-theme` element. Set a token's pair, such as `--femto-light-primary` and `--femto-dark-primary`, to give each scheme its own value, or one of the two to change one scheme. A plain value of the token itself, such as `--femto-primary: #c00`, applies in both schemes, in place of its pair.
 - `data-theme="dark"` on a web component's host makes its shadow root dark when the component loads femto there.
+
+femto combines each pair into its token on `:root` and `:host`, so a `--femto-light-*` or `--femto-dark-*` token set on another element has no effect on femto's colors. To change a color in one part of a page, set the token itself on that element, such as `--femto-primary` on a card. An override written with `light-dark()`, such as `--femto-primary: light-dark(#c00, #f66)`, also works, except in browsers without `light-dark()`, where it fails (see [Browser support](#browser-support)).
 
 A `color-scheme` that your own CSS sets on an element also switches femto's colors in that subtree, as it switches the browser's own colors. `data-theme` is still the way to theme an element: it also switches the form validation icons and the chevron and loading spinner on `.contrast` buttons, which `light-dark()` cannot carry.
 
@@ -274,7 +276,7 @@ Each minimum version is at or above what Baseline Widely Available maps to on 20
 
 `npm run lint` runs the `use-baseline` rule of @eslint/css over every file in `css/`, with the Baseline data of web-features 3.42.0 from October 2026. It checks property names, at-rule names, `@media` features, pseudo-classes and pseudo-elements, and the keywords, functions and units of ordinary declarations. It does not check custom property values, which is where `light-dark()` and the font stacks live, values nested inside other functions, vendor-prefixed names or browser versions. Its exceptions are listed and explained in `eslint.config.mjs`.
 
-Browsers without `light-dark()`, which means Chrome and Edge before 123, Firefox before 120, Safari before 17.5 and Samsung Internet before 27, do not get a plainer femto: they get a broken one. Every color token whose light and dark values differ fails where it is used, so form fields lose their borders and backgrounds and some button labels disappear. Tools that rewrite `light-dark()` for those browsers cause a narrower break in supported ones: `data-theme` on an element stops changing its colors; see [npm](#npm).
+Browsers without `light-dark()`, which means Chrome and Edge before 123, Firefox before 120, Safari before 17.5 and Samsung Internet before 27, get femto's light scheme only. They ignore a dark system setting and `data-theme="dark"`, on the page, an element or a shadow host, and the browser's own controls stay light unless your own CSS sets `color-scheme: dark`, which femto's colors do not follow there. Themes, plain overrides and `--femto-light-*` overrides apply in them, but an override of your own written with `light-dark()` fails where it is used. These browsers are below femto's minimum versions and are not tested. Tools that rewrite `light-dark()` for them cause a narrower break in supported browsers: `data-theme` on an element stops changing its colors; see [npm](#npm).
 
 ## Contributing
 
@@ -371,13 +373,13 @@ Color tokens are now declared once, and `data-theme` sets the scheme instead of 
 
 - `data-theme` on a button, heading or form field keeps that element's own colors in the chosen scheme. In Pico 2.1.1 such an element took the page's background and text colors: on a dark page, `<button data-theme="light">` was a white box that turned blue on hover.
 - `data-theme="dark"` on a web component's host makes its shadow root dark when the component loads femto there. When only the shadow root loaded Pico 2.1.1, it gave that shadow root no color tokens.
-- Custom color overrides work on plain `:root` and reach inside `data-theme` elements. Pico 2.1.1 ignored them in the light and automatic dark schemes, where its scheme selectors outranked `:root`, and inside every nested `data-theme` element, which redeclared the tokens. Likewise, your own rules that set `--femto-form-element-focus-color` on a checkbox or radio now take effect from specificity (0,1,1); Pico 2.1.1's scheme selectors outranked them below (0,2,1) or (0,3,1).
+- Custom color overrides work on plain `:root` and reach inside `data-theme` elements. Pico 2.1.1 ignored them in the light and automatic dark schemes, where its scheme selectors outranked `:root`, and inside every nested `data-theme` element, which redeclared the tokens. Likewise, your own rules that set `--femto-form-element-focus-color` on a checkbox or radio now take effect from specificity (0,1,1); Pico 2.1.1's scheme selectors outranked them below (0,2,1) or (0,3,1). To give a token a value per scheme, set its new `--femto-light-*` and `--femto-dark-*` pair on `:root`, such as `--femto-light-primary` and `--femto-dark-primary`.
 - A `color-scheme` set on an element without `data-theme` now switches femto's colors in that subtree. `data-theme` remains the way to theme an element.
-- A script that reads a color token with `getPropertyValue()` gets `light-dark(...)` text where the schemes differ, such as for `--femto-primary`, where Pico 2.1.1 gave a color. To get the color in effect, set the token on a property, such as `color: var(--femto-primary)`, and read that property's computed value.
+- A script that reads a color token with `getPropertyValue()` gets `light-dark(...)` text for a token declared with `light-dark()` or set from one with `var()`, such as `--femto-primary` and `--femto-primary-hover-underline`, where Pico 2.1.1 gave a color. To get the color in effect, set the token on a property, such as `color: var(--femto-primary)`, and read that property's computed value.
 
 ### Supported browsers
 
-Pico 2.1.1 supported every browser in browserslist's `defaults`, with prefixes added by autoprefixer. femto 3.0 supports Chrome and Edge 125, Firefox 128, Safari 17.5 and Samsung Internet 27 (see [Browser support](#browser-support)), and drops the `-ms-` rules, `::-webkit-input-placeholder` and `::-moz-list-bullet`. In browsers without `light-dark()`, femto's colors and form fields break rather than degrade, so stay on Pico 2.1.1 if you need them.
+Pico 2.1.1 supported every browser in browserslist's `defaults`, with prefixes added by autoprefixer. femto 3.0 supports Chrome and Edge 125, Firefox 128, Safari 17.5 and Samsung Internet 27 (see [Browser support](#browser-support)), and drops the `-ms-` rules, `::-webkit-input-placeholder` and `::-moz-list-bullet`. Browsers without `light-dark()` get only femto's light scheme and are not tested, so stay on Pico 2.1.1 if you need full support in them.
 
 ### Other changes
 
@@ -385,7 +387,7 @@ Pico 2.1.1 supported every browser in browserslist's `defaults`, with prefixes a
 - Some rendering bugs of 2.1.1 are fixed, such as an indeterminate `<progress>` that looked complete in Firefox with reduced motion. The [changelog](CHANGELOG.md#fixed) lists them.
 - The focus ring of `role="group"` and `role="search"` inside a `data-theme` element follows that element's scheme.
 - With `no-transitions.css`, `--femto-transition` is `0s` (2.1.1 kept `0.2s ease-in-out`), so your own rules that read it stop animating too, and the group focus ring no longer fades.
-- Two new tokens: `--femto-primary-inverse-filter`, the filter for the loading spinner on primary buttons, which a theme of your own sets to `brightness(0) invert(0)` when its `--femto-primary-inverse` is dark, and `--femto-grid-template-columns`, which `.grid` reads.
+- Two other new tokens: `--femto-primary-inverse-filter`, the filter for the loading spinner on primary buttons, which a theme of your own sets to `brightness(0) invert(0)` when its `--femto-primary-inverse` is dark, and `--femto-grid-template-columns`, which `.grid` reads.
 - If you used a classless build, classes such as `.grid`, `.secondary`, `.dropdown` and `.striped` that it ignored are now styled.
 
 Every difference from Pico 2.1.1 that the parity tests found is registered, with its reason, in [tests/divergences/](tests/divergences/), and [CHANGELOG.md](CHANGELOG.md) lists the changes in each release.

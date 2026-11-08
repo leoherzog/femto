@@ -6,8 +6,8 @@
 """Mechanical checks on the repository, the shipped files and dist/.
 
   uv run tests/static_checks.py                        run every check
-  uv run tests/static_checks.py --only imports,syntax  run some (ids: toolchain name imports syntax hygiene vendor themes coverage package license dist)
-  uv run tests/static_checks.py --root DIR             check another checkout (imports, syntax, hygiene, vendor and themes need no git)
+  uv run tests/static_checks.py --only imports,syntax  run some (ids: toolchain name imports syntax hygiene vendor themes fallback coverage package license dist)
+  uv run tests/static_checks.py --root DIR             check another checkout (imports, syntax, hygiene, vendor, themes and fallback need no git)
 
 Each check prints PASS or FAIL with evidence lines; the exit status is 1 if any check fails.
 "imports", "syntax", "hygiene" and "vendor" cover conversion rules the lint
@@ -31,9 +31,14 @@ or @supports nested in a rule (use-baseline only inspects declarations whose par
 nesting traps (rules where native nesting differs from Sass nesting), and duplicate rules.
 
 "themes" covers what the harness cannot see in a theme file: tokens-light-dark-raw-text accepts
-any light-dark() text, so it compares each file's ten tokens with its 2.1.1 reference as text. The
-themes in HOVER_BACKGROUND_LIGHT_ONLY must have their light --femto-primary-hover-background in
-both schemes.
+any light-dark() text, so it compares each file's ten tokens with its 2.1.1 reference as text, the
+six in THEME_PAIRS as --femto-light-<token> and --femto-dark-<token>. The themes in
+HOVER_BACKGROUND_LIGHT_ONLY must have their light --femto-primary-hover-background in both schemes.
+
+"fallback" covers what no harness browser can run, the light scheme where light-dark() is
+unsupported: the wrappers and the @supports not block in tokens/schemes.css, the dark icons and
+filters inside @supports, and color-scheme: dark only in the two dark scheme rules, which a later
+@supports not block sets back to light.
 
 "coverage" checks the coverage table in tests/README.md ("Coverage: 2.1.1 modules and settings")
 against tag v2.1.1's $modules keys and settings, tests/sections.json, tests/pages/pages.json and the
@@ -553,6 +558,7 @@ THEME_TOKENS = (
     "primary-inverse-filter",
     "switch-thumb-box-shadow",
 )
+THEME_PAIRS = {"text-selection-color", "primary", "primary-underline", "primary-hover", "primary-hover-background", "primary-focus"}
 HOVER_BACKGROUND_LIGHT_ONLY = {"azure", "blue", "cyan", "fuchsia", "green", "jade", "orange", "pink", "zinc"}
 THEME_BLOCKS = {
     "light": "[data-theme=light], :root:not([data-theme=dark]), :host(:not([data-theme=dark]))",
@@ -585,7 +591,7 @@ def reference_rules(text: str) -> dict[str, dict[str, str]]:
 
 
 def themes(root: Path) -> Result:
-    r = Result("Theme files: each css/themes/<color>.css is the ten tokens of its 2.1.1 reference, text for text")
+    r = Result("Theme files: each css/themes/<color>.css is the ten tokens of its 2.1.1 reference, text for text, the six THEME_PAIRS tokens as --femto-light-<token> and --femto-dark-<token>")
     files = sorted((root / "css/themes").glob("*.css"))
     if not files:
         r.note("no css/themes/*.css yet")
@@ -602,20 +608,24 @@ def themes(root: Path) -> Result:
         light, dark = blocks["light"], blocks["dark"]
         expected = []
         for t in THEME_TOKENS:
+            name = "--femto-" + t
             if t == "primary-inverse-filter":
-                value = blocks["spinner"].get("filter")
+                pairs = [(name, blocks["spinner"].get("filter"))]
             else:
-                name = "--femto-" + t
                 if blocks["dark-media"].get(name) != dark.get(name):
                     r.fail(f"{rel}: reference {name} differs between the prefers-color-scheme and data-theme=dark blocks")
-                value = None
+                pairs = [(name, None)]
                 if name in light and name in dark:
-                    value = light[name] if light[name] == dark[name] else f"light-dark({light[name]}, {dark[name]})"
-                    if t == "primary-hover-background" and color in HOVER_BACKGROUND_LIGHT_ONLY:
-                        value = light[name]
-            if value is None:
-                r.fail(f"{rel}: reference has no value for --femto-{t}")
-            expected.append((f"--femto-{t}", value))
+                    if t in THEME_PAIRS:
+                        d = light[name] if t == "primary-hover-background" and color in HOVER_BACKGROUND_LIGHT_ONLY else dark[name]
+                        pairs = [(f"--femto-light-{t}", light[name]), (f"--femto-dark-{t}", d)]
+                    else:
+                        if light[name] != dark[name]:
+                            r.fail(f"{rel}: reference {name} differs between the schemes but is not in THEME_PAIRS")
+                        pairs = [(name, light[name])]
+            if pairs[0][1] is None:
+                r.fail(f"{rel}: reference has no value for {name}")
+            expected += pairs
         code = re.sub(r"/\*.*?\*/", "", p.read_text(), flags=re.S)
         m = re.fullmatch(r"\s*:root,\s*:host\s*\{([^{}]*)\}\s*", code)
         if not m:
@@ -623,13 +633,140 @@ def themes(root: Path) -> Result:
             continue
         got = [tuple(part.strip() for part in d.split(":", 1)) for d in m.group(1).split(";") if d.strip()]
         if [g[0] for g in got] != [e[0] for e in expected]:
-            r.fail(f"{rel}: declares {[g[0] for g in got]}, expected the ten theme tokens in azure.css order")
+            r.fail(f"{rel}: declares {[g[0] for g in got]}, expected {[e[0] for e in expected]}")
             continue
         for (name, value), (_, want) in zip(got, expected):
             if want is not None and value != want:
                 r.fail(f"{rel}: {name}: {value} (2.1.1 reference text: {want})")
     if r.passed:
         r.ok(f"{len(files)} theme files match their references")
+    return r
+
+
+SUPPORTS = "(color: light-dark(#000, #fff))"
+DARK_ONLY = (
+    ("color-scheme: dark", re.compile(r"(?<![\w-])color-scheme\s*:\s*dark\b")),
+    ("filter: brightness(0)", re.compile(r"(?<![\w-])filter\s*:\s*brightness\(0\)\s*[;}]")),
+    ("var(--femto-dark-icon-*)", re.compile(r"var\(\s*--femto-dark-icon-")),
+)
+
+
+SCHEME_DARK_RULES = (
+    ("@media only screen and (prefers-color-scheme: dark)", ":root:not([data-theme]), :host(:not([data-theme]))"),
+    ("[data-theme=dark], :host([data-theme=dark])",),
+)
+
+
+def css_blocks(masked: str) -> list[tuple[tuple[str, ...], int, int]]:
+    """(preludes from the outermost block down to this one, body start, body end) for every block."""
+    out, stack, last = [], [], 0
+    for i, c in enumerate(masked):
+        if c == "{":
+            stack.append((" ".join(masked[last:i].split()), i + 1))
+        elif c == "}" and stack:
+            out.append((tuple(p for p, _ in stack), stack[-1][1], i))
+            stack.pop()
+        if c in "{};":
+            last = i + 1
+    return out
+
+
+def declarations(code: str, masked: str, start: int, end: int) -> list[tuple[int, str, str]]:
+    """(offset, name, whitespace-collapsed value) of each declaration in a block body without nested blocks."""
+    out, last = [], start
+    for cut in [start + m.start() for m in re.finditer(";", masked[start:end])] + [end]:
+        name, sep, value = code[last:cut].partition(":")
+        if sep:
+            out.append((last + len(name) - len(name.lstrip()), name.strip(), " ".join(value.split())))
+        last = cut + 1
+    return out
+
+
+def light_arm(value: str) -> str:
+    """value with each light-dark(a, b) replaced by a."""
+    while m := re.search(r"(?<![\w-])light-dark\(", value):
+        args, end = call_args(value, m.end() - 1)
+        value = value[: m.start()] + split_selectors(args)[0] + value[end + 1 :]
+    return value
+
+
+def fallback(root: Path) -> Result:
+    r = Result(f"Fallback: every light-dark() is a --femto-light-/--femto-dark- wrapper on :root, :host in tokens/schemes.css (or a --femto-box-shadow layer), @supports not {SUPPORTS} sets each light value, the dark icons and filters sit in @supports {SUPPORTS}, and a later @supports not {SUPPORTS} sets the two dark scheme rules' color-scheme back to light")
+    p, rel = root / "css/tokens/schemes.css", "css/tokens/schemes.css"
+    if not p.exists():
+        r.fail(f"{rel} is missing")
+        return r
+    text = p.read_text(encoding="utf-8")
+    code, masked, _ = scan_css(text)
+    blocks = css_blocks(masked)
+    found = [[b for b in blocks if b[0] == path] for path in ((":root, :host",), (f"@supports not {SUPPORTS}", ":root, :host"), (f"@supports {SUPPORTS}",))]
+    if [len(f) for f in found] != [1, 1, 1]:
+        r.fail(f"{rel}: expected one top-level :root, :host rule, one @supports not {SUPPORTS} {{ :root, :host }} and one top-level @supports {SUPPORTS}; found {', '.join(str(len(f)) for f in found)}")
+        return r
+    (_, rs, rend), (_, fs, fend), (_, ps, pend) = (f[0] for f in found)
+    if fs < rend:
+        r.fail(f"{rel}: the @supports not block comes before the :root, :host rule, which then overrides it")
+    decls = declarations(code, masked, rs, rend)
+    names = [n for _, n, _ in decls]
+    wrapped, shadow_layers = [], 0
+    expected = [("color-scheme", "light"), ("--femto-icon-valid", "var(--femto-light-icon-valid)"), ("--femto-icon-invalid", "var(--femto-light-icon-invalid)")]
+    for k, (o, n, v) in enumerate(decls):
+        if "light-dark(" not in v:
+            continue
+        t, light, dark = n.removeprefix("--femto-"), n.replace("--femto-", "--femto-light-", 1), n.replace("--femto-", "--femto-dark-", 1)
+        if n == "--femto-box-shadow":
+            shadow_layers = v.count("light-dark(")
+            expected.append((n, light_arm(v)))
+            continue
+        wrapped.append(t)
+        expected.append((n, f"var({light})"))
+        if v != f"light-dark(var({light}), var({dark}))":
+            r.fail(f"{rel}:{line_of(text, o)}: {n}: {v[:90]} is not light-dark(var({light}), var({dark}))")
+        elif names[max(k - 2, 0) : k] != [light, dark] or names.count(light) != 1 or names.count(dark) != 1:
+            r.fail(f"{rel}:{line_of(text, o)}: {light} and {dark} must each be declared once in this rule, right before {n}")
+    got = [(n, v) for _, n, v in declarations(code, masked, fs, fend)]
+    for what, items in (("lacks", [e for e in expected if e not in got]), ("has the extra", [g for g in got if g not in expected])):
+        r.failures += [f"{rel}: the @supports not block {what} {n}: {v[:90]}" for n, v in capped(items, "declarations")]
+    if got != expected and sorted(got) == sorted(expected):
+        r.fail(f"{rel}: the @supports not block is not in :root, :host order")
+    if r.passed:
+        r.ok(f"{rel}: {len(wrapped)} wrappers light-dark(var(--femto-light-<token>), var(--femto-dark-<token>)), each right after its two declarations, and --femto-box-shadow with {shadow_layers} light-dark() layers")
+        r.ok(f"{rel}: @supports not {SUPPORTS} sets color-scheme: light, the two icons and the {len(expected) - 3} tokens in :root, :host order, --femto-box-shadow as its light layers")
+    scheme_spans = []
+    for path in SCHEME_DARK_RULES:
+        plain = [b for b in blocks if b[0] == path]
+        undo = [b for b in blocks if b[0] == (f"@supports not {SUPPORTS}",) + path]
+        sets = [[(n, v) for _, n, v in declarations(code, masked, b[1], b[2])] for b in plain + undo]
+        if sets != [[("color-scheme", "dark")], [("color-scheme", "light")]]:
+            r.fail(f"{rel}: {' '.join(path)} must be one rule setting only color-scheme: dark, followed by one inside @supports not {SUPPORTS} setting only color-scheme: light")
+            continue
+        scheme_spans.append((plain[0][1], plain[0][2]))
+        if undo[0][1] < plain[0][2]:
+            r.fail(f"{rel}: the @supports not {SUPPORTS} {' '.join(path)} rule comes before the color-scheme: dark one it overrides")
+    allowed = set(wrapped) | {"icon-valid", "icon-invalid"}
+    dark_counts, scheme_vars, others = {label: 0 for label, _ in DARK_ONLY}, 0, 0
+    for f in [f for f in shipped_files(root) if f.suffix == ".css"]:
+        frel = f.relative_to(root).as_posix()
+        ftext = f.read_text(encoding="utf-8", errors="replace")
+        _, fmasked, _ = scan_css(ftext)
+        spans = [(rs, rend)] + [m.span() for m in re.finditer(r"@supports[^{]*", fmasked)] if frel == rel else []
+        others += frel != rel
+        for m in re.finditer(r"(?<![\w-])light-dark\(", fmasked):
+            if not any(a <= m.start() < b for a, b in spans):
+                r.fail(f"{frel}:{line_of(ftext, m.start())}: light-dark() outside the :root, :host rule of {rel}")
+        for label, pattern in DARK_ONLY:
+            for m in pattern.finditer(fmasked):
+                if frel == rel and (ps <= m.start() < pend or (label == "color-scheme: dark" and any(a <= m.start() < b for a, b in scheme_spans))):
+                    dark_counts[label] += 1
+                else:
+                    r.fail(f"{frel}:{line_of(ftext, m.start())}: {label} outside @supports {SUPPORTS}")
+        for m in re.finditer(r"(?<![\w-])--femto-(?:light|dark)-([\w-]+)\s*:", fmasked):
+            scheme_vars += 1
+            if m.group(1) not in allowed:
+                r.fail(f"{frel}:{line_of(ftext, m.start())}: {m.group(0)[:-1].strip()} sets a scheme value of a token {rel} does not wrap, so it does nothing")
+    if r.passed:
+        r.ok(f"no light-dark() in the other {others} CSS files under css/; {scheme_vars} --femto-light-/--femto-dark- declarations, each for a wrapped token or a validation icon")
+        r.ok(f"inside @supports {SUPPORTS} or the two dark scheme rules only: " + ", ".join(f"{n} {label}" for label, n in dark_counts.items()))
     return r
 
 
@@ -836,6 +973,7 @@ CHECKS = {
     "hygiene": hygiene,
     "vendor": vendor,
     "themes": themes,
+    "fallback": fallback,
     "coverage": coverage,
     "package": package,
     "license": license,
