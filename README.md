@@ -1,7 +1,7 @@
 <h1>
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/leoherzog/femto/HEAD/.github/logo-dark.svg">
-    <img alt="femto" src="https://raw.githubusercontent.com/leoherzog/femto/HEAD/.github/logo-light.svg" height="60">
+    <img alt="femto" src="https://raw.githubusercontent.com/leoherzog/femto/HEAD/.github/logo-light.svg" height="46">
   </picture>
 </h1>
 
