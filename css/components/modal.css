@@ -34,6 +34,7 @@ dialog {
 }
 dialog > article {
   width: 100%;
+  max-height: calc(100vh - var(--femto-spacing) * 2);
   max-height: calc(100svh - var(--femto-spacing) * 2);
   margin: var(--femto-spacing);
   overflow: auto;
