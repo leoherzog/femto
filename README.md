@@ -128,7 +128,7 @@ femto comes in two forms that style a page the same way: one file in `dist/`, or
 | `css/themes/` | The 20 [theme colors](#themes). |
 | `css/options/` | The 3 [options](#options). |
 
-Use `dist/femto.min.css` unless you need the modules. It is about 74 KB, 11 KB gzipped and 10 KB with Brotli. With `css/femto.css`, the browser finds the modules only after it has downloaded the entry, then fetches 36 files instead of one, and many small files compress worse than one. Median first contentful paint in milliseconds, with a cold cache, in Chrome and Firefox over emulated links to a local HTTPS server set up like a CDN (2026-10-28 and 29):
+Use `dist/femto.min.css` unless you need the modules. It is about 91 KB, 13 KB gzipped and 11 KB with Brotli. With `css/femto.css`, the browser finds the modules only after it has downloaded the entry, then fetches 36 files instead of one, and many small files compress worse than one. Median first contentful paint in milliseconds, with a cold cache, in Chrome and Firefox over emulated links to a local HTTPS server set up like a CDN (2026-10-28 and 29):
 
 | Link (round trip) | HTTP/2, `css/femto.css` / one file | HTTP/3 | HTTP/1.1 |
 |---|---|---|---|
