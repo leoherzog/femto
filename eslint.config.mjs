@@ -45,6 +45,10 @@ export default defineConfig([
             // light-dark(): Baseline low 2024-05-13, Widely 2026-11-13 (web-features 3.44.0).
             "light-dark",
           ],
+          allowPropertyValues: {
+            // text-wrap: balance (Typography headings): Baseline low 2024-05-13, Widely 2026-11-13.
+            "text-wrap": ["balance"],
+          },
 
           // (a) Standard halves of the hand-written prefix pairs femto keeps. Each
           // is written next to its prefixed form, which the target browsers without the

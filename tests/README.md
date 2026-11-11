@@ -570,6 +570,13 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   slightly differently (fixtures: every `<small>` of those pages, such as the form helpers of
   `forms-basics.html` and `kitchen-sink.html` and the helpers in the shadow roots of
   `tokens-schemes.html`).
+  `heading-text-wrap-balance`, on every heading and the elements inside one. 2.1.1 left headings to
+  greedy line breaking, so a wrapped heading could end on one short word; femto sets `text-wrap:
+  balance` on `h1` to `h6`, which evens out the lines without changing their number, so only the
+  computed `text-wrap-style` changes (fixtures: every heading, the link in an `h2` of
+  `content-link.html` and the code in an `h2` of `content-code.html`). The shorthand also sets
+  `text-wrap-mode: wrap`, so a heading inside a `white-space: nowrap` ancestor, such as a busy card,
+  now wraps; no fixture has one, so that was probed outside the harness.
 - `content-table.json`: `striped-row-data-theme`, with `-image`, limited to
   `classes-table-striped.html`. 2.1.1 painted an odd body cell of a `.striped` table with the
   translucent stripe alone, so under a `data-theme` on the table, its `tbody`, the row or the cell

@@ -123,5 +123,18 @@
     "category": "natural-fix",
     "reason": "Consequence of small-font-size-token-applied: in a nav whose item holds a group followed by small helper text, the larger small changes that item's content sizes, so the nav's two lists, their items, the group and its input share the nav's width slightly differently, and their transform and perspective origins follow.",
     "notes": "Fixture: the \"Group helper\" nav of components-nav.html, a div[role=group] followed by <small>Helper</small> in one item. The group goes from 275.328px to 275.812px wide at 390 and from 343px to 345.219px at 1280 in Chrome Beta 158 (Firefox 160 beta: 285.85px to 286.25px and 400.017px to 402.183px), and the first list from 114.672px to 114.188px at 390 (Firefox: 104.15px to 103.75px). The input's placeholder follows its width in Chrome. Heights do not change, and the other navs of the page show no difference. Upstream pull request picocss/pico#561."
+  },
+  {
+    "id": "heading-text-wrap-balance",
+    "module": "content/typography",
+    "kind": "style",
+    "selector": ":is(h1, h2, h3, h4, h5, h6), :is(h1, h2, h3, h4, h5, h6) *",
+    "pseudo": "",
+    "property": "text-wrap-style",
+    "reference": "auto",
+    "femto": "balance",
+    "category": "natural-fix",
+    "reason": "2.1.1 leaves headings to the browser's greedy line breaking, so a heading that wraps fills its first lines and can leave one short word alone on the last. femto sets text-wrap: balance on h1 to h6, so a wrapped heading's lines come out close to the same length. Balancing keeps the number of lines, so headings are as tall as before, and links, code and other elements inside a heading inherit it. A paragraph subtitle in an hgroup is not a heading and keeps the default wrapping; a heading used as the subtitle balances too. text-wrap is a shorthand that also sets text-wrap-mode to wrap, so a heading no longer inherits nowrap from an ancestor: a heading inside an element with white-space: nowrap, such as a busy (aria-busy=true) card, which 2.1.1 kept on one line and let run out of the card, now wraps inside it. A heading that is itself aria-busy keeps nowrap, because the busy rule outranks the heading rule.",
+    "notes": "Seen on every h1 to h6 of 43 pages, including the headings in shadow roots, and on the elements inside headings that the fixtures have (the link in an h2 of content-link.html and the code in an h2 of content-code.html), in Chrome 158 and Firefox 161, every preset, leg, width, direction and state. It is the only property that changes: no heading changes size. No fixture has a heading inside a nowrap ancestor, so text-wrap-mode never differs in the harness. Probed with standalone Selenium pages in Chrome 157 and Firefox 161 at 560px: three wrapped headings move a word or two from their first line to their last, a paragraph subtitle in an hgroup wraps as before, and an h3 inside article[aria-busy=true] goes from one 38px line running past the card to two lines, 76px tall, while computed text-wrap-mode goes from nowrap to wrap; an h2 with aria-busy=true keeps nowrap."
   }
 ]

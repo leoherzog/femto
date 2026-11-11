@@ -661,6 +661,7 @@ h6 {
   font-size: var(--femto-font-size);
   line-height: var(--femto-line-height);
   font-family: var(--femto-font-family);
+  text-wrap: balance;
 }
 h1 {
   --femto-color: var(--femto-h1-color);
