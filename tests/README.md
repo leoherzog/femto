@@ -1012,11 +1012,24 @@ passes together cover both media legs.
 | `compare` of `css/femto.css` against `dist/femto.css` and `dist/femto.min.css`, empty registry | 512 each | only `token-raw` records on `--femto-box-shadow`, `--femto-card-box-shadow` and `--femto-dropdown-box-shadow`, equal once whitespace is collapsed: `dist/` writes every custom property value on one line, and the source writes `--femto-box-shadow` across seven |
 | `compare` of `css/femto.colors.css` against both `dist/femto.colors*.css`, empty registry | 8 each | 0 differences |
 
-`coverage --css /css/femto.css --entry default` reports 715 selectors over 43 pages (64 loads), 0
-dynamic rules without `data-states`, and three selectors that match nothing. One never can (see
-Known limits). The other two are forms of the `z-index` rule for validated fields in
-`components/group.css`, because no page has a `select` with `aria-invalid` in a group or an `input`
-with it in a search group. `uv run tests/static_checks.py` and `npm run lint` pass.
+After the forced colors, right-to-left, icon mask and reset cleanup changes, `full --browsers
+chrome,firefox` ran again on 2026-11-11 with Chrome Beta 158.0.8127.18 and Firefox 161.0: 4,290
+cells (17,914 states), 0 unregistered, 0 harness errors, 585 s. The first Safari passes that day,
+with Safari 27.2, failed on two groups only. Date and time inputs computed `overflow: hidden`
+instead of `visible`, because dropping `input { overflow: visible }` was not a no-op in Safari, so
+that rule is back. In Safari only, each summary's `::marker` reports the inherited
+`text-align: start`, now registered under `accordion-summary-text-align-start`. With both fixes,
+`full --browsers chrome,firefox` on the 8 pages they touch passed (1,062 cells, 0 unregistered),
+and `safari.py` passed: light OS 2,145 cells (7,195 states), 0 unregistered, 0 harness errors,
+1,016 s; selftest all pass; dark OS 2,145 cells (5,423 states), 0 unregistered, 0 harness errors,
+769 s. `selftest --browsers chrome,firefox` passed all 24 controls, and the `compare` rows gave
+the results in the table above.
+
+`coverage --css /css/femto.css --entry default` reports 691 selectors over 43 pages (64 loads), 0
+dynamic rules without `data-states`, and four selectors that match nothing. One never can (see
+Known limits). The other three are the `[type=submit]`, `[type=reset]` and `[type=button]` forms
+of the modal footer button rule in `components/modal.css`, because no page has an `input` button in
+a modal footer. `uv run tests/static_checks.py` and `npm run lint` pass.
 
 ## Known limits
 
