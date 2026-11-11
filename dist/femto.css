@@ -1259,7 +1259,7 @@ label[aria-disabled=true] input[disabled] {
 :where(input, select, textarea)[aria-invalid=true]:is(:active, :focus):not([type=checkbox], [type=radio]) {
   --femto-box-shadow: 0 0 0 var(--femto-outline-width) var(--femto-form-element-invalid-focus-color) !important;
 }
-[dir=rtl] :where(input, select, textarea):not([type=checkbox], [type=radio]):is([aria-invalid], [aria-invalid=true], [aria-invalid=false]) {
+:where(input, select, textarea):not([type=checkbox], [type=radio], [type=date], [type=datetime-local], [type=month], [type=time], [type=week]):is([aria-invalid], [aria-invalid=true], [aria-invalid=false]):dir(rtl) {
   background-position: center left 0.75rem;
 }
 input::placeholder,
@@ -1287,7 +1287,7 @@ select[multiple] option:checked {
   background: var(--femto-form-element-selected-background-color);
   color: var(--femto-form-element-color);
 }
-[dir=rtl] select:not([multiple], [size]) {
+select:not([multiple], [size]):dir(rtl) {
   background-position: center left 0.75rem;
 }
 textarea {
@@ -1524,22 +1524,22 @@ input:not([type=checkbox], [type=radio], [type=range], [type=file])[type=time] {
     background-image: none !important;
   }
 }
-[dir=rtl] :is([type=date], [type=datetime-local], [type=month], [type=time], [type=week]) {
+:is([type=date], [type=datetime-local], [type=month], [type=time], [type=week]):dir(rtl) {
   text-align: right;
 }
 
 /* css/forms/input-file.css */
 [type=file] {
   --femto-color: var(--femto-muted-color);
-  margin-left: calc(var(--femto-outline-width) * -1);
+  margin-inline-start: calc(var(--femto-outline-width) * -1);
   padding: calc(var(--femto-form-element-spacing-vertical) * 0.5) 0;
-  padding-left: var(--femto-outline-width);
+  padding-inline-start: var(--femto-outline-width);
   border: 0;
   border-radius: 0;
   background: none;
 }
 [type=file]::file-selector-button {
-  margin-right: calc(var(--femto-spacing) / 2);
+  margin-inline-end: calc(var(--femto-spacing) / 2);
   padding: calc(var(--femto-form-element-spacing-vertical) * 0.5) var(--femto-form-element-spacing-horizontal);
 }
 [type=file]:is(:hover, :active, :focus)::file-selector-button {
@@ -1622,10 +1622,10 @@ input:not([type=checkbox], [type=radio], [type=range], [type=file])[type=search]
 input:not([type=checkbox], [type=radio], [type=range], [type=file])[type=search][aria-invalid=true] {
   background-image: var(--femto-icon-search), var(--femto-icon-invalid);
 }
-[dir=rtl] :where(input):not([type=checkbox], [type=radio], [type=range], [type=file])[type=search] {
+:where(input):not([type=checkbox], [type=radio], [type=range], [type=file])[type=search]:dir(rtl) {
   background-position: center right 1.125rem;
 }
-[dir=rtl] :where(input):not([type=checkbox], [type=radio], [type=range], [type=file])[type=search][aria-invalid] {
+:where(input):not([type=checkbox], [type=radio], [type=range], [type=file])[type=search][aria-invalid]:dir(rtl) {
   background-position: center right 1.125rem, center left 0.75rem;
 }
 
@@ -1655,7 +1655,7 @@ details summary::after {
   width: 1rem;
   height: 1rem;
   margin-inline-start: calc(var(--femto-spacing, 1rem) * 0.5);
-  float: right;
+  float: inline-end;
   transform: rotate(-90deg);
   background-color: rgb(136, 145, 164);
   content: "";
@@ -1681,7 +1681,7 @@ details summary:focus-visible:not([role]) {
 }
 details summary[role=button] {
   width: 100%;
-  text-align: left;
+  text-align: start;
 }
 details summary[role=button]::after {
   height: calc(1rem * var(--femto-line-height, 1.5));
@@ -1697,13 +1697,6 @@ details[open] > summary:not([role]):not(:focus) {
 }
 details[open] > summary::after {
   transform: rotate(0);
-}
-[dir=rtl] details summary {
-  text-align: right;
-}
-[dir=rtl] details summary::after {
-  float: left;
-  background-position: left center;
 }
 
 /* css/components/card.css */
@@ -1752,13 +1745,16 @@ details.dropdown > a::after {
   width: 1rem;
   height: calc(1rem * var(--femto-line-height, 1.5));
   margin-inline-start: 0.25rem;
-  float: right;
+  float: inline-end;
   transform: rotate(0deg) translateX(0.2rem);
   background-color: rgb(136, 145, 164);
   content: "";
   mask: var(--femto-icon-chevron) right center / 1rem auto no-repeat;
   forced-color-adjust: none;
   forced-color-adjust: preserve-parent-color;
+}
+details.dropdown > :is(summary, button, a):where(:dir(rtl))::after {
+  transform: rotate(0deg) translateX(-0.2rem);
 }
 nav details.dropdown {
   margin-bottom: 0;
@@ -2228,11 +2224,11 @@ nav ul {
 }
 nav ol:first-of-type,
 nav ul:first-of-type {
-  margin-left: calc(var(--femto-nav-element-spacing-horizontal) * -1);
+  margin-inline-start: calc(var(--femto-nav-element-spacing-horizontal) * -1);
 }
 nav ol:last-of-type,
 nav ul:last-of-type {
-  margin-right: calc(var(--femto-nav-element-spacing-horizontal) * -1);
+  margin-inline-end: calc(var(--femto-nav-element-spacing-horizontal) * -1);
 }
 nav li {
   display: inline-block;
@@ -2355,7 +2351,7 @@ progress:indeterminate::-moz-progress-bar {
   }
 }
 @media (prefers-reduced-motion: no-preference) {
-  [dir=rtl] progress:indeterminate {
+  progress:indeterminate:dir(rtl) {
     animation-direction: reverse;
   }
 }

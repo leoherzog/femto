@@ -14,13 +14,16 @@ details.dropdown > a::after {
   width: 1rem;
   height: calc(1rem * var(--femto-line-height, 1.5));
   margin-inline-start: 0.25rem;
-  float: right;
+  float: inline-end;
   transform: rotate(0deg) translateX(0.2rem);
   background-color: rgb(136, 145, 164);
   content: "";
   mask: var(--femto-icon-chevron) right center / 1rem auto no-repeat;
   forced-color-adjust: none;
   forced-color-adjust: preserve-parent-color;
+}
+details.dropdown > :is(summary, button, a):where(:dir(rtl))::after {
+  transform: rotate(0deg) translateX(-0.2rem);
 }
 
 nav details.dropdown {

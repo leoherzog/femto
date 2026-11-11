@@ -126,5 +126,27 @@
     "category": "natural-fix",
     "reason": "Consequence of fieldset-min-width-auto in Safari's computed style only, which reports used margins in right-to-left text. In 2.1.1 the fieldset in the narrow column is wider than the column, so its left margin, the end side in rtl, absorbs the overflow as a negative used margin; in femto it fits and the margin is 0px. Its legend sits at the right with the rest of the width as its left margin, which shrinks by the same amount. Chrome and Firefox report the computed 0px for both.",
     "notes": "Fixture: the fieldset of #date-narrow-grid and its legend. In Safari 27.2 on a dark OS at 1280 in rtl, the fieldset's margin-left and margin-inline-end go from -73.234375px to 0px, and the legend's from 205.03125px to 131.796875px, a difference of the same 73.234375px."
+  },
+  {
+    "id": "rtl-invalid-date-icon-stays-right",
+    "module": "forms/basics",
+    "kind": "style",
+    "selector": "input:is([type=date], [type=datetime-local], [type=month], [type=time], [type=week])[aria-invalid]:dir(rtl)",
+    "pseudo": "",
+    "property": "/^background-position(-x)?$/",
+    "reference": "/^[0-9.]+px( 50%)?$/",
+    "femto": "/^calc\\(100% - [0-9.]+px\\)( 50%)?$/",
+    "where": {
+      "dirs": [
+        "rtl"
+      ],
+      "pages": [
+        "forms-basics.html",
+        "forms-input-date.html"
+      ]
+    },
+    "category": "natural-fix",
+    "reason": "2.1.1's right-to-left rule for aria-invalid fields, [dir=rtl] :where(input, select, textarea):not([type=checkbox], [type=radio]), moves their background to the left. It also matched date, datetime-local, month, time and week inputs, whose background is the calendar or clock icon, with its padding on the right. Chrome lays these inputs out left to right even in right-to-left text, so an aria-invalid date or time field in a right-to-left page drew its icon at the left, over the date. femto leaves the date and time types out of that rule, which now tests the field's own direction with :dir(rtl), so the icon stays at the right, where its padding is. Firefox draws no femto icon on these inputs, so there only the computed background position changes.",
+    "notes": "Fixtures, in the rtl legs: the aria-invalid=true date field in the Validation states block of forms-basics.html, and in forms-input-date.html the aria-invalid=true date, the aria-invalid=false time and the aria-invalid=true dates of the light and dark islands. Chrome 158 reports background-position going from '15px 50%' to 'calc(100% - 15px) 50%' at 1280 (12px at 390), and Firefox 161 background-position-x from 15px to calc(100% - 15px). A standalone Selenium probe in Chrome 157 shows these inputs at direction: ltr in a dir=rtl page, with padding-left 18px and padding-right 31.5px, so the 2.1.1 icon at the left covered the start of the date. Safari is not yet probed."
   }
 ]

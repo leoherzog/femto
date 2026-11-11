@@ -47,7 +47,7 @@ progress:indeterminate::-moz-progress-bar {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  [dir=rtl] progress:indeterminate {
+  progress:indeterminate:dir(rtl) {
     animation-direction: reverse;
   }
 }

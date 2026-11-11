@@ -183,7 +183,7 @@ label[aria-disabled=true] input[disabled] {
   --femto-box-shadow: 0 0 0 var(--femto-outline-width) var(--femto-form-element-invalid-focus-color) !important;
 }
 
-[dir=rtl] :where(input, select, textarea):not([type=checkbox], [type=radio]):is([aria-invalid], [aria-invalid=true], [aria-invalid=false]) {
+:where(input, select, textarea):not([type=checkbox], [type=radio], [type=date], [type=datetime-local], [type=month], [type=time], [type=week]):is([aria-invalid], [aria-invalid=true], [aria-invalid=false]):dir(rtl) {
   background-position: center left 0.75rem;
 }
 
@@ -215,7 +215,7 @@ select[multiple] option:checked {
   color: var(--femto-form-element-color);
 }
 
-[dir=rtl] select:not([multiple], [size]) {
+select:not([multiple], [size]):dir(rtl) {
   background-position: center left 0.75rem;
 }
 

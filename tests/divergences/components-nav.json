@@ -274,5 +274,40 @@
     "category": "natural-fix",
     "reason": "Consequence of aside-plain-list-geometry: each breadcrumb divider is absolutely positioned with auto insets, so its computed top and bottom follow its static position, which moves up with everything below the shorter aside.",
     "notes": "Fixture: the breadcrumbs in the dir=\"rtl\", light and dark blocks after the second aside of components-nav.html. Each divider's top goes from 829px to 809px for the first of them at 1280 (20px up) in Chrome Beta 158 and Firefox 160 beta. At 390 they move 16px up, from 736px to 720px, and nav-role-button-link-breadcrumb-shift, which moves them 8px down there, matches the same records. Upstream picocss/pico#646."
+  },
+  {
+    "id": "nav-rtl-list-edge-margins",
+    "module": "components/nav",
+    "kind": "style",
+    "selector": "nav :is(ol, ul):is(:first-of-type:not(:last-of-type), :last-of-type:not(:first-of-type)):dir(rtl)",
+    "pseudo": "",
+    "property": "/^margin-(left|right|inline-start|inline-end)$/",
+    "reference": "/^(0|-[0-9.]+)px$/",
+    "femto": "/^(0|-[0-9.]+)px$/",
+    "where": {
+      "pages": ["classes-dropdown-open.html", "classes-dropdown.html", "components-nav.html", "kitchen-sink.html"]
+    },
+    "category": "natural-fix",
+    "reason": "2.1.1 pulls a nav's first list out with a negative margin-left and its last list with a negative margin-right, the nav element spacing, so the first and last items' text lines up with the container's edges and the links' hover backgrounds reach past them. In right-to-left text the first list sits on the right and the last on the left, so those margins fell on the lists' inner sides: the first item sat one spacing in from the right edge, and the last link's background stopped at the left edge. femto uses margin-inline-start and margin-inline-end, so a right-to-left nav mirrors a left-to-right one. Left-to-right navs are unchanged.",
+    "notes": "Seen on the first and last lists of the navs of components-nav.html (the top-level navs and those of the light and dark islands in the rtl legs, and the nav in <div dir=\"rtl\"> in every leg), classes-dropdown.html, classes-dropdown-open.html and the kitchen sink's nav in the rtl legs, in Chrome 158 and Firefox 161: the first list's right margin and the last list's left margin go from 0 to minus the nav element spacing (-8 to -10.5px, depending on the width), and the margins on their other sides from it to 0. where.dirs is not set because the dir=rtl island shows the change in ltr cells. A list that is both the first and the last of its type keeps both margins and does not change (the second nav's ul in components-nav.html, the dropdown lists, an aside nav's ul and ol). Probed with a standalone Selenium page in Chrome 157 and Firefox 161, a nav with a brand list and two links inside .container at 900px: in ltr the brand text starts at the container's content edge and the last link's box reaches 9px past the other edge, before and after; in rtl 2.1.1 puts the brand text 9px in from the right edge and the last link's box at the left edge, and femto matches ltr."
+  },
+  {
+    "id": "file-input-rtl-nav-list-widths",
+    "module": "forms/input-file",
+    "kind": "style",
+    "selector": "nav:has(> ul > li > [type=file]) > :is(ol, ul), nav:has(> ul > li > [type=file]) > :is(ol, ul) > li",
+    "pseudo": "",
+    "property": "/^(width|inline-size|perspective-origin|transform-origin)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "browsers": ["firefox"],
+      "pages": ["components-nav.html"],
+      "widths": [1280],
+      "dirs": ["rtl"]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of file-input-rtl-logical-shift: in right-to-left text, Firefox's file input in a nav item is about 2.4px narrower, as its selector button has one gap after it instead of two, so the lists and items that share the nav's row as flex items share the freed width: the list holding the file input is a fraction of a pixel narrower and the other lists and items a fraction wider, and their transform and perspective origins follow. Their widths now equal the left-to-right ones.",
+    "notes": "Seen only in Firefox 161, rtl, at 1280, on the second nav of components-nav.html (the ol, the ul of form controls and the last ol), in the light and theme-dark legs, with the same values in each of the page's 19 state runs: the ul goes from 1045.37 to 1044.7px, its items 1 to 3, 5 and 6 from 225.95, 198.517, 97.3833, 166.233 and 249.3px to 226.533, 199.033, 97.6, 166.65 and 246.9px, the item holding the file input being the narrower one, and the two ol and the last ol's item from 170.8 and 103.833px to 171.217 and 104.083px, the ltr values. Chrome 158 shows no difference. Isolated with a standalone Selenium page in Firefox 161 at 1280: 2.1.1 with only femto's forms/*.css gives exactly these widths in rtl, and 2.1.1 with only nav.css's logical list margins (nav-rtl-list-edge-margins) moves the margins and leaves the widths at 2.1.1's. file-input-rtl-nav-item-widths records the form controls in that nav."
   }
 ]

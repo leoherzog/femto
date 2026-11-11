@@ -21,9 +21,9 @@ input:not([type=checkbox], [type=radio], [type=range], [type=file])[type=search]
   background-image: var(--femto-icon-search), var(--femto-icon-invalid);
 }
 
-[dir=rtl] :where(input):not([type=checkbox], [type=radio], [type=range], [type=file])[type=search] {
+:where(input):not([type=checkbox], [type=radio], [type=range], [type=file])[type=search]:dir(rtl) {
   background-position: center right 1.125rem;
 }
-[dir=rtl] :where(input):not([type=checkbox], [type=radio], [type=range], [type=file])[type=search][aria-invalid] {
+:where(input):not([type=checkbox], [type=radio], [type=range], [type=file])[type=search][aria-invalid]:dir(rtl) {
   background-position: center right 1.125rem, center left 0.75rem;
 }

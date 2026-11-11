@@ -28,11 +28,11 @@ nav ul {
 }
 nav ol:first-of-type,
 nav ul:first-of-type {
-  margin-left: calc(var(--femto-nav-element-spacing-horizontal) * -1);
+  margin-inline-start: calc(var(--femto-nav-element-spacing-horizontal) * -1);
 }
 nav ol:last-of-type,
 nav ul:last-of-type {
-  margin-right: calc(var(--femto-nav-element-spacing-horizontal) * -1);
+  margin-inline-end: calc(var(--femto-nav-element-spacing-horizontal) * -1);
 }
 nav li {
   display: inline-block;

@@ -254,5 +254,31 @@
     "category": "natural-fix",
     "reason": "The Firefox side of chevron-forced-color-adjust-chrome: Firefox does not support preserve-parent-color, so it applies the none declared before it. Firefox forces colors before inheritance, so the chevron's currentColor is already the summary's forced text color, and the gray chevrons keep their gray. Outside forced colors mode nothing changes, but getComputedStyle reports none instead of auto.",
     "notes": "Seen in run fixes-full-1 (Chrome 158, Firefox 161) in Firefox on the pseudo-elements of chevron-mask. Forced colors were checked with standalone Selenium pages in Firefox with browser.display.document_color_use=2 and black-on-white and white-on-black colors: every chevron is visible, a role=button summary's in its forced text color."
+  },
+  {
+    "id": "accordion-chevron-float-inline-end",
+    "module": "components/accordion",
+    "kind": "style",
+    "selector": "details:not(.dropdown) > summary",
+    "pseudo": "::after",
+    "property": "float",
+    "reference": "/^(left|right)$/",
+    "femto": "inline-end",
+    "category": "natural-fix",
+    "reason": "2.1.1 floats an accordion's chevron right, and left under any [dir=rtl] ancestor, so an accordion whose direction differs from the page's, such as <details dir=\"ltr\"> in a right-to-left page, had its chevron on the wrong side. femto floats it to the inline end, which follows the summary's own direction, and drops the [dir=rtl] rules, including the background-position one, which the 1rem mask that fills its 1rem box does not need. Where the whole page or block runs one way, the chevron does not move, but getComputedStyle reports inline-end instead of right or left.",
+    "notes": "Seen in run fixes-full-1 (Chrome 158, Firefox 161) on every accordion summary of the pages listed in chevron-mask; left appears in the rtl legs and in the dir=rtl blocks of components-accordion.html in its ltr legs. The fix was checked with standalone Selenium pages in Chrome and Firefox: a <details dir=\"ltr\"> in a dir=\"rtl\" page had its chevron on the left and its summary text right-aligned with 2.1.1, and has them on the right and left with femto. Accordions in a uniform rtl page are pixel-identical in Chrome and within 3/255 in Firefox."
+  },
+  {
+    "id": "accordion-summary-text-align-start",
+    "module": "components/accordion",
+    "kind": "style",
+    "selector": "details summary, details summary *",
+    "pseudo": "/^(|::before|::after|::marker)$/",
+    "property": "text-align",
+    "reference": "/^(left|right)$/",
+    "femto": "start",
+    "category": "natural-fix",
+    "reason": "2.1.1 aligns a role=button summary's text left, and every summary's text right under any [dir=rtl] ancestor, so a <details dir=\"ltr\"> in a right-to-left page had right-aligned summary text. femto aligns a role=button summary to the start and drops the [dir=rtl] rule, so a summary follows its own direction. A summary without role=button now inherits its container's alignment in right-to-left text too, start by default, as it does in left-to-right text. Where the whole page or block runs one way, nothing moves, but the summary, its ::before, ::after and ::marker, which inherit the value, and anything inside it report start instead of left or right.",
+    "notes": "Seen in run fixes-full-1 (Chrome 158, Firefox 161): left on the role=button summaries (and their pseudo-elements) of the accordion and dropdown pages in ltr, right on every summary in the rtl legs and in the dir=rtl blocks of components-accordion.html, classes-dropdown.html and classes-dropdown-open.html in their ltr legs. The ::before is the open dropdown's overlay in classes-dropdown-open.html. The ::marker shows in Safari 27.2 only (runs safari-20261111-131249-light and -dark), on the same summaries: its ::marker reports the inherited value, where Chrome and Firefox report the same value on both sides. See accordion-chevron-float-inline-end for the standalone check."
   }
 ]

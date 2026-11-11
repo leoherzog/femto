@@ -134,5 +134,31 @@
     "category": "natural-fix",
     "reason": "2.1.1 pads every dropdown li, and a checkbox or radio label alone in its li sits inside that padding with the global label rule's bottom margin of 0.375 * --femto-spacing below it. The whole li highlights on hover, but the label covered only its middle, so a click in the side or top padding or in the bottom strip hit the li and did not toggle the input. femto keeps the li's padding and lets a label that is the li's only element reach over it, as link rows already do: negative margins of the row padding, the same padding on the label, and the former bottom margin added to its bottom padding. The label's border box is now the row, so its computed width, height, inline and block sizes, margins, paddings and transform and perspective origins change, and its cursor covers the whole row. For a label holding its input and text, the row size, the input and text positions, the hover color and the painted pixels do not change. A lone label whose last child is a block with a bottom margin, such as a field with a <small> helper, makes its row taller by 0.375 * --femto-spacing, since that margin no longer collapses through the label. :only-child ignores text nodes, so an li with bare text beside its only label element also matches; the li keeps its padding there and the text does not move. Rows where the label sits beside its input (input + label for) or beside other elements keep 2.1.1's layout.",
     "notes": "Fixtures: the three label rows of \"Open dropdown with checkboxes and radios\" in classes-dropdown-open.html (the first with data-states=\"hover\") and the two label rows of the dropdown inside a label in classes-dropdown.html; at 390 the label goes from 356x24 to 388x42 with margins -6px -16px and padding 6px 16px 12px, at 1280 from 1238x30 to 1278x52.5 with margins -7.5px -20px and padding 7.5px 20px 15px, and no li or list changes. Probed with a standalone Selenium page in Chrome Beta 158 and Firefox 160 beta, light and dark, at 1000 and 420 wide, with checkbox, checked checkbox, radio and switch rows in ltr, ul dir=rtl, div dir=rtl, data-theme light and dark islands and a nav dropdown: before the fix the label covered 46 to 58 percent of the li on a 2px elementFromPoint grid and real pointer clicks at the inline-start, inline-end, top and bottom padding toggled nothing (21 of 105, center only); after it the label box equals the li box (698x47.25 at 1000, 466x42 at 420), coverage is 100 percent, 105 of 105 clicks toggle and the cursor on the former padding is pointer. The li, input and text rects, the hover background and the link, plain text, sibling label and nested label rows are unchanged; Firefox screenshots are pixel-identical, and Chrome's few differing pixels (channel delta up to 10) fall within the run-to-run noise it shows between the reference and the unchanged femto sheet. Edge cases on the same browsers: a label followed or preceded by bare text keeps the text where 2.1.1 puts it, pixel-identical; a label ending in an input with a <small> helper grows its row by 6.75px at 1000 and 6px at 420. Upstream issue picocss/pico#691."
+  },
+  {
+    "id": "dropdown-chevron-float-inline-end",
+    "module": "components/dropdown",
+    "kind": "style",
+    "selector": "details.dropdown > :is(summary, button, a)",
+    "pseudo": "::after",
+    "property": "float",
+    "reference": "right",
+    "femto": "inline-end",
+    "category": "natural-fix",
+    "reason": "2.1.1 floats a dropdown's chevron right in every direction: its rule outranks the accordion's [dir=rtl] float. So in right-to-left text the chevron sat on the start side, against the label, while a <select> next to it has its chevron on the left. femto floats it to the inline end, so in right-to-left text the chevron sits on the left like a select's, with the offset mirrored (dropdown-chevron-rtl-offset). In left-to-right text nothing moves, but getComputedStyle reports inline-end instead of right.",
+    "notes": "Seen in run fixes-full-1 (Chrome 158, Firefox 161) on every dropdown summary, and on the link and button children of the open dropdown in classes-dropdown.html. Measured with standalone Selenium pages at an 18px root, against the built dist: in rtl a form dropdown's chevron was 24px from the right border with 2.1.1 (23px in Firefox), and is now 20px from the left border (19px in Firefox), the mirror of its place in ltr; a select's chevron is 19px from the left border."
+  },
+  {
+    "id": "dropdown-chevron-rtl-offset",
+    "module": "components/dropdown",
+    "kind": "style",
+    "selector": "details.dropdown > :is(summary, button, a):dir(rtl)",
+    "pseudo": "::after",
+    "property": "transform",
+    "reference": "/^matrix\\(1, 0, 0, 1, [0-9.]+, 0\\)$/",
+    "femto": "/^matrix\\(1, 0, 0, 1, -[0-9.]+, 0\\)$/",
+    "category": "natural-fix",
+    "reason": "2.1.1 nudges a dropdown's chevron 0.2rem toward the end edge with translateX(0.2rem), a physical shift to the right. With the chevron on the left in right-to-left text (dropdown-chevron-float-inline-end), that shift would move it toward the label, so femto mirrors it to translateX(-0.2rem) there. The chevron then sits as far from the left border in right-to-left text as from the right border in left-to-right text, about as far as a select's chevron. A nav dropdown's chevron has no shift, as in 2.1.1.",
+    "notes": "Seen in run fixes-full-1 (Chrome 158, Firefox 161) on the dropdown summaries, links and buttons in right-to-left text: in the rtl legs of classes-dropdown.html, classes-dropdown-open.html and kitchen-sink.html, and in the dir=rtl blocks of the first two in their ltr legs. The shift is 0.2rem at the root size of each width (3.2px to 4.2px)."
   }
 ]

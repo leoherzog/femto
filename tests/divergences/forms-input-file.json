@@ -1,0 +1,73 @@
+[
+  {
+    "id": "file-input-rtl-logical-shift",
+    "module": "forms/input-file",
+    "kind": "style",
+    "selector": "input[type=file]:dir(rtl)",
+    "pseudo": "",
+    "property": "/^(margin|padding)-(left|right|inline-start|inline-end)$/",
+    "reference": "/^-?[0-9.]+px$/",
+    "femto": "/^-?[0-9.]+px$/",
+    "where": {
+      "pages": [
+        "components-nav.html",
+        "content-button.html",
+        "forms-basics.html",
+        "forms-input-file.html",
+        "kitchen-sink.html"
+      ]
+    },
+    "category": "natural-fix",
+    "reason": "2.1.1 shifts a file input left by the focus ring's width with margin-left and pads it back with padding-left, so the focus ring of its selector button is not clipped. In right-to-left text the button sits at the right, so the shift and the padding were on the side away from it. femto uses margin-inline-start and padding-inline-start, so a right-to-left file input mirrors a left-to-right one: it shifts right by the outline width and pads its right side. Left-to-right file inputs are unchanged.",
+    "notes": "Fixtures: every file input whose direction is rtl. Those are the file inputs of components-nav.html, forms-basics.html (the labeled one and the aria-invalid one) and kitchen-sink.html in their rtl legs, and the file input in the <div dir=\"rtl\"> of content-button.html and of forms-input-file.html, which changes in the ltr cells too, so where.dirs is not set and the selector's :dir(rtl) limits the entry. In Chrome 158 and Firefox 161 at 1280, margin-left goes from -2.5px to 0px and margin-right from 0px to -2.5px, margin-inline-start and margin-inline-end swap the same way, and padding-left goes from 2.5px to 0px and padding-right from 0px to 2.5px. At 390 the values are 2px, and the option presets and the kitchen sink's band widths give 2.125 to 2.625px. The aria-invalid file input of forms-basics.html keeps the aria-invalid rule's !important logical paddings, so only its margins change. A Chrome and Firefox run of the 18 pages with form fixtures, with no record cap, shows no other difference from the file input rules. Safari is not yet probed."
+  },
+  {
+    "id": "file-input-rtl-button-margin",
+    "module": "forms/input-file",
+    "kind": "style",
+    "selector": "input[type=file]:dir(rtl)",
+    "pseudo": "::file-selector-button",
+    "property": "/^margin-(left|right|inline-start|inline-end)$/",
+    "reference": "/^[0-9.]+px$/",
+    "femto": "/^[0-9.]+px$/",
+    "where": {
+      "pages": [
+        "components-nav.html",
+        "content-button.html",
+        "forms-basics.html",
+        "forms-input-file.html",
+        "kitchen-sink.html"
+      ]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of file-input-rtl-logical-shift for the selector button: its gap to the file name, 2.1.1's margin-right, is now margin-inline-end. In right-to-left text 2.1.1 put that half-spacing gap on the button's outer side, against the edge of the input, and left only the browser's own 4px (Chrome) or 5px (Firefox) margin between the button and the file name. femto puts the gap between them, as in left-to-right text.",
+    "notes": "Same fixtures as file-input-rtl-logical-shift. At 1280 the button's margin-left (its margin-inline-end in rtl) goes from the browser's 4px in Chrome 158 or 5px in Firefox 161 to 10px, and its margin-right (margin-inline-start) from 10px to 0px. At 390 the half spacing is 8px, and the option presets and the kitchen sink's band widths give 8.5 to 10.5px. Safari is not yet probed."
+  },
+  {
+    "id": "file-input-rtl-nav-item-widths",
+    "module": "forms/input-file",
+    "kind": "style",
+    "selector": "[data-module=\"components/nav\"] nav li > :is(input, select)",
+    "pseudo": "",
+    "property": "/^(width|inline-size|transform-origin|perspective-origin)$/",
+    "reference": "/^[0-9.]+px( [0-9.]+px)?$/",
+    "femto": "/^[0-9.]+px( [0-9.]+px)?$/",
+    "where": {
+      "browsers": [
+        "firefox"
+      ],
+      "dirs": [
+        "rtl"
+      ],
+      "pages": [
+        "components-nav.html"
+      ],
+      "widths": [
+        1280
+      ]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of file-input-rtl-button-margin in Firefox: in a right-to-left nav, a file input was as wide as its content, which counted both the browser's margin and femto's gap beside its button. With one gap it is about 2.4px narrower, and the other fields of its nav share the freed width, so their widths and transform and perspective origins change by under 1px. The nav's lists and items are file-input-rtl-nav-list-widths in components-nav.json.",
+    "notes": "Fixture: the second nav of components-nav.html, whose list holds a search, text, select, checkbox, range and file field, in Firefox 161's rtl legs at 1280. The file input goes from 229.3px to 226.9px wide, and the search, text, select and range fields grow by 0.22 to 0.58px, the search field for example from 205.95px to 206.533px. Chrome 158 changes no width in that nav, and at 390 no field in it changes width in Firefox either."
+  }
+]

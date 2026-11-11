@@ -426,12 +426,31 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   fieldset in `#date-narrow-grid`). Safari reports used margins, so in its rtl legs
   `fieldset-narrow-column-safari-rtl-margins` records that fieldset's negative left margin going
   to 0px and its legend's left margin shrinking by the same amount.
+  `rtl-invalid-date-icon-stays-right`, limited to `forms-basics.html` and `forms-input-date.html` in
+  rtl. 2.1.1's right-to-left `aria-invalid` rule also moved the background of date-family inputs,
+  which Chrome lays out left to right, so their calendar or clock icon sat at the left, over the
+  date, while their padding stayed on the right; femto leaves those types out of the rule, which now
+  tests the field's own direction with `:dir(rtl)`, so the icon stays at the right. Firefox draws no
+  femto icon on them, so there only the computed value changes (fixtures: the `aria-invalid` date in
+  "Validation states" of `forms-basics.html`, and the invalid date, the valid time and the islands'
+  invalid dates of `forms-input-date.html`).
 - `forms-input-date.json`: `group-date-input-min-width`, with `-narrow-column-geometry` from 768px,
   limited to `forms-input-date.html`. 2.1.1 left a date-family input in `[role=group]` or
   `[role=search]` at a flex item's `min-width: auto`, so it kept the native field's width and pushed
   the group's button past a narrow column; femto sets `min-width: 0` there, and the field clips its
   text instead (fixture: `#date-narrow-grid`, a four-column `.grid` holding a datetime-local group
   and a fieldset with another).
+- `forms-input-file.json`: `file-input-rtl-logical-shift` and `file-input-rtl-button-margin`,
+  limited to the five pages with a right-to-left file input, and `file-input-rtl-nav-item-widths`,
+  limited to Firefox's rtl legs of `components-nav.html` at 1280. 2.1.1 shifted a file input left by
+  the focus ring's width, padded it back on the left and put the button's gap in its `margin-right`,
+  so in right-to-left text the shift and padding fell on the side away from the button and the gap
+  on the button's outer side; femto uses logical properties, so a right-to-left file input mirrors a
+  left-to-right one. `where.dirs` is not set: the `<div dir="rtl">` file inputs of
+  `content-button.html` and `forms-input-file.html` show the change in their ltr cells, and the
+  selector's `:dir(rtl)` limits the entries. In Firefox the other fields of a nav share the width
+  the narrower file input frees (fixture: the second nav of `components-nav.html`, whose lists and
+  items are `file-input-rtl-nav-list-widths` in `components-nav.json`).
 - `components-group.json`: the island focus ring, split by the island's scheme
   (`group-island-focus-ring-style` and `-light-island`), and `group-hidden-child-corners`, with
   `-margin`, `-geometry` and `-hidden-input`, limited to `components-group.html`. 2.1.1 found a
@@ -488,6 +507,14 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   reach over it with negative margins and matching padding, as link rows do, so only the label's
   size, margins, paddings and origins change (fixtures: the label rows of "Open dropdown with
   checkboxes and radios" and of the dropdown inside a label).
+  `dropdown-chevron-float-inline-end`, on every dropdown summary and the link and button children of
+  the open dropdown in `classes-dropdown.html`, and `dropdown-chevron-rtl-offset`, on those in
+  right-to-left text. 2.1.1 floats the dropdown chevron right in every direction, since its rule
+  outranks the accordion's `[dir=rtl]` float, so in right-to-left text the chevron sat against the
+  label while a `<select>`'s chevron is on the left; femto floats it to the inline end and mirrors
+  its `translateX(0.2rem)` with `:where(:dir(rtl))`, so in left-to-right text only the computed
+  `float` changes (fixtures: the rtl legs of `classes-dropdown.html`, `classes-dropdown-open.html`
+  and `kitchen-sink.html`, and the `dir="rtl"` blocks of the first two in their ltr legs).
 - `components-nav.json`: `rtl-breadcrumb-backslash`, with `-geometry` and `-divider-inset`, limited to
   `components-nav.html` and `kitchen-sink.html`. 2.1.1's rtl rule gave the `::after` of every element
   inside a breadcrumb item but the last a backslash; femto drops it, so an rtl breadcrumb shows only
@@ -514,6 +541,16 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   below move up (fixture: the second aside, a `<ul>` without a nav). Safari reports the used
   margins that place an outside marker, so in Safari `aside-plain-list-marker-safari-margin`
   records that item's new marker's margins.
+  `nav-rtl-list-edge-margins`, limited to `classes-dropdown.html`, `classes-dropdown-open.html`,
+  `components-nav.html` and `kitchen-sink.html`. 2.1.1 pulled a nav's first list out with
+  `margin-left` and its last with `margin-right`, which in right-to-left text fell on their inner
+  sides; femto uses `margin-inline-start` and `margin-inline-end`, so a right-to-left nav lines up
+  with its container like a left-to-right one (fixtures: those pages' navs in their rtl legs, and
+  the `<div dir="rtl">` nav of `components-nav.html` in every leg).
+  `file-input-rtl-nav-list-widths`, limited to Firefox's rtl legs of `components-nav.html` at 1280,
+  follows from `file-input-rtl-logical-shift` in `forms-input-file.json`: the file input in the
+  second nav gets about 2.4px narrower, and the lists and items around it share the freed width,
+  matching their ltr widths.
 - `content-typography.json`: `nested-list-margins`, with `-container-size` and `-breadcrumb-shift`,
   limited to `content-typography.html` and `kitchen-sink.html`. 2.1.1's
   `:where(dl, ol, ul) :where(dl, ol, ul)` has zero specificity and loses to the earlier list rule, so
@@ -594,7 +631,13 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   second and Firefox, which lacks it, the first; the harness does not emulate forced colors, so the
   icons' visibility there was checked outside it. An accordion summary with `data-tooltip` gets no
   mask and keeps its caret (fixture: the open accordion of `components-tooltip.html`, which shows no
-  difference).
+  difference). `accordion-chevron-float-inline-end` and `accordion-summary-text-align-start`: the
+  chevron floats to the inline end and summaries align to the start instead of right or left, so
+  `<details dir="ltr">` in a right-to-left page no longer takes the page's side; where a page or
+  block runs one way, only the computed values change, also on the summary's pseudo-elements and
+  contents, which inherit `text-align` (fixtures: every summary in the rtl legs and in the
+  `dir="rtl"` blocks of `components-accordion.html`, `classes-dropdown.html` and
+  `classes-dropdown-open.html`, and every `role=button` summary in ltr).
 - `components-loading.json`: `spinner-mask`, with `spinner-background-image-dropped`,
   `spinner-fill-gray`, `spinner-fill-text-color`, `spinner-filter-dropped` (`dropped-hack`) and
   `spinner-forced-color-adjust-chrome` and `-firefox`, on every `[aria-busy=true]::before`: the same
@@ -649,7 +692,7 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
 - `rig.json`: the checks Safari cannot run (`safari-no-media-dark`,
   `safari-no-focus-visible-date-input`).
 
-The other 13 modules need no entry. Two fixtures exist to make the registry's checks meaningful:
+The other 12 modules need no entry. Two fixtures exist to make the registry's checks meaningful:
 `colors.html` has a "Two classes" block in which each span carries two neighboring utility classes
 in file order, so a change of rule order in `femto.colors.css` shows as a difference, and
 `components-tooltip.html` has tooltips on an open accordion summary and on two dropdown summaries,
