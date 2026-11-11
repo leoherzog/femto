@@ -59,7 +59,7 @@
   bottom: auto;
   transform: translate(-50%, 0.25rem);
 }
-[data-tooltip][data-placement=bottom]:after {
+[data-tooltip][data-placement=bottom]::after {
   transform: translate(-50%, -0.3rem);
   border: 0.3rem solid transparent;
   border-bottom: 0.3rem solid;
@@ -73,7 +73,7 @@
   left: auto;
   transform: translate(-0.25rem, -50%);
 }
-[data-tooltip][data-placement=left]:after {
+[data-tooltip][data-placement=left]::after {
   transform: translate(0.3rem, -50%);
   border: 0.3rem solid transparent;
   border-left: 0.3rem solid;
@@ -87,7 +87,7 @@
   left: 100%;
   transform: translate(0.25rem, -50%);
 }
-[data-tooltip][data-placement=right]:after {
+[data-tooltip][data-placement=right]::after {
   transform: translate(-0.3rem, -50%);
   border: 0.3rem solid transparent;
   border-right: 0.3rem solid;

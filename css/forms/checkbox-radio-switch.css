@@ -76,7 +76,7 @@ input:where([type=radio]:not(:checked)) {
 [type=checkbox][role=switch]:not([aria-invalid]) {
   --femto-border-color: var(--femto-switch-background-color);
 }
-[type=checkbox][role=switch]:before {
+[type=checkbox][role=switch]::before {
   display: block;
   aspect-ratio: 1;
   height: 100%;

@@ -30,8 +30,3 @@ img {
 :where(svg:not([fill])) {
   fill: currentColor;
 }
-
-svg:not(:root),
-svg:not(:host) {
-  overflow: hidden;
-}

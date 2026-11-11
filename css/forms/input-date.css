@@ -1,21 +1,26 @@
 /*
- * Input type datetime: date, datetime-local, month, time and week inputs draw a calendar or clock
- * icon at the right, under the native picker indicator, which is made transparent but stays
- * clickable. Firefox gets neither the icon nor its padding: it draws its own calendar on date and
+ * Input type datetime: in browsers that support ::-webkit-datetime-edit, date, datetime-local,
+ * month, time and week inputs draw a calendar or clock icon at the right, under the native picker
+ * indicator where there is one, which is made transparent but stays clickable. Firefox does not
+ * support it and gets neither the icon nor its padding: it draws its own calendar on date and
  * datetime-local inputs and shows month and week as text fields, and before about version 154 it
  * draws no clock on time inputs. Right-to-left inputs are right-aligned.
  */
 input:not([type=checkbox], [type=radio], [type=range], [type=file]):is([type=date], [type=datetime-local], [type=month], [type=time], [type=week]) {
   --femto-icon-position: 0.75rem;
   --femto-icon-width: 1rem;
-  padding-right: calc(var(--femto-icon-width) + var(--femto-icon-position));
-  background-image: var(--femto-icon-date);
   background-position: center right var(--femto-icon-position);
   background-size: var(--femto-icon-width) auto;
   background-repeat: no-repeat;
 }
-input:not([type=checkbox], [type=radio], [type=range], [type=file])[type=time] {
-  background-image: var(--femto-icon-time);
+@supports selector(::-webkit-datetime-edit) {
+  input:not([type=checkbox], [type=radio], [type=range], [type=file]):is([type=date], [type=datetime-local], [type=month], [type=time], [type=week]) {
+    padding-right: calc(var(--femto-icon-width) + var(--femto-icon-position));
+    background-image: var(--femto-icon-date);
+  }
+  input:not([type=checkbox], [type=radio], [type=range], [type=file])[type=time] {
+    background-image: var(--femto-icon-time);
+  }
 }
 
 :is([role=search], [role=group]) input:is([type=date], [type=datetime-local], [type=month], [type=time], [type=week]) {
@@ -33,16 +38,6 @@ input:not([type=checkbox], [type=radio], [type=range], [type=file])[type=time] {
   opacity: 0;
 }
 
-@-moz-document url-prefix() {
-  [type=date],
-  [type=datetime-local],
-  [type=month],
-  [type=time],
-  [type=week] {
-    padding-right: var(--femto-form-element-spacing-horizontal) !important;
-    background-image: none !important;
-  }
-}
 :is([type=date], [type=datetime-local], [type=month], [type=time], [type=week]):dir(rtl) {
   text-align: right;
 }

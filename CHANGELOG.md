@@ -37,6 +37,8 @@ The first alpha of femto 3: Pico CSS 2.1.1's default build rewritten as plain CS
 - The prebuilt themed copies, such as `pico.jade.min.css`.
 - The Composer package. Install femto from npm, link it from a CDN or download it.
 - The `-ms-` rules, `::-webkit-input-placeholder`, `::-moz-list-bullet`, `:-moz-focusring { outline: none }` and `:-moz-ui-invalid { box-shadow: none }`.
+- Reset rules that repeat what browsers already do: `display: block` on `main`, `figure` and `details`, `overflow: visible` on `button`, `svg:not(:root) { overflow: hidden }` and `[dir=rtl] { direction: rtl }`. Pages look the same, but these values now come from the browser's own stylesheet, so a rule of your own for one of those properties applies at any specificity.
+- The `@-moz-document url-prefix()` block that removed the date and time field icons in Firefox with two `!important`s. The icons are now drawn only where the browser supports `::-webkit-datetime-edit`, which Firefox does not, so in Firefox a `padding-right` of your own on a date or time field now applies.
 
 ### Fixed
 

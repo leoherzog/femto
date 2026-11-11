@@ -1,10 +1,10 @@
 /*
  * Accessibility and user interaction: a pointer cursor on [aria-controls], a not-allowed cursor on
- * disabled elements, display and clipping for elements with both hidden and aria-hidden=false
- * (Misc's [hidden] rule still hides them, as in 2.1.1), and direction for [dir=rtl], based on
- * normalize.css v8.0.1 and sanitize.css v13.0.0. In forced colors mode, focused buttons, form
- * fields, links and dropdown summaries get a Highlight outline, and checkboxes, radios, switches,
- * progress bars and range sliders draw their state and track in system colors.
+ * disabled elements, and display and clipping for elements with both hidden and aria-hidden=false
+ * (Misc's [hidden] rule still hides them, as in 2.1.1), based on normalize.css v8.0.1 and
+ * sanitize.css v13.0.0. In forced colors mode, focused buttons, form fields, links and dropdown
+ * summaries get a Highlight outline, and checkboxes, radios, switches, progress bars and range
+ * sliders draw their state and track in system colors.
  */
 [aria-controls] {
   cursor: pointer;
@@ -22,10 +22,6 @@
 [aria-hidden=false][hidden]:not(:focus) {
   clip: rect(0, 0, 0, 0);
   position: absolute;
-}
-
-[dir=rtl] {
-  direction: rtl;
 }
 
 @media (forced-colors: active) {

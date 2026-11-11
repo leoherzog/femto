@@ -446,7 +446,7 @@
     {
       "section": "Color schemes",
       "topic": "scheme selectors",
-      "note": "2.1.1 writes the light block as '[data-theme=light], :root:not([data-theme=dark]), :host(:not([data-theme=dark]))', the dark media block as '@media only screen and (prefers-color-scheme: dark) { :root:not([data-theme]), :host(:not([data-theme])) }', and '[data-theme=dark]'. femto's tokens/schemes.css keeps both :host() forms and 'only screen and'. Without 'only screen', print output with a dark OS preference turns dark where 2.1.1 stays light; without :host(), shadow roots lose their scheme."
+      "note": "2.1.1 writes the light block as '[data-theme=light], :root:not([data-theme=dark]), :host(:not([data-theme=dark]))', the dark media block as '@media only screen and (prefers-color-scheme: dark) { :root:not([data-theme]), :host(:not([data-theme])) }', and '[data-theme=dark]'. femto's tokens/schemes.css keeps both :host() forms and the screen media type, as '@media screen and (prefers-color-scheme: dark)': 'only' hid the query from browsers that predate media queries and has no effect in femto's. Without 'screen', print output with a dark OS preference turns dark where 2.1.1 stays light; without :host(), shadow roots lose their scheme."
     },
     {
       "section": "Color schemes",

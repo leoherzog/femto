@@ -1,9 +1,8 @@
 /*
- * Figure: a block without margin or padding, whose figcaption gets vertical padding and the muted
+ * Figure: figure without margin or padding, and its figcaption with vertical padding and the muted
  * text color.
  */
 figure {
-  display: block;
   margin: 0;
   padding: 0;
 }

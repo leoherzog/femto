@@ -39,7 +39,7 @@ textarea {
   transition: initial;
 }
 
-[type=checkbox][role=switch]:before {
+[type=checkbox][role=switch]::before {
   transition: initial;
 }
 

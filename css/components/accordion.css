@@ -1,11 +1,10 @@
 /*
- * Accordion: details as a block whose summary carries a chevron at its inline end that turns when
- * it opens (a summary with data-tooltip shows the tooltip caret instead), with summary colors for
- * the closed, focused and open states, and a full-width summary[role=button] whose chevron takes
- * the button's text color unless it is .outline.
+ * Accordion: details whose summary carries a chevron at its inline end that turns when it opens
+ * (a summary with data-tooltip shows the tooltip caret instead), with summary colors for the closed,
+ * focused and open states, and a full-width summary[role=button] whose chevron takes the button's
+ * text color unless it is .outline.
  */
 details {
-  display: block;
   margin-bottom: var(--femto-spacing);
 }
 details summary {

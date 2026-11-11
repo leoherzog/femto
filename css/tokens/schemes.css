@@ -317,7 +317,7 @@ input:is([type=submit], [type=button], [type=reset], [type=checkbox], [type=radi
 }
 
 /* Dark color scheme (auto), when the OS prefers dark. Keep in sync with the forced rule below. */
-@media only screen and (prefers-color-scheme: dark) {
+@media screen and (prefers-color-scheme: dark) {
   :root:not([data-theme]),
   :host(:not([data-theme])) {
     color-scheme: dark;
@@ -331,7 +331,7 @@ input:is([type=submit], [type=button], [type=reset], [type=checkbox], [type=radi
 }
 
 @supports (color: light-dark(#000, #fff)) {
-  @media only screen and (prefers-color-scheme: dark) {
+  @media screen and (prefers-color-scheme: dark) {
     :root:not([data-theme]),
     :host(:not([data-theme])) {
       --femto-icon-valid: var(--femto-dark-icon-valid);
@@ -347,7 +347,7 @@ input:is([type=submit], [type=button], [type=reset], [type=checkbox], [type=radi
 }
 
 @supports not (color: light-dark(#000, #fff)) {
-  @media only screen and (prefers-color-scheme: dark) {
+  @media screen and (prefers-color-scheme: dark) {
     :root:not([data-theme]),
     :host(:not([data-theme])) {
       color-scheme: light;

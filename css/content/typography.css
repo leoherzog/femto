@@ -128,8 +128,6 @@ blockquote {
   display: block;
   margin: var(--femto-typography-spacing-vertical) 0;
   padding: var(--femto-spacing);
-  border-right: none;
-  border-left: 0.25rem solid var(--femto-blockquote-border-color);
   border-inline-start: 0.25rem solid var(--femto-blockquote-border-color);
   border-inline-end: none;
 }

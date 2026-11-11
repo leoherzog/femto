@@ -646,7 +646,7 @@ DARK_ONLY = (
 
 
 SCHEME_DARK_RULES = (
-    ("@media only screen and (prefers-color-scheme: dark)", ":root:not([data-theme]), :host(:not([data-theme]))"),
+    ("@media screen and (prefers-color-scheme: dark)", ":root:not([data-theme]), :host(:not([data-theme]))"),
     ("[data-theme=dark], :host([data-theme=dark])",),
 )
 

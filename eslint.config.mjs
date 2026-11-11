@@ -17,21 +17,6 @@ export default defineConfig([
     language: "css/css",
     plugins: { css },
     extends: ["css/recommended"],
-    languageOptions: {
-      customSyntax: (syntax) => ({
-        ...syntax,
-        atrules: {
-          ...syntax.atrules,
-          // 2.1.1 writes `@-moz-document url-prefix() { ... }` with an empty argument, which Firefox
-          // accepts and femto keeps as it is. CSSTree's grammar requires a
-          // string inside url-prefix(), so the argument is made optional here.
-          "-moz-document": {
-            prelude:
-              "[ <url> | url-prefix( <string>? ) | domain( <string> ) | media-document( <string> ) | regexp( <string> ) ]#",
-          },
-        },
-      }),
-    },
     rules: {
       // femto keeps 2.1.1's default output, including its 20 !important declarations
       // ($enable-important is dropped and its default output stays).

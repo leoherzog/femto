@@ -17,7 +17,6 @@ td {
   background-color: var(--femto-background-color);
   color: var(--femto-color);
   font-weight: var(--femto-font-weight);
-  text-align: left;
   text-align: start;
 }
 
