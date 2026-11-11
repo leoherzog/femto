@@ -58,7 +58,6 @@ label:has([type=checkbox], [type=radio]) {
   border-width: 0.35em;
   background-image: none;
 }
-/* An unchecked radio's border snaps back to the thin width, so its background changes at once too. */
 input:where([type=radio]:not(:checked)) {
   transition-property: border-color, color, box-shadow;
 }
@@ -86,7 +85,6 @@ input:where([type=radio]:not(:checked)) {
   content: "";
   transition: margin 0.1s ease-in-out;
 }
-/* A switch's ::before is its thumb, so these outrank the tooltip rules, options/no-transitions.css included. */
 [type=checkbox][role=switch][data-tooltip]::before,
 [type=checkbox][role=switch][data-tooltip]:focus::before,
 [type=checkbox][role=switch][data-tooltip]:hover::before {

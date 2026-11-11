@@ -52,7 +52,6 @@ textarea {
   -webkit-appearance: none;
 }
 
-/* Chrome and Safari alias this to ::file-selector-button; without it the file button takes the UA's Arial. */
 ::-webkit-file-upload-button {
   -webkit-appearance: button;
   font: inherit;

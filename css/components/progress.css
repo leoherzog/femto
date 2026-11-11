@@ -28,7 +28,6 @@ progress[value]::-webkit-progress-value {
 progress::-moz-progress-bar {
   background-color: var(--femto-progress-color);
 }
-/* Firefox draws an indeterminate bar at full width. */
 progress:indeterminate::-moz-progress-bar {
   background-color: transparent;
 }

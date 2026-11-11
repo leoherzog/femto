@@ -74,7 +74,6 @@ button:focus, button:is([aria-current]:not([aria-current=false])):focus,
   --femto-box-shadow: var(--femto-button-hover-box-shadow, 0 0 0 rgba(0, 0, 0, 0)), 0 0 0 var(--femto-outline-width) var(--femto-primary-focus);
 }
 
-/* Busy elements and dropdown menus keep text on one line, and breadcrumb links have a negative start margin, so the cap skips them. */
 :where(:is(button, [role=button]):not([aria-busy=true], [aria-busy=true]:not(input, select, textarea, html, form) *, details.dropdown > summary + ul *, nav[aria-label=breadcrumb] ul li a)) {
   max-width: 100%;
 }

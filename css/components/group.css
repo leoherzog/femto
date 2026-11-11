@@ -21,7 +21,6 @@
   flex: 1 1 auto;
   margin-bottom: 0;
 }
-/* The :where() before each :nth-child() tests the parent first, so elements outside a group skip the sibling count. */
 :is([role=search], [role=group]) > :where(:is([role=search], [role=group]) > *):not(:nth-child(1 of :where(:not([hidden], input[type=hidden])))),
 :is([role=search], [role=group]) input:not([type=checkbox], [type=radio]):where(:is([role=search], [role=group]) *):not(:nth-child(1 of :where(:not([hidden], input[type=hidden])))),
 :is([role=search], [role=group]) select:where(:is([role=search], [role=group]) *):not(:nth-child(1 of :where(:not([hidden], input[type=hidden])))) {

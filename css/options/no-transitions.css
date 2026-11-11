@@ -15,10 +15,6 @@
   --femto-transition: 0s;
 }
 
-/* Each rule below except the last three repeats the selector list of the femto rule it undoes, so it
-   has the same specificity and reach. The transition and modal rules reset what that rule declares
-   to its initial value, less what an earlier rule here already resets; the tooltip rules restore
-   the static values. */
 :where(a:not([role=button])),
 [role=link] {
   transition: initial;
@@ -99,14 +95,6 @@ progress[value]::-webkit-progress-value {
   transition: initial;
 }
 
-/* Tooltips: no slide-in. Hovered and focused tooltips keep opacity 1 and the transform that wins
-   without the slide rules: their placement's resting transform from the rules outside this media
-   query or, in the last three rules, the chevron transform of an open accordion summary or a
-   dropdown's summary, button or link, whose selectors outrank [data-tooltip]::after when the
-   tooltip has no top, bottom, left or right placement. Those three put all but [data-tooltip], the
-   state and ::after in :where(), so at (0,2,1) they win over the rules above by order alone and
-   outrank none of your rules those do not; they skip top placement, and the bottom, left and right
-   rules above outrank them. */
 @media (hover: hover) and (pointer: fine) {
   [data-tooltip]:focus::before,
   [data-tooltip]:focus::after,
