@@ -1,0 +1,103 @@
+[
+  {
+    "id": "spinner-mask",
+    "module": "components/loading",
+    "kind": "style",
+    "selector": "[aria-busy=true]:not(input, select, textarea, html, form)",
+    "pseudo": "::before",
+    "property": "/^(-webkit-)?mask-(image|position|position-x|position-y|repeat|repeat-x|repeat-y|size)$/",
+    "reference": "/^(none|0%|0% 0%|repeat|auto)$/",
+    "femto": "/^(url\\(\"data:image/svg\\+xml,[^\"]*stroke-dasharray[^\"]*\"\\)|0px|0px 0px|no-repeat|[0-9.]+px auto)$/",
+    "category": "natural-fix",
+    "reason": "2.1.1 draws the loading spinner of an aria-busy=true element as a gray background image, and recolors it with filters on a busy button that is not .outline: the theme's choice of white or black for every such button, and black on .contrast in the dark scheme. The filters were wrong wherever the button's text color differed from that choice. In amber, grey, lime, pumpkin, sand and yellow, a busy .secondary, reset or light-scheme .contrast button has white text but got a black spinner. A .contrast button inside a data-theme=\"light\" element nested in a dark element or a dark page got a black spinner on its dark background. In forced colors mode, the white spinner sat on the browser's light button face and could not be seen. femto draws the spinner as a CSS mask of the same animated image and size (mask: var(--femto-icon-loading) 0 0 / 1em auto no-repeat), filled with background-color. The fill is Pico's gray rgb(136, 145, 164) where 2.1.1 left the spinner unfiltered (spinner-fill-gray), and the button's text color on a filled button (spinner-fill-text-color). So the mask longhands change from their initial values to the icon's, mask-position reporting 0px 0px for the same top-left position, and the spinner looks and animates as before wherever 2.1.1's color was right. A custom --femto-icon-loading now sets only the spinner's shape, and its colors are ignored. Your own rules that set background-image or filter on [aria-busy=true]::before no longer change the spinner: set mask (or mask-image) and background-color instead.",
+    "notes": "Seen in run fixes-full-1 (Chrome 158, Firefox 161) on every busy element of components-loading.html, kitchen-sink.html, layout-elements.html, tokens-base.html, tokens-schemes.html and utilities-reduce-motion.html. Chrome also reports -webkit-mask-position-x and -webkit-mask-position-y. Outside the harness, with standalone Selenium pages in Chrome and Firefox, the masked spinner animates on every busy element, and pixel comparisons with a static copy of the spinner show unfiltered spinners within 2/255 in Chrome and 16/255 in Firefox on antialiased edge pixels, and filtered ones that 2.1.1 painted the text color identical in both."
+  },
+  {
+    "id": "spinner-background-image-dropped",
+    "module": "components/loading",
+    "kind": "style",
+    "selector": "[aria-busy=true]:not(input, select, textarea, html, form)",
+    "pseudo": "::before",
+    "property": "/^background-(image|size)$/",
+    "reference": "/^(url\\(\"data:image/svg\\+xml,[^\"]*stroke-dasharray[^\"]*\"\\)|[0-9.]+px auto)$/",
+    "femto": "/^(none|auto)$/",
+    "category": "natural-fix",
+    "reason": "Consequence of spinner-mask: the spinner is no longer a background image, so background-image is none and background-size reports its initial value.",
+    "notes": "Seen in run fixes-full-1 (Chrome 158, Firefox 161) on the busy elements listed in spinner-mask."
+  },
+  {
+    "id": "spinner-fill-gray",
+    "module": "components/loading",
+    "kind": "style",
+    "selector": "[aria-busy=true]:not(input, select, textarea, html, form)",
+    "pseudo": "::before",
+    "property": "background-color",
+    "reference": "rgba(0, 0, 0, 0)",
+    "femto": "rgb(136, 145, 164)",
+    "category": "natural-fix",
+    "reason": "Consequence of spinner-mask: on every spinner 2.1.1 left unfiltered (busy text, links, articles and other elements, and .outline buttons), the mask is filled with rgb(136, 145, 164), the stroke color of 2.1.1's image, so the spinner looks the same. In forced colors mode it also stays that gray, as 2.1.1's background image did (spinner-forced-color-adjust-chrome and -firefox).",
+    "notes": "Seen in run fixes-full-1 (Chrome 158, Firefox 161) on the gray spinners of the pages listed in spinner-mask."
+  },
+  {
+    "id": "spinner-fill-text-color",
+    "module": "components/loading",
+    "kind": "style",
+    "selector": "[aria-busy=true]:not(input, select, textarea, html, form):is(button, [type=submit], [type=button], [type=reset], [role=button]):not(.outline)",
+    "pseudo": "::before",
+    "property": "background-color",
+    "reference": "rgba(0, 0, 0, 0)",
+    "femto": "/^rgb\\((0, 0, 0|255, 255, 255)\\)$/",
+    "category": "natural-fix",
+    "reason": "On a busy button, submit, reset or role=button element that is not .outline, femto fills the spinner's mask with currentColor, the button's text color. 2.1.1 painted it with a filter (spinner-filter-dropped): the same color on every filled button, white or black from the theme's --femto-primary-inverse, and black on .contrast in the dark scheme. It looks the same wherever that matched the text, and it now also matches where it did not. In amber, grey, lime, pumpkin, sand and yellow, a busy .secondary, reset or light-scheme .contrast button's spinner is white like its text instead of black. A .contrast button inside a data-theme=\"light\" element nested in a dark element or a dark page has a white spinner instead of a black one. In forced colors mode, the spinner follows the forced button text color instead of staying white on a light button face, or black on a dark one for .contrast.",
+    "notes": "Seen in run fixes-full-1 (Chrome 158, Firefox 161): the fill is rgb(255, 255, 255) or rgb(0, 0, 0), each button's text color, on the busy default, .secondary, .contrast and reset buttons, a[role=button] and span[role=button] of the pages listed in spinner-mask; a primary button is black only in the six light-primary theme presets. Pixel comparisons with standalone Selenium pages (static copy of the spinner) in Chrome and Firefox, light and dark, with azure, amber and yellow show the same spinner wherever 2.1.1's filter matched the text. They show a black-to-white change on .secondary, reset and light-scheme .contrast buttons in amber and yellow (and on a .contrast button directly in a light shadow host), and on .contrast buttons in a light island nested in a dark context. Forced colors were checked as in chevron-fill-text-color: every filled button's spinner is drawn in its forced text color."
+  },
+  {
+    "id": "spinner-filter-dropped",
+    "module": "components/loading",
+    "kind": "style",
+    "selector": "[aria-busy=true]:not(input, select, textarea, html, form):is(button, [type=submit], [type=button], [type=reset], [role=button]):not(.outline)",
+    "pseudo": "::before",
+    "property": "filter",
+    "reference": "/^brightness\\(0\\)( invert\\([01]\\))?$/",
+    "femto": "none",
+    "category": "dropped-hack",
+    "reason": "femto drops 2.1.1's filters on the spinner of a filled busy button: '[aria-busy=true]:not(input, select, textarea):is(button, [type=submit], [type=button], [type=reset], [role=button]):not(.outline)::before' with brightness(0) invert(1), or brightness(0) invert(0) in the six light-primary themes (femto 3.0.0-alpha.1's --femto-primary-inverse-filter token, now gone), and the dark scheme's brightness(0) on .contrast. The masked spinner takes its color from background-color instead (spinner-fill-text-color), so the computed filter is none. An author rule that set a filter on this spinner still applies.",
+    "notes": "Seen in run fixes-full-1 (Chrome 158, Firefox 161) on the filled busy buttons of the pages listed in spinner-mask; brightness(0) invert(0) appears in the six light-primary theme presets, brightness(0) on .contrast in the dark legs, dark islands, the dark shadow host of tokens-schemes.html and the light island nested inside a dark context."
+  },
+  {
+    "id": "spinner-forced-color-adjust-chrome",
+    "module": "components/loading",
+    "kind": "style",
+    "selector": "[aria-busy=true]:not(input, select, textarea, html, form)",
+    "pseudo": "::before",
+    "property": "forced-color-adjust",
+    "reference": "auto",
+    "femto": "preserve-parent-color",
+    "where": {
+      "browsers": [
+        "chrome"
+      ]
+    },
+    "category": "natural-fix",
+    "reason": "As for the chevron (chevron-forced-color-adjust-chrome): forced colors mode would replace the masked spinner's background-color and erase it, so femto sets forced-color-adjust: none, then preserve-parent-color, which Chrome and Edge apply. The gray spinners keep 2.1.1's gray, and a filled button's spinner follows its forced text color, where 2.1.1's filtered spinner was white on a light button face. Outside forced colors mode nothing changes, but getComputedStyle reports preserve-parent-color instead of auto.",
+    "notes": "Seen in run fixes-full-1 (Chrome 158, Firefox 161) in Chrome on the busy elements of spinner-mask; forced colors were checked outside the harness as in chevron-forced-color-adjust-chrome."
+  },
+  {
+    "id": "spinner-forced-color-adjust-firefox",
+    "module": "components/loading",
+    "kind": "style",
+    "selector": "[aria-busy=true]:not(input, select, textarea, html, form)",
+    "pseudo": "::before",
+    "property": "forced-color-adjust",
+    "reference": "auto",
+    "femto": "none",
+    "where": {
+      "browsers": [
+        "firefox"
+      ]
+    },
+    "category": "natural-fix",
+    "reason": "The Firefox side of spinner-forced-color-adjust-chrome: Firefox ignores preserve-parent-color and applies the none declared before it, and its currentColor is already the forced text color. Outside forced colors mode nothing changes, but getComputedStyle reports none instead of auto.",
+    "notes": "Seen in run fixes-full-1 (Chrome 158, Firefox 161) in Firefox on the busy elements of spinner-mask; forced colors were checked outside the harness as in chevron-forced-color-adjust-firefox."
+  }
+]

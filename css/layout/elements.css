@@ -1,8 +1,7 @@
 /*
  * Element tokens: per-element overrides of the base tokens (font size and weight, line height,
- * border and outline widths, spacing) and the icon filters on filled buttons (the spinner's follows
- * the theme). They sit before the color schemes and every module, as in 2.1.1, including the
- * overrides that serve class rules.
+ * border and outline widths, spacing). They sit before the color schemes and every module, as in
+ * 2.1.1, including the overrides that serve class rules.
  */
 a {
   --femto-text-decoration: underline;
@@ -126,13 +125,4 @@ nav details.dropdown summary:focus-visible {
 [role=group] [type=button],
 [role=group] [role=button] {
   --femto-form-element-spacing-horizontal: 2rem;
-}
-
-details summary[role=button]:not(.outline)::after {
-  filter: brightness(0) invert(1);
-}
-
-/* The spinner follows --femto-primary-inverse: themes whose inverse is black set the filter token to brightness(0) invert(0). */
-[aria-busy=true]:not(input, select, textarea):is(button, [type=submit], [type=button], [type=reset], [role=button]):not(.outline)::before {
-  filter: var(--femto-primary-inverse-filter);
 }

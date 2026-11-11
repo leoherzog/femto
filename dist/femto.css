@@ -39,7 +39,6 @@
   --femto-icon-search: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(136, 145, 164)' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E");
   --femto-icon-close: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(136, 145, 164)' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'%3E%3C/line%3E%3Cline x1='6' y1='6' x2='18' y2='18'%3E%3C/line%3E%3C/svg%3E");
   --femto-icon-loading: url("data:image/svg+xml,%3Csvg fill='none' height='24' width='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' %3E%3Cstyle%3E g %7B animation: rotate 2s linear infinite; transform-origin: center center; %7D circle %7B stroke-dasharray: 75,100; stroke-dashoffset: -5; animation: dash 1.5s ease-in-out infinite; stroke-linecap: round; %7D @keyframes rotate %7B 0%25 %7B transform: rotate(0deg); %7D 100%25 %7B transform: rotate(360deg); %7D %7D @keyframes dash %7B 0%25 %7B stroke-dasharray: 1,100; stroke-dashoffset: 0; %7D 50%25 %7B stroke-dasharray: 44.5,100; stroke-dashoffset: -17.5; %7D 100%25 %7B stroke-dasharray: 44.5,100; stroke-dashoffset: -62; %7D %7D %3C/style%3E%3Cg%3E%3Ccircle cx='12' cy='12' r='10' fill='none' stroke='rgb(136, 145, 164)' stroke-width='4' /%3E%3C/g%3E%3C/svg%3E");
-  --femto-primary-inverse-filter: brightness(0) invert(1);
 }
 
 /* css/tokens/breakpoints.css */
@@ -180,12 +179,6 @@ nav details.dropdown summary:focus-visible {
 [role=group] [type=button],
 [role=group] [role=button] {
   --femto-form-element-spacing-horizontal: 2rem;
-}
-details summary[role=button]:not(.outline)::after {
-  filter: brightness(0) invert(1);
-}
-[aria-busy=true]:not(input, select, textarea):is(button, [type=submit], [type=button], [type=reset], [role=button]):not(.outline)::before {
-  filter: var(--femto-primary-inverse-filter);
 }
 
 /* css/tokens/schemes.css */
@@ -499,27 +492,11 @@ input:is([type=submit], [type=button], [type=reset], [type=checkbox], [type=radi
       --femto-icon-valid: var(--femto-dark-icon-valid);
       --femto-icon-invalid: var(--femto-dark-icon-invalid);
     }
-    :root:not([data-theme]) details summary[role=button].contrast:not(.outline)::after,
-    :host(:not([data-theme])) details summary[role=button].contrast:not(.outline)::after {
-      filter: brightness(0);
-    }
-    :root:not([data-theme]) [aria-busy=true]:not(input, select, textarea).contrast:is(button, [type=submit], [type=button], [type=reset], [role=button]):not(.outline)::before,
-    :host(:not([data-theme])) [aria-busy=true]:not(input, select, textarea).contrast:is(button, [type=submit], [type=button], [type=reset], [role=button]):not(.outline)::before {
-      filter: brightness(0);
-    }
   }
   [data-theme=dark],
   :host([data-theme=dark]) {
     --femto-icon-valid: var(--femto-dark-icon-valid);
     --femto-icon-invalid: var(--femto-dark-icon-invalid);
-  }
-  [data-theme=dark] details summary[role=button].contrast:not(.outline)::after,
-  :host([data-theme=dark]) details summary[role=button].contrast:not(.outline)::after {
-    filter: brightness(0);
-  }
-  [data-theme=dark] [aria-busy=true]:not(input, select, textarea).contrast:is(button, [type=submit], [type=button], [type=reset], [role=button]):not(.outline)::before,
-  :host([data-theme=dark]) [aria-busy=true]:not(input, select, textarea).contrast:is(button, [type=submit], [type=button], [type=reset], [role=button]):not(.outline)::before {
-    filter: brightness(0);
   }
 }
 @supports not (color: light-dark(#000, #fff)) {
@@ -1680,12 +1657,16 @@ details summary::after {
   margin-inline-start: calc(var(--femto-spacing, 1rem) * 0.5);
   float: right;
   transform: rotate(-90deg);
-  background-image: var(--femto-icon-chevron);
-  background-position: right center;
-  background-size: 1rem auto;
-  background-repeat: no-repeat;
+  background-color: rgb(136, 145, 164);
   content: "";
+  mask: var(--femto-icon-chevron) right center / 1rem auto no-repeat;
+  forced-color-adjust: none;
+  forced-color-adjust: preserve-parent-color;
   transition: transform var(--femto-transition);
+}
+details summary[data-tooltip]::after {
+  mask: none;
+  forced-color-adjust: auto;
 }
 details summary:focus {
   outline: none;
@@ -1704,6 +1685,9 @@ details summary[role=button] {
 }
 details summary[role=button]::after {
   height: calc(1rem * var(--femto-line-height, 1.5));
+}
+details summary[role=button]:not(.outline, [data-tooltip])::after {
+  background-color: currentColor;
 }
 details[open] > summary {
   margin-bottom: var(--femto-spacing);
@@ -1770,11 +1754,11 @@ details.dropdown > a::after {
   margin-inline-start: 0.25rem;
   float: right;
   transform: rotate(0deg) translateX(0.2rem);
-  background-image: var(--femto-icon-chevron);
-  background-position: right center;
-  background-size: 1rem auto;
-  background-repeat: no-repeat;
+  background-color: rgb(136, 145, 164);
   content: "";
+  mask: var(--femto-icon-chevron) right center / 1rem auto no-repeat;
+  forced-color-adjust: none;
+  forced-color-adjust: preserve-parent-color;
 }
 nav details.dropdown {
   margin-bottom: 0;
@@ -2059,11 +2043,15 @@ label > details.dropdown {
   display: inline-block;
   width: 1em;
   height: 1em;
-  background-image: var(--femto-icon-loading);
-  background-size: 1em auto;
-  background-repeat: no-repeat;
+  background-color: rgb(136, 145, 164);
   content: "";
   vertical-align: -0.125em;
+  mask: var(--femto-icon-loading) 0 0 / 1em auto no-repeat;
+  forced-color-adjust: none;
+  forced-color-adjust: preserve-parent-color;
+}
+[aria-busy=true]:not(input, select, textarea):is(button, [type=submit], [type=button], [type=reset], [role=button]):not(.outline)::before {
+  background-color: currentColor;
 }
 [aria-busy=true]:not(input, select, textarea, html, form):not(:empty)::before {
   margin-inline-end: calc(var(--femto-spacing) * 0.5);

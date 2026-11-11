@@ -1,6 +1,6 @@
 /*
  * Theme color: zinc, loaded after femto.css and before any stylesheet of yours that overrides the
- * theme tokens. Like every theme file, it is one rule on :root, :host that sets the ten theme
+ * theme tokens. Like every theme file, it is one rule on :root, :host that sets the nine theme
  * tokens, six of them as --femto-light-<token> and --femto-dark-<token> pairs.
  */
 :root,
@@ -19,6 +19,5 @@
   --femto-light-primary-focus: rgba(136, 145, 164, 0.5);
   --femto-dark-primary-focus: rgba(150, 158, 175, 0.375);
   --femto-primary-inverse: #fff;
-  --femto-primary-inverse-filter: brightness(0) invert(1);
   --femto-switch-thumb-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
 }

@@ -1,9 +1,9 @@
 /*
  * Theme color: lime, loaded after femto.css and before any stylesheet of yours that overrides the
- * theme tokens. Like every theme file, it is one rule on :root, :host that sets the ten theme
+ * theme tokens. Like every theme file, it is one rule on :root, :host that sets the nine theme
  * tokens, six of them as --femto-light-<token> and --femto-dark-<token> pairs.
- * Lime is a light color, so primary buttons have black text, filled buttons show black loading
- * spinners, checked radios have a black dot, and the switch thumb casts a shadow.
+ * Lime is a light color, so primary buttons have black text, chevrons and loading spinners,
+ * checked radios have a black dot, and the switch thumb casts a shadow.
  */
 :root,
 :host {
@@ -21,6 +21,5 @@
   --femto-light-primary-focus: rgba(119, 156, 0, 0.5);
   --femto-dark-primary-focus: rgba(130, 171, 0, 0.375);
   --femto-primary-inverse: #000;
-  --femto-primary-inverse-filter: brightness(0) invert(0);
   --femto-switch-thumb-box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.25);
 }

@@ -153,5 +153,106 @@
     "category": "natural-fix",
     "reason": "Consequence of accordion-summary-flow-root in a squeezed nav. Chrome and Firefox hold the list of a closed dropdown in a ::details-content box that is an independent formatting context and the list's containing block. The chevron that 2.1.1 let escape below a wrapped select-like nav summary narrowed that box, and with it the list (width: 100%), its items and links, which were narrower than the summary. Contained in the summary, the chevron no longer reaches it, so the closed list is as wide as the summary, as at the widths where the label does not wrap. The list is not rendered while closed, and an open list was already as wide as the summary.",
     "notes": "Fixtures: the closed lists of the select-like nav dropdowns of kitchen-sink.html at 575 and 640 (576 and 577 with option-fixed-typography) and of classes-dropdown.html at 390. In kitchen-sink.html the list goes from 86.02px to 115.02px at 575 and from 118.7px to 149.45px at 640 in Chrome Beta 158 (85.97px to 114.97px and 118.45px to 149.2px in Firefox 160 beta), with its item and link; in classes-dropdown.html its item and link go from 88.52px to 117.52px. The open lists of classes-dropdown-open.html do not change. Upstream issue picocss/pico#653."
+  },
+  {
+    "id": "chevron-mask",
+    "module": "components/accordion",
+    "kind": "style",
+    "selector": "details summary:not([data-tooltip]), details.dropdown > :is(summary, button, a)",
+    "pseudo": "::after",
+    "property": "/^(-webkit-)?mask-(image|position|position-x|position-y|repeat|repeat-x|repeat-y|size)$/",
+    "reference": "/^(none|0%|0% 0%|repeat|auto)$/",
+    "femto": "/^(url\\(\"data:image/svg\\+xml,[^\"]*points='6 9 12 15 18 9'[^\"]*\"\\)|100%|50%|100% 50%|no-repeat|[0-9.]+px auto)$/",
+    "category": "natural-fix",
+    "reason": "2.1.1 draws the chevron of an accordion or dropdown summary, and of a link or button placed directly in a dropdown, as a gray background image, and recolors it with filters on a role=button summary that is not .outline: white everywhere, and black on .contrast in the dark scheme. The filters were wrong wherever the text color differed from what they assumed. In amber, grey, lime, pumpkin, sand and yellow, a primary role=button summary has black text but got a white chevron. A .contrast summary inside a data-theme=\"light\" element nested in a dark element or a dark page got the dark filter, so a black chevron on its dark background. In forced colors mode, the white chevron sat on the browser's light button face and could not be seen. femto draws the chevron as a CSS mask of the same image, position and size (mask: var(--femto-icon-chevron) right center / 1rem auto no-repeat), filled with background-color. The fill is Pico's gray rgb(136, 145, 164) where 2.1.1 left the chevron unfiltered (chevron-fill-gray), and the summary's text color on a role=button summary that is not .outline (chevron-fill-text-color). So the mask longhands change from their initial values to the icon's, and the chevron looks as before wherever 2.1.1's color was right. A custom --femto-icon-chevron now sets only the chevron's shape here, and its colors are ignored; the select's chevron, still a background image, keeps them. Your own rules that set background-image or filter on these pseudo-elements no longer change the chevron: set mask (or mask-image) and background-color instead. An accordion summary with data-tooltip gets no mask, so its ::after stays the tooltip's caret, as in 2.1.1.",
+    "notes": "Seen in run fixes-full-1 (Chrome 158, Firefox 161) on every accordion and dropdown summary of components-accordion.html, classes-dropdown.html, classes-dropdown-open.html, components-nav.html, components-tooltip.html, kitchen-sink.html, layout-elements.html, tokens-base.html, tokens-schemes.html, utilities-accessibility.html and utilities-reduce-motion.html, and on the link and button children of the open dropdown in classes-dropdown.html. Chrome also reports -webkit-mask-position-x and -webkit-mask-position-y, which are longhands of their own there. Both sides were pixel-compared outside the harness with standalone Selenium pages, light and dark, in data-theme islands and in shadow roots, with azure, amber and yellow: unfiltered chevrons differ by at most 2/255 in Chrome and 4/255 in Firefox on antialiased edge pixels. Filtered chevrons that 2.1.1 painted the text color are identical in Chrome; Firefox draws a rotated (closed) or translated (dropdown) one slightly sharper, up to 93/255 on about 70 edge pixels, because the filtered image was resampled. The dropdown summaries with data-tooltip of components-tooltip.html keep the mask: the dropdown rule outranks the tooltip's, as it already did for 2.1.1's background image."
+  },
+  {
+    "id": "chevron-background-image-dropped",
+    "module": "components/accordion",
+    "kind": "style",
+    "selector": "details summary:not([data-tooltip]), details.dropdown > :is(summary, button, a)",
+    "pseudo": "::after",
+    "property": "/^background-(image|position|position-x|position-y|size|repeat)$/",
+    "reference": "/^(url\\(\"data:image/svg\\+xml,[^\"]*points='6 9 12 15 18 9'[^\"]*\"\\)|100%|0%|50%|100% 50%|0% 50%|[0-9.]+px auto|no-repeat)$/",
+    "femto": "/^(none|0%|0% 0%|auto|repeat)$/",
+    "category": "natural-fix",
+    "reason": "Consequence of chevron-mask: the chevron is no longer a background image, so background-image is none and background-position and background-size report their initial values. On a dropdown summary with data-tooltip, whose ::after is also the tooltip's caret, the tooltip's background shorthand now sets background-repeat too, so it reports repeat instead of no-repeat; that box has no background image, so nothing changes on screen.",
+    "notes": "Seen in run fixes-full-1 (Chrome 158, Firefox 161) on the same pseudo-elements as chevron-mask. background-repeat appears only on the two dropdown summaries with data-tooltip in components-tooltip.html; every other ::after keeps no-repeat from the layout/document.css rule for all pseudo-elements, as in 2.1.1."
+  },
+  {
+    "id": "chevron-fill-gray",
+    "module": "components/accordion",
+    "kind": "style",
+    "selector": "details summary, details.dropdown > :is(button, a)",
+    "pseudo": "::after",
+    "property": "background-color",
+    "reference": "rgba(0, 0, 0, 0)",
+    "femto": "rgb(136, 145, 164)",
+    "category": "natural-fix",
+    "reason": "Consequence of chevron-mask: on every chevron 2.1.1 left unfiltered (plain and select-like summaries, .outline role=button summaries, role=button summaries with data-tooltip in a dropdown, and the links and buttons in a dropdown), the mask is filled with rgb(136, 145, 164), the stroke color of 2.1.1's image, so the chevron looks the same. In forced colors mode it also stays that gray, as 2.1.1's background image did, with forced-color-adjust keeping the browser from replacing it (chevron-forced-color-adjust-chrome and -firefox).",
+    "notes": "Seen in run fixes-full-1 (Chrome 158, Firefox 161) on the gray chevrons of the pages listed in chevron-mask. Pixel differences against 2.1.1's image are at most 2/255 in Chrome and 4/255 in Firefox, on antialiased edge pixels."
+  },
+  {
+    "id": "chevron-fill-text-color",
+    "module": "components/accordion",
+    "kind": "style",
+    "selector": "details summary[role=button]:not(.outline, [data-tooltip])",
+    "pseudo": "::after",
+    "property": "background-color",
+    "reference": "rgba(0, 0, 0, 0)",
+    "femto": "/^rgb\\((0, 0, 0|255, 255, 255)\\)$/",
+    "category": "natural-fix",
+    "reason": "On a role=button summary that is not .outline, in an accordion or a dropdown, femto fills the chevron's mask with currentColor, the summary's text color, where 2.1.1 painted the gray image white with filter: brightness(0) invert(1), or black with brightness(0) on .contrast in the dark scheme (chevron-filter-dropped). It looks the same wherever the filter matched the text, and it now also matches where the filter did not. In amber, grey, lime, pumpkin, sand and yellow, a primary summary's chevron is black like its text instead of white. A .contrast summary inside a data-theme=\"light\" element nested in a dark element or a dark page has a white chevron instead of a black one on its dark background. In forced colors mode, the chevron follows the forced button text color instead of staying white on a light button face, or black on a dark one for .contrast.",
+    "notes": "Seen in run fixes-full-1 (Chrome 158, Firefox 161): the fill is rgb(255, 255, 255) or rgb(0, 0, 0), each summary's text color, on the default, .secondary and .contrast role=button summaries of components-accordion.html, classes-dropdown.html, classes-dropdown-open.html, kitchen-sink.html, layout-elements.html and tokens-schemes.html. A primary summary is black only in the six light-primary theme presets. Pixel comparisons of the two sides with standalone Selenium pages in Chrome and Firefox, light and dark, with azure, amber and yellow, show the same chevron wherever 2.1.1's filter matched the text. They show a white-to-black change on primary summaries in amber and yellow, and a black-to-white change on .contrast summaries in a light island nested in a dark context, on the page and inside a dark shadow host. Forced colors were checked outside the harness: in Chrome with Emulation.setEmulatedMedia (forced-colors: active, both palettes) and in Firefox with browser.display.document_color_use=2. In both, every such chevron is drawn in the summary's forced text color, where 2.1.1's was invisible in the light palette (and on .contrast in the dark one)."
+  },
+  {
+    "id": "chevron-filter-dropped",
+    "module": "components/accordion",
+    "kind": "style",
+    "selector": "details summary[role=button]:not(.outline)",
+    "pseudo": "::after",
+    "property": "filter",
+    "reference": "/^brightness\\(0\\)( invert\\(1\\))?$/",
+    "femto": "none",
+    "category": "dropped-hack",
+    "reason": "femto drops 2.1.1's filters on the chevron of a role=button summary: 'details summary[role=button]:not(.outline)::after { filter: brightness(0) invert(1) }' in the Styles section, and the dark scheme's brightness(0) on .contrast (for the media-dark root, [data-theme=dark] and, in femto, a dark shadow host). The masked chevron takes its color from background-color instead (chevron-fill-text-color), so the computed filter is none. An author rule that set a filter on this chevron still applies.",
+    "notes": "Seen in run fixes-full-1 (Chrome 158, Firefox 161) on the role=button summaries that are not .outline, in every leg; brightness(0) appears on .contrast in the dark legs, in dark islands and in the dark shadow host of tokens-schemes.html, and also in the light island nested inside a dark element or page, where 2.1.1's descendant selector reached it."
+  },
+  {
+    "id": "chevron-forced-color-adjust-chrome",
+    "module": "components/accordion",
+    "kind": "style",
+    "selector": "details summary:not([data-tooltip]), details.dropdown > :is(summary, button, a)",
+    "pseudo": "::after",
+    "property": "forced-color-adjust",
+    "reference": "auto",
+    "femto": "preserve-parent-color",
+    "where": {
+      "browsers": [
+        "chrome"
+      ]
+    },
+    "category": "natural-fix",
+    "reason": "In forced colors mode a browser replaces background-color with a system color, which would erase a masked chevron (chevron-mask), so femto sets forced-color-adjust on it: none, then preserve-parent-color, which Chrome and Edge apply and Firefox ignores. With preserve-parent-color, the chevron's own colors stay as authored, so the gray chevrons keep 2.1.1's gray, and currentColor resolves to the summary's forced text color, so a role=button summary's chevron follows the forced button text. With none alone, Chrome resolves currentColor to the summary's unforced color, white on a light button face. 2.1.1's chevron was a background image, which forced colors mode keeps, so only the filtered ones went missing. Outside forced colors mode nothing changes, but getComputedStyle reports preserve-parent-color instead of auto.",
+    "notes": "Seen in run fixes-full-1 (Chrome 158, Firefox 161) in Chrome on the pseudo-elements of chevron-mask; the harness does not emulate forced colors. Forced colors were checked with standalone Selenium pages in Chrome through Emulation.setEmulatedMedia (forced-colors: active, prefers-color-scheme light and dark). With preserve-parent-color, a role=button summary's ::after computes its color and fill to the summary's forced color (rgb(0, 0, 0) or LinkText rgb(0, 0, 159) in the light palette, white or yellow in the dark one). With none alone, it kept rgb(255, 255, 255) in both palettes."
+  },
+  {
+    "id": "chevron-forced-color-adjust-firefox",
+    "module": "components/accordion",
+    "kind": "style",
+    "selector": "details summary:not([data-tooltip]), details.dropdown > :is(summary, button, a)",
+    "pseudo": "::after",
+    "property": "forced-color-adjust",
+    "reference": "auto",
+    "femto": "none",
+    "where": {
+      "browsers": [
+        "firefox"
+      ]
+    },
+    "category": "natural-fix",
+    "reason": "The Firefox side of chevron-forced-color-adjust-chrome: Firefox does not support preserve-parent-color, so it applies the none declared before it. Firefox forces colors before inheritance, so the chevron's currentColor is already the summary's forced text color, and the gray chevrons keep their gray. Outside forced colors mode nothing changes, but getComputedStyle reports none instead of auto.",
+    "notes": "Seen in run fixes-full-1 (Chrome 158, Firefox 161) in Firefox on the pseudo-elements of chevron-mask. Forced colors were checked with standalone Selenium pages in Firefox with browser.display.document_color_use=2 and black-on-white and white-on-black colors: every chevron is visible, a role=button summary's in its forced text color."
   }
 ]

@@ -369,7 +369,7 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   - `tokens-light-dark-raw-text`: the raw text of tokens whose femto value is a `light-dark()` pair,
     `--femto-primary-hover-background`'s pair of one value, such as `light-dark(#02659a, #02659a)`,
     among them without a theme file and in the nine themes of the hover contrast fix. It accepts any
-    `light-dark()` text, so `static_checks.py --only themes` compares each theme file's ten tokens
+    `light-dark()` text, so `static_checks.py --only themes` compares each theme file's nine tokens
     with its reference as text.
   - `tokens-light-dark-names`: the 116 `--femto-light-<token>` and `--femto-dark-<token>` names, for
     the 56 pairs and the two validation icons; the `--femto-light-` names also feed the
@@ -389,10 +389,6 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
     per-scheme copies of `--femto-form-element-focus-color`, so in a shadow root whose host carries
     `data-theme=dark`, a focused checkbox or radio draws the `primary-focus` ring like every other one
     (fixtures `shadow-dark-host-c1` and `shadow-dark-host-r`, with `data-states="focus"`).
-  - `tokens-dark-shadow-host-contrast-filter`: a shadow host carrying `data-theme=dark` is dark. The
-    forced-dark rules add `:host([data-theme=dark])`, and this entry records the one harness-visible
-    effect, the contrast summary and busy contrast icons in the `shadow-dark-host` template taking the
-    dark filter.
   - `tokens-root-user-override-style`, `-token` and `-raw`: a page author's own
     `:root { --femto-primary: ... }` now takes effect everywhere, including inside `data-theme`
     islands. They are scoped to the `user-root-override` preset and limited to the colors of
@@ -402,8 +398,6 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
     `--femto-form-element-focus-color` at (0,1,1), so an author rule loaded after femto, from (0,1,1)
     up to the matching 2.1.1 scheme copy at (0,2,1) or (0,3,1), now sets a checkbox's or radio's focus
     ring color.
-  - `tokens-new-names`: `--femto-primary-inverse-filter`, the spinner filter that 2.1.1 picked at
-    compile time.
   - `tokens-dark-hover-background-contrast-style` and `-token`: in azure, blue, cyan,
     fuchsia, green, jade, orange, pink and zinc, white text on 2.1.1's dark-scheme
     `--femto-primary-hover-background` has 3.76:1 to 4.46:1 contrast, below WCAG AA's 4.5:1, so
@@ -587,6 +581,30 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   `accordion-nav-dropdown-list-width` the closed list that the escaped chevron no longer narrows
   (fixtures: the nav dropdowns of `kitchen-sink.html` at 375 to 640, and of `classes-dropdown.html`
   and `classes-dropdown-open.html` at 390).
+  `chevron-mask`, with `chevron-background-image-dropped`, `chevron-fill-gray`,
+  `chevron-fill-text-color`, `chevron-filter-dropped` (`dropped-hack`) and
+  `chevron-forced-color-adjust-chrome` and `-firefox`, on the `::after` of every accordion and
+  dropdown summary and of a dropdown's link and button children. 2.1.1 draws the chevron as a gray
+  background image and recolors it with filters on `role=button` summaries that are not `.outline`,
+  white, or black on `.contrast` in the dark scheme, which missed primary summaries in the six
+  light-primary themes, `.contrast` summaries in a light island inside a dark context, and forced
+  colors mode; femto draws it as a mask of the same image, filled with 2.1.1's gray, or with
+  `currentColor` on those summaries, so the mask and background longhands, the fill and `filter`
+  change. `forced-color-adjust` is `none`, then `preserve-parent-color`, so Chrome reports the
+  second and Firefox, which lacks it, the first; the harness does not emulate forced colors, so the
+  icons' visibility there was checked outside it. An accordion summary with `data-tooltip` gets no
+  mask and keeps its caret (fixture: the open accordion of `components-tooltip.html`, which shows no
+  difference).
+- `components-loading.json`: `spinner-mask`, with `spinner-background-image-dropped`,
+  `spinner-fill-gray`, `spinner-fill-text-color`, `spinner-filter-dropped` (`dropped-hack`) and
+  `spinner-forced-color-adjust-chrome` and `-firefox`, on every `[aria-busy=true]::before`: the same
+  change for the loading spinner. 2.1.1's filter on a filled busy button came from the theme, black
+  in the six light-primary themes, so it also missed `.secondary`, reset and light-scheme
+  `.contrast` buttons there; femto fills the mask with the gray, or with `currentColor` on a filled
+  button. The shorthand writes the position as `0 0`, so `mask-position` reports `0px 0px`
+  (fixtures: the busy elements of `components-loading.html`, `kitchen-sink.html`,
+  `layout-elements.html`, `tokens-base.html`, `tokens-schemes.html` and
+  `utilities-reduce-motion.html`).
 - `components-card.json`: `table-cells-in-card-background`, limited to `components-card.html`.
   2.1.1 filled every `th` and `td` with the page background, so in the dark scheme a table in a
   card, which is lighter, showed as a darker block, and in a `.striped` table the translucent odd
@@ -631,7 +649,7 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
 - `rig.json`: the checks Safari cannot run (`safari-no-media-dark`,
   `safari-no-focus-visible-date-input`).
 
-The other 14 modules need no entry. Two fixtures exist to make the registry's checks meaningful:
+The other 13 modules need no entry. Two fixtures exist to make the registry's checks meaningful:
 `colors.html` has a "Two classes" block in which each span carries two neighboring utility classes
 in file order, so a change of rule order in `femto.colors.css` shows as a difference, and
 `components-tooltip.html` has tooltips on an open accordion summary and on two dropdown summaries,
@@ -679,7 +697,7 @@ tables against the tag, `tests/sections.json`, `tests/pages/pages.json` and `css
 
 | 2.1.1 module | 2.1.1 section in `pico.css` | femto file (position in `css/femto.css`) | Fixture pages besides `kitchen-sink.html` |
 |---|---|---|---|
-| `themes/default` | Styles; Color schemes | `tokens/base.css` (1), `tokens/breakpoints.css` (2) and `layout/elements.css` (3) for Styles; `tokens/schemes.css` (4) for Color schemes. Azure is built in; `themes/azure.css` restates its ten tokens | `tokens-base.html`, `tokens-breakpoints.html`, `layout-elements.html`, `tokens-schemes.html` |
+| `themes/default` | Styles; Color schemes | `tokens/base.css` (1), `tokens/breakpoints.css` (2) and `layout/elements.css` (3) for Styles; `tokens/schemes.css` (4) for Color schemes. Azure is built in; `themes/azure.css` restates its nine tokens | `tokens-base.html`, `tokens-breakpoints.html`, `layout-elements.html`, `tokens-schemes.html` |
 | `layout/document` | Document | `layout/document.css` (5) | `layout-document.html` |
 | `layout/landmarks` | Landmarks | `layout/landmarks.css` (6) | `layout-landmarks.html` |
 | `layout/container` | Container | `layout/container.css` (8) | `classes-container.html` |
@@ -722,7 +740,7 @@ against `css/` in the browsers (see Last verified).
 
 | 2.1.1 setting | 2.1.1 default | femto file or mechanism | Checked by |
 |---|---|---|---|
-| `$theme-color` | `"azure"` | Azure is built into `tokens/schemes.css` and `tokens/base.css` (`--femto-primary-inverse-filter`). Each of the 20 colors, azure included, is `css/themes/<color>.css`: one `:root, :host` rule with ten tokens, those whose schemes differ as `--femto-light-<token>` and `--femto-dark-<token>`, loaded after femto | presets `theme-<color>` against `tests/reference/femto.<color>.css` (`femto.css` for azure); `static_checks.py --only themes` |
+| `$theme-color` | `"azure"` | Azure is built into `tokens/schemes.css`. Each of the 20 colors, azure included, is `css/themes/<color>.css`: one `:root, :host` rule with nine tokens, those whose schemes differ as `--femto-light-<token>` and `--femto-dark-<token>`, loaded after femto | presets `theme-<color>` against `tests/reference/femto.<color>.css` (`femto.css` for azure); `static_checks.py --only themes` |
 | `$css-var-prefix` | `"--pico-"` | Dropped: always `--femto-` | `static_checks.py` shipped-file hygiene (no `--pico-` names) |
 | `$semantic-root-element` | `"body"` | Hardcoded `body` (`body > header`, `body > main`, `body > footer` in `layout/landmarks.css` and `options/responsive-spacings.css`) | `default` and `option-responsive-spacings` presets, `layout-landmarks.html` |
 | `$enable-semantic-container` | `false` | Dropped with the classless builds. `.container` gives centered widths | `default` preset (the default build's output) |
@@ -992,7 +1010,8 @@ with it in a search group. `uv run tests/static_checks.py` and `npm run lint` pa
   and Firefox. The one reduced-motion difference, the indeterminate progress bar in Firefox, was
   probed the same way and is registered as documentation only.
 - Forced colors is not an axis, so no cell matches `@media (forced-colors: active)` in
-  `utilities/accessibility.css`. Its rules were checked with standalone pages in Chrome (CDP
+  `utilities/accessibility.css`, and the masked chevrons' and spinner's `forced-color-adjust` is
+  seen only as a computed value. They were checked with standalone pages in Chrome (CDP
   `Emulation.setEmulatedMedia`) and Firefox (`browser.display.document_color_use=2`), in light and
   dark palettes, with 0 differences when forced colors is off.
 - No run has a dynamic mobile toolbar, so `100svh` equals `100vh` in every cell and the modal card's

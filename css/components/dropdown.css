@@ -16,11 +16,11 @@ details.dropdown > a::after {
   margin-inline-start: 0.25rem;
   float: right;
   transform: rotate(0deg) translateX(0.2rem);
-  background-image: var(--femto-icon-chevron);
-  background-position: right center;
-  background-size: 1rem auto;
-  background-repeat: no-repeat;
+  background-color: rgb(136, 145, 164);
   content: "";
+  mask: var(--femto-icon-chevron) right center / 1rem auto no-repeat;
+  forced-color-adjust: none;
+  forced-color-adjust: preserve-parent-color;
 }
 
 nav details.dropdown {

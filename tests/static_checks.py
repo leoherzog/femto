@@ -31,14 +31,14 @@ or @supports nested in a rule (use-baseline only inspects declarations whose par
 nesting traps (rules where native nesting differs from Sass nesting), and duplicate rules.
 
 "themes" covers what the harness cannot see in a theme file: tokens-light-dark-raw-text accepts
-any light-dark() text, so it compares each file's ten tokens with its 2.1.1 reference as text, the
+any light-dark() text, so it compares each file's nine tokens with its 2.1.1 reference as text, the
 six in THEME_PAIRS as --femto-light-<token> and --femto-dark-<token>. The themes in
 HOVER_BACKGROUND_LIGHT_ONLY must have their light --femto-primary-hover-background in both schemes.
 
 "fallback" covers what no harness browser can run, the light scheme where light-dark() is
-unsupported: the wrappers and the @supports not block in tokens/schemes.css, the dark icons and
-filters inside @supports, and color-scheme: dark only in the two dark scheme rules, which a later
-@supports not block sets back to light.
+unsupported: the wrappers and the @supports not block in tokens/schemes.css, the dark icons inside
+@supports, and color-scheme: dark only in the two dark scheme rules, which a later @supports not
+block sets back to light.
 
 "coverage" checks the coverage table in tests/README.md ("Coverage: 2.1.1 modules and settings")
 against tag v2.1.1's $modules keys and settings, tests/sections.json, tests/pages/pages.json and the
@@ -555,7 +555,6 @@ THEME_TOKENS = (
     "primary-hover-background",
     "primary-focus",
     "primary-inverse",
-    "primary-inverse-filter",
     "switch-thumb-box-shadow",
 )
 THEME_PAIRS = {"text-selection-color", "primary", "primary-underline", "primary-hover", "primary-hover-background", "primary-focus"}
@@ -564,7 +563,6 @@ THEME_BLOCKS = {
     "light": "[data-theme=light], :root:not([data-theme=dark]), :host(:not([data-theme=dark]))",
     "dark-media": "@media only screen and (prefers-color-scheme: dark) >> :root:not([data-theme]), :host(:not([data-theme]))",
     "dark": "[data-theme=dark]",
-    "spinner": "[aria-busy=true]:not(input, select, textarea):is(button, [type=submit], [type=button], [type=reset], [role=button]):not(.outline)::before",
 }
 
 
@@ -591,7 +589,7 @@ def reference_rules(text: str) -> dict[str, dict[str, str]]:
 
 
 def themes(root: Path) -> Result:
-    r = Result("Theme files: each css/themes/<color>.css is the ten tokens of its 2.1.1 reference, text for text, the six THEME_PAIRS tokens as --femto-light-<token> and --femto-dark-<token>")
+    r = Result("Theme files: each css/themes/<color>.css is the nine tokens of its 2.1.1 reference, text for text, the six THEME_PAIRS tokens as --femto-light-<token> and --femto-dark-<token>")
     files = sorted((root / "css/themes").glob("*.css"))
     if not files:
         r.note("no css/themes/*.css yet")
@@ -609,20 +607,17 @@ def themes(root: Path) -> Result:
         expected = []
         for t in THEME_TOKENS:
             name = "--femto-" + t
-            if t == "primary-inverse-filter":
-                pairs = [(name, blocks["spinner"].get("filter"))]
-            else:
-                if blocks["dark-media"].get(name) != dark.get(name):
-                    r.fail(f"{rel}: reference {name} differs between the prefers-color-scheme and data-theme=dark blocks")
-                pairs = [(name, None)]
-                if name in light and name in dark:
-                    if t in THEME_PAIRS:
-                        d = light[name] if t == "primary-hover-background" and color in HOVER_BACKGROUND_LIGHT_ONLY else dark[name]
-                        pairs = [(f"--femto-light-{t}", light[name]), (f"--femto-dark-{t}", d)]
-                    else:
-                        if light[name] != dark[name]:
-                            r.fail(f"{rel}: reference {name} differs between the schemes but is not in THEME_PAIRS")
-                        pairs = [(name, light[name])]
+            if blocks["dark-media"].get(name) != dark.get(name):
+                r.fail(f"{rel}: reference {name} differs between the prefers-color-scheme and data-theme=dark blocks")
+            pairs = [(name, None)]
+            if name in light and name in dark:
+                if t in THEME_PAIRS:
+                    d = light[name] if t == "primary-hover-background" and color in HOVER_BACKGROUND_LIGHT_ONLY else dark[name]
+                    pairs = [(f"--femto-light-{t}", light[name]), (f"--femto-dark-{t}", d)]
+                else:
+                    if light[name] != dark[name]:
+                        r.fail(f"{rel}: reference {name} differs between the schemes but is not in THEME_PAIRS")
+                    pairs = [(name, light[name])]
             if pairs[0][1] is None:
                 r.fail(f"{rel}: reference has no value for {name}")
             expected += pairs
@@ -646,7 +641,6 @@ def themes(root: Path) -> Result:
 SUPPORTS = "(color: light-dark(#000, #fff))"
 DARK_ONLY = (
     ("color-scheme: dark", re.compile(r"(?<![\w-])color-scheme\s*:\s*dark\b")),
-    ("filter: brightness(0)", re.compile(r"(?<![\w-])filter\s*:\s*brightness\(0\)\s*[;}]")),
     ("var(--femto-dark-icon-*)", re.compile(r"var\(\s*--femto-dark-icon-")),
 )
 
@@ -691,7 +685,7 @@ def light_arm(value: str) -> str:
 
 
 def fallback(root: Path) -> Result:
-    r = Result(f"Fallback: every light-dark() is a --femto-light-/--femto-dark- wrapper on :root, :host in tokens/schemes.css (or a --femto-box-shadow layer), @supports not {SUPPORTS} sets each light value, the dark icons and filters sit in @supports {SUPPORTS}, and a later @supports not {SUPPORTS} sets the two dark scheme rules' color-scheme back to light")
+    r = Result(f"Fallback: every light-dark() is a --femto-light-/--femto-dark- wrapper on :root, :host in tokens/schemes.css (or a --femto-box-shadow layer), @supports not {SUPPORTS} sets each light value, the dark icons sit in @supports {SUPPORTS}, and a later @supports not {SUPPORTS} sets the two dark scheme rules' color-scheme back to light")
     p, rel = root / "css/tokens/schemes.css", "css/tokens/schemes.css"
     if not p.exists():
         r.fail(f"{rel} is missing")

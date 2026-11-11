@@ -128,7 +128,7 @@ femto comes in two forms that style a page the same way: one file in `dist/`, or
 | `css/themes/` | The 20 [theme colors](#themes). |
 | `css/options/` | The 3 [options](#options). |
 
-Use `dist/femto.min.css` unless you need the modules. It is about 93 KB, 13 KB gzipped and 12 KB with Brotli. With `css/femto.css`, the browser finds the modules only after it has downloaded the entry, then fetches 36 files instead of one, and many small files compress worse than one. Median first contentful paint in milliseconds, with a cold cache, in Chrome and Firefox over emulated links to a local HTTPS server set up like a CDN (2026-10-28 and 29):
+Use `dist/femto.min.css` unless you need the modules. It is about 92 KB, 13 KB gzipped and 12 KB with Brotli. With `css/femto.css`, the browser finds the modules only after it has downloaded the entry, then fetches 36 files instead of one, and many small files compress worse than one. Median first contentful paint in milliseconds, with a cold cache, in Chrome and Firefox over emulated links to a local HTTPS server set up like a CDN (2026-10-28 and 29):
 
 | Link (round trip) | HTTP/2, `css/femto.css` / one file | HTTP/3 | HTTP/1.1 |
 |---|---|---|---|
@@ -153,7 +153,7 @@ femto's built-in color is azure. Each of the 19 others is one file in `css/theme
 <link rel="stylesheet" href="styles.css">
 ```
 
-A theme file is one `:root, :host` rule that sets ten theme tokens. That is the same specificity as your own overrides on `:root`, so a theme loaded after your stylesheet replaces your values of the tokens it sets. Six of them it sets as a `--femto-light-*` and `--femto-dark-*` pair instead of the token, such as `--femto-light-primary` and `--femto-dark-primary` for `--femto-primary` (see [Color schemes](#color-schemes)), even where both values are the same, and it has no `light-dark()`. It does not replace your plain value of a token it sets as a pair, such as `--femto-primary: #c00`. For a color of your own, copy a theme file and change its values.
+A theme file is one `:root, :host` rule that sets nine theme tokens. That is the same specificity as your own overrides on `:root`, so a theme loaded after your stylesheet replaces your values of the tokens it sets. Six of them it sets as a `--femto-light-*` and `--femto-dark-*` pair instead of the token, such as `--femto-light-primary` and `--femto-dark-primary` for `--femto-primary` (see [Color schemes](#color-schemes)), even where both values are the same, and it has no `light-dark()`. It does not replace your plain value of a token it sets as a pair, such as `--femto-primary: #c00`. For a color of your own, copy a theme file and change its values.
 
 femto ships no prebuilt themed copies: there is no `dist/femto.jade.min.css`. To fetch femto and a theme in one request, join them in a jsDelivr combine URL:
 
@@ -215,7 +215,7 @@ Every color token is declared once, on `:root` and `:host`. A token that femto o
 
 femto combines each pair into its token on `:root` and `:host`, so a `--femto-light-*` or `--femto-dark-*` token set on another element has no effect on femto's colors. To change a color in one part of a page, set the token itself on that element, such as `--femto-primary` on a card. An override written with `light-dark()`, such as `--femto-primary: light-dark(#c00, #f66)`, also works, except in browsers without `light-dark()`, where it fails (see [Browser support](#browser-support)).
 
-A `color-scheme` that your own CSS sets on an element also switches femto's colors in that subtree, as it switches the browser's own colors. `data-theme` is still the way to theme an element: it also switches the form validation icons and the chevron and loading spinner on `.contrast` buttons, which `light-dark()` cannot carry.
+A `color-scheme` that your own CSS sets on an element also switches femto's colors in that subtree, as it switches the browser's own colors. `data-theme` is still the way to theme an element: it also switches the form validation icons, which `light-dark()` cannot carry.
 
 In forced colors mode, such as a Windows contrast theme, the browser replaces femto's colors with the system's. femto then draws focus as a `Highlight` outline, and the state of checkboxes, radios and switches and the tracks of `<progress>` and range sliders in system colors.
 
@@ -389,7 +389,8 @@ Pico 2.1.1 supported every browser in browserslist's `defaults`, with prefixes a
 - Some rendering bugs of 2.1.1 are fixed, such as an indeterminate `<progress>` that looked complete in Firefox with reduced motion. The [changelog](CHANGELOG.md#fixed) lists them.
 - The focus ring of `role="group"` and `role="search"` inside a `data-theme` element follows that element's scheme.
 - With `no-transitions.css`, `--femto-transition` is `0s` (2.1.1 kept `0.2s ease-in-out`), so your own rules that read it stop animating too, and the group focus ring no longer fades.
-- Two other new tokens: `--femto-primary-inverse-filter`, the filter for the loading spinner on primary buttons, which a theme of your own sets to `brightness(0) invert(0)` when its `--femto-primary-inverse` is dark, and `--femto-grid-template-columns`, which `.grid` reads.
+- One other new token: `--femto-grid-template-columns`, which `.grid` reads.
+- The accordion and dropdown chevrons and the loading spinner are CSS masks. On filled buttons they take the button's text color, and your own rules that set `background-image` or `filter` on them no longer restyle them: set `mask` and `background-color` instead.
 - If you used a classless build, classes such as `.grid`, `.secondary`, `.dropdown` and `.striped` that it ignored are now styled.
 
 Every difference from Pico 2.1.1 that the parity tests found is registered, with its reason, in [tests/divergences/](tests/divergences/), and [CHANGELOG.md](CHANGELOG.md) lists the changes in each release.

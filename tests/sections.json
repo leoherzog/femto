@@ -426,7 +426,7 @@
     {
       "section": "Styles",
       "topic": "theme-color-dependent declaration outside Color schemes",
-      "note": "For the six light-primary themes (amber, grey, lime, pumpkin, sand, yellow; --femto-primary-inverse: #000) the Styles rule '[aria-busy=true]...:not(.outline)::before' becomes 'filter: brightness(0) invert(0)' instead of invert(1) in femto.<color>.css. The neighbouring 'details summary[role=button]:not(.outline)::after' keeps invert(1) in every theme (a 2.1.1 inconsistency to keep). femto writes that filter as the token --femto-primary-inverse-filter, which every themes/<color>.css sets. This is the 28th theme-dependent declaration."
+      "note": "For the six light-primary themes (amber, grey, lime, pumpkin, sand, yellow; --femto-primary-inverse: #000) the Styles rule '[aria-busy=true]...:not(.outline)::before' becomes 'filter: brightness(0) invert(0)' instead of invert(1) in femto.<color>.css. The neighbouring 'details summary[role=button]:not(.outline)::after' keeps invert(1) in every theme. This is the 28th theme-dependent declaration. femto has neither filter: components/accordion.css and components/loading.css draw the chevron and the spinner as masks filled with currentColor on these buttons, so both follow the button's text color in every theme and scheme."
     },
     {
       "section": "Styles",
@@ -441,7 +441,7 @@
     {
       "section": "Color schemes",
       "topic": "class-related declarations",
-      "note": "The scheme blocks also hold declarations for class-based components: five --femto-dropdown-* tokens (background-color, border-color, box-shadow, color, hover-background-color) in each scheme block, and in both dark blocks 'details summary[role=button].contrast:not(.outline)::after' and '[aria-busy=true]...contrast...:not(.outline)::before' { filter: brightness(0) }. Moving them to components/dropdown.css or content/button.css would put them later in the cascade than 2.1.1 does."
+      "note": "The scheme blocks also hold declarations for class-based components: five --femto-dropdown-* tokens (background-color, border-color, box-shadow, color, hover-background-color) in each scheme block, and in both dark blocks 'details summary[role=button].contrast:not(.outline)::after' and '[aria-busy=true]...contrast...:not(.outline)::before' { filter: brightness(0) }. femto has no such filters (see the Styles note on the theme-color-dependent declaration). Moving the dropdown tokens to components/dropdown.css would put them later in the cascade than 2.1.1 does."
     },
     {
       "section": "Color schemes",

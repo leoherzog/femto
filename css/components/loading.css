@@ -1,7 +1,7 @@
 /*
  * Loading: any element with aria-busy=true, other than form fields, html and form, shows the
- * spinner icon before its content, centered when the element is empty. Busy buttons and links
- * ignore the pointer.
+ * spinner icon before its content, centered when the element is empty; on a filled button it takes
+ * the button's text color. Busy buttons and links ignore the pointer.
  */
 [aria-busy=true]:not(input, select, textarea, html, form) {
   white-space: nowrap;
@@ -10,11 +10,15 @@
   display: inline-block;
   width: 1em;
   height: 1em;
-  background-image: var(--femto-icon-loading);
-  background-size: 1em auto;
-  background-repeat: no-repeat;
+  background-color: rgb(136, 145, 164);
   content: "";
   vertical-align: -0.125em;
+  mask: var(--femto-icon-loading) 0 0 / 1em auto no-repeat;
+  forced-color-adjust: none;
+  forced-color-adjust: preserve-parent-color;
+}
+[aria-busy=true]:not(input, select, textarea):is(button, [type=submit], [type=button], [type=reset], [role=button]):not(.outline)::before {
+  background-color: currentColor;
 }
 [aria-busy=true]:not(input, select, textarea, html, form):not(:empty)::before {
   margin-inline-end: calc(var(--femto-spacing) * 0.5);
