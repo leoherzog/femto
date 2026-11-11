@@ -20,6 +20,7 @@ dialog {
   height: inherit;
   min-height: 100%;
   padding: 0;
+  overscroll-behavior: contain;
   border: 0;
   -webkit-backdrop-filter: var(--femto-modal-overlay-backdrop-filter);
   backdrop-filter: var(--femto-modal-overlay-backdrop-filter);
@@ -35,6 +36,7 @@ dialog > article {
   max-height: calc(100svh - var(--femto-spacing) * 2);
   margin: var(--femto-spacing);
   overflow: auto;
+  overscroll-behavior: contain;
 }
 @media (min-width: 576px) {
   dialog > article {

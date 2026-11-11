@@ -80,6 +80,9 @@ export default defineConfig([
             // forced-color-adjust (Accessibility: forced colors): Limited because Safari lacks it,
             // and Safari has no forced colors mode.
             "forced-color-adjust",
+            // overscroll-behavior (Modal): Limited in the bundled data; where it is ignored, a
+            // modal's scroll chains to the page, as in 2.1.1.
+            "overscroll-behavior",
           ],
           allowSelectors: [
             // (c) summary::marker { display: none } is kept from 2.1.1 beside

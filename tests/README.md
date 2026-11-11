@@ -611,6 +611,12 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   toolbar, see Known limits): the card's `max-height` uses `100svh` where 2.1.1 used `100vh`, so on a
   phone whose browser toolbar shows, a tall card fits the visible viewport instead of running past
   both edges.
+  `modal-overscroll-contain`, on every dialog and its card: femto sets `overscroll-behavior:
+  contain` on both, so on a page without the `modal-is-open` class a card scrolled to its end no
+  longer scrolls the page behind it, and neither does the overlay of a `showModal()` dialog in
+  browsers that contain scroll containers with nothing to scroll (Chrome 144 and Firefox 150 and
+  later). The harness shows only the computed values; the scrolling was probed outside it in Chrome,
+  since headless Firefox ignores `overscroll-behavior` for WebDriver input.
 - `components-accordion.json`: `accordion-summary-flow-root`, on every summary. 2.1.1 floats the
   chevron at the end of the summary's last line but leaves the summary a list item, which does not
   contain floats, so a chevron that wraps below a full last line hung out of the summary, half
