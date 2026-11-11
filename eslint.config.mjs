@@ -85,6 +85,12 @@ export default defineConfig([
             "resize",
             // clip (Accessibility: [aria-hidden=false][hidden]): deprecated, still applied everywhere.
             "clip",
+
+            // (d) femto additions that are not Baseline but that browsers without them ignore
+            // harmlessly.
+            // forced-color-adjust (Accessibility: forced colors): Limited because Safari lacks it,
+            // and Safari has no forced colors mode.
+            "forced-color-adjust",
           ],
           allowSelectors: [
             // (c) summary::marker { display: none } is kept from 2.1.1 beside

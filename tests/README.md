@@ -991,6 +991,10 @@ with it in a search group. `uv run tests/static_checks.py` and `npm run lint` pa
   text (identical to 2.1.1's section) and with a standalone wrapper that emulates `reduce` in Chrome
   and Firefox. The one reduced-motion difference, the indeterminate progress bar in Firefox, was
   probed the same way and is registered as documentation only.
+- Forced colors is not an axis, so no cell matches `@media (forced-colors: active)` in
+  `utilities/accessibility.css`. Its rules were checked with standalone pages in Chrome (CDP
+  `Emulation.setEmulatedMedia`) and Firefox (`browser.display.document_color_use=2`), in light and
+  dark palettes, with 0 differences when forced colors is off.
 - No run has a dynamic mobile toolbar, so `100svh` equals `100vh` in every cell and the modal card's
   `max-height` computes the same on both sides. The modal fix was probed with a standalone page that
   emulates the toolbar in Chrome and Firefox, and is registered as documentation only.

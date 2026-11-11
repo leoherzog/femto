@@ -2564,6 +2564,67 @@ progress:indeterminate::-moz-progress-bar {
 [dir=rtl] {
   direction: rtl;
 }
+@media (forced-colors: active) {
+  :is(button, [type=submit], [type=reset], [type=button], [role=button]):focus,
+  [type=file]:focus::file-selector-button,
+  input:not([type=submit], [type=button], [type=reset], [type=file], [readonly]):focus,
+  :where(select, textarea):not([readonly]):focus,
+  details.dropdown > summary:not([role]):focus,
+  :where(a:not([role=button])):focus-visible,
+  [role=link]:focus-visible {
+    outline: 0.125rem solid Highlight;
+    outline-offset: 0.125rem;
+  }
+  [type=checkbox][role=switch] {
+    --femto-color: CanvasText;
+  }
+  [type=checkbox]:is(:checked, :indeterminate) {
+    --femto-color: HighlightText;
+    background-color: Highlight;
+  }
+  [type=checkbox]:is(:checked, :indeterminate),
+  [type=radio]:checked {
+    border-color: Highlight;
+  }
+  :is([type=checkbox], [type=radio]):disabled {
+    --femto-color: GrayText;
+    border-color: GrayText;
+  }
+  [type=checkbox]:is(:checked, :indeterminate):disabled {
+    --femto-color: Canvas;
+    background-color: GrayText;
+  }
+  [type=checkbox]:not([role=switch], [data-tooltip]):is(:checked, :indeterminate) {
+    background-image: none;
+  }
+  [type=checkbox]:not([role=switch], [data-tooltip]):is(:checked, :indeterminate)::before {
+    display: block;
+    height: 100%;
+    background-color: var(--femto-color);
+    content: "";
+    mask: var(--femto-icon-checkbox) center / 0.75em auto no-repeat;
+  }
+  [type=checkbox]:not([role=switch], [data-tooltip]):indeterminate::before {
+    mask-image: var(--femto-icon-minus);
+  }
+  progress {
+    --femto-progress-background-color: Canvas;
+    --femto-progress-color: Highlight;
+    border: var(--femto-border-width) solid CanvasText;
+    forced-color-adjust: none;
+  }
+  [type=range],
+  [type=range]:is(:active, :focus-within) {
+    --femto-range-border-color: CanvasText;
+    --femto-range-thumb-border-color: CanvasText;
+    --femto-range-thumb-color: Canvas;
+    forced-color-adjust: none;
+  }
+  [type=range]:disabled {
+    --femto-range-border-color: GrayText;
+    --femto-range-thumb-border-color: GrayText;
+  }
+}
 
 /* css/utilities/reduce-motion.css */
 @media (prefers-reduced-motion: reduce) {
