@@ -161,7 +161,7 @@ femto ships no prebuilt themed copies: there is no `dist/femto.jade.min.css`. To
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/@leoherzog/femto@3/dist/femto.min.css,npm/@leoherzog/femto@3/css/themes/jade.css">
 ```
 
-This should work once femto is published, because neither file has an `@import` and every `url()` in them is a `data:` URI, but it is not yet confirmed. It does not work with `css/femto.css`: jsDelivr does not rewrite relative paths in combined files, so the entry's `@import`s would not resolve.
+This works because neither file has an `@import` and every `url()` in them is a `data:` URI. It does not work with `css/femto.css`: jsDelivr does not rewrite relative paths in combined files, so the entry's `@import`s would not resolve.
 
 ## Options
 
@@ -312,7 +312,7 @@ femto 3.0 is derived from Pico CSS 2.1.1, copyright 2019-2024 Pico, under the MI
 
 The one-file builds moved from `css/` to `dist/`, and `css/femto.css` is now the `@import` entry. On jsDelivr, `https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css` becomes `https://cdn.jsdelivr.net/npm/@leoherzog/femto@3/dist/femto.min.css`.
 
-A themed build such as `pico.jade.min.css` becomes femto plus `css/themes/jade.css`: one combine URL (expected to work once femto is published, but not yet confirmed; see [Themes](#themes)), or two `<link>` tags.
+A themed build such as `pico.jade.min.css` becomes femto plus `css/themes/jade.css`: one combine URL (see [Themes](#themes)), or two `<link>` tags.
 
 ```html
 <!-- One request -->

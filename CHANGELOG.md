@@ -83,5 +83,4 @@ Rendering bugs that Pico 2.1.1 has. Where Pico has an open issue for one, it is 
 ### Known issues
 
 - A bundler that rewrites CSS for browsers older than femto's minimums breaks `data-theme` on elements. Vite 8's default production build is one; the README's npm section shows how to set its CSS targets.
-- The jsDelivr combine URL for femto plus a theme is expected to work but has not been confirmed.
 - An item of `role="group"` or `role="search"` rounds its corners and places its border overlap by its own text direction, not its group's. In a right-to-left group, an item laid out left to right, such as `type="tel"`, `dir="ltr"` or `dir="auto"` holding left-to-right text, keeps Pico 2.1.1's inside-out corners and overlap. In a left-to-right group, an item whose direction is right to left, `dir="rtl"` or `dir="auto"` once it holds Hebrew or Arabic text, now rounds its inner corners and squares its outer ones, where Pico 2.1.1 drew it like the other items.
