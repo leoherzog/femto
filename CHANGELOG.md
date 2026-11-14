@@ -2,7 +2,7 @@
 
 All notable changes to femto are listed here. femto 3.0 is derived from Pico CSS 2.1.1, so its first entry lists how it differs from Pico 2.1.1.
 
-## 3.0.0-alpha.1 (unreleased)
+## 3.0.0-alpha.1 (2026-11-13)
 
 The first alpha of femto 3: Pico CSS 2.1.1's default build rewritten as plain CSS, with no Sass. It keeps every element and feature of Pico's default build, its 20 theme colors, its options and its color utilities. The README's [Migrating from Pico](README.md#migrating-from-pico) section explains how to switch.
 
