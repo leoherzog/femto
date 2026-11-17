@@ -16,6 +16,8 @@ Link one stylesheet and plain HTML looks clean and readable: headings, text, lin
 - A color palette with utility classes, in a file of its own.
 - Only CSS that is Baseline Widely Available, apart from some vendor-only rules and a few documented exceptions.
 
+[femto.style](https://femto.style/docs) documents every element, component and setting with live examples. AI agents can read the same docs as Markdown, one file per section, listed in [llms.txt](https://femto.style/llms.txt).
+
 ## Quick start
 
 femto 3.0 is in alpha, so names and files may still change before 3.0.0. Every `@3` link and command in this README is for 3.0.0 and works once it is released: jsDelivr and npm skip prereleases when they resolve `@3`. Until then, load the alpha by its version from jsDelivr, or write `@alpha` in place of `@3` in any link:
