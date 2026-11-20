@@ -23,7 +23,7 @@ Link one stylesheet and plain HTML looks clean and readable: headings, text, lin
 femto 3.0 is in alpha, so names and files may still change before 3.0.0. Every `@3` link and command in this README is for 3.0.0 and works once it is released: jsDelivr and npm skip prereleases when they resolve `@3`. Until then, load the alpha by its version from jsDelivr, or write `@alpha` in place of `@3` in any link:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@leoherzog/femto@3.0.0-alpha.1/dist/femto.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@leoherzog/femto@3.0.0-alpha.2/dist/femto.min.css">
 ```
 
 or install it from npm, pinned to that version so that a later alpha, which may rename things, is not installed on its own:
