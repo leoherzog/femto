@@ -472,6 +472,13 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   field shares with it; femto gives that field `z-index: 1`, so its whole red or green border shows,
   and a focused item stays above it at 2 (fixtures: the invalid text input and button after "Two
   inputs" in "Role group", and the valid select, search input and submit in "Role search").
+  `group-overlap-whole-pixels`, with `-geometry`, limited to `components-group.html` from 576px:
+  2.1.1 overlaps each item by the border width token, 1.0625px to 1.3125px there, while browsers
+  draw that border 1px wide, so where a transparent outline button lets the border it overlaps show
+  through, the seams are one or two pixels wide by sub-pixel position; femto rounds an outline
+  button's overlap down to whole pixels, and the items of its group share the width differently
+  (fixtures: the outline links, the email input before four outline buttons and the outline search,
+  and the "Right to left outline" block).
 - `options-no-transitions.json`: six entries limited to the `option-no-transitions` preset. 2.1.1
   builds that option by compiling the gated `transition` declarations, the modal animations and the
   tooltip slides out; an appended file can only reset them, so `options/no-transitions.css` sets

@@ -130,5 +130,39 @@
     "category": "natural-fix",
     "reason": "2.1.1 pulls every item after the first in a [role=group] or [role=search] row back one border width over the item before it and leaves every item at z-index auto, so the later item paints over the border they share; only a focused item is raised, to z-index 2. A field with aria-invalid=true or aria-invalid=false therefore lost its red or green border on the edge it shares with the next item. femto gives such a field z-index 1, with the selector shapes of the focus rule and placed before it, so its whole colored border shows and a focused item still sits above it at 2. Other aria-invalid values, which femto does not color, and groups without aria-invalid are unchanged.",
     "notes": "Fixtures in components-group.html: the [role=group] after \"Two inputs\" in \"Role group\" (a text input with aria-invalid=true, data-states=focus, then a button) and the [role=search] after the s-before-select one in \"Role search\" (a select with aria-invalid=false, a search input, a submit). Both go from auto to 1 in every state except while the field itself is focused, when both sides are 2. Probed with standalone Selenium pages in Chrome 158 and Firefox 160 beta, light, dark, data-theme islands and rtl, at 1000 and 375px, at rest, with the button hovered and with fields and buttons focused, against 2.1.1, femto before the fix and the built dist: before, the pixel at the middle of an invalid input's end border was the button's #0172ad (#02659a with the button hovered) while its computed border was rgb(184, 106, 107), and elementFromPoint returned the button; after, it is the field's #b76a6b (Chrome) or #b86a6b (Firefox), rgb(76, 155, 138) green for aria-invalid=false, and the field is on top, in all 12 width and variant cells for first, middle, select, textarea and search fields. aria-invalid=\"\" and aria-invalid=grammar stay at auto. Six harness pages without aria-invalid in a group show no computed z-index change. Side effects: the raised field paints above earlier z-index 1 content, such as a z-index 1 sticky header, the menu of an open dropdown inside such a header, or an open dropdown's click-catcher (summary::before), so a click on the invalid field focuses it instead of closing the dropdown; 2.1.1 already does this for a focused grouped item at z-index 2. When a button in the group has focus, field borders are transparent, so the raised field's edge covers one column of the next button, the same 1px seam 2.1.1 shows where a field follows a button. Two adjacent aria-invalid fields still share the later field's color. Upstream issue picocss/pico#536."
+  },
+  {
+    "id": "group-overlap-whole-pixels",
+    "module": "components/group",
+    "kind": "style",
+    "selector": ":is([role=group], [role=search]) .outline",
+    "pseudo": "",
+    "property": "/^margin-(left|inline-start)$/",
+    "reference": "/^-1\\.(0625|125|1875|25|3125)px$/",
+    "femto": "-1px",
+    "where": {
+      "pages": ["components-group.html"],
+      "widths": [{"min": 576}]
+    },
+    "category": "natural-fix",
+    "reason": "2.1.1 pulls every item after the first in a [role=group] or [role=search] row back by --femto-border-width, 0.0625rem, which is 1.0625px to 1.3125px from 576px up, while browsers draw that border one whole pixel wide at 1x and 2x. A field, select or filled button hides the border it overlaps behind its own background, but an outline button is transparent, so both borders show and each seam is one or two pixels wide depending on the item's sub-pixel position. femto overlaps an outline button by the border width rounded down to whole pixels from 1px up, so its border lies exactly over the one before it at 1x and 2x and every seam is one border wide. Other items keep the token's overlap: their background already hides the earlier border, and a rounded overlap would leave it showing at scales such as 1.75x, where a 1.25px border is drawn two device pixels wide.",
+    "notes": "Fixtures in components-group.html: the three secondary outline role=button links after the \"Role button\" group in \"Role group\", the next group (an email input, then outline button, submit, reset and input button), the [role=search] before the form with a hidden input in \"Role search\" (a search input, then an outline button), and the \"Right to left outline\" block, whose right-to-left margins group-rtl-logical-corners registers. The reference is -1.0625px at 576 to 767px, -1.125px, -1.1875px, -1.25px at 1280 and -1.3125px from 1536px; femto is -1px, and below 576px both are -1px. Probed with standalone Playwright pages in Chromium 156 with --force-device-scale-factor, counting the device pixels of border color at each seam over four sub-pixel offsets, eight groups and root sizes 16 to 21px: before, outline seams were 1 or 2 pixels at 1x and 2 or 3 at 2x from a 17px root; after, 1 and 2. At 1.5x the border is drawn one device pixel (0.666667px) and the 1px overlap is 1.5 device pixels, so outline seams stay 1 or 2 device pixels, as at a 16px root before. Fields, selects and filled buttons were even before and after at 1x, 1.5x, 2x and 1.75x. Firefox and Safari were not checked."
+  },
+  {
+    "id": "group-overlap-whole-pixels-geometry",
+    "module": "components/group",
+    "kind": "style",
+    "selector": ":is([role=group], [role=search]):has(.outline) *",
+    "pseudo": "/^(|::placeholder)$/",
+    "property": "/^(width|inline-size|transform-origin|perspective-origin)$/",
+    "reference": "*",
+    "femto": "*",
+    "where": {
+      "pages": ["components-group.html"],
+      "widths": [{"min": 576}]
+    },
+    "category": "natural-fix",
+    "reason": "Consequence of group-overlap-whole-pixels: an outline button overlaps the item before it by up to 0.3125px less, so the items of its group share the group's width differently, and their widths, inline sizes and transform and perspective origins change, as do an input's ::placeholder ones.",
+    "notes": "Recorded in Chromium 156 at 1280: the first of the three outline links goes from 422.859px to 422.688px wide. The selector matches every item of a group that holds an outline button."
   }
 ]

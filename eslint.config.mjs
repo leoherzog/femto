@@ -39,11 +39,13 @@ export default defineConfig([
 
           // (b) Widely Available by the release date, but Newly Available in the bundled data,
           // whose stored status the rule compares. femto writes light-dark() only inside custom
-          // properties and @supports conditions, which the rule skips, so this entry only covers a
-          // future direct use.
+          // properties and @supports conditions, and round() only inside calc(), which the rule
+          // skips, so these entries only cover a future direct use.
           allowFunctions: [
             // light-dark(): Baseline low 2024-05-13, Widely 2026-11-13 (web-features 3.44.0).
             "light-dark",
+            // round() (Group): Baseline low 2024-05-17, Widely 2026-11-17 (web-features 3.47.0).
+            "round",
           ],
           allowPropertyValues: {
             // text-wrap: balance (Typography headings): Baseline low 2024-05-13, Widely 2026-11-13.

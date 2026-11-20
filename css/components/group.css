@@ -1,7 +1,9 @@
 /*
  * Group: [role=group] and [role=search] as one inline row of buttons, inputs and selects with
  * shared borders and only the outer corners rounded, and a group focus ring drawn through :has().
- * [role=search] rounds its outer corners into a pill.
+ * An outline button lets the border it overlaps show through, so it overlaps by the border width
+ * rounded down to whole pixels from 1px up, as browsers draw it at 1x and 2x. [role=search] rounds
+ * its outer corners into a pill.
  */
 [role=search],
 [role=group] {
@@ -52,6 +54,13 @@
 :is([role=search], [role=group]) input:not([type=checkbox], [type=radio]):where(:is([role=search], [role=group]) *):not(:nth-child(1 of :where(:not([hidden], input[type=hidden])))),
 :is([role=search], [role=group]) select:where(:is([role=search], [role=group]) *):not(:nth-child(1 of :where(:not([hidden], input[type=hidden])))) {
   margin-inline-start: calc(var(--femto-border-width) * -1);
+}
+:is([role=search], [role=group]) button.outline:where(:is([role=search], [role=group]) *):not(:nth-child(1 of :where(:not([hidden], input[type=hidden])))),
+:is([role=search], [role=group]) [type=submit].outline:where(:is([role=search], [role=group]) *):not(:nth-child(1 of :where(:not([hidden], input[type=hidden])))),
+:is([role=search], [role=group]) [type=reset].outline:where(:is([role=search], [role=group]) *):not(:nth-child(1 of :where(:not([hidden], input[type=hidden])))),
+:is([role=search], [role=group]) [type=button].outline:where(:is([role=search], [role=group]) *):not(:nth-child(1 of :where(:not([hidden], input[type=hidden])))),
+:is([role=search], [role=group]) [role=button].outline:where(:is([role=search], [role=group]) *):not(:nth-child(1 of :where(:not([hidden], input[type=hidden])))) {
+  margin-inline-start: calc(max(round(down, var(--femto-border-width), 1px), min(var(--femto-border-width), 1px)) * -1);
 }
 :is([role=search], [role=group]) button,
 :is([role=search], [role=group]) [type=submit],

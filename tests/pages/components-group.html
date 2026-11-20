@@ -30,6 +30,18 @@
     <a href="#rb" role="button" data-states="focus">Role button</a>
   </div>
   <div role="group">
+    <a href="#ol1" role="button" class="secondary outline">One</a>
+    <a href="#ol2" role="button" class="secondary outline" data-states="hover focus">Two</a>
+    <a href="#ol3" role="button" class="secondary outline">Three</a>
+  </div>
+  <div role="group">
+    <input type="email" name="g-outline-email" placeholder="Email before outline buttons">
+    <button class="outline" data-states="focus">Outline</button>
+    <input type="submit" class="outline contrast" value="Submit outline">
+    <input type="reset" class="outline" value="Reset outline">
+    <input type="button" class="outline secondary" value="Input button outline">
+  </div>
+  <div role="group">
     <input type="text" name="g-only" placeholder="Single input in a group">
   </div>
   <div role="group">
@@ -97,6 +109,10 @@
     <input type="search" name="s-search-5" placeholder="Search">
     <input type="submit" value="Search">
   </div>
+  <div role="search">
+    <input type="search" name="s-outline" placeholder="Search before an outline button">
+    <button class="outline" data-states="hover">Search</button>
+  </div>
   <form role="search">
     <input type="hidden" name="s-hidden" value="femto">
     <input type="search" name="s-after-hidden" placeholder="Search after a hidden input">
@@ -113,6 +129,13 @@
     <div role="search">
       <input type="search" name="rs-search" placeholder="Search" data-states="focus">
       <input type="submit" value="Search">
+    </div>
+  </div>
+  <div dir="rtl">
+    <h2>Right to left outline</h2>
+    <div role="group">
+      <button class="outline">First outline</button>
+      <button class="outline secondary">Second outline</button>
     </div>
   </div>
 

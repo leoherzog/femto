@@ -2,6 +2,12 @@
 
 All notable changes to femto are listed here. femto 3.0 is derived from Pico CSS 2.1.1, so its first entry lists how it differs from Pico 2.1.1.
 
+## Unreleased
+
+### Fixed
+
+- In `role="group"` and `role="search"`, from 576px up, an outline button or outline `role="button"` link shares one border line with the item before it, as it already did below 576px, instead of seams that alternate between one and two pixels. It now overlaps that item by the border width rounded down to whole pixels, the width browsers draw it at, so it sits up to 0.3125px further along and the items of its group share the width a little differently. At 1x and 2x every seam is one border wide, so a `--femto-border-width: 1px` set on a group to work around this can go. At a fractional display scale such as 150%, seams between outline items can still differ by one device pixel, as they already did below 576px. Fields, selects and filled buttons are unchanged, since their background already covers the border they overlap.
+
 ## 3.0.0-alpha.1 (2026-11-13)
 
 The first alpha of femto 3: Pico CSS 2.1.1's default build rewritten as plain CSS, with no Sass. It keeps every element and feature of Pico's default build, its 20 theme colors, its options and its color utilities. The README's [Migrating from Pico](README.md#migrating-from-pico) section explains how to switch.
