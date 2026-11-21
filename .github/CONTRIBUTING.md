@@ -24,4 +24,6 @@ The [`dev`](https://github.com/leoherzog/femto/tree/dev) branch is open for pull
 
 The [Build workflow](workflows/build.yml) lints `css/` and rebuilds `dist/` on every push and pull request. If a push to `dev` forgets the build, the workflow commits `dist/` after it, so pull before your next push. Anywhere else, including a pull request, a stale `dist/` fails the check.
 
+Releases reach npm only through the [Publish workflow](workflows/publish.yml), which runs when a GitHub release is published. It uses npm's trusted publishing, so no npm token is stored anywhere, and npm shows which commit and workflow run built each version.
+
 Please follow the [code of conduct](CODE_OF_CONDUCT.md), and report security problems privately as [SECURITY.md](SECURITY.md) describes.

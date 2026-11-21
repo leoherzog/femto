@@ -1,0 +1,72 @@
+# Publishes femto to npm when a GitHub release is published, pre-releases included. It uses npm's
+# trusted publishing: npm accepts this workflow's GitHub OIDC token in place of an npm token, which
+# it trusts by file name (npm trust github --file publish.yml --repo leoherzog/femto), and records
+# the commit and run that built each version. A prerelease goes to the npm dist-tag its version
+# names (3.0.0-alpha.2 to alpha, 3.0.0-rc.1 to rc), and a release to latest. Publishing a release
+# whose version is already on npm, such as 3.0.0-alpha.1, which was published by hand, does nothing.
+name: Publish
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: lts/*
+      - name: Check the release against package.json
+        id: check
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+          PRERELEASE: ${{ github.event.release.prerelease }}
+        run: |
+          echo "node $(node --version), npm $(npm --version)"
+          name=$(node -p 'require("./package.json").name')
+          version=$(node -p 'require("./package.json").version')
+          if [ "$TAG" != "v$version" ]; then
+            echo "::error::The release's tag is $TAG, but package.json says $version."
+            exit 1
+          fi
+          if ! git merge-base --is-ancestor HEAD origin/main; then
+            echo "::error::$TAG is not on main."
+            exit 1
+          fi
+          case "$version" in
+            *-*) prerelease=true; dist_tag=${version#*-}; dist_tag=${dist_tag%%.*} ;;
+            *) prerelease=false; dist_tag=latest ;;
+          esac
+          if [ "$PRERELEASE" != "$prerelease" ]; then
+            echo "::error::The release's pre-release box is $PRERELEASE, but for $version it should be $prerelease."
+            exit 1
+          fi
+          if [ -n "$(npm view "$name@$version" version 2>/dev/null)" ]; then
+            echo "::notice::$name@$version is already on npm, so nothing is published."
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "Publishing $name@$version with the dist-tag $dist_tag."
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+          fi
+          echo "dist_tag=$dist_tag" >> "$GITHUB_OUTPUT"
+      - if: steps.check.outputs.publish == 'true'
+        run: npm ci --ignore-scripts
+      - if: steps.check.outputs.publish == 'true'
+        run: npm run lint
+      # prepublishOnly rebuilds dist/ and fails if that changed it.
+      - if: steps.check.outputs.publish == 'true'
+        run: npm publish --tag "$DIST_TAG"
+        env:
+          DIST_TAG: ${{ steps.check.outputs.dist_tag }}
