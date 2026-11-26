@@ -393,7 +393,7 @@ Pico 2.1.1 supported every browser in browserslist's `defaults`, with prefixes a
 - With `no-transitions.css`, `--femto-transition` is `0s` (2.1.1 kept `0.2s ease-in-out`), so your own rules that read it stop animating too, and the group focus ring no longer fades.
 - Screen readers no longer read a tooltip's text, which is not part of its element's accessible name. An element named only by its tooltip, such as an icon-only button, needs `aria-label` or text of its own, and a hint that matters belongs in the page's text.
 - One other new token: `--femto-grid-template-columns`, which `.grid` reads.
-- The accordion and dropdown chevrons and the loading spinner are CSS masks. On filled buttons they take the button's text color, and your own rules that set `background-image` or `filter` on them no longer restyle them: set `mask` and `background-color` instead.
+- The accordion and dropdown chevrons and the loading spinner are CSS masks. On filled buttons they take the button's text color. Your own rules that set `background-image` on them no longer replace the icon, and a `filter` written to recolor Pico's image still applies on top of the new color, so remove both and set `mask` and `background-color` instead.
 - If you used a classless build, classes such as `.grid`, `.secondary`, `.dropdown` and `.striped` that it ignored are now styled.
 
 Every difference from Pico 2.1.1 that the parity tests found is registered, with its reason, in [tests/divergences/](tests/divergences/), and [CHANGELOG.md](CHANGELOG.md) lists the changes in each release.
