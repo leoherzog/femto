@@ -327,7 +327,7 @@ A themed build such as `pico.jade.min.css` becomes femto plus `css/themes/jade.c
 
 ### Find and replace
 
-Replace `pico` with `femto` in class names and custom properties, in your HTML, CSS and scripts. femto has no `--pico-*` aliases, so every name needs the change:
+Replace `pico` with `femto` in class names and custom properties, in your HTML, CSS and scripts. The one exception is the conditional builds' `.pico` class, which you remove (see [Dropped builds](#dropped-builds)). femto has no `--pico-*` aliases, so every name needs the change:
 
 - Custom properties: `--pico-primary` becomes `--femto-primary`, and every other `--pico-` name likewise.
 - Color utility classes: `.pico-color-jade-500` becomes `.femto-color-jade-500`, and `.pico-background-*` becomes `.femto-background-*`.
@@ -336,7 +336,7 @@ Change file paths, URLs and package names by the table above, not by find and re
 
 ### Dropped builds
 
-- The conditional builds (`pico.conditional*.css`) are gone, with their `$parent-selector` setting. They styled what is inside `.pico` and kept some rules for the whole page, such as the root element's colors and typography, `box-sizing` and `background-repeat` on every element, the body's width and margin, `main`'s display, `data-theme`'s color scheme and tokens, `.container`, `.container-fluid` and `.grid`, and the `.modal-is-open`, `.modal-is-opening` and `.modal-is-closing` classes. femto styles the whole page, or a shadow root that loads it. Remove the `.pico` classes.
+- The conditional builds (`pico.conditional*.css`) are gone, with their `$parent-selector` setting. They styled what is inside `.pico` and kept some rules for the whole page, such as the root element's colors and typography, `box-sizing` and `background-repeat` on every element, the body's width and margin, `main`'s display, `data-theme`'s color scheme and tokens, `.container`, `.container-fluid` and `.grid`, and the `.modal-is-open`, `.modal-is-opening` and `.modal-is-closing` classes. femto styles the whole page, or a shadow root that loads it. Remove the `.pico` class from your markup, and from your own selectors too, where `.pico button.secondary` becomes `button.secondary`, or the rule stops matching.
 - The classless builds (`pico.classless*.css` and `pico.fluid.classless*.css`) are gone. Load femto and put a container class on the header, main and footer that are direct children of `<body>`, the only ones those builds made containers: `.container` for centered widths, or `.container-fluid` for the full width.
 
 ```html
