@@ -43,5 +43,18 @@
     "category": "natural-fix",
     "reason": "2.1.1's source removes the default outline with outline: none, which leaves outline-width at its initial medium, 3px. The parity reference is the unminified pico.css, which keeps that, but 2.1.1's minifier writes the same declaration as outline:0 in every .min.css build, the files most sites load, and there outline-width is 0. Nothing shows either way, since outline-style is none in both, until a rule of the page's own sets only outline-style: it drew no ring with pico.min.css and a 3px ring with pico.css. femto writes outline: 0, so its one-file builds and its modules both compute 0, as the minified 2.1.1 builds do. Here the rule is that of buttons, role=button elements and the file input's button.",
     "notes": "Seen in run outline-1 (Chrome Beta 159, Firefox 161) on every button, role=button element and file selector button, in every state. Probed outside the harness in the same browsers with a, button, input, summary { outline-style: solid }: outline-width is 3px with pico.css and with femto before this change, and 0px with pico.min.css and with femto after it, on a link, a button, a text field and a focused dropdown summary."
+  },
+  {
+    "id": "button-group-max-width-overlap",
+    "module": "content/button",
+    "kind": "style",
+    "selector": ":is([role=search], [role=group]) :is(button, [role=button]):not(:nth-child(1 of :where(:not([hidden], input[type=hidden]))), [aria-busy=true], [aria-busy=true]:not(input, select, textarea, html, form) *, details.dropdown > summary + ul *, nav[aria-label=breadcrumb] ul li a)",
+    "pseudo": "",
+    "property": "/^max-(width|inline-size)$/",
+    "reference": "none",
+    "femto": "/^calc\\(100% \\+ [0-9.]+px\\)$/",
+    "category": "natural-fix",
+    "reason": "The cap of button-long-label-max-width inside a role=group or role=search row. Every item after the first there has a negative margin-inline-start of the border width, so that neighbors share a border. Where the row sizes an item's track to the item, as an author's display: grid with an auto column does, the track is the button's width less that margin, and max-width: 100% of it cut the button one border width short of its own content: its label broke onto a second line, or the button ended a border width before the row's edge. femto caps a button after the first in a group at 100% plus the border width, so the cap allows for the overlap, and a long unbroken label still wraps inside the row. The first item, which has no negative margin, keeps the cap of 100%. An outline button, which overlaps by the border width rounded down, gets the same value as any other, a fraction of a pixel looser than it needs.",
+    "notes": "Seen in run group-cap-3 (Chrome Beta 159, Firefox 161) on the buttons and role=button links after the first item of every group: calc(100% + 1px) at 390 and calc(100% + 1.25px) at 1280, where femto computed 100% before; nothing else differs, since the fixtures' groups are flex rows wider than their buttons. Probed outside the harness in the same browsers at 1280 with form[role=search] and div[role=group] set to display: grid; grid-template-columns: 1fr auto, holding a field and a button: with 2.1.1 the button is 62.5px tall and ends at the row's edge; with max-width: 100% it was 92px tall, its label on two lines, and ended 1.25px short (1px for an outline button); with this rule it matches 2.1.1. In Chrome, a button with a 62-character URL label that is the only item of a group inside a 12rem box is as wide as the box, 240px, where 2.1.1 gave 622.03px; a second such button is 241.25px wide."
   }
 ]

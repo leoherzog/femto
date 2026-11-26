@@ -1,8 +1,9 @@
 /*
  * Button: button, the button-like inputs, the file input's selector button and [role=button], with
  * their hover, active, focus and aria-current states, the .secondary, .contrast and .outline classes,
- * and the disabled state. A button is at most as wide as its container, so a long label wraps. The
- * reboot rules follow normalize.css v8.0.1 and sanitize.css v13.0.0.
+ * and the disabled state. A button is at most as wide as its container, plus the border it shares
+ * with the item before it in a group, so a long label wraps. The reboot rules follow normalize.css
+ * v8.0.1 and sanitize.css v13.0.0.
  */
 button {
   margin: 0;
@@ -76,6 +77,9 @@ button:focus, button:is([aria-current]:not([aria-current=false])):focus,
 
 :where(:is(button, [role=button]):not([aria-busy=true], [aria-busy=true]:not(input, select, textarea, html, form) *, details.dropdown > summary + ul *, nav[aria-label=breadcrumb] ul li a)) {
   max-width: 100%;
+}
+:where(:is([role=search], [role=group]) :is(button, [role=button]):not(:nth-child(1 of :where(:not([hidden], input[type=hidden]))), [aria-busy=true], [aria-busy=true]:not(input, select, textarea, html, form) *, details.dropdown > summary + ul *, nav[aria-label=breadcrumb] ul li a)) {
+  max-width: calc(100% + var(--femto-border-width));
 }
 
 [type=submit],

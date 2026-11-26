@@ -876,6 +876,9 @@ button:is([aria-current]:not([aria-current=false])):focus,
 :where(:is(button, [role=button]):not([aria-busy=true], [aria-busy=true]:not(input, select, textarea, html, form) *, details.dropdown > summary + ul *, nav[aria-label=breadcrumb] ul li a)) {
   max-width: 100%;
 }
+:where(:is([role=search], [role=group]) :is(button, [role=button]):not(:nth-child(1 of :where(:not([hidden], input[type=hidden]))), [aria-busy=true], [aria-busy=true]:not(input, select, textarea, html, form) *, details.dropdown > summary + ul *, nav[aria-label=breadcrumb] ul li a)) {
+  max-width: calc(100% + var(--femto-border-width));
+}
 [type=submit],
 [type=reset],
 [type=button] {

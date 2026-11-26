@@ -724,6 +724,12 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   button changes only its computed `max-width` and `max-inline-size` (fixture: `#long-label`, a
   narrow fixed-height box holding a button and a link with a URL label, whose size, height and
   origins change).
+  `button-group-max-width-overlap`, on the buttons and `role=button` links after the first item of
+  every group: such an item overlaps the one before it by the border width, so where a row sizes a
+  track to its button, as an author's grid with an `auto` column does, `max-width: 100%` cut the
+  button one border short and broke its label; femto caps it at 100% plus the border width, so only
+  that computed value changes in the fixtures, whose groups are flex rows, and the grid case was
+  probed outside the harness.
   `button-outline-width-zero`, with `link-outline-width-zero` (`content-link.json`),
   `form-field-outline-width-zero` (`forms-basics.json`) and `summary-focus-outline-width-zero`
   (`components-accordion.json`), on every button, link, form field and focused summary. 2.1.1's
