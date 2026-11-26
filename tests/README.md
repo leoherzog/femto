@@ -530,6 +530,10 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   `classes-dropdown-open.html`: the tooltip's transform and `pointer-events: none` moved the
   click-outside overlay half a viewport left and let clicks through; femto resets both and hides the
   caret while the dropdown is open.
+  `dropdown-open-overlay-size`, documentation only: 2.1.1 also sized that overlay `100vw` by
+  `100vh`, the initial containing block, which on a phone page wider than the screen is less than
+  the layout viewport that `inset: 0` covers, so a tap on the rest of the page left the dropdown
+  open; no fixture has such a viewport, so it was probed outside the harness.
 - `components-nav.json`: `rtl-breadcrumb-backslash`, with `-geometry` and `-divider-inset`, limited to
   `components-nav.html` and `kitchen-sink.html`. 2.1.1's rtl rule gave the `::after` of every element
   inside a breadcrumb item but the last a backslash; femto drops it, so an rtl breadcrumb shows only

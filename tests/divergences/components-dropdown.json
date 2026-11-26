@@ -212,5 +212,18 @@
     "category": "natural-fix",
     "reason": "Consequence of dropdown-open-tooltip-overlay-transform: with the overlay in the summary's ::before, an open dropdown has no tooltip bubble, so femto hides the caret too, display: none on the summary's ::after, instead of 2.1.1's chevron in the caret's place above the summary. A hidden pseudo-element reports its declared insets, size and transform, so those change with it.",
     "notes": "Fixtures and run as dropdown-open-tooltip-overlay-transform: display block to none, width 16px and height 24px to auto, top -24px to auto, left 194px to 50% at 390, transform to none, and in the rtl leg margin-right instead of margin-left."
+  },
+  {
+    "id": "dropdown-open-overlay-size",
+    "module": "components/dropdown",
+    "kind": "style",
+    "selector": "details.dropdown[open] > summary",
+    "pseudo": "::before",
+    "property": "/^(width|inline-size|height|block-size|right|bottom|inset-(inline|block)-end|transform-origin|perspective-origin)$/",
+    "reference": "*",
+    "femto": "*",
+    "category": "natural-fix",
+    "reason": "An open dropdown's summary::before is a transparent fixed overlay that closes the dropdown on a click outside. 2.1.1 sizes it width: 100vw and height: 100vh on top of inset: 0, and femto drops the two sizes, so inset: 0 alone stretches the overlay over the whole layout viewport. The two agree except in two cases. Where the layout viewport is larger than the initial containing block, which those units measure, as on a phone page wider than the screen, 2.1.1's overlay covered only part of the zoomed-out page, and a tap on the rest left the dropdown open, where femto closes it. Where a classic scrollbar takes part of the viewport, 100vw includes it, so 2.1.1's overlay also ran under the scrollbar, which changes no click.",
+    "notes": "Documentation only: every fixture's layout viewport equals its initial containing block so both sides compute the same size and this never hits. Probed outside the harness in Chrome Beta 159 with mobile emulation at 390 by 900 on a page holding an 800px wide box: the overlay computes 390px by 900px with 2.1.1's pico.css and pico.min.css and 816px by 1884px with femto, and a click at (600, 300) leaves 2.1.1's dropdown open and closes femto's. Without mobile emulation both compute 390px by 900px. At 1280 by 800 on a 3000px tall page with a 15px scrollbar, set with ::-webkit-scrollbar, the overlay is 1280px wide with 2.1.1 and 1265px with femto."
   }
 ]
