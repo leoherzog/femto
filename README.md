@@ -388,7 +388,7 @@ Pico 2.1.1 supported every browser in browserslist's `defaults`, with prefixes a
 ### Other changes
 
 - Firefox shows its keyboard focus ring again on elements that set no outline of their own, such as `video` and tooltips with `tabindex`: femto drops 2.1.1's `:-moz-focusring { outline: none }`. It also draws the focus and `aria-invalid` rings on a field the user has left invalid, as Chrome and Safari already did, because femto drops `:-moz-ui-invalid { box-shadow: none }`.
-- Some rendering bugs of 2.1.1 are fixed, such as an indeterminate `<progress>` that looked complete in Firefox with reduced motion. The [changelog](CHANGELOG.md#fixed) lists them.
+- Some rendering bugs of 2.1.1 are fixed, such as an indeterminate `<progress>` that looked complete in Firefox with reduced motion. The changelog lists them, most under Fixed in its [3.0.0-alpha.1 entry](CHANGELOG.md#300-alpha1-2026-11-13), which has the other differences from 2.1.1 under Changed, Added and Removed. Later entries add more.
 - The focus ring of `role="group"` and `role="search"` inside a `data-theme` element follows that element's scheme.
 - With `no-transitions.css`, `--femto-transition` is `0s` (2.1.1 kept `0.2s ease-in-out`), so your own rules that read it stop animating too, and the group focus ring no longer fades.
 - Screen readers no longer read a tooltip's text, which is not part of its element's accessible name. An element named only by its tooltip, such as an icon-only button, needs `aria-label` or text of its own, and a hint that matters belongs in the page's text.
