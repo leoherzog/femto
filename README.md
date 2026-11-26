@@ -337,7 +337,7 @@ Change file paths, URLs and package names by the table above, not by find and re
 ### Dropped builds
 
 - The conditional builds (`pico.conditional*.css`) are gone, with their `$parent-selector` setting. They styled what is inside `.pico` and kept some rules for the whole page, such as the root element's colors and typography, `box-sizing` and `background-repeat` on every element, the body's width and margin, `main`'s display, `data-theme`'s color scheme and tokens, `.container`, `.container-fluid` and `.grid`, and the `.modal-is-open`, `.modal-is-opening` and `.modal-is-closing` classes. femto styles the whole page, or a shadow root that loads it. Remove the `.pico` class from your markup, and from your own selectors too, where `.pico button.secondary` becomes `button.secondary`, or the rule stops matching.
-- The classless builds (`pico.classless*.css` and `pico.fluid.classless*.css`) are gone. Load femto and put a container class on the header, main and footer that are direct children of `<body>`, the only ones those builds made containers: `.container` for centered widths, or `.container-fluid` for the full width.
+- The classless builds (`pico.classless*.css` and `pico.fluid.classless*.css`) are gone. Load femto and put a container class on the header, main and footer that are direct children of `<body>`, the only ones those builds made containers: `.container` for centered widths, or `.container-fluid` for the full width. The classless conditional builds (`pico.classless.conditional*.css` and `pico.fluid.classless.conditional*.css`) were scoped to `.pico` too: remove the class as for the conditional builds, and give the three a container class only if `.pico` was on `<html>`, the only place where they were containers.
 
 ```html
 <body>
