@@ -1,0 +1,15 @@
+[
+  {
+    "id": "link-outline-width-zero",
+    "module": "content/link",
+    "kind": "style",
+    "selector": "a:not([role=button]), [role=link]",
+    "pseudo": "",
+    "property": "outline-width",
+    "reference": "3px",
+    "femto": "0px",
+    "category": "natural-fix",
+    "reason": "As button-outline-width-zero (content-button.json), on links and role=link elements: femto writes outline: 0 where 2.1.1's source has outline: none, as 2.1.1's minified builds do, so outline-width computes 0 instead of the initial 3px.",
+    "notes": "Seen in run outline-1 (Chrome Beta 159, Firefox 161) on every link without role=button and every role=link element, in every state."
+  }
+]

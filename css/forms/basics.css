@@ -111,7 +111,7 @@ textarea {
   --femto-box-shadow: none;
   border: var(--femto-border-width) solid var(--femto-border-color);
   border-radius: var(--femto-border-radius);
-  outline: none;
+  outline: 0;
   background-color: var(--femto-background-color);
   box-shadow: var(--femto-box-shadow);
   color: var(--femto-color);

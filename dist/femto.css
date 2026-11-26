@@ -751,7 +751,7 @@ del {
   --femto-color: var(--femto-primary);
   --femto-background-color: transparent;
   --femto-underline: var(--femto-primary-underline);
-  outline: none;
+  outline: 0;
   background-color: var(--femto-background-color);
   color: var(--femto-color);
   -webkit-text-decoration: var(--femto-text-decoration);
@@ -824,7 +824,7 @@ button,
   padding: var(--femto-form-element-spacing-vertical) var(--femto-form-element-spacing-horizontal);
   border: var(--femto-border-width) solid var(--femto-border-color);
   border-radius: var(--femto-border-radius);
-  outline: none;
+  outline: 0;
   background-color: var(--femto-background-color);
   box-shadow: var(--femto-box-shadow);
   color: var(--femto-color);
@@ -1180,7 +1180,7 @@ textarea {
   --femto-box-shadow: none;
   border: var(--femto-border-width) solid var(--femto-border-color);
   border-radius: var(--femto-border-radius);
-  outline: none;
+  outline: 0;
   background-color: var(--femto-background-color);
   box-shadow: var(--femto-box-shadow);
   color: var(--femto-color);
@@ -1649,7 +1649,7 @@ details summary[data-tooltip]::after {
   forced-color-adjust: auto;
 }
 details summary:focus {
-  outline: none;
+  outline: 0;
 }
 details summary:focus:not([role]) {
   color: var(--femto-accordion-active-summary-color);
@@ -1765,7 +1765,7 @@ details.dropdown > summary:not([role]):focus {
   box-shadow: 0 0 0 var(--femto-outline-width) var(--femto-form-element-focus-color);
 }
 details.dropdown > summary:not([role]):focus-visible {
-  outline: none;
+  outline: 0;
 }
 details.dropdown > summary:not([role])[aria-invalid=false] {
   --femto-form-element-border-color: var(--femto-form-element-valid-border-color);

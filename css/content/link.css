@@ -8,7 +8,7 @@
   --femto-color: var(--femto-primary);
   --femto-background-color: transparent;
   --femto-underline: var(--femto-primary-underline);
-  outline: none;
+  outline: 0;
   background-color: var(--femto-background-color);
   color: var(--femto-color);
   -webkit-text-decoration: var(--femto-text-decoration);

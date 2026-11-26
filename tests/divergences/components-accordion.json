@@ -293,5 +293,18 @@
     "category": "natural-fix",
     "reason": "A summary with data-tooltip draws the tooltip caret in the ::after that holds its chevron, and 2.1.1 left the chevron's 1rem box and half-spacing margin on it, so the caret's 0.3rem top border sat 1rem above the summary, inside the bubble, where it covered part of the bubble's text; an open accordion also turned it with rotate(0), which dropped the caret's centering. femto gives a summary's caret an auto width and height and no margin, and keeps the open rotation off it with :where(:not([data-tooltip])), so it is the 0.6rem by 0.3rem triangle under the bubble that any other element shows. The no-transitions option drops its rule that put back the open rotation under a tooltip.",
     "notes": "Fixture: the open accordion summary with a tooltip in components-tooltip.html, in every state and preset. Recorded in run caret-1 (Chrome for Testing 159 on Linux): width 16px to 8px (option-fixed-typography) and 10px, height 16px to 4px and 5px, margin-inline-start 10px to 0px, transform matrix(1, 0, 0, 1, 0, 0) to a translate by half the caret's width, with the insets and origins that follow. Screenshots of a hovered accordion summary in the same Chrome showed the caret's border over the bubble's text before and a triangle under the bubble after, the same as a button's. dropdown-tooltip-summary-caret covers dropdown summaries, which take the same caret. Firefox and Safari unverified until the macOS rig runs."
+  },
+  {
+    "id": "summary-focus-outline-width-zero",
+    "module": "components/accordion",
+    "kind": "style",
+    "selector": "details summary:focus",
+    "pseudo": "",
+    "property": "outline-width",
+    "reference": "3px",
+    "femto": "0px",
+    "category": "natural-fix",
+    "reason": "As button-outline-width-zero (content-button.json), on a focused summary: femto writes outline: 0 where 2.1.1's source has outline: none, as 2.1.1's minified builds do, so outline-width computes 0 instead of the initial 3px. A summary without a role that matches :focus-visible draws its own outline and does not differ. The same change in the dropdown module, on details.dropdown > summary:not([role]):focus-visible, lands on a summary this entry already matches.",
+    "notes": "Seen in run outline-1 (Chrome Beta 159, Firefox 161) on the focused role=button summaries and dropdown summaries, in the states that leave them focused."
   }
 ]

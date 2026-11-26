@@ -53,7 +53,7 @@ details.dropdown > summary:not([role]):focus {
   box-shadow: 0 0 0 var(--femto-outline-width) var(--femto-form-element-focus-color);
 }
 details.dropdown > summary:not([role]):focus-visible {
-  outline: none;
+  outline: 0;
 }
 details.dropdown > summary:not([role])[aria-invalid=false] {
   --femto-form-element-border-color: var(--femto-form-element-valid-border-color);

@@ -30,5 +30,18 @@
     "category": "natural-fix",
     "reason": "The box change of button-long-label-max-width: a button or role=button link whose unbroken label is wider than its container is now as wide as the container, and the label wraps onto more lines, so its width, inline-size, height, block-size and the origins at its center change. The fixture's wrapper has a fixed height, so nothing else moves.",
     "notes": "Fixture: #long-label in content-button.html, a 12rem box with a fixed 16rem height holding a button and an a[role=button] labeled with a 52-character URL. In Chrome Beta 158 each goes from 474.42x50px to 192x98px at 390 and from 578.2x62px to 240x122px at 1280; in Firefox 160 beta from 423.02x74px to 192x122px and from 516.68x92px to 240x152px. Upstream issue picocss/pico#485."
+  },
+  {
+    "id": "button-outline-width-zero",
+    "module": "content/button",
+    "kind": "style",
+    "selector": "button, [type=submit], [type=reset], [type=button], [type=file], [role=button]",
+    "pseudo": "/^(::file-selector-button)?$/",
+    "property": "outline-width",
+    "reference": "3px",
+    "femto": "0px",
+    "category": "natural-fix",
+    "reason": "2.1.1's source removes the default outline with outline: none, which leaves outline-width at its initial medium, 3px. The parity reference is the unminified pico.css, which keeps that, but 2.1.1's minifier writes the same declaration as outline:0 in every .min.css build, the files most sites load, and there outline-width is 0. Nothing shows either way, since outline-style is none in both, until a rule of the page's own sets only outline-style: it drew no ring with pico.min.css and a 3px ring with pico.css. femto writes outline: 0, so its one-file builds and its modules both compute 0, as the minified 2.1.1 builds do. Here the rule is that of buttons, role=button elements and the file input's button.",
+    "notes": "Seen in run outline-1 (Chrome Beta 159, Firefox 161) on every button, role=button element and file selector button, in every state. Probed outside the harness in the same browsers with a, button, input, summary { outline-style: solid }: outline-width is 3px with pico.css and with femto before this change, and 0px with pico.min.css and with femto after it, on a link, a button, a text field and a focused dropdown summary."
   }
 ]

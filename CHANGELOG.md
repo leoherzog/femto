@@ -13,6 +13,7 @@ All notable changes to femto are listed here. femto 3.0 is derived from Pico CSS
 - An open dropdown whose summary has `data-tooltip` closes on a click outside. The tooltip's transform and `pointer-events: none` reached the overlay in the summary's `::before`, which then covered only half of the viewport and let clicks through. The tooltip is hidden while the dropdown is open.
 - A dropdown summary with `data-tooltip` shows the tooltip's caret, as an accordion summary does, instead of moving its gray chevron above the summary into the caret's place on hover and focus.
 - A summary's tooltip caret is the small triangle under the bubble that other elements show, instead of a box whose border covered part of the bubble's text. It stays centered under the bubble while an accordion is open.
+- `outline-width` computes to 0 on links, buttons, form fields and focused summaries, as it does with Pico 2.1.1's `.min.css` builds, instead of 3px. femto wrote `outline: none`, as Pico's source does, which leaves the width at `medium`, while Pico's minifier turned it into `outline:0`. Nothing showed until a rule of your own set only `outline-style` on one of those elements, which then drew a 3px ring that `pico.min.css` never drew.
 
 ## 3.0.0-alpha.2 (2026-11-20)
 

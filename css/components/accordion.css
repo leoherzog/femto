@@ -45,7 +45,7 @@ details summary[data-tooltip]::after {
   forced-color-adjust: auto;
 }
 details summary:focus {
-  outline: none;
+  outline: 0;
 }
 details summary:focus:not([role]) {
   color: var(--femto-accordion-active-summary-color);
