@@ -720,10 +720,12 @@
  {
   "page": "classes-dropdown-open.html",
   "modules": [
-   "components/dropdown"
+   "components/dropdown",
+   "components/tooltip"
   ],
   "sections": [
-   "Dropdown (details.dropdown)"
+   "Dropdown (details.dropdown)",
+   "Tooltip ([data-tooltip])"
   ],
   "entries": [
    "default"

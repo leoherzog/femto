@@ -1,13 +1,15 @@
 /*
  * Dropdown: details.dropdown as a select-like or button summary with a chevron, whose list opens
  * below it as a floating menu, with valid and invalid summaries, tighter summaries inside nav, and a
- * transparent overlay behind an open dropdown that catches outside clicks.
+ * transparent overlay behind an open dropdown that catches outside clicks. A summary with
+ * data-tooltip shows the tooltip caret instead of the chevron, as in an accordion, and an open
+ * dropdown hides its summary's tooltip, whose ::before is the overlay.
  */
 details.dropdown {
   position: relative;
   border-bottom: none;
 }
-details.dropdown > summary::after,
+details.dropdown > summary:where(:not([data-tooltip]))::after,
 details.dropdown > button::after,
 details.dropdown > a::after {
   display: block;
@@ -22,7 +24,7 @@ details.dropdown > a::after {
   forced-color-adjust: none;
   forced-color-adjust: preserve-parent-color;
 }
-details.dropdown > :is(summary, button, a):where(:dir(rtl))::after {
+details.dropdown > :is(summary:where(:not([data-tooltip])), button, a):where(:dir(rtl))::after {
   transform: rotate(0deg) translateX(-0.2rem);
 }
 
@@ -68,7 +70,7 @@ nav details.dropdown {
   display: block;
   margin: 0;
 }
-nav details.dropdown > summary::after {
+nav details.dropdown > summary:where(:not([data-tooltip]))::after {
   transform: rotate(0deg) translateX(0rem);
 }
 nav details.dropdown > summary:not([role]) {
@@ -158,6 +160,14 @@ details.dropdown[open] > summary::before {
   background: none;
   content: "";
   cursor: default;
+}
+details.dropdown[open] > summary[data-tooltip]::before {
+  transform: none;
+  pointer-events: auto;
+  animation-name: none;
+}
+details.dropdown[open] > summary[data-tooltip]::after {
+  display: none;
 }
 
 label > details.dropdown {

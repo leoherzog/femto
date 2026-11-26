@@ -154,10 +154,7 @@ progress[value]::-webkit-progress-value {
   :where(details[open] > summary:not([data-placement=top]))[data-tooltip]:is(:focus, :hover)::after {
     transform: rotate(0);
   }
-  :where(details.dropdown > :is(summary, button, a):not([data-placement=top]))[data-tooltip]:is(:focus, :hover)::after {
+  :where(details.dropdown > :is(button, a):not([data-placement=top]))[data-tooltip]:is(:focus, :hover)::after {
     transform: rotate(0deg) translateX(0.2rem);
-  }
-  :where(nav details.dropdown > summary:not([data-placement=top]))[data-tooltip]:is(:focus, :hover)::after {
-    transform: rotate(0deg) translateX(0rem);
   }
 }

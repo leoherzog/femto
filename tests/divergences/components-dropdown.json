@@ -160,5 +160,57 @@
     "category": "natural-fix",
     "reason": "2.1.1 nudges a dropdown's chevron 0.2rem toward the end edge with translateX(0.2rem), a physical shift to the right. With the chevron on the left in right-to-left text (dropdown-chevron-float-inline-end), that shift would move it toward the label, so femto mirrors it to translateX(-0.2rem) there. The chevron then sits as far from the left border in right-to-left text as from the right border in left-to-right text, about as far as a select's chevron. A nav dropdown's chevron has no shift, as in 2.1.1.",
     "notes": "Seen in run fixes-full-1 (Chrome 158, Firefox 161) on the dropdown summaries, links and buttons in right-to-left text: in the rtl legs of classes-dropdown.html, classes-dropdown-open.html and kitchen-sink.html, and in the dir=rtl blocks of the first two in their ltr legs. The shift is 0.2rem at the root size of each width (3.2px to 4.2px)."
+  },
+  {
+    "id": "dropdown-tooltip-summary-caret",
+    "module": "components/dropdown",
+    "kind": "style",
+    "selector": "details.dropdown:not([open]) > summary[data-tooltip]",
+    "pseudo": "::after",
+    "property": "/^(block-size|height|top|right|bottom|left|inset-(block|inline)-(start|end)|margin-(inline-start|left|right)|transform|transform-origin|perspective-origin)$/",
+    "reference": "*",
+    "femto": "*",
+    "category": "natural-fix",
+    "reason": "A tooltip draws its caret in ::after, which a dropdown summary uses for its chevron. 2.1.1's dropdown chevron rule outranks the caret rules, so a dropdown summary with data-tooltip took the chevron's size, margin and transform with the caret's absolute position: the chevron left its place in the summary and showed, gray and 1.5rem tall, above the summary in the caret's place on hover and focus. femto keeps the dropdown chevron rules off a summary with data-tooltip, with :where(:not([data-tooltip])) so their specificity is unchanged, and the summary shows the tooltip caret as an accordion summary with a tooltip does.",
+    "notes": "Fixtures: the dropdown and nav dropdown summaries with tooltips in components-tooltip.html, in every state and preset. Recorded in run change-1 (Chrome for Testing 159 on Linux): height 24px to 16px, margin-inline-start 4px to 8px, transform matrix(1, 0, 0, 1, 3.2, 0) (0 in the nav) to matrix(1, 0, 0, 1, -8, 0), centering the caret under the bubble, with the insets and origins that follow. The no-transitions option drops its two rules that put back the dropdown chevron's transform under a tooltip on a summary, and keeps the one for a dropdown's link and button children. Firefox and Safari unverified until the macOS rig runs."
+  },
+  {
+    "id": "dropdown-open-tooltip-overlay-transform",
+    "module": "components/dropdown",
+    "kind": "style",
+    "selector": "details.dropdown[open] > summary[data-tooltip]",
+    "pseudo": "::before",
+    "property": "transform",
+    "reference": "/^matrix\\(1, 0, 0, 1, -[0-9.]+, -?[0-9.]+\\)$/",
+    "femto": "none",
+    "category": "natural-fix",
+    "reason": "An open dropdown's summary::before is the fixed, viewport-sized overlay that closes it on a click outside, and a tooltip draws its bubble in the same ::before. 2.1.1's overlay rule sets its position, inset, content and background but not the tooltip's transform or pointer-events, so on a summary with data-tooltip the overlay was shifted left by half its width, leaving the right half of the viewport uncovered, and let clicks through, so a click outside left the dropdown open. femto adds a rule at (0,3,3), above every tooltip rule in any placement and state, that sets the overlay's transform to none, its pointer-events to auto and its animation-name to none.",
+    "notes": "Fixtures: the two open dropdowns with tooltips in classes-dropdown-open.html, one with a default and one with a bottom placement. Recorded in run change-1 (Chrome for Testing 159 on Linux) at 390: matrix(1, 0, 0, 1, -195, -4) and matrix(1, 0, 0, 1, -195, 4) to none. No fixture hovers or focuses an open summary with a tooltip, so the animation-name change is not recorded. Probed in the same Chrome on a page with an open dropdown whose summary has data-tooltip: clicks at the four corners of the viewport left it open before and closed it after. Firefox and Safari unverified until the macOS rig runs."
+  },
+  {
+    "id": "dropdown-open-tooltip-overlay-pointer-events",
+    "module": "components/dropdown",
+    "kind": "style",
+    "selector": "details.dropdown[open] > summary[data-tooltip]",
+    "pseudo": "::before",
+    "property": "pointer-events",
+    "reference": "none",
+    "femto": "auto",
+    "category": "natural-fix",
+    "reason": "Consequence of dropdown-open-tooltip-overlay-transform: the overlay of an open dropdown whose summary has data-tooltip catches clicks again instead of taking the tooltip's pointer-events: none.",
+    "notes": "Fixtures and run as dropdown-open-tooltip-overlay-transform."
+  },
+  {
+    "id": "dropdown-open-tooltip-caret-hidden",
+    "module": "components/dropdown",
+    "kind": "style",
+    "selector": "details.dropdown[open] > summary[data-tooltip]",
+    "pseudo": "::after",
+    "property": "/^(display|block-size|height|top|right|bottom|left|inset-(block|inline)-(start|end)|margin-(inline-start|left|right)|transform|transform-origin|perspective-origin)$/",
+    "reference": "*",
+    "femto": "*",
+    "category": "natural-fix",
+    "reason": "Consequence of dropdown-open-tooltip-overlay-transform: with the overlay in the summary's ::before, an open dropdown has no tooltip bubble, so femto hides the caret too, display: none on the summary's ::after, instead of 2.1.1's chevron in the caret's place above the summary. A hidden pseudo-element reports its declared insets, size and transform, so those change with it.",
+    "notes": "Fixtures and run as dropdown-open-tooltip-overlay-transform: display block to none, height 24px to 16px, top -24px to auto, left 194px to 50% at 390, transform to none, and in the rtl leg margin-right instead of margin-left."
   }
 ]

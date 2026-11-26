@@ -8,6 +8,11 @@ All notable changes to femto are listed here. femto 3.0 is derived from Pico CSS
 
 - A tooltip's text is no longer part of its element's accessible name. Browsers count generated content in the name, so a button, link or summary whose text or hidden label matched its tooltip was announced twice, as in "Follow by RSS Follow by RSS". The bubble's `content` now has empty alternative text, `attr(data-tooltip) / ""`, and looks the same. An element whose only name was its tooltip, such as an icon-only button, now has none, so give it `aria-label` or text of its own. Screen readers no longer read the tooltip text at all, also on plain text such as `<span data-tooltip>`, where it was read with the text, so put a hint they need in the page's own text.
 
+### Fixed
+
+- An open dropdown whose summary has `data-tooltip` closes on a click outside. The tooltip's transform and `pointer-events: none` reached the overlay in the summary's `::before`, which then covered only half of the viewport and let clicks through. The tooltip is hidden while the dropdown is open.
+- A dropdown summary with `data-tooltip` shows the tooltip's caret, as an accordion summary does, instead of moving its gray chevron above the summary into the caret's place on hover and focus.
+
 ## 3.0.0-alpha.2 (2026-11-20)
 
 ### Fixed

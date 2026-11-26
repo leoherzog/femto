@@ -522,6 +522,14 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   its `translateX(0.2rem)` with `:where(:dir(rtl))`, so in left-to-right text only the computed
   `float` changes (fixtures: the rtl legs of `classes-dropdown.html`, `classes-dropdown-open.html`
   and `kitchen-sink.html`, and the `dir="rtl"` blocks of the first two in their ltr legs).
+  `dropdown-tooltip-summary-caret`, on the summaries with tooltips of `components-tooltip.html`:
+  2.1.1's chevron rule outranks the caret rules, so the chevron left the summary for the caret's
+  place above it; femto keeps the dropdown chevron rules off a summary with `data-tooltip`, which
+  then shows the accordion's caret. `dropdown-open-tooltip-overlay-transform` and `-pointer-events`,
+  with `dropdown-open-tooltip-caret-hidden`, on the two open dropdowns with tooltips of
+  `classes-dropdown-open.html`: the tooltip's transform and `pointer-events: none` moved the
+  click-outside overlay half a viewport left and let clicks through; femto resets both and hides the
+  caret while the dropdown is open.
 - `components-nav.json`: `rtl-breadcrumb-backslash`, with `-geometry` and `-divider-inset`, limited to
   `components-nav.html` and `kitchen-sink.html`. 2.1.1's rtl rule gave the `::after` of every element
   inside a breadcrumb item but the last a backslash; femto drops it, so an rtl breadcrumb shows only
@@ -649,9 +657,10 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   `currentColor` on those summaries, so the mask and background longhands, the fill and `filter`
   change. `forced-color-adjust` is `none`, then `preserve-parent-color`, so Chrome reports the
   second and Firefox, which lacks it, the first; the harness does not emulate forced colors, so the
-  icons' visibility there was checked outside it. An accordion summary with `data-tooltip` gets no
-  mask and keeps its caret (fixture: the open accordion of `components-tooltip.html`, which shows no
-  difference). `accordion-chevron-float-inline-end` and `accordion-summary-text-align-start`: the
+  icons' visibility there was checked outside it. A summary with `data-tooltip`, in an accordion or
+  a dropdown, gets no mask and keeps its caret (fixture: the open accordion of
+  `components-tooltip.html`, which shows no difference).
+  `accordion-chevron-float-inline-end` and `accordion-summary-text-align-start`: the
   chevron floats to the inline end and summaries align to the start instead of right or left, so
   `<details dir="ltr">` in a right-to-left page no longer takes the page's side; where a page or
   block runs one way, only the computed values change, also on the summary's pseudo-elements and
@@ -716,12 +725,14 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
 - `rig.json`: the checks Safari cannot run (`safari-no-media-dark`,
   `safari-no-focus-visible-date-input`).
 
-The other 11 modules need no entry. Two fixtures exist to make the registry's checks meaningful:
+The other 11 modules need no entry. Three fixtures exist to make the registry's checks meaningful:
 `colors.html` has a "Two classes" block in which each span carries two neighboring utility classes
-in file order, so a change of rule order in `femto.colors.css` shows as a difference, and
-`components-tooltip.html` has tooltips on an open accordion summary and on two dropdown summaries,
-which exercise the no-transitions option's chevron rules, and runs for `components/accordion`,
-`components/dropdown` and `components/nav` too.
+in file order, so a change of rule order in `femto.colors.css` shows as a difference;
+`components-tooltip.html` has tooltips on an open accordion summary, which exercises the
+no-transitions option's chevron rule, and on two dropdown summaries, which show the caret instead of
+the chevron, and runs for `components/accordion`, `components/dropdown` and `components/nav` too;
+and `classes-dropdown-open.html` has two open dropdowns with tooltips, in the default and bottom
+placements, whose overlays must stay in place, and runs for `components/tooltip` too.
 
 ## Output
 
@@ -794,7 +805,7 @@ tables against the tag, `tests/sections.json`, `tests/pages/pages.json` and `css
 | `components/modal` | Modal (`<dialog>`) | `components/modal.css` (31) | `components-modal.html`, `components-modal-show.html`, `classes-modal.html` |
 | `components/nav` | Nav | `components/nav.css` (32) | `components-nav.html`, `components-tooltip.html` |
 | `components/progress` | Progress | `components/progress.css` (33) | `components-progress.html` |
-| `components/tooltip` | Tooltip (`[data-tooltip]`) | `components/tooltip.css` (34) | `components-tooltip.html` |
+| `components/tooltip` | Tooltip (`[data-tooltip]`) | `components/tooltip.css` (34) | `components-tooltip.html`, `classes-dropdown-open.html` |
 | `utilities/accessibility` | Accessibility & User interaction | `utilities/accessibility.css` (35) | `utilities-accessibility.html` |
 | `utilities/reduce-motion` | Reduce Motion Features | `utilities/reduce-motion.css` (36) | `utilities-reduce-motion.html` (no run applies `reduce`; see Known limits) |
 
