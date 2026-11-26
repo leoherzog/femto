@@ -658,8 +658,10 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   change. `forced-color-adjust` is `none`, then `preserve-parent-color`, so Chrome reports the
   second and Firefox, which lacks it, the first; the harness does not emulate forced colors, so the
   icons' visibility there was checked outside it. A summary with `data-tooltip`, in an accordion or
-  a dropdown, gets no mask and keeps its caret (fixture: the open accordion of
-  `components-tooltip.html`, which shows no difference).
+  a dropdown, gets no mask and shows the tooltip caret. `summary-tooltip-caret-box`: 2.1.1 left the
+  chevron's 1rem box, margin and open rotation on that caret, so its border sat inside the bubble
+  over the text; femto sizes and places it as on any element (fixture: the open accordion of
+  `components-tooltip.html`).
   `accordion-chevron-float-inline-end` and `accordion-summary-text-align-start`: the
   chevron floats to the inline end and summaries align to the start instead of right or left, so
   `<details dir="ltr">` in a right-to-left page no longer takes the page's side; where a page or
@@ -728,11 +730,11 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
 The other 11 modules need no entry. Three fixtures exist to make the registry's checks meaningful:
 `colors.html` has a "Two classes" block in which each span carries two neighboring utility classes
 in file order, so a change of rule order in `femto.colors.css` shows as a difference;
-`components-tooltip.html` has tooltips on an open accordion summary, which exercises the
-no-transitions option's chevron rule, and on two dropdown summaries, which show the caret instead of
-the chevron, and runs for `components/accordion`, `components/dropdown` and `components/nav` too;
-and `classes-dropdown-open.html` has two open dropdowns with tooltips, in the default and bottom
-placements, whose overlays must stay in place, and runs for `components/tooltip` too.
+`components-tooltip.html` has tooltips on an open accordion summary and on two dropdown summaries,
+which show the caret instead of the chevron, and runs for `components/accordion`,
+`components/dropdown` and `components/nav` too; and `classes-dropdown-open.html` has two open
+dropdowns with tooltips, in the default and bottom placements, whose overlays must stay in place,
+and runs for `components/tooltip` too.
 
 ## Output
 

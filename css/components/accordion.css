@@ -1,8 +1,8 @@
 /*
  * Accordion: details whose summary carries a chevron at its inline end that turns when it opens
- * (a summary with data-tooltip shows the tooltip caret instead), with summary colors for the closed,
- * focused and open states, and a full-width summary[role=button] whose chevron takes the button's
- * text color unless it is .outline.
+ * (a summary with data-tooltip shows the tooltip caret instead, sized and placed as on any
+ * element), with summary colors for the closed, focused and open states, and a full-width
+ * summary[role=button] whose chevron takes the button's text color unless it is .outline.
  */
 details {
   margin-bottom: var(--femto-spacing);
@@ -38,6 +38,9 @@ details summary::after {
   transition: transform var(--femto-transition);
 }
 details summary[data-tooltip]::after {
+  width: auto;
+  height: auto;
+  margin-inline-start: 0;
   mask: none;
   forced-color-adjust: auto;
 }
@@ -56,7 +59,7 @@ details summary[role=button] {
   width: 100%;
   text-align: start;
 }
-details summary[role=button]::after {
+details summary[role=button]:where(:not([data-tooltip]))::after {
   height: calc(1rem * var(--femto-line-height, 1.5));
 }
 details summary[role=button]:not(.outline, [data-tooltip])::after {
@@ -68,6 +71,6 @@ details[open] > summary {
 details[open] > summary:not([role]):not(:focus) {
   color: var(--femto-accordion-open-summary-color);
 }
-details[open] > summary::after {
+details[open] > summary:where(:not([data-tooltip]))::after {
   transform: rotate(0);
 }

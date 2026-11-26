@@ -151,9 +151,6 @@ progress[value]::-webkit-progress-value {
     --femto-tooltip-caret-slide-to: initial;
     transform: translate(-0.3rem, -50%);
   }
-  :where(details[open] > summary:not([data-placement=top]))[data-tooltip]:is(:focus, :hover)::after {
-    transform: rotate(0);
-  }
   :where(details.dropdown > :is(button, a):not([data-placement=top]))[data-tooltip]:is(:focus, :hover)::after {
     transform: rotate(0deg) translateX(0.2rem);
   }
