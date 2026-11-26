@@ -337,7 +337,7 @@ Change file paths, URLs and package names by the table above, not by find and re
 ### Dropped builds
 
 - The conditional builds (`pico.conditional*.css`) are gone, with their `$parent-selector` setting. They styled what is inside `.pico` and kept some rules for the whole page, such as the root element's colors and typography, `box-sizing` and `background-repeat` on every element, the body's width and margin, `main`'s display, `data-theme`'s color scheme and tokens, `.container`, `.container-fluid` and `.grid`, and the `.modal-is-open`, `.modal-is-opening` and `.modal-is-closing` classes. femto styles the whole page, or a shadow root that loads it. Remove the `.pico` classes.
-- The classless builds (`pico.classless*.css` and `pico.fluid.classless*.css`) are gone. Load femto and put a container class on the page's header, main and footer: `.container` for centered widths, or `.container-fluid` for the full width.
+- The classless builds (`pico.classless*.css` and `pico.fluid.classless*.css`) are gone. Load femto and put a container class on the header, main and footer that are direct children of `<body>`, the only ones those builds made containers: `.container` for centered widths, or `.container-fluid` for the full width.
 
 ```html
 <body>
@@ -361,7 +361,7 @@ femto has no Sass. Each Pico 2.1.1 setting is now a file, a custom property, or 
 | `$breakpoints` | Fixed at 576, 768, 1024, 1280 and 1536px |
 | `$css-var-prefix` | Gone: always `--femto-` |
 | `$semantic-root-element` | Gone: always `body` |
-| `$enable-semantic-container`, `$enable-viewport` | Gone with the classless builds: use `.container`, or `.container-fluid` where `$enable-viewport` was false |
+| `$enable-semantic-container`, `$enable-viewport` | Gone with the classless builds. Where `$enable-semantic-container` was true, give the header, main and footer that are direct children of `<body>` `.container`, or `.container-fluid` where `$enable-viewport` was false. With its default, false, there were no such containers, so add no class |
 | `$enable-classes` | Gone: classes are always on |
 | `$enable-important` | Gone: femto keeps the default build's `!important` declarations |
 | `$parent-selector` | Gone with the conditional builds |
