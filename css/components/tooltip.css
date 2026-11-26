@@ -1,7 +1,9 @@
 /*
  * Tooltip: any element with data-tooltip shows that text in a bubble with a caret, above the element
  * by default or where data-placement (top, bottom, left, right) puts it, on hover and focus.
- * On devices with a fine pointer that can hover, the bubble and caret slide in.
+ * On devices with a fine pointer that can hover, the bubble and caret slide in. The bubble's text has
+ * empty alternative text, so it adds nothing to the element's accessible name, which the element
+ * needs of its own.
  */
 [data-tooltip] {
   position: relative;
@@ -27,7 +29,7 @@
   transform: translate(-50%, -0.25rem);
   border-radius: var(--femto-border-radius);
   background: var(--femto-tooltip-background-color);
-  content: attr(data-tooltip);
+  content: attr(data-tooltip) / "";
   color: var(--femto-tooltip-color);
   font-style: normal;
   font-weight: var(--femto-font-weight);

@@ -2323,7 +2323,7 @@ progress:indeterminate::-moz-progress-bar {
   transform: translate(-50%, -0.25rem);
   border-radius: var(--femto-border-radius);
   background: var(--femto-tooltip-background-color);
-  content: attr(data-tooltip);
+  content: attr(data-tooltip) / "";
   color: var(--femto-tooltip-color);
   font-style: normal;
   font-weight: var(--femto-font-weight);

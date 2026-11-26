@@ -709,10 +709,14 @@ into natural fixes, dropped hacks, new tokens, option mechanisms and browser lim
   button changes only its computed `max-width` and `max-inline-size` (fixture: `#long-label`, a
   narrow fixed-height box holding a button and a link with a URL label, whose size, height and
   origins change).
+- `components-tooltip.json`: `tooltip-bubble-empty-alt`, on the `::before` of every tooltip. 2.1.1's
+  bubble is `content: attr(data-tooltip)`, which browsers count in the element's accessible name, so
+  a control whose own name matched its tooltip was announced twice; femto gives the content empty
+  alternative text, so only the computed `content` changes, as `"Text" / ""`.
 - `rig.json`: the checks Safari cannot run (`safari-no-media-dark`,
   `safari-no-focus-visible-date-input`).
 
-The other 12 modules need no entry. Two fixtures exist to make the registry's checks meaningful:
+The other 11 modules need no entry. Two fixtures exist to make the registry's checks meaningful:
 `colors.html` has a "Two classes" block in which each span carries two neighboring utility classes
 in file order, so a change of rule order in `femto.colors.css` shows as a difference, and
 `components-tooltip.html` has tooltips on an open accordion summary and on two dropdown summaries,

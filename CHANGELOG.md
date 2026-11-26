@@ -2,6 +2,12 @@
 
 All notable changes to femto are listed here. femto 3.0 is derived from Pico CSS 2.1.1, so its first entry lists how it differs from Pico 2.1.1.
 
+## Unreleased
+
+### Changed
+
+- A tooltip's text is no longer part of its element's accessible name. Browsers count generated content in the name, so a button, link or summary whose text or hidden label matched its tooltip was announced twice, as in "Follow by RSS Follow by RSS". The bubble's `content` now has empty alternative text, `attr(data-tooltip) / ""`, and looks the same. An element whose only name was its tooltip, such as an icon-only button, now has none, so give it `aria-label` or text of its own. Screen readers no longer read the tooltip text at all, also on plain text such as `<span data-tooltip>`, where it was read with the text, so put a hint they need in the page's own text.
+
 ## 3.0.0-alpha.2 (2026-11-20)
 
 ### Fixed

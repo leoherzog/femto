@@ -107,7 +107,7 @@ Most of femto works from the elements alone. These are the classes and attribute
 | `<details class="dropdown">` | A dropdown: a `<summary>` and a `<ul>` that opens below it |
 | `<nav aria-label="breadcrumb">` | Breadcrumbs |
 | `aria-busy="true"` | A loading spinner |
-| `data-tooltip`, `data-placement` | A tooltip with that text, above the element or where `data-placement` (`top`, `bottom`, `left`, `right`) puts it. A switch shows none, since its `::before` is its thumb, so put the tooltip on the switch's `<label>` |
+| `data-tooltip`, `data-placement` | A tooltip with that text, above the element or where `data-placement` (`top`, `bottom`, `left`, `right`) puts it. Screen readers do not read the text, so the element needs a name of its own, and a hint that matters belongs in the page's text. A switch shows none, since its `::before` is its thumb, so put the tooltip on the switch's `<label>` |
 | `<dialog>` holding an `<article>` | A modal. The `.modal-is-open`, `.modal-is-opening` and `.modal-is-closing` classes, which your script sets on `<html>`, lock scrolling and run the opening and closing animations. To keep the page from shifting when `.modal-is-open` hides the scrollbar, your script can also set `--femto-scrollbar-width` on `<html>` to the scrollbar's width |
 | `.close`, or `rel="prev"` on a link or button, in a modal's `<article>` | A close button: an × icon at the top right (top left in right-to-left text), in the header if there is one |
 | `aria-current` (any value but `"false"`) | Shows a link, button or dropdown item as current, with its hover colors; in breadcrumbs, the current page as plain text |
@@ -391,6 +391,7 @@ Pico 2.1.1 supported every browser in browserslist's `defaults`, with prefixes a
 - Some rendering bugs of 2.1.1 are fixed, such as an indeterminate `<progress>` that looked complete in Firefox with reduced motion. The [changelog](CHANGELOG.md#fixed) lists them.
 - The focus ring of `role="group"` and `role="search"` inside a `data-theme` element follows that element's scheme.
 - With `no-transitions.css`, `--femto-transition` is `0s` (2.1.1 kept `0.2s ease-in-out`), so your own rules that read it stop animating too, and the group focus ring no longer fades.
+- Screen readers no longer read a tooltip's text, which is not part of its element's accessible name. An element named only by its tooltip, such as an icon-only button, needs `aria-label` or text of its own, and a hint that matters belongs in the page's text.
 - One other new token: `--femto-grid-template-columns`, which `.grid` reads.
 - The accordion and dropdown chevrons and the loading spinner are CSS masks. On filled buttons they take the button's text color, and your own rules that set `background-image` or `filter` on them no longer restyle them: set `mask` and `background-color` instead.
 - If you used a classless build, classes such as `.grid`, `.secondary`, `.dropdown` and `.striped` that it ignored are now styled.

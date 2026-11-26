@@ -1,0 +1,15 @@
+[
+  {
+    "id": "tooltip-bubble-empty-alt",
+    "module": "components/tooltip",
+    "kind": "style",
+    "selector": "[data-tooltip]",
+    "pseudo": "::before",
+    "property": "content",
+    "reference": "/^\".*\"$/s",
+    "femto": "/^\".*\" \\/ \"\"$/s",
+    "category": "natural-fix",
+    "reason": "2.1.1 draws a tooltip's bubble with content: attr(data-tooltip), and browsers count generated content in an element's accessible name, so a button, link or summary that already has a name, from its text or from visually hidden text, was announced with the tooltip text added: a button labeled Follow by RSS with that tooltip was read as \"Follow by RSS Follow by RSS\". femto gives the bubble's content empty alternative text, content: attr(data-tooltip) / \"\", so the bubble still shows the text and adds nothing to the name. An element whose only name was its tooltip, such as an icon-only button with no label, now has none and needs one of its own, such as aria-label or visually hidden text. The text leaves the accessibility tree on every element: on plain text, such as a span with data-tooltip, it was read with the text and now is not.",
+    "notes": "Every femto minimum browser supports the alternative text form: Chrome 77, Firefox 128 and Safari 17.4. Recorded in run change-1 (Chrome for Testing 159 on Linux) on the ::before of every tooltip of components-tooltip.html, as \"Default tooltip\" against \"Default tooltip\" / \"\", in every state and preset. An open dropdown's summary and a switch draw no bubble, so their ::before content is \"\" on both sides and does not match. Probed in the same Chrome with Playwright's ariaSnapshot: four role=button controls whose visually hidden text repeats their tooltip went from names such as \"Follow by RSS Follow by RSS\" to \"Follow by RSS\". Firefox and Safari unverified until the macOS rig runs."
+  }
+]
