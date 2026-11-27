@@ -2,7 +2,7 @@
 
 All notable changes to femto are listed here. femto 3.0 is derived from Pico CSS 2.1.1, so the entry of its first release, [3.0.0-alpha.1](#300-alpha1-2026-11-13), lists how that release differs from Pico 2.1.1, and later entries add what has changed since.
 
-## Unreleased
+## 3.0.0-beta.1 (2026-11-26)
 
 ### Changed
 
